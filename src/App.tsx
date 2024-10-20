@@ -1,6 +1,6 @@
-import DashBoardSidebar from './layouts/dashboard/DashBoardSideBard';
-import DashBoardContent from './layouts/dashboard/DashBoardContent';
-import { ThemeProvider } from './components/theme-provider';
+import DashBoardSidebar from '@/layouts/dashboard/DashBoardSidebard';
+import DashBoardContent from '@/layouts/dashboard/DashBoardContent';
+import { ThemeProvider } from '@/components/theme-provider';
 
 export default function App() {
   return (
