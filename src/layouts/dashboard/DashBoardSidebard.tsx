@@ -28,7 +28,6 @@ import {
   Send,
   SunIcon,
   MoonIcon,
-  MoonStar,
   SunMoon
 } from 'lucide-react';
 
