@@ -14,7 +14,7 @@ import {
   SidebarTrigger
 } from '@/components/ui/sidebar';
 
-export default function Page() {
+export default function DashboardPage() {
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -35,7 +35,7 @@ export default function Page() {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                  <BreadcrumbPage>Data Fetching dfd</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
