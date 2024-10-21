@@ -75,6 +75,7 @@ import {
 import { Theme, useTheme } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthProvider';
+import { Link } from 'react-router-dom';
 
 const data = {
   user: {
@@ -102,86 +103,86 @@ const data = {
   navMain: [
     {
       title: 'Playground',
-      url: '#',
+      url: '/',
       icon: SquareTerminal,
       isActive: true,
       items: [
         {
           title: 'History',
-          url: '#'
+          url: '/'
         },
         {
           title: 'Starred',
-          url: '#'
+          url: '/'
         },
         {
           title: 'Settings',
-          url: '#'
+          url: '/'
         }
       ]
     },
     {
       title: 'Models',
-      url: '#',
+      url: '/',
       icon: Bot,
       items: [
         {
           title: 'Genesis',
-          url: '#'
+          url: '/'
         },
         {
           title: 'Explorer',
-          url: '#'
+          url: '/'
         },
         {
           title: 'Quantum',
-          url: '#'
+          url: '/'
         }
       ]
     },
     {
       title: 'Documentation',
-      url: '#',
+      url: '/',
       icon: BookOpen,
       items: [
         {
           title: 'Introduction',
-          url: '#'
+          url: '/'
         },
         {
           title: 'Get Started',
-          url: '#'
+          url: '/'
         },
         {
           title: 'Tutorials',
-          url: '#'
+          url: '/'
         },
         {
           title: 'Changelog',
-          url: '#'
+          url: '/'
         }
       ]
     },
     {
       title: 'Settings',
-      url: '#',
+      url: '/',
       icon: Settings2,
       items: [
         {
           title: 'General',
-          url: '#'
+          url: '/settings'
         },
         {
           title: 'Team',
-          url: '#'
+          url: '/'
         },
         {
           title: 'Billing',
-          url: '#'
+          url: '/'
         },
         {
           title: 'Limits',
-          url: '#'
+          url: '/'
         }
       ]
     }
@@ -189,29 +190,29 @@ const data = {
   navSecondary: [
     {
       title: 'Support',
-      url: '#',
+      url: '/',
       icon: LifeBuoy
     },
     {
       title: 'Feedback',
-      url: '#',
+      url: '/',
       icon: Send
     }
   ],
   projects: [
     {
       name: 'Design Engineering',
-      url: '#',
+      url: '/',
       icon: Frame
     },
     {
       name: 'Sales & Marketing',
-      url: '#',
+      url: '/',
       icon: PieChart
     },
     {
       name: 'Travel',
-      url: '#',
+      url: '/',
       icon: Map
     }
   ]
@@ -331,9 +332,9 @@ export default function DashBoardSidebar(props: DashBoardSidebarProps) {
                         {item.items?.map((subItem) => (
                           <SidebarMenuSubItem key={subItem.title}>
                             <SidebarMenuSubButton asChild>
-                              <a href={subItem.url}>
+                              <Link to={subItem.url}>
                                 <span>{subItem.title}</span>
-                              </a>
+                              </Link>
                             </SidebarMenuSubButton>
                           </SidebarMenuSubItem>
                         ))}

@@ -26,6 +26,10 @@ const routes = createBrowserRouter([
           {
             index: true,
             lazy: () => import('@/pages/home/HomePage')
+          },
+          {
+            path: '/settings',
+            lazy: () => import('@/pages/settings/SettingsPage')
           }
         ]
       },
