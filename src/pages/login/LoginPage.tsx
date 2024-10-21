@@ -4,7 +4,7 @@ import OAuthStack from '@/components/OAuthStack';
 
 export default function LoginPage() {
   return (
-    <div className="rounded-xl border-border/60 bg-muted/50 px-6 pb-10 pt-6 sm:border sm:dark:bg-muted/30">
+    <div className="rounded-xl border-border/60 bg-muted/50 bg-transparent px-6 pb-10 pt-6 sm:border dark:sm:bg-muted/30">
       <h3 className="mb-10 text-2xl font-semibold max-sm:text-center sm:mb-5 sm:text-xl">
         Login
       </h3>
