@@ -10,8 +10,8 @@ import { toast } from 'sonner';
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  login: (email: string, password: string) => void;
-  logout: () => void;
+  login: (email: string, password: string) => void | Promise<void>;
+  logout: () => void | Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -39,8 +39,18 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, [isAuthenticated]);
 
   const login = async (email: string, password: string) => {
-    setIsAuthenticated(true);
+    await delay(1000);
     console.log('User logged in:', email, password);
+    toast.promise(delay(1000), {
+      loading: 'Loging in...',
+      success: () => {
+        setIsAuthenticated(true);
+        return `You have loged in!!`;
+      },
+      position: 'top-center',
+      duration: 1000,
+      error: () => 'Logged in failed'
+    });
   };
 
   const logout = () => {

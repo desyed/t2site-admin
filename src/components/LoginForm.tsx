@@ -15,6 +15,8 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/contexts/AuthProvider';
+import { useState } from 'react';
+import { LoadingSpinner } from './ui/loading-spinner';
 
 const FormSchema = z.object({
   email: z
@@ -29,6 +31,7 @@ const FormSchema = z.object({
 });
 
 export function InpuLoginForm() {
+  const [loading, setLoading] = useState(false);
   const { login } = useAuth();
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -40,8 +43,10 @@ export function InpuLoginForm() {
     shouldFocusError: true
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    login(data.email, data.password);
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    setLoading(true);
+    await login(data.email, data.password);
+    setLoading(false);
   }
 
   return (
@@ -91,8 +96,9 @@ export function InpuLoginForm() {
           <Button
             type="submit"
             size="sm"
+            disabled={loading}
           >
-            Login
+            <LoadingSpinner visable={loading} /> Login
           </Button>
         </div>
       </form>
