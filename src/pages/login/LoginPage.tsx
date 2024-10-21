@@ -1,6 +1,6 @@
 import { InpuLoginForm } from '@/components/LoginForm';
 import { Link } from 'react-router-dom';
-import OAuthStack from '@/components/OauthStack';
+import OAuthStack from '@/components/OAuthStack';
 
 export default function LoginPage() {
   return (
