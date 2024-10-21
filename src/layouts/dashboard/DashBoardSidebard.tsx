@@ -74,6 +74,7 @@ import {
 } from '@/components/ui/sidebar';
 import { Theme, useTheme } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/contexts/AuthProvider';
 
 const data = {
   user: {
@@ -226,6 +227,8 @@ export default function DashBoardSidebar(props: DashBoardSidebarProps) {
   const handleThemeSelect = (theme: Theme) => {
     setTheme(theme);
   };
+
+  const { logout } = useAuth();
 
   return (
     <SidebarProvider>
@@ -501,16 +504,6 @@ export default function DashBoardSidebar(props: DashBoardSidebarProps) {
                     <DropdownMenuSubContent>
                       <DropdownMenuItem
                         onSelect={() => {
-                          handleThemeSelect('dark');
-                        }}
-                        className={cn({
-                          'bg-muted': theme == 'dark'
-                        })}
-                      >
-                        <MoonIcon /> Dark
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        onSelect={() => {
                           handleThemeSelect('light');
                         }}
                         className={cn({
@@ -519,6 +512,17 @@ export default function DashBoardSidebar(props: DashBoardSidebarProps) {
                       >
                         <SunIcon /> Light
                       </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onSelect={() => {
+                          handleThemeSelect('dark');
+                        }}
+                        className={cn({
+                          'bg-muted': theme == 'dark'
+                        })}
+                      >
+                        <MoonIcon /> Dark
+                      </DropdownMenuItem>
+
                       <DropdownMenuItem
                         onSelect={() => {
                           handleThemeSelect('system');
@@ -531,7 +535,11 @@ export default function DashBoardSidebar(props: DashBoardSidebarProps) {
                       </DropdownMenuItem>
                     </DropdownMenuSubContent>
                   </DropdownMenuSub>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem
+                    onSelect={() => {
+                      logout();
+                    }}
+                  >
                     <LogOut />
                     Log out
                   </DropdownMenuItem>
