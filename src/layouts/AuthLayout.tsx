@@ -31,7 +31,7 @@ export default function AuthLayout() {
       <div className="flex flex-1 justify-center gap-5 sm:items-center sm:p-8">
         <div className="flex flex-1 flex-col gap-5 px-5 max-sm:justify-between sm:max-w-[420px]">
           <Outlet />
-          <div className="px-5 pb-5 text-center text-sm text-muted-foreground">
+          <div className="px-5 pb-10 text-center text-sm text-muted-foreground">
             By clicking continue, you agree to our{' '}
             <a
               className="underline hover:text-foreground"
