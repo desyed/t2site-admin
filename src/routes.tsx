@@ -1,30 +1,55 @@
-import { ThemeProvider } from '@/components/theme-provider';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import DashboardPage from './app/dashboard/page';
-import LoginPage from './app/login/page';
+import ErrorBoundary from "@/components/ErrorBoundary";
+import SplashScreen from "@/components/SplashScreen";
+import AuthLayout from "@/layouts/AuthLayout";
+import PrivateLayout from "@/layouts/PrivateLayout";
+import RootLayout from "@/layouts/RootLayout";
+import { delay } from "@/lib/utils";
+import NotFound from "@/pages/404";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import LoginPage from "./pages/login/LoginPage";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-      <DashboardPage />
-    ),
-  },
-  {
-    path: "/login",
-    element: (
-      <LoginPage />
-    ),
-  }
+const routes = createBrowserRouter([
+	{
+		path: "/",
+		element: <RootLayout />,
+		errorElement: <ErrorBoundary />,
+
+		children: [
+			{
+				loader: async () => {
+					// Pre - session check
+					await delay(1000);
+					return [];
+				},
+				element: <PrivateLayout />,
+				children: [
+					{
+						index: true,
+						lazy: () => import("@/pages/home/HomePage"),
+					},
+					{
+						path: "/settings",
+						lazy: () => import("@/pages/settings/SettingsPage"),
+					},
+				],
+			},
+			{
+				element: <AuthLayout />,
+				children: [
+					{
+						path: "/login",
+						element: <LoginPage />,
+					},
+				],
+			},
+			{
+				path: "*",
+				element: <NotFound />,
+			},
+		],
+	},
 ]);
 
-export default function App() {
-  return (
-    <ThemeProvider
-      defaultTheme="system"
-      storageKey="t2site-theme"
-    >
-      <RouterProvider router={router} />
-    </ThemeProvider>
-  );
+export default function Routers() {
+	return <RouterProvider router={routes} fallbackElement={<SplashScreen />} />;
 }
