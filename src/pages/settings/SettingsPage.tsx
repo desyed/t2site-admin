@@ -1,15 +1,11 @@
 import { delay } from "@/lib/utils";
+import { redirect } from "react-router-dom";
 
 export async function loader() {
 	await delay(1000);
-	return {
-		title: "settings",
-	};
+	return redirect("/settings/general");
 }
+
 export function Component() {
-	return (
-		<div className="p-10">
-			<h1 className="text-2xl font-semibold">Settings</h1>
-		</div>
-	);
+	return null;
 }
