@@ -1,8 +1,11 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 import { delay } from "@/lib/utils";
-import { useState } from "react";
+import { Upload } from "lucide-react";
+import { DeleteProjectAlert } from "./_components/delete-project-alert";
 
 export async function loader() {
 	await delay(1000);
@@ -12,38 +15,63 @@ export async function loader() {
 }
 
 export function Component() {
-	const [username, setUsername] = useState("");
-	const [email, setEmail] = useState("");
-
-	const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault();
-	};
-
 	return (
-		<div className="container mx-auto p-6">
-			<h1 className="text-2xl font-bold mb-6">General Settings</h1>
-			<form onSubmit={handleSubmit} className="space-y-4">
-				<div>
-					<Label htmlFor="username">Username</Label>
-					<Input
-						id="username"
-						value={username}
-						onChange={(e) => setUsername(e.target.value)}
-						placeholder="Enter your username"
-					/>
+		<div className="max-w-xl p-6">
+			<form className="space-y-5">
+				<div className="flex items-center gap-5">
+					<Avatar className="size-20 rounded-sm">
+						<AvatarImage
+							src="https://github.com/shadcn.png"
+							alt="Workspace Avatar"
+						/>
+						<AvatarFallback>WS</AvatarFallback>
+					</Avatar>
+					<div className="space-y-1">
+						<h2 className="text-sm font-semibold">Workspace Logo</h2>
+						<div className="flex items-center gap-2">
+							<Button size={"sm"} variant={"outline"}>
+								<Upload className="size-4 mr-1" />
+								Change Logo
+							</Button>
+							<Button disabled size={"sm"} variant={"outline"}>
+								Remove
+							</Button>
+						</div>
+						<p className="text-xs text-muted-foreground">
+							.png, or .jpg files up to 10MB at least 400px by 400px
+						</p>
+					</div>
 				</div>
-				<div>
-					<Label htmlFor="email">Email</Label>
-					<Input
-						id="email"
-						type="email"
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-						placeholder="Enter your email"
-					/>
+
+				<div className="space-y-0.5">
+					<Label>Workspace Name</Label>
+					<Input placeholder="My Workspace" />
 				</div>
-				<Button type="submit">Save Changes</Button>
+
+				<div className="space-y-0.5">
+					<Label>Workspace URL</Label>
+					<Input placeholder="my-workspace" />
+				</div>
+
+				<Button>Update</Button>
 			</form>
+
+			<Separator className="my-4" />
+
+			<div className="flex items-center justify-between">
+				<div className="w-7/12">
+					<h3 className="text-destructive font-medium">Delete Workspace</h3>
+					<p className="text-xs text-muted-foreground">
+						Once you delete your workspace, there is no going back. Please be
+						certain.
+					</p>
+				</div>
+				<DeleteProjectAlert>
+					<Button size={"sm"} variant={"destructive"}>
+						Delete Workspace
+					</Button>
+				</DeleteProjectAlert>
+			</div>
 		</div>
 	);
 }
