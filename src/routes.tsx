@@ -28,6 +28,10 @@ const routes = createBrowserRouter([
 						lazy: () => import("@/pages/home/HomePage"),
 					},
 					{
+						path: "/tickets",
+						lazy: () => import("@/pages/tickets/TicketsPage"),
+					},
+					{
 						path: "/settings",
 						lazy: () => import("@/pages/settings/SettingsPage"),
 					},
