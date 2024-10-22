@@ -113,7 +113,7 @@ const data = {
 				},
 				{
 					title: "Team",
-					url: "/",
+					url: "/settings/team",
 				},
 				{
 					title: "Billing",

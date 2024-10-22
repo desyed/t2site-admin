@@ -35,6 +35,14 @@ const routes = createBrowserRouter([
 						path: "/settings",
 						lazy: () => import("@/pages/settings/SettingsPage"),
 					},
+					{
+						path: "/settings/general",
+						lazy: () => import("@/pages/settings/general/GeneralSettingsPage"),
+					},
+					{
+						path: "/settings/team",
+						lazy: () => import("@/pages/settings/team/TeamSettingsPage"),
+					},
 				],
 			},
 			{
