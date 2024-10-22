@@ -2,13 +2,11 @@ import "./styles/global.css";
 
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import App from "./routes.tsx";
+import App from "./App.tsx";
 
-const rootElement = document.getElementById("root");
-if (rootElement) {
-	createRoot(rootElement).render(
-		<StrictMode>
-			<App />
-		</StrictMode>,
-	);
-}
+// biome-ignore lint/style/noNonNullAssertion: <explanation>
+createRoot(document.getElementById("root")!).render(
+	<StrictMode>
+		<App />
+	</StrictMode>,
+);
