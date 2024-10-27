@@ -32,7 +32,6 @@ const FormSchema = z.object({
 
 export function InpuLoginForm() {
 	const [loading, setLoading] = useState(false);
-	const { login } = useAuth();
 
 	const form = useForm<z.infer<typeof FormSchema>>({
 		resolver: zodResolver(FormSchema),
@@ -45,7 +44,7 @@ export function InpuLoginForm() {
 
 	async function onSubmit(data: z.infer<typeof FormSchema>) {
 		setLoading(true);
-		await login(data.email, data.password);
+		alert(data);
 		setLoading(false);
 	}
 

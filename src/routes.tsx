@@ -3,24 +3,19 @@ import SplashScreen from "@/components/SplashScreen";
 import AuthLayout from "@/layouts/AuthLayout";
 import PrivateLayout from "@/layouts/PrivateLayout";
 import RootLayout from "@/layouts/RootLayout";
-import { delay } from "@/lib/utils";
 import NotFound from "@/pages/404";
+import LoginPage from "@/pages/login/LoginPage";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import LoginPage from "./pages/login/LoginPage";
+import { authPreSessionLoader } from "./app/auth/authLoader";
 
 const routes = createBrowserRouter([
 	{
 		path: "/",
 		element: <RootLayout />,
 		errorElement: <ErrorBoundary />,
-
+		loader: authPreSessionLoader,
 		children: [
 			{
-				loader: async () => {
-					// Pre - session check
-					await delay(1000);
-					return [];
-				},
 				element: <PrivateLayout />,
 				children: [
 					{

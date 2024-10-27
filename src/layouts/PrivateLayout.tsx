@@ -4,11 +4,16 @@ import DashBoardSidebar from "@/layouts/dashboard/DashBoardSidebard";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 export default function PrivateLayout() {
-	const { isAuthenticated } = useAuth();
+	const { isAuthenticated, isLogingOut } = useAuth();
 	const location = useLocation();
 
 	if (!isAuthenticated) {
-		return <Navigate state={{ from: location }} to={"/login"} />;
+		return (
+			<Navigate
+				state={{ from: isLogingOut ? "/" : location.pathname }}
+				to={"/login"}
+			/>
+		);
 	}
 
 	return (

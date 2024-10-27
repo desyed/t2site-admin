@@ -1,17 +1,14 @@
+import { type TAuthUser, useAuthStore } from "@/app/auth/authStore";
 import { delay } from "@/lib/utils";
-import {
-	type ReactNode,
-	createContext,
-	useContext,
-	useEffect,
-	useState,
-} from "react";
+import { type ReactNode, createContext, useContext, useMemo } from "react";
 import { toast } from "sonner";
 
 interface AuthContextType {
 	isAuthenticated: boolean;
 	login: (email: string, password: string) => void | Promise<void>;
 	logout: () => void | Promise<void>;
+	isLogingOut: boolean;
+	user: TAuthUser | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -29,23 +26,21 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-		const storedAuthState = localStorage.getItem("isAuthenticated");
-		return storedAuthState === "true";
-	});
+	const user = useAuthStore((state) => state.user);
+	const isLogingOut = useAuthStore((state) => state.isLogingOut);
 
-	useEffect(() => {
-		localStorage.setItem("isAuthenticated", JSON.stringify(isAuthenticated));
-	}, [isAuthenticated]);
+	const accessToken = useAuthStore((state) => state.accessToken);
+	const logoutHandle = useAuthStore((state) => state.logout);
 
-	const login = async (email: string, password: string) => {
-		// biome-ignore lint/suspicious/noConsoleLog: <explanation>
-		console.log("User logged in:", email, password);
-		await delay(1000);
+	const isAuthenticated = useMemo(
+		() => !!(accessToken && user),
+		[accessToken, user],
+	);
+
+	const login = async () => {
 		toast.promise(delay(1000), {
 			loading: "Loging in...",
 			success: () => {
-				setIsAuthenticated(true);
 				return "You have loged in";
 			},
 			position: "top-center",
@@ -55,10 +50,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 	};
 
 	const logout = () => {
-		toast.promise(delay(500), {
+		toast.promise(logoutHandle, {
 			loading: "Singing in...",
 			success: () => {
-				setIsAuthenticated(false);
 				return "You have loged out";
 			},
 			finally: () => {},
@@ -69,7 +63,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 	};
 
 	return (
-		<AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+		<AuthContext.Provider
+			value={{ isAuthenticated, login, logout, user, isLogingOut }}
+		>
 			{children}
 		</AuthContext.Provider>
 	);

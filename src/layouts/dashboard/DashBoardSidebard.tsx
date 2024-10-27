@@ -44,6 +44,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import { useAuthStore } from "@/app/auth/authStore";
 import { type Theme, useTheme } from "@/components/theme-provider";
 import {
 	Sidebar,
@@ -64,15 +65,10 @@ import {
 	SidebarRail,
 } from "@/components/ui/sidebar";
 import { useAuth } from "@/contexts/AuthProvider";
-import { cn } from "@/lib/utils";
+import { cn, getNameInitials } from "@/lib/utils";
 import { Link } from "react-router-dom";
 
 const data = {
-	user: {
-		name: "Shanto Islam",
-		email: "ishanto@gmail.com",
-		avatar: "https://avatars.githubusercontent.com/u/40614334?v=4",
-	},
 	teams: [
 		{
 			name: "Acme Inc",
@@ -146,6 +142,8 @@ export type DashBoardSidebarProps = {
 export default function DashBoardSidebar(props: DashBoardSidebarProps) {
 	const [activeTeam, setActiveTeam] = React.useState(data.teams[0]);
 
+	const authUser = useAuthStore((state) => state.user);
+
 	const { theme, setTheme } = useTheme();
 	const handleThemeSelect = (theme: Theme) => {
 		setTheme(theme);
@@ -169,6 +167,7 @@ export default function DashBoardSidebar(props: DashBoardSidebarProps) {
 							},
 						}}
 					/>
+
 					<SidebarMenu>
 						<SidebarMenuItem>
 							<DropdownMenu>
@@ -302,17 +301,21 @@ export default function DashBoardSidebar(props: DashBoardSidebarProps) {
 									>
 										<Avatar className="h-8 w-8 rounded-lg">
 											<AvatarImage
-												src={data.user.avatar}
-												alt={data.user.name}
+												src={authUser?.avatar}
+												alt={authUser?.name}
 											/>
-											<AvatarFallback className="rounded-lg">CN</AvatarFallback>
+											{authUser && (
+												<AvatarFallback className="rounded-lg">
+													{getNameInitials(authUser.name)}
+												</AvatarFallback>
+											)}
 										</Avatar>
 										<div className="grid flex-1 text-left text-sm leading-tight">
 											<span className="truncate font-semibold">
-												{data.user.name}
+												{authUser?.name}
 											</span>
 											<span className="truncate text-xs">
-												{data.user.email}
+												{authUser?.email}
 											</span>
 										</div>
 										<ChevronsUpDown className="ml-auto size-4" />
@@ -328,19 +331,21 @@ export default function DashBoardSidebar(props: DashBoardSidebarProps) {
 										<div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
 											<Avatar className="h-8 w-8 rounded-lg">
 												<AvatarImage
-													src={data.user.avatar}
-													alt={data.user.name}
+													src={authUser?.avatar}
+													alt={authUser?.name}
 												/>
-												<AvatarFallback className="rounded-lg">
-													SI
-												</AvatarFallback>
+												{authUser && (
+													<AvatarFallback className="rounded-lg">
+														{getNameInitials(authUser.name)}
+													</AvatarFallback>
+												)}
 											</Avatar>
 											<div className="grid flex-1 text-left text-sm leading-tight">
 												<span className="truncate font-semibold">
-													{data.user.name}
+													{authUser?.name}
 												</span>
 												<span className="truncate text-xs">
-													{data.user.email}
+													{authUser?.email}
 												</span>
 											</div>
 										</div>

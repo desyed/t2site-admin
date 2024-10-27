@@ -55,11 +55,16 @@ DropdownMenuSubContent.displayName =
 	DropdownMenuPrimitive.SubContent.displayName;
 
 const DropdownMenuContent = React.forwardRef<
-	React.ElementRef<typeof DropdownMenuPrimitive.Content>,
+	React.ElementRef<typeof DropdownMenuPrimitive.Content> & {
+		onCloseAutoFocus?: (e: Event) => void | Promise<void>;
+	},
 	React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
->(({ className, sideOffset = 4, ...props }, ref) => (
+>(({ className, sideOffset = 4, onCloseAutoFocus, ...props }, ref) => (
 	<DropdownMenuPrimitive.Portal>
 		<DropdownMenuPrimitive.Content
+			onCloseAutoFocus={
+				onCloseAutoFocus ? onCloseAutoFocus : (e) => e.preventDefault()
+			}
 			ref={ref}
 			sideOffset={sideOffset}
 			className={cn(
@@ -181,18 +186,18 @@ DropdownMenuShortcut.displayName = "DropdownMenuShortcut";
 
 export {
 	DropdownMenu,
-	DropdownMenuTrigger,
-	DropdownMenuContent,
-	DropdownMenuItem,
 	DropdownMenuCheckboxItem,
-	DropdownMenuRadioItem,
+	DropdownMenuContent,
+	DropdownMenuGroup,
+	DropdownMenuItem,
 	DropdownMenuLabel,
+	DropdownMenuPortal,
+	DropdownMenuRadioGroup,
+	DropdownMenuRadioItem,
 	DropdownMenuSeparator,
 	DropdownMenuShortcut,
-	DropdownMenuGroup,
-	DropdownMenuPortal,
 	DropdownMenuSub,
 	DropdownMenuSubContent,
 	DropdownMenuSubTrigger,
-	DropdownMenuRadioGroup,
+	DropdownMenuTrigger,
 };

@@ -7,7 +7,7 @@ export default function AuthLayout() {
 	const { isAuthenticated } = useAuth();
 	const location = useLocation();
 
-	const from = location.state?.from?.pathname || "/";
+	const from = location.state?.from || "/";
 
 	if (isAuthenticated) {
 		return <Navigate to={from} replace />;
