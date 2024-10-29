@@ -1,22 +1,36 @@
-import { api } from "@/lib/api";
+import { api } from '@/lib/api';
 
 /**
- * @DELETE /auth/logout
+ * @POST /auth/login
  */
-export function logoutMutaion() {
-	return api.delete("/auth/logout");
+export function loginMutaion() {
+  return api.get('/auth/login');
 }
 
 /**
- * @DELETE /auth/refresh
+ * @POST /auth/signup
+ */
+export function singupMutaion(payload: object) {
+  return api.post('/auth/signup', payload);
+}
+
+/**
+ * @get /auth/refresh
  */
 export function getTokenQuery() {
-	return api.delete("/auth/refresh");
+  return api.get('/auth/refresh');
 }
 
 /**
  * @GET /session
  */
 export function getSessionQuery() {
-	return api.get("/session");
+  return api.get('/session');
+}
+
+/**
+ * @DELETE /auth/logout
+ */
+export function logoutMutaion() {
+  return api.delete('/auth/logout');
 }

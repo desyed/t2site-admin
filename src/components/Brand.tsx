@@ -7,7 +7,7 @@ export default function Brand() {
 			<img
 				draggable="false"
 				src="/t2-site-brand-dark.svg"
-				className="w-[90px] sm:w-[110px] lg:w-[120px]"
+				className="w-[100px] sm:w-[130px] lg:w-[140px]"
 				style={{
 					display: colorMode.isDark ? "block" : "none",
 				}}
@@ -17,7 +17,7 @@ export default function Brand() {
 			<img
 				draggable="false"
 				src="/t2-site-brand-light.svg"
-				className="w-[90px] sm:w-[110px] lg:w-[120px]"
+				className="w-[100px] sm:w-[130px] lg:w-[140px]"
 				style={{
 					display: colorMode.isLight ? "block" : "none",
 				}}

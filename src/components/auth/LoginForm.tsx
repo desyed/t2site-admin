@@ -13,10 +13,10 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useAuth } from "@/contexts/AuthProvider";
 import { useState } from "react";
-import { LoadingSpinner } from "./ui/loading-spinner";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { InputIcon } from "@/components/ui/input-icon";
+import { InputPassword } from "../ui/input-password";
 
 const FormSchema = z.object({
 	email: z
@@ -30,7 +30,7 @@ const FormSchema = z.object({
 	}),
 });
 
-export function InpuLoginForm() {
+export default function LoginForm() {
 	const [loading, setLoading] = useState(false);
 
 	const form = useForm<z.infer<typeof FormSchema>>({
@@ -52,7 +52,7 @@ export function InpuLoginForm() {
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className="flex flex-col gap-4"
+				className="flex flex-col gap-3"
 			>
 				<div>
 					<FormField
@@ -62,7 +62,11 @@ export function InpuLoginForm() {
 							<FormItem>
 								<FormLabel>Email</FormLabel>
 								<FormControl>
-									<Input placeholder="example@example.com" {...field} />
+									<InputIcon
+										icon="mdi:email"
+										placeholder="example@example.com"
+										{...field}
+									/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -78,7 +82,11 @@ export function InpuLoginForm() {
 							<FormItem>
 								<FormLabel>Password</FormLabel>
 								<FormControl>
-									<Input placeholder="•••••••••••••••••••" {...field} />
+									<InputPassword
+										icon="mdi:lock"
+										placeholder="•••••••••••••••••••"
+										{...field}
+									/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>

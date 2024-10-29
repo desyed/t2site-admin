@@ -5,8 +5,10 @@ import PrivateLayout from "@/layouts/PrivateLayout";
 import RootLayout from "@/layouts/RootLayout";
 import NotFound from "@/pages/404";
 import LoginPage from "@/pages/login/LoginPage";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { authPreSessionLoader } from "./app/auth/authLoader";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { authPreSessionLoader } from "@/app/auth/authLoader";
+import SignupPage from "@/pages/signup/SignupPage";
+import VerifyPage from "@/pages/verify/VerifyPage";
 
 const routes = createBrowserRouter([
 	{
@@ -46,6 +48,14 @@ const routes = createBrowserRouter([
 					{
 						path: "/login",
 						element: <LoginPage />,
+					},
+					{
+						path: "/signup",
+						element: <SignupPage />,
+					},
+					{
+						path: "/verify",
+						element: <VerifyPage />,
 					},
 				],
 			},

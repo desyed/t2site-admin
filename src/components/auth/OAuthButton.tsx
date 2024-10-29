@@ -7,16 +7,14 @@ export type T2OAuthType = "google" | "github" | "microsoft";
 
 export type OAuthButtonProps = {
 	type: T2OAuthType;
+	label?: boolean;
 };
 
 export default function OAuthButton(props: OAuthButtonProps) {
-	const { type } = props;
+	const { type, label = true } = props;
 	const location = useLocation();
-	function handleOauth() {
-		const from = location.state?.from || "/";
-		const loginUrl = `${import.meta.env.VITE_OAUTH_URL}/${type}?redirect_path=${from}`;
-		window.location.href = loginUrl;
-	}
+
+	const from = location.state?.from || "/";
 
 	const OAuthIcon = useMemo(() => {
 		switch (type) {
@@ -30,15 +28,21 @@ export default function OAuthButton(props: OAuthButtonProps) {
 	}, [type]);
 
 	return (
-		<div className="grid flex-1">
-			<Button
-				onClick={handleOauth}
-				variant="outline"
-				size="lg"
-				data-oauth-type={type}
-			>
-				{OAuthIcon}
-			</Button>
-		</div>
+		<form action={`${import.meta.env.VITE_OAUTH_URL}/${type}`} method="post">
+			<input type="hidden" name="redirect_path" value={from} />
+			<input type="hidden" name="csrf_token" value="asdkasdkjasdjkasdjkl" />
+			<div className="grid flex-1">
+				<Button
+					variant="outline"
+					size="sm"
+					className="capitalize"
+					type="submit"
+					data-oauth-type={type}
+				>
+					{OAuthIcon}
+					{label && `Continue With ${type}`}
+				</Button>
+			</div>
+		</form>
 	);
 }
