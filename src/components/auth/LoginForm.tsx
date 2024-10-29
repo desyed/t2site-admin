@@ -13,9 +13,9 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
-import { useState } from "react";
-import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { InputIcon } from "@/components/ui/input-icon";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { useState } from "react";
 import { InputPassword } from "../ui/input-password";
 
 const FormSchema = z.object({

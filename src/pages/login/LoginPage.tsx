@@ -9,7 +9,7 @@ export default function LoginPage() {
 	useEffect(() => {
 		const error = getQuery("error");
 		if (error && error.length > 3) {
-			let message = error;
+			const message = error;
 			setTimeout(() => {
 				toast.error("Loging Failed", {
 					description: message,

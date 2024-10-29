@@ -1,6 +1,6 @@
 import { type TAuthUser, useAuthStore } from "@/app/auth/authStore";
-import { delay, EmailAddress } from "@/lib/utils";
-import { createContext, type ReactNode, useContext } from "react";
+import { type EmailAddress, delay } from "@/lib/utils";
+import { type ReactNode, createContext, useContext } from "react";
 import { toast } from "sonner";
 
 interface AuthContextType {
