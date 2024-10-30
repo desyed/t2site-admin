@@ -1,15 +1,13 @@
 import { type TAuthUser, useAuthStore } from "@/app/auth/authStore";
-import { type EmailAddress, delay } from "@/lib/utils";
-import { type ReactNode, createContext, useContext } from "react";
+import { createContext, type ReactNode, useContext } from "react";
 import { toast } from "sonner";
 
 interface AuthContextType {
 	isAuthenticated: boolean;
-	login: (email: string, password: string) => void | Promise<void>;
 	logout: () => void | Promise<void>;
 	isLogingOut: boolean;
 	user: TAuthUser | null;
-	unverifiedEmail: EmailAddress | null;
+	isEmailVerified: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -32,21 +30,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
 	const logoutHandle = useAuthStore((state) => state.logout);
 
-	const unverifiedEmail = useAuthStore((state) => state.unverifiedEmail);
-
-	const isAuthenticated = !!user;
-
-	const login = async () => {
-		toast.promise(delay(1000), {
-			loading: "Loging in...",
-			success: () => {
-				return "You have loged in";
-			},
-			position: "top-center",
-			duration: 1000,
-			error: () => "Logged in failed",
-		});
-	};
+	const isAuthenticated = !!user?.email;
+	const isEmailVerified = !!user?.emailVerified;
 
 	const logout = () => {
 		toast.promise(logoutHandle, {
@@ -65,11 +50,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 		<AuthContext.Provider
 			value={{
 				isAuthenticated,
-				login,
 				logout,
 				user,
 				isLogingOut,
-				unverifiedEmail,
+				isEmailVerified,
 			}}
 		>
 			{children}

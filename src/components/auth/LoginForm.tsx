@@ -1,6 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -15,8 +14,15 @@ import {
 } from "@/components/ui/form";
 import { InputIcon } from "@/components/ui/input-icon";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
-import { useState } from "react";
 import { InputPassword } from "../ui/input-password";
+import { toast } from "sonner";
+import { displayFieldsError } from "@/lib/error";
+import { useAuthStore } from "@/app/auth/authStore";
+import { loginMutation } from "@/app/auth/authApi";
+import Alert from "@/components/Alert";
+import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { handleApiErrorException } from "@/lib/utils";
 
 const FormSchema = z.object({
 	email: z
@@ -31,7 +37,11 @@ const FormSchema = z.object({
 });
 
 export default function LoginForm() {
+	const [invalidCred, setInvalidCred] = useState<string | null>(null);
+
 	const [loading, setLoading] = useState(false);
+
+	const setAuth = useAuthStore((state) => state.setAuth);
 
 	const form = useForm<z.infer<typeof FormSchema>>({
 		resolver: zodResolver(FormSchema),
@@ -42,10 +52,41 @@ export default function LoginForm() {
 		shouldFocusError: true,
 	});
 
-	async function onSubmit(data: z.infer<typeof FormSchema>) {
+	async function onSubmit(values: z.infer<typeof FormSchema>) {
 		setLoading(true);
-		alert(data);
-		setLoading(false);
+		setInvalidCred(null);
+
+		toast.promise(loginMutation(values), {
+			loading: "Logging in...",
+			success: (result) => {
+				if (result.data?.access_token && result.data.user.email) {
+					setAuth(result.data.user, result.data.access_token);
+					if (!result.data.user.emailVerified) {
+						toast.warning("Email Not Verified!", {
+							description:
+								"You have successfully logged in, but your email is not verified. Please verify your email to enjoy full features.",
+						});
+					}
+					form.reset();
+				}
+				return "Login successful!";
+			},
+			finally: () => {
+				setLoading(false);
+			},
+			position: "top-center",
+			duration: 1000,
+			error: (error) => {
+				const { errors } = handleApiErrorException(error);
+				if (errors && errors?.invalidCred) {
+					setInvalidCred(errors?.invalidCred);
+				}
+				if (errors && !errors?.invalidCred) {
+					displayFieldsError(form, errors);
+				}
+				return "Failed to login";
+			},
+		});
 	}
 
 	return (
@@ -93,6 +134,18 @@ export default function LoginForm() {
 						)}
 					/>
 				</div>
+				{invalidCred && (
+					<Alert
+						close={true}
+						handleClose={() => {
+							setInvalidCred(null);
+						}}
+						title="Invalid credentials"
+						message={invalidCred}
+						type="error"
+					/>
+				)}
+
 				<div className="mt-5 flex flex-col sm:mt-2">
 					<Button type="submit" size="sm" disabled={loading}>
 						<LoadingSpinner visable={loading} /> Login

@@ -7,8 +7,10 @@ import RootLayout from "@/layouts/RootLayout";
 import NotFound from "@/pages/404";
 import LoginPage from "@/pages/login/LoginPage";
 import SignupPage from "@/pages/signup/SignupPage";
-import VerifyPage from "@/pages/verify/VerifyPage";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import VerifyLayout from "@/layouts/VerifyLayout";
+import OAuthCheck from "@/pages/OAuthCheck";
 
 const routes = createBrowserRouter([
 	{
@@ -53,11 +55,21 @@ const routes = createBrowserRouter([
 						path: "/signup",
 						element: <SignupPage />,
 					},
+				],
+			},
+			{
+				path: "/verify",
+				element: <VerifyLayout />,
+				children: [
 					{
-						path: "/verify",
-						element: <VerifyPage />,
+						index: true,
+						lazy: () => import("@/pages/verify/VerifyPage"),
 					},
 				],
+			},
+			{
+				path: "/oauth",
+				element: <OAuthCheck />,
 			},
 			{
 				path: "*",

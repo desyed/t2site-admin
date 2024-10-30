@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { singupMutaion } from "@/app/auth/authApi";
+import { singupMutation } from "@/app/auth/authApi";
 import { Button } from "@/components/ui/button";
 import {
 	Form,
@@ -16,11 +16,12 @@ import {
 } from "@/components/ui/form";
 import { InputIcon } from "@/components/ui/input-icon";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
-import { useApiMutation } from "@/hooks/use-api";
+import { useApi } from "@/hooks/use-api";
 import { displayFieldsError } from "@/lib/error";
 import { isValidPassword } from "@/lib/utils";
 import { toast } from "sonner";
 import { InputPassword } from "../ui/input-password";
+import { TAuthUser, useAuthStore } from "@/app/auth/authStore";
 
 const FormSchema = z.object({
 	name: z
@@ -55,7 +56,12 @@ const FormSchema = z.object({
 });
 
 export default function SingupForm() {
-	const { executeMutation, loading } = useApiMutation(singupMutaion, {
+	const setAuth = useAuthStore((state) => state.setAuth);
+
+	const { executeMutation, loading } = useApi<{
+		user: TAuthUser;
+		access_token: string;
+	}>(singupMutation, {
 		toast: true,
 	});
 
@@ -74,16 +80,19 @@ export default function SingupForm() {
 		if (result.errors) {
 			return displayFieldsError(form, result.errors);
 		}
-
 		if (result.success) {
 			toast.success("Congratulations! 🎉", {
 				description:
-					"You have successfully signed up! \n\nTo get started, please verify your email address. We've sent a verification link to your inbox.",
+					"You have successfully signed up! \n\nTo get started, please verify your email address.",
+				position: "top-center",
+				duration: 1000,
+				style: {
+					fontSize: "0.95rem",
+				},
 			});
-			if (result.data.nextFlow === "EMAIL_VERIFICATION") {
-				alert("asdsad");
+			if (result.data?.access_token && result.data.user.email) {
+				setAuth(result.data.user, result.data.access_token);
 			}
-
 			form.reset();
 		}
 	}

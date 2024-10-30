@@ -1,4 +1,4 @@
-import { handleApiMutation } from "@/lib/utils";
+import { handleApi } from "@/lib/utils";
 import type { AxiosResponse } from "axios";
 import { useState } from "react";
 
@@ -10,7 +10,7 @@ type ApiMutationState<TResponse, TError> = {
 	errors: TError | null;
 };
 
-export function useApiMutation<TResponse = unknown, TError = unknown>(
+export function useApi<TResponse = unknown, TError = unknown>(
 	apiHandler: (payload: object) => Promise<AxiosResponse<any, any>>,
 	config: {
 		toast?: boolean;
@@ -32,7 +32,10 @@ export function useApiMutation<TResponse = unknown, TError = unknown>(
 			errors: null,
 		}));
 
-		const { success, data, message, errors } = await handleApiMutation(
+		const { success, data, message, errors } = await handleApi<
+			TResponse,
+			TError
+		>(
 			apiHandler,
 			payload,
 			config,

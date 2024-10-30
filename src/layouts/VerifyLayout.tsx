@@ -3,23 +3,23 @@ import { ModeToggle } from "@/components/mode-toggle";
 import { useAuth } from "@/contexts/AuthProvider";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
-export default function AuthLayout() {
+export default function VerifyLayout() {
 	const { isAuthenticated, isEmailVerified } = useAuth();
 	const location = useLocation();
 
 	const from = location.state?.from?.pathname || "/";
 
-	if (isAuthenticated && isEmailVerified) {
-		return <Navigate to={from} replace />;
-	}
-
-	if (isAuthenticated && !isEmailVerified) {
+	if (!isAuthenticated) {
 		return (
 			<Navigate
 				state={{ from }}
-				to={"/verify"}
+				to={"/login"}
 			/>
 		);
+	}
+
+	if (isAuthenticated && isEmailVerified) {
+		return <Navigate to={from} replace />;
 	}
 
 	return (

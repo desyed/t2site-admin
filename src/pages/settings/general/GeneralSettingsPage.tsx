@@ -8,7 +8,7 @@ import { Upload } from "lucide-react";
 import { DeleteProjectAlert } from "./_components/delete-project-alert";
 
 export async function loader() {
-	await delay(1000);
+	await delay(500);
 	return {
 		title: "General Settings",
 	};
