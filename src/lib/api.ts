@@ -26,7 +26,7 @@ axiosAuthApiInstance.interceptors.response.use(
           description:
             'Your session has expired. Please log in again to continue.',
           position: 'bottom-right',
-        });
+        });   
         return Promise.reject(error);
       }
       originalRequest._retry = true;

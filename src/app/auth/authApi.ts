@@ -1,5 +1,4 @@
 import { api } from '@/lib/api';
-import { delay } from "@/lib/utils";
 
 /**
  * @POST /auth/login
@@ -23,6 +22,13 @@ export function getTokenQuery() {
 }
 
 /**
+ * @DELETE /auth/logout
+ */
+export function logoutMutation() {
+  return api.delete('/auth/logout');
+}
+
+/**
  * @GET /session
  */
 export function getSessionQuery() {
@@ -33,20 +39,12 @@ export function getSessionQuery() {
  * @POST /send-email-verification
  */
 export async function sendEmailVericationMutation() {
-  await delay(1000);
-  return api.post('/send-email-verification');
+  return api.post('/verification/email/send');
 }
 
 /**
  * @POST /verify-email
  */
 export function verifyEmailMutation(payload: object) {
-  return api.post('/verify-email', payload);
-}
-
-/**
- * @DELETE /auth/logout
- */
-export function logoutMutation() {
-  return api.delete('/auth/logout');
+  return api.post('/verification/email/verify', payload);
 }
