@@ -36,6 +36,13 @@ export function getSessionQuery() {
 }
 
 /**
+ * @GET /session
+ */
+export function getProfileQuery() {
+  return api.get('/profile');
+}
+
+/**
  * @POST /send-email-verification
  */
 export async function sendEmailVericationMutation() {
