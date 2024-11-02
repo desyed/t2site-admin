@@ -29,8 +29,9 @@ const FormSchema = z.object({
 		.min(1, { message: "Name is required" })
 		.min(2, { message: "Name must be at least 2 characters long" })
 		.max(70, { message: "Name cannot exceed 70 characters" })
-		.regex(/^[A-Za-z0-9_-\s]+$/, {
-			message: "Only letters, numbers, _, -, and spaces allowed",
+		.regex(/^[a-zA-Z]+([ '-][a-zA-Z]+)*$/, {
+			message:
+				"Name can only contain letters, spaces, hyphens, or apostrophes and must not start or end with special characters.",
 		})
 		.trim(),
 	email: z
@@ -142,7 +143,6 @@ export default function SingupForm() {
 						)}
 					/>
 				</div>
-
 				<div>
 					<FormField
 						control={form.control}
