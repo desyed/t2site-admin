@@ -34,7 +34,7 @@ axiosAuthApiInstance.interceptors.response.use(
       try {
         const refreshResponse = await axiosAuthApiInstance.get('/auth/refresh');
         if (refreshResponse.status === 200) {
-          authStore.setAccessToken(refreshResponse.data);
+          authStore.setAccessToken(refreshResponse.data.access_token);
           return axiosAuthApiInstance(originalRequest);
         }
       } catch (refreshError) {
