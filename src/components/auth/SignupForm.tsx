@@ -23,7 +23,7 @@ import { toast } from "sonner";
 import { InputPassword } from "../ui/input-password";
 import { TAuthUser, useAuthStore } from "@/app/auth/authStore";
 
-const FormSchema = z.object({
+const SignupSchema = z.object({
 	name: z
 		.string()
 		.min(1, { message: "Name is required" })
@@ -66,8 +66,8 @@ export default function SingupForm() {
 		toast: true,
 	});
 
-	const form = useForm<z.infer<typeof FormSchema>>({
-		resolver: zodResolver(FormSchema),
+	const form = useForm<z.infer<typeof SignupSchema>>({
+		resolver: zodResolver(SignupSchema),
 		defaultValues: {
 			name: "",
 			email: "",
@@ -76,7 +76,7 @@ export default function SingupForm() {
 		shouldFocusError: true,
 	});
 
-	async function onSubmit(values: z.infer<typeof FormSchema>) {
+	async function onSubmit(values: z.infer<typeof SignupSchema>) {
 		const result = await executeMutation(values);
 		if (result.errors) {
 			return displayFieldsError(form, result.errors);

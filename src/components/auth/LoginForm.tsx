@@ -24,7 +24,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { handleApiErrorException } from "@/lib/utils";
 
-const FormSchema = z.object({
+const loginSchema = z.object({
 	email: z
 		.string()
 		.min(1, {
@@ -43,8 +43,8 @@ export default function LoginForm() {
 
 	const setAuth = useAuthStore((state) => state.setAuth);
 
-	const form = useForm<z.infer<typeof FormSchema>>({
-		resolver: zodResolver(FormSchema),
+	const form = useForm<z.infer<typeof loginSchema>>({
+		resolver: zodResolver(loginSchema),
 		defaultValues: {
 			email: "",
 			password: "",
@@ -52,7 +52,7 @@ export default function LoginForm() {
 		shouldFocusError: true,
 	});
 
-	async function onSubmit(values: z.infer<typeof FormSchema>) {
+	async function onSubmit(values: z.infer<typeof loginSchema>) {
 		setLoading(true);
 		setInvalidCred(null);
 
