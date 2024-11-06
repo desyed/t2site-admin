@@ -2,16 +2,17 @@ import Brand from "@/components/Brand";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@iconify/react";
-import { useNavigate } from "react-router-dom";
+
+import { Link, useNavigate } from "react-router-dom";
 
 export default function NotFound() {
 	const navigate = useNavigate();
 	return (
 		<div className="relative flex min-h-screen flex-col">
 			<div className="flex h-[90px] items-center justify-between px-6 sm:px-10">
-				<div>
+				<Link to="/">
 					<Brand />
-				</div>
+				</Link>
 				<div>
 					<ModeToggle />
 				</div>

@@ -31,9 +31,9 @@ export default function AuthLayout() {
 				</div>
 			</div>
 			<div className="flex flex-1 justify-center gap-10 sm:items-center sm:p-8 flex-col mt-16">
-				<div className="flex justify-center">
+				<a href="https://t2site.vercel.app" className="flex justify-center">
 					<Brand />
-				</div>
+				</a>
 				<div className="flex flex-1 flex-col gap-5  max-sm:justify-between sm:max-w-[390px]">
 					<div className="rounded-xl border-border/60 bg-transparent px-6 pb-10 sm:border sm:pt-6 dark:sm:bg-muted/30 sm:bg-muted/50 overflow-x-hidden">
 						<Outlet />
