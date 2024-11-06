@@ -27,10 +27,17 @@ export default function OAuthButton(props: OAuthButtonProps) {
 		}
 	}, [type]);
 
+	const redirect_url =
+		`${window.location.origin}/oauth/?rp=${from}&oauth_login=success`;
+
+	const redirect_error =
+		`${window.location.origin}/login`;
+
 	return (
 		<form action={`${import.meta.env.VITE_OAUTH_URL}/${type}`} method="post">
-			<input type="hidden" name="redirect_path" value={from} />
-			<input type="hidden" name="csrf_token" value="asdkasdkjasdjkasdjkl" />
+			<input type="hidden" name="redirect_url" value={redirect_url} />
+			<input type="hidden" name="redirect_error" value={redirect_error} />
+			<input type="hidden" name="csrf_token" value="" />
 			<div className="grid flex-1">
 				<Button
 					variant="outline"
