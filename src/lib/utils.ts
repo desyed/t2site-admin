@@ -29,7 +29,7 @@ export function getNameInitials(name: string): string {
     .split(' ')
     .map((part) => part.at(0))
     .filter(Boolean) // Remove any undefined values if only one name exists
-    .slice(0, 2) // Take only the first two initials
+    .slice(0, 1) // Take only the first two initials
     .join('');
 }
 

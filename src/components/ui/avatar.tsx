@@ -33,16 +33,33 @@ AvatarImage.displayName = AvatarPrimitive.Image.displayName;
 const AvatarFallback = React.forwardRef<
 	React.ElementRef<typeof AvatarPrimitive.Fallback>,
 	React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>
->(({ className, ...props }, ref) => (
-	<AvatarPrimitive.Fallback
-		ref={ref}
-		className={cn(
-			"flex h-full w-full items-center justify-center rounded-full bg-muted",
-			className,
-		)}
-		{...props}
-	/>
-));
+>(({ className, ...props }, ref) => {
+	// Professional background/text color combinations with good contrast
+	const colorPairs = [
+		["bg-blue-100", "text-blue-800"],
+		["bg-green-100", "text-green-800"],
+		["bg-purple-100", "text-purple-800"], 
+		["bg-orange-100", "text-orange-800"],
+		["bg-teal-100", "text-teal-800"],
+		["bg-pink-100", "text-pink-800"]
+	];
+
+	const randomPair = colorPairs[Math.floor(Math.random() * colorPairs.length)];
+	const [bg, text] = randomPair;
+
+	return (
+		<AvatarPrimitive.Fallback
+			ref={ref}
+			className={cn(
+				"flex h-full w-full items-center justify-center rounded-full font-semibold",
+				bg,
+				text,
+				className,
+			)}
+			{...props}
+		/>
+	);
+});
 AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName;
 
 export { Avatar, AvatarImage, AvatarFallback };

@@ -20,8 +20,8 @@ import { useTheme } from "../theme-provider";
 
 const SIDEBAR_COOKIE_NAME = "sidebar:state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
-const SIDEBAR_WIDTH = "15rem";
-const SIDEBAR_WIDTH_MOBILE = "16rem";
+const SIDEBAR_WIDTH = "13rem";
+const SIDEBAR_WIDTH_MOBILE = "13rem";
 const SIDEBAR_WIDTH_ICON = "3.15rem";
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
@@ -403,7 +403,7 @@ const SidebarContent = React.forwardRef<
 			ref={ref}
 			data-sidebar="content"
 			className={cn(
-				"flex min-h-0 flex-1 flex-col gap-2 overflow-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary/60 group-data-[collapsible=icon]:overflow-hidden",
+				"flex min-h-0 flex-1 flex-col gap-2 overflow-auto site-scrollbar group-data-[collapsible=icon]:overflow-hidden",
 				className,
 			)}
 			{...props}
@@ -750,7 +750,7 @@ const SidebarLogo = React.forwardRef<
 	}
 >(({ logo }, ref) => {
 	const theme = useTheme();
-	const { open } = useSidebar();
+	const { open, isMobile } = useSidebar();
 
 	return (
 		<SidebarContent
@@ -762,15 +762,16 @@ const SidebarLogo = React.forwardRef<
 			<img
 				src={logo.dark.url}
 				className={cn("hidden h-[35px] w-[105px]", {
-					"!block": theme.colorMode.isDark && open,
+					"!block": theme.colorMode.isDark && (open || isMobile),
 				})}
 				alt="t2site-logo"
 				draggable={false}
 			/>
+			
 			<img
 				src={logo.dark.mobileUrl}
 				className={cn("hidden h-[35px] w-[23px]", {
-					"!block": theme.colorMode.isDark && !open,
+					"!block": theme.colorMode.isDark && !open && !isMobile,
 				})}
 				alt="t2site-logo"
 				draggable={false}
@@ -778,7 +779,7 @@ const SidebarLogo = React.forwardRef<
 			<img
 				src={logo.light.url}
 				className={cn("hidden h-[35px] w-[105px]", {
-					"!block": theme.colorMode.isLight && open,
+					"!block": theme.colorMode.isLight && (open || isMobile) ,
 				})}
 				alt="t2site-logo"
 				draggable={false}
@@ -786,7 +787,7 @@ const SidebarLogo = React.forwardRef<
 			<img
 				src={logo.light.mobileUrl}
 				className={cn("hidden h-[35px] w-[23px]", {
-					"!block": theme.colorMode.isLight && !open,
+					"!block": theme.colorMode.isLight && !open && !isMobile,
 				})}
 				alt="t2site-logo"
 				draggable={false}

@@ -94,3 +94,9 @@ html.dark {
 		font-feature-settings: "rlig" 1, "calt" 1;
 	}
 }
+
+@layer utilities {
+	.site-scrollbar {
+		@apply scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary/60;
+	}
+}
