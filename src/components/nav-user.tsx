@@ -31,231 +31,269 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { useAuthStore } from '@/app/auth/authStore';
+import { TOrganization, useAuthStore } from '@/app/auth/authStore';
 import { Theme, useTheme } from './theme-provider';
 import { useAuth } from '@/contexts/AuthProvider';
-import { cn, getNameInitials } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
-import { CreateOrganizationDialog } from "./dialogs/create-organization-dialog";
+import { cn } from '@/lib/utils';
+import { CreateOrganizationDialog } from './dialogs/create-organization-dialog';
+import { RoleBadge } from './role-badge';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useApi } from '@/hooks/use-api';
+import { changeCurrentOrganizationMutation } from '@/app/organization/organizationApi';
+import { toast } from 'sonner';
+import { useNavigate } from "react-router-dom";
 
 export function NavUser() {
   const authUser = useAuthStore((state) => state.user);
+  const authOrganization = useAuthStore((state) => state.userOrganization);
+  const setAccessToken = useAuthStore((state) => state.setAccessToken);
+  const isMobile = useIsMobile();
 
   const { theme, setTheme } = useTheme();
   const handleThemeSelect = (theme: Theme) => {
     setTheme(theme);
   };
 
+  const navigate = useNavigate();
+  
   const { logout } = useAuth();
 
+  const { executeMutation } = useApi<{
+    currentOrganizationId: string;
+    access_token: string;
+  }>(changeCurrentOrganizationMutation);
+
+  const handleChangeOrganization = async (organization: TOrganization) => {
+    toast.promise(executeMutation({ organizationId: organization.id }), {
+      loading: 'Changing organization...',
+      success: (result) => {
+        if(result.data?.access_token) {
+          setAccessToken(result.data.access_token);
+          navigate('/auth?auth_login=success&ocr=true');
+          return `Now organization switched to ${organization.name}`;
+        }else {
+          return `Failed to change organization!`;
+        }
+      },
+      error: 'Failed to change organization!',
+      position: "top-center",
+      duration: 1000,
+    });
+
+  };
+
   return (
-   <>
-	  <SidebarMenu>
-      <SidebarMenuItem>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <SidebarMenuButton
-              size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground rounded-lg"
-            >
-              <Avatar className="h-8 w-8 rounded-full">
-                <AvatarImage
-                  src={authUser?.avatar ?? ''}
-                  alt={authUser?.name}
-                />
-                {authUser && (
+    <>
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <SidebarMenuButton
+                size="lg"
+                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground rounded-lg"
+              >
+                <Avatar className="h-8 w-8 rounded-full">
+                  <AvatarImage
+                    src={authUser?.avatar ?? ''}
+                    alt={authUser?.name}
+                  />
+
                   <AvatarFallback className="rounded-full">
-                    {getNameInitials(authUser.name)}
+                    {authUser?.name ?? ''}
                   </AvatarFallback>
-                )}
-              </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{authUser?.name}</span>
-              </div>
-              <ChevronsUpDown className="ml-auto size-4" />
-            </SidebarMenuButton>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            className="w-[--radix-dropdown-menu-trigger-width] min-w-64 rounded-md"
-            side="left"
-            align="end"
-            sideOffset={4}
-          >
-            <div className="max-h-[calc(100vh-25px)] overflow-x-hidden site-scrollbar ">
-              <DropdownMenuLabel className="uppercase">
-                Signed in as
-              </DropdownMenuLabel>
-              <DropdownMenuItem className="p-0 font-normal">
-                <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm  flex-1">
-                  <Avatar className="h-9 w-9 rounded-full">
-                    <AvatarImage
-                      src={authUser?.avatar ?? ''}
-                      alt={authUser?.name}
-                    />
-                    {authUser && (
-                      <AvatarFallback className="rounded-full">
-                        {getNameInitials(authUser.name)}
-                      </AvatarFallback>
-                    )}
-                  </Avatar>
-                  <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold text-md">
-                      {authUser?.name}
-                    </span>
-                    <span className="truncate text-xs">{authUser?.email}</span>
-                  </div>
-                  <span className="mr-1">
-                    <Settings />
+                </Avatar>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-semibold">
+                    {authUser?.name}
                   </span>
                 </div>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuGroup>
+                <ChevronsUpDown className="ml-auto size-4" />
+              </SidebarMenuButton>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="md:min-w-80 rounded-md"
+              side={isMobile ? 'top' : 'left'}
+              align="end"
+              sideOffset={4}
+            >
+              <div>
                 <DropdownMenuLabel className="uppercase">
-                  Current Organization
+                  Signed in as
                 </DropdownMenuLabel>
-                <DropdownMenuItem>
-                  <Avatar className="h-7 w-7 rounded-lg">
-                    <AvatarImage src={''} alt={''} />
-                    {authUser && (
-                      <AvatarFallback className="rounded-lg">
-                        {getNameInitials('T2 Site')}
+                <DropdownMenuItem className="p-0 font-normal">
+                  <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm  flex-1">
+                    <Avatar className="h-9 w-9 rounded-full">
+                      <AvatarImage
+                        src={authUser?.avatar ?? ''}
+                        alt={authUser?.name}
+                      />
+                      <AvatarFallback className="rounded-full">
+                        {authUser?.name ?? ''}
                       </AvatarFallback>
-                    )}
-                  </Avatar>
-                  <span>T2 Site</span>
-                  <Badge variant="warning">OWNER</Badge>
-                  <span className="ml-auto mr-1">
+                    </Avatar>
+                    <div className="grid flex-1 text-left text-sm leading-tight">
+                      <span className="truncate font-semibold text-md">
+                        {authUser?.name}
+                      </span>
+                      <span className="truncate text-xs">
+                        {authUser?.email}
+                      </span>
+                    </div>
                     <Settings />
-                  </span>
+                  </div>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <CreditCard />
-                  Billing
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Plus />
-                  <span>Invite members</span>
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
-              <DropdownMenuSeparator />
+                <DropdownMenuSeparator />
+                {authOrganization?.currentOrganization && (
+                  <>
+                    <DropdownMenuGroup>
+                      <DropdownMenuLabel className="uppercase">
+                        Current Organization
+                      </DropdownMenuLabel>
+                      <DropdownMenuItem>
+                        <Avatar className="h-7 w-7 rounded-lg">
+                          <AvatarImage
+                            src={
+                              authOrganization?.currentOrganization?.logo ?? ''
+                            }
+                            alt={
+                              authOrganization?.currentOrganization?.name ?? ''
+                            }
+                          />
+                          <AvatarFallback className="rounded-lg">
+                            {authOrganization?.currentOrganization?.name ?? ''}
+                          </AvatarFallback>
+                        </Avatar>
+                        <span className="line-clamp-2">
+                          {authOrganization?.currentOrganization?.name}
+                        </span>
+                        <RoleBadge
+                          role={
+                            authOrganization?.currentOrganization?.role ??
+                            'none'
+                          }
+                        />
 
-              <DropdownMenuGroup>
-                <DropdownMenuLabel className="uppercase">
-                  Other Organizations
-                </DropdownMenuLabel>
-                <DropdownMenuItem>
-                  <Avatar className="h-7 w-7 rounded-lg">
-                    <AvatarImage src={''} alt={''} />
-                    {authUser && (
-                      <AvatarFallback className="rounded-lg">
-                        {getNameInitials('T2 Site')}
-                      </AvatarFallback>
-                    )}
-                  </Avatar>
-                  <span>T2 Site</span>
-                  <Badge variant="warning">OWNER</Badge>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Avatar className="h-7 w-7 rounded-lg">
-                    <AvatarImage src={''} alt={''} />
-                    {authUser && (
-                      <AvatarFallback className="rounded-lg">
-                        {getNameInitials('Uqidev')}
-                      </AvatarFallback>
-                    )}
-                  </Avatar>
-                  <span>UQI DEV</span>
-                  <Badge variant="secondary">MEMBER</Badge>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Avatar className="h-7 w-7 rounded-lg">
-                    <AvatarImage src={''} alt={''} />
-                    {authUser && (
-                      <AvatarFallback className="rounded-lg">
-                        {getNameInitials('OMS')}
-                      </AvatarFallback>
-                    )}
-                  </Avatar>
-                  <span>OMG</span>
-                  <Badge variant="success">ADMIN</Badge>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild >
-									<CreateOrganizationDialog />
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
-              </DropdownMenuItem>
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger className="font-semibold">
-                  {theme === 'light' && <SunIcon />}
-                  {theme === 'dark' && <MoonIcon />}
-                  {theme === 'system' && <Laptop2 />}
-                  <span className="ml-3">Color theme</span>
-                  <DropdownMenuShortcut className="font-sans capitalize tracking-tighter">
-                    {theme} mode
-                  </DropdownMenuShortcut>
-                </DropdownMenuSubTrigger>
-                <DropdownMenuSubContent>
-                  <DropdownMenuItem
-                    onSelect={() => {
-                      handleThemeSelect('light');
-                    }}
-                    className={cn({
-                      'bg-muted': theme === 'light',
-                    })}
-                  >
-                    <SunIcon /> Light
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onSelect={() => {
-                      handleThemeSelect('dark');
-                    }}
-                    className={cn({
-                      'bg-muted': theme === 'dark',
-                    })}
-                  >
-                    <MoonIcon /> Dark
-                  </DropdownMenuItem>
+                        <span className="ml-auto -mr-1">
+                          <Settings />
+                        </span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <CreditCard />
+                        Billing
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Plus />
+                        <span>Invite members</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                    <DropdownMenuSeparator />
+                  </>
+                )}
 
-                  <DropdownMenuItem
-                    onSelect={() => {
-                      handleThemeSelect('system');
-                    }}
-                    className={cn({
-                      'bg-muted': theme === 'system',
-                    })}
-                  >
-                    <Laptop2 /> System
+                <DropdownMenuGroup>
+                  <DropdownMenuLabel className="uppercase">
+                    Other Organizations
+                  </DropdownMenuLabel>
+                  <div className="max-h-[calc(100vh-55vh)] overflow-x-hidden site-scrollbar">
+                    {authOrganization?.organizations.map(
+                      (organization) =>
+                        organization.id !==
+                          authOrganization?.currentOrganization?.id && (
+                          <DropdownMenuItem
+                            onSelect={() => handleChangeOrganization(organization)}
+                            key={organization.id}
+                          >
+                            <Avatar className="h-7 w-7 rounded-lg">
+                              <AvatarImage
+                                src={organization.logo ?? ''}
+                                alt={organization.name ?? ''}
+                              />
+                              <AvatarFallback className="rounded-lg">
+                                {organization.name ?? ''}
+                              </AvatarFallback>
+                            </Avatar>
+                            <span>{organization.name}</span>
+                            <RoleBadge role={organization.role} />
+                          </DropdownMenuItem>
+                        )
+                    )}
+                  </div>
+
+                  <DropdownMenuItem asChild>
+                    <CreateOrganizationDialog />
                   </DropdownMenuItem>
-                </DropdownMenuSubContent>
-              </DropdownMenuSub>
-              <DropdownMenuItem>
-                <PartyPopper size={16} />
-                What's new
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Sparkles />
-                Feature preview
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                onSelect={() => {
-                  logout();
-                }}
-              >
-                <LogOut />
-                Log out
-              </DropdownMenuItem>
-            </div>
-          </DropdownMenuContent>
-        </DropdownMenu>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Bell />
+                  Notifications
+                </DropdownMenuItem>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger className="font-semibold">
+                    {theme === 'light' && <SunIcon />}
+                    {theme === 'dark' && <MoonIcon />}
+                    {theme === 'system' && <Laptop2 />}
+                    <span className="ml-3">Color theme</span>
+                    <DropdownMenuShortcut className="font-sans capitalize tracking-tighter">
+                      {theme} mode
+                    </DropdownMenuShortcut>
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem
+                      onSelect={() => {
+                        handleThemeSelect('light');
+                      }}
+                      className={cn({
+                        'bg-muted': theme === 'light',
+                      })}
+                    >
+                      <SunIcon /> Light
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onSelect={() => {
+                        handleThemeSelect('dark');
+                      }}
+                      className={cn({
+                        'bg-muted': theme === 'dark',
+                      })}
+                    >
+                      <MoonIcon /> Dark
+                    </DropdownMenuItem>
+
+                    <DropdownMenuItem
+                      onSelect={() => {
+                        handleThemeSelect('system');
+                      }}
+                      className={cn({
+                        'bg-muted': theme === 'system',
+                      })}
+                    >
+                      <Laptop2 /> System
+                    </DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
+                <DropdownMenuItem>
+                  <PartyPopper size={16} />
+                  What's new
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Sparkles />
+                  Feature preview
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onSelect={() => {
+                    logout();
+                  }}
+                >
+                  <LogOut />
+                  Log out
+                </DropdownMenuItem>
+              </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </SidebarMenuItem>
       </SidebarMenu>
-      
     </>
   );
 }

@@ -2,14 +2,27 @@ import { handleApi } from '@/lib/utils';
 import { create } from 'zustand';
 import { getSessionQuery, logoutMutation } from './authApi';
 
+export type TOrganization = {
+  role: 'admin' | 'member' | 'owner';
+  id: number;
+  name: string;
+  slug: string;
+  logo: string | null;
+};
+
 export type TAuthUser = {
   authType: string;
-  access_token: string;
   id: number;
   avatar: null | string;
   email: string;
+  currentOrganizationId: string | null;
   emailVerified: null | string;
   name: string;
+};
+
+export type TUserOrganization = {
+  organizations: TOrganization[];
+  currentOrganization: TOrganization | null;
 };
 
 export type TAuthState = {
@@ -24,12 +37,16 @@ export type TAuthState = {
   setAuth: (user: TAuthUser, access_token: string) => void;
   logout: () => Promise<void>;
   isLogingOut: boolean;
+  userOrganization: TUserOrganization | null;
+  setUserOrganization: (userOrganization: TUserOrganization) => void;
 };
 
 export const useAuthStore = create<TAuthState>((set, get) => ({
   user: null,
+  userOrganization: null,
   isLogingOut: false,
   accessToken: localStorage.getItem('t2_ac'),
+  setUserOrganization: (userOrganization: TUserOrganization) => set({ userOrganization: userOrganization }),
   setAuthUser: (user) => set({ user: user }),
   updateAuthUser: (user) =>
     set((state) => ({
@@ -53,8 +70,9 @@ export const useAuthStore = create<TAuthState>((set, get) => ({
           toast: true,
         }
       );
-      if (data?.email) {
-        set({ user: data as TAuthUser });
+      if (data?.user) {
+        set({ user: data.user as TAuthUser, accessToken: data.access_token, userOrganization: data.userOrganization as TUserOrganization });
+        
       } else {
         get().logout();
       }

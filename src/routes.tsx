@@ -10,7 +10,7 @@ import SignupPage from "@/pages/signup/SignupPage";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import VerifyLayout from "@/layouts/VerifyLayout";
-import OAuthCheck from "@/pages/OAuthCheck";
+import AuthCheckPoint from "@/pages/AuthCheckPoint";
 
 const routes = createBrowserRouter([
 	{
@@ -68,8 +68,8 @@ const routes = createBrowserRouter([
 				],
 			},
 			{
-				path: "/oauth",
-				element: <OAuthCheck />,
+				path: "/auth",
+				element: <AuthCheckPoint />,
 			},
 			{
 				path: "*",

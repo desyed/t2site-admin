@@ -24,13 +24,16 @@ export async function delay(duration: number) {
  * @param name - The full name to extract initials from.
  * @returns A string containing up to two initials, or an empty string if no valid initials are found.
  */
-export function getNameInitials(name: string): string {
-  return name
+export function getNameInitials(name: string, length: number = 1, uppercase: boolean = true): string {
+  const initials = name
     .split(' ')
     .map((part) => part.at(0))
     .filter(Boolean) // Remove any undefined values if only one name exists
-    .slice(0, 1) // Take only the first two initials
+    .slice(0, length) // Take only the first two initials
     .join('');
+
+  return uppercase ? initials.toUpperCase() : initials;
+  
 }
 
 export function getQuery(key: string) {

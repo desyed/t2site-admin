@@ -18,6 +18,7 @@ import { useApi } from "@/hooks/use-api";
 import { verifyEmailMutation } from "@/app/auth/authApi";
 import { toast } from "sonner";
 import { useAuthStore } from "@/app/auth/authStore";
+import { useNavigate } from "react-router-dom";
 
 const FormSchema = z.object({
 	code: z
@@ -29,7 +30,7 @@ const FormSchema = z.object({
 
 export default function VerifyEmailForm() {
 	const setAuth = useAuthStore((state) => state.setAuth);
-
+	const navigation = useNavigate();
 	const { executeMutation: verifyEmail, loading } = useApi<any>(
 		verifyEmailMutation,
 		{
@@ -48,9 +49,9 @@ export default function VerifyEmailForm() {
 		const { data, success } = await verifyEmail(values);
 
 		if (success) {
-			console.log(data.user)
 			if (data?.access_token && data.user.email && data.user.emailVerified) {
 				setAuth(data.user, data.access_token);
+				navigation('/auth?auth_login=success');
 				toast.success("Email Verified!", {
 					description: "Your email has been successfully verified. 🎉",
 					duration: 3000,

@@ -95,7 +95,7 @@ html.dark {
 	}
 }
 
-@layer utilities {
+@layer components {
 	.site-scrollbar {
 		@apply scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary/60;
 	}
