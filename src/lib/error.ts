@@ -16,3 +16,28 @@ export function displayFieldsError<T extends FieldValues>(
     }
   }
 }
+
+export function handleServerErrors<T extends FieldValues>(
+  form: UseFormReturn<T>,
+  serverErrors: { path: string[]; message: string }[]
+) {
+  if (serverErrors) {
+    const fieldErrors: Record<Path<T>, string> = {} as Record<Path<T>, string>;
+
+    for (const error of serverErrors) {
+      if (error.path && error.path.length > 0) {
+        const fieldName = error.path[0] as Path<T>;
+
+        if (!fieldErrors[fieldName]) {
+          fieldErrors[fieldName] = error.message;
+        }
+      }
+    }
+
+    for (const [key, message] of Object.entries(fieldErrors)) {
+      if (typeof message === "string") {
+        form.setError(key as Path<T>, { message });
+      }
+    }
+  }
+}

@@ -24,7 +24,11 @@ export async function delay(duration: number) {
  * @param name - The full name to extract initials from.
  * @returns A string containing up to two initials, or an empty string if no valid initials are found.
  */
-export function getNameInitials(name: string, length: number = 1, uppercase: boolean = true): string {
+export function getNameInitials(
+  name: string,
+  length: number = 1,
+  uppercase: boolean = true
+): string {
   const initials = name
     .split(' ')
     .map((part) => part.at(0))
@@ -33,7 +37,6 @@ export function getNameInitials(name: string, length: number = 1, uppercase: boo
     .join('');
 
   return uppercase ? initials.toUpperCase() : initials;
-  
 }
 
 export function getQuery(key: string) {
@@ -67,9 +70,12 @@ export function handleApiErrorException<TError = any>(
   let message = 'An unexpected error occurred. Please try again.';
   let errors: TError | null = null;
   let responseType = null;
+  let code = 'UNKNOWN';
 
   if (err instanceof AxiosError) {
     const status = err.response?.status;
+    code = err.response?.data?.code ?? err.code;
+
     if (err.code === 'ERR_NETWORK') {
       message = 'Please check your internet connection.';
       responseType = 'Connection Failed';
@@ -77,8 +83,15 @@ export function handleApiErrorException<TError = any>(
         toastMessage.warning(responseType, {
           description: message,
         });
+    } else if (status === 422) {
+      message = 'Request is unprocessable.';
+      responseType = 'Unprocessable Entity';
+      errors = err.response?.data?.error as TError;
+      toast &&
+        toastMessage.warning(responseType, {
+          description: message,
+        });
     } else if (status === 400) {
-      errors = err.response?.data?.errors as TError;
       responseType = 'Bad Request';
       message = err.response?.data?.message ?? 'Please check your input.';
       toast &&
@@ -137,7 +150,7 @@ export function handleApiErrorException<TError = any>(
     console.error('Unexpected error:', err);
   }
 
-  return { errors, responseType, message };
+  return { errors, responseType, message, code };
 }
 
 export async function handleApi<TResponse = any, TError = any>(

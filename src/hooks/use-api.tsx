@@ -10,7 +10,7 @@ type ApiMutationState<TResponse, TError> = {
 	errors: TError | null;
 };
 
-export function useApi<TResponse = unknown, TError = unknown>(
+export function useApi<TResponse = unknown, TError = any>(
 	apiHandler: (payload: object) => Promise<AxiosResponse<any, any>>,
 	config: {
 		toast?: boolean;

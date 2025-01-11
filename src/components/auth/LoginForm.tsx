@@ -16,14 +16,14 @@ import { InputIcon } from '@/components/ui/input-icon';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { InputPassword } from '../ui/input-password';
 import { toast } from 'sonner';
-import { displayFieldsError } from '@/lib/error';
 import { useAuthStore } from '@/app/auth/authStore';
 import { getSessionQuery, loginMutation } from '@/app/auth/authApi';
 import Alert from '@/components/Alert';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { handleApi, handleApiErrorException } from '@/lib/utils';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import { handleServerErrors } from "@/lib/error";
 
 const loginSchema = z.object({
   email: z
@@ -39,7 +39,7 @@ const loginSchema = z.object({
 
 export default function LoginForm() {
   const [invalidCred, setInvalidCred] = useState<string | null>(null);
-	const navigation = useNavigate();
+  const navigation = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const setAuth = useAuthStore((state) => state.setAuth);
@@ -55,14 +55,13 @@ export default function LoginForm() {
 
   async function onSubmit(values: z.infer<typeof loginSchema>) {
     setLoading(true);
-    setInvalidCred(null);
 
     toast.promise(loginMutation(values), {
       loading: 'Logging in...',
       success: async (result) => {
         if (result.data?.access_token && result.data.user.email) {
           if (!result.data.user.emailVerified) {
-						setAuth(result.data.user, result.data.access_token);
+            setAuth(result.data.user, result.data.access_token);
             toast.warning('Email Not Verified!', {
               description:
                 'You have successfully logged in, but your email is not verified. Please verify your email to enjoy full features.',
@@ -70,10 +69,10 @@ export default function LoginForm() {
           } else {
             const { data } = await handleApi(getSessionQuery);
             if (data?.email) {
-							setAuth(result.data, result.data.access_token)
+              setAuth(result.data, result.data.access_token);
             } else {
-							navigation('/auth?auth_login=success');
-						}
+              navigation('/auth?auth_login=success');
+            }
           }
           form.reset();
         }
@@ -85,12 +84,17 @@ export default function LoginForm() {
       position: 'top-center',
       duration: 1000,
       error: (error) => {
-        const { errors } = handleApiErrorException(error);
-        if (errors && errors?.invalidCred) {
-          setInvalidCred(errors?.invalidCred);
+        const { errors, code } = handleApiErrorException(error);
+        console.log(errors);
+        if (code === 'invalid-credentials') {
+          setInvalidCred('Oops! The email or password you entered doesn\'t match our records. Please double-check and try again. 🔑');
+        } else {
+          setInvalidCred(null);
         }
-        if (errors && !errors?.invalidCred) {
-          displayFieldsError(form, errors);
+
+        if(errors){
+          handleServerErrors(form, errors)
+          console.log(JSON.stringify(errors, null, 2));
         }
         return 'Failed to login';
       },

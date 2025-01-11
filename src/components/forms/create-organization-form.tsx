@@ -16,7 +16,7 @@ import * as z from 'zod';
 import { createOrganizationMutation } from '@/app/organization/organizationApi';
 import { useApi } from '@/hooks/use-api';
 import { useAuthStore } from '@/app/auth/authStore';
-import { displayFieldsError } from '@/lib/error';
+import { handleServerErrors } from '@/lib/error';
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
@@ -50,7 +50,7 @@ export function CreateOrganizationForm({ onClose }: { onClose: () => void }) {
     try {
       const result = await executeMutation(values);
       if (result.errors) {
-        return displayFieldsError(form, result.errors);
+        return handleServerErrors(form, result.errors);
       }
       if (result.data?.access_token && result.data?.organizationId) {
         setAccessToken(result.data.access_token);
