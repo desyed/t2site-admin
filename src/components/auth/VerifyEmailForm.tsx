@@ -19,6 +19,7 @@ import { verifyEmailMutation } from "@/app/auth/authApi";
 import { toast } from "sonner";
 import { useAuthStore } from "@/app/auth/authStore";
 import { useNavigate } from "react-router-dom";
+import { handleServerErrors } from "@/lib/error";
 
 const FormSchema = z.object({
 	code: z
@@ -46,7 +47,11 @@ export default function VerifyEmailForm() {
 	});
 
 	async function onSubmit(values: z.infer<typeof FormSchema>) {
-		const { data, success } = await verifyEmail(values);
+		const { data, success, errors } = await verifyEmail(values);
+
+		if(errors) {
+			return handleServerErrors(form, errors);
+		}
 
 		if (success) {
 			if (data?.access_token && data.user.email && data.user.emailVerified) {

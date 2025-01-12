@@ -8,6 +8,7 @@ type ApiMutationState<TResponse, TError> = {
 	success: boolean;
 	message: string | null;
 	errors: TError | null;
+	code: string | null;
 };
 
 export function useApi<TResponse = unknown, TError = any>(
@@ -22,6 +23,7 @@ export function useApi<TResponse = unknown, TError = any>(
 		success: false,
 		message: null,
 		errors: null,
+		code: null,
 	});
 
 	const executeMutation = async (payload: object = {}) => {
@@ -32,7 +34,7 @@ export function useApi<TResponse = unknown, TError = any>(
 			errors: null,
 		}));
 
-		const { success, data, message, errors } = await handleApi<
+		const { success, data, message, errors, code } = await handleApi<
 			TResponse,
 			TError
 		>(
@@ -47,9 +49,10 @@ export function useApi<TResponse = unknown, TError = any>(
 			success,
 			message: message,
 			errors: errors,
+			code: code,
 		});
 
-		return { success, data, message, errors };
+		return { success, data, message, errors, code };
 	};
 
 	return { ...state, executeMutation };

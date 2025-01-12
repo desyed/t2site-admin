@@ -17,7 +17,7 @@ import {
 import { InputIcon } from "@/components/ui/input-icon";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { useApi } from "@/hooks/use-api";
-import { displayFieldsError } from "@/lib/error";
+import {  handleServerErrors } from "@/lib/error";
 import { isValidPassword } from "@/lib/utils";
 import { toast } from "sonner";
 import { InputPassword } from "../ui/input-password";
@@ -78,8 +78,10 @@ export default function SingupForm() {
 
 	async function onSubmit(values: z.infer<typeof SignupSchema>) {
 		const result = await executeMutation(values);
+
+		console.log(result.message)
 		if (result.errors) {
-			return displayFieldsError(form, result.errors);
+			return handleServerErrors(form, result.errors);
 		}
 		if (result.success) {
 			toast.success("Congratulations! 🎉", {

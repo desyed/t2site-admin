@@ -85,7 +85,6 @@ export default function LoginForm() {
       duration: 1000,
       error: (error) => {
         const { errors, code } = handleApiErrorException(error);
-        console.log(errors);
         if (code === 'invalid-credentials') {
           setInvalidCred('Oops! The email or password you entered doesn\'t match our records. Please double-check and try again. 🔑');
         } else {

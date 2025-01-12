@@ -165,6 +165,7 @@ export async function handleApi<TResponse = any, TError = any>(
   message: string;
   errors: TError | null;
   responseType: string | null;
+  code: string | null;
 }> {
   const { toast } = config;
   try {
@@ -175,12 +176,13 @@ export async function handleApi<TResponse = any, TError = any>(
       message: result.data?.message ?? null,
       errors: null,
       responseType: 'OK',
+      code: null,
     };
   } catch (err) {
-    const { errors, message, responseType } = handleApiErrorException(
+    const { errors, message, responseType, code} = handleApiErrorException(
       err,
       toast
     );
-    return { success: false, message, errors, data: null, responseType };
+    return { success: false, message, errors, data: null, responseType, code };
   }
 }

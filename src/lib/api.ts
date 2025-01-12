@@ -3,8 +3,7 @@ import axios from 'axios';
 import { toast } from 'sonner';
 
 const axiosAuthApiInstance = axios.create({
-  baseURL: `${import.meta.env.VITE_BACKEND_URL}/api`,
-  withCredentials: true,
+  baseURL: `/server/api`,
 });
 
 axiosAuthApiInstance.interceptors.request.use(

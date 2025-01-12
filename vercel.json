@@ -1,9 +1,14 @@
 {
+	"trailingSlash": true,
 	"rewrites": [
 		{
 			"source": "/(.*)",
 			"destination": "/"
-		}
+		},
+		{
+      "source": "/server/:match*",
+      "destination": "https://uqify.com/:match*"
+    }
 	],
 	"headers": [
 		{
