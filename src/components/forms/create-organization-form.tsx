@@ -18,7 +18,7 @@ import { useApi } from '@/hooks/use-api';
 import { useAuthStore } from '@/app/auth/authStore';
 import { handleServerErrors } from '@/lib/error';
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from  "react-router";
 
 export const createOrganizationSchema = z.object({
   name: z.string().min(2, 'Organization name must be at least 2 characters'),
@@ -59,7 +59,7 @@ export function CreateOrganizationForm({ onClose }: { onClose: () => void }) {
           position: "top-center",
           duration: 3000,
         });
-        navigate('/auth?auth_login=success&ocr=true')
+        navigate('/auth?ocr=true');
         onClose();
       }else {
         toast.error("Failed to create organization!", {

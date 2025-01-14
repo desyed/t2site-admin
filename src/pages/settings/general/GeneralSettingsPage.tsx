@@ -3,12 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { delay } from "@/lib/utils";
 import { Upload } from "lucide-react";
 import { DeleteProjectAlert } from "./_components/delete-project-alert";
 
 export async function loader() {
-	await delay(500);
 	return {
 		title: "General Settings",
 	};

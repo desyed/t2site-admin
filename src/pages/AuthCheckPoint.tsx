@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { authStore } from "@/app/auth/authStore";
 import { getQuery } from "@/lib/utils";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import Brand from "@/components/Brand";
 import { ModeToggle } from "@/components/mode-toggle";
 
@@ -14,14 +14,19 @@ export default function AuthCheckPoint() {
       const auth_login = getQuery("auth_login");
       if (auth_login === "success") {
         const from = getQuery("rp") ?? "/";
-        await authStore.fetchSession();
-        navigate(from);
+        await authStore.fetchSession(true);
+        navigate(from, {replace: true});
+      }
+      if (getQuery("ocr") === "true") {
+        const from = getQuery("rp") ?? "/";
+        await authStore.fetchSession(true);
+        navigate(from, {replace: true});
       }
     }
     initSession();
   }, []);
 
-  return !getQuery("ocr") ? (
+  return !getQuery("ocr")  ? (
     <div className="relative flex min-h-screen flex-col">
     <div className="flex h-[90px] items-center justify-between px-6 sm:px-10">
       <div>

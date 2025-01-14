@@ -3,8 +3,8 @@ import { ModeToggle } from "@/components/mode-toggle";
 import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { AlertCircle, RefreshCw } from "lucide-react";
-import { useRouteError } from "react-router-dom";
-import { isRouteErrorResponse } from "react-router-dom";
+import { useRouteError } from  "react-router";
+import { isRouteErrorResponse } from  "react-router";
 
 export default function ErrorBoundary() {
 	const error = useRouteError();

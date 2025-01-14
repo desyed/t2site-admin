@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { useLocation } from "react-router-dom";
+import { useLocation } from  "react-router";
 
 export default function DashBoardHeader() {
 	const location = useLocation();

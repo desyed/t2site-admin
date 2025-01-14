@@ -1,30 +1,22 @@
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { useAuth } from '@/contexts/AuthProvider';
 import DashBoardContent from '@/layouts/dashboard/DashBoardContent';
 import DashBoardSidebar from '@/layouts/dashboard/DashBoardSidebard';
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router';
+import { useAuth } from "@/contexts/AuthProvider";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 export default function PrivateLayout() {
-  const { isAuthenticated, isLogingOut, isEmailVerified } = useAuth();
-  const location = useLocation();
 
-  if (!isAuthenticated) {
-    return (
-      <Navigate
-        state={{ from: isLogingOut ? '/' : location.pathname }}
-        to={'/login'}
-      />
-    );
-  }
+	const {isAuthenticated} = useAuth();
+	const navigate = useNavigate();
 
-  if (!isEmailVerified && isAuthenticated) {
-    return (
-      <Navigate
-        state={{ from: isLogingOut ? '/' : location.pathname }}
-        to={'/verify'}
-      />
-    );
-  }
+  useEffect(()=>{
+		if(!isAuthenticated){
+			navigate('/login')
+		}
+	},[isAuthenticated]);
+
 
   return (
     <SidebarProvider>

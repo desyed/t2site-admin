@@ -17,13 +17,13 @@ import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { InputPassword } from '../ui/input-password';
 import { toast } from 'sonner';
 import { useAuthStore } from '@/app/auth/authStore';
-import { getSessionQuery, loginMutation } from '@/app/auth/authApi';
+import { loginMutation } from '@/app/auth/authApi';
 import Alert from '@/components/Alert';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { handleApi, handleApiErrorException } from '@/lib/utils';
-import { useNavigate } from 'react-router-dom';
-import { handleServerErrors } from "@/lib/error";
+import { handleApiErrorException } from '@/lib/utils';
+import { useNavigate } from 'react-router';
+import { handleServerErrors } from '@/lib/error';
 
 const loginSchema = z.object({
   email: z
@@ -39,7 +39,7 @@ const loginSchema = z.object({
 
 export default function LoginForm() {
   const [invalidCred, setInvalidCred] = useState<string | null>(null);
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const setAuth = useAuthStore((state) => state.setAuth);
@@ -67,12 +67,7 @@ export default function LoginForm() {
                 'You have successfully logged in, but your email is not verified. Please verify your email to enjoy full features.',
             });
           } else {
-            const { data } = await handleApi(getSessionQuery);
-            if (data?.email) {
-              setAuth(result.data, result.data.access_token);
-            } else {
-              navigation('/auth?auth_login=success');
-            }
+            navigate('/auth?auth_login=success', {replace: true});
           }
           form.reset();
         }
@@ -86,13 +81,15 @@ export default function LoginForm() {
       error: (error) => {
         const { errors, code } = handleApiErrorException(error);
         if (code === 'invalid-credentials') {
-          setInvalidCred('Oops! The email or password you entered doesn\'t match our records. Please double-check and try again. 🔑');
+          setInvalidCred(
+            "Oops! The email or password you entered doesn't match our records. Please double-check and try again. 🔑"
+          );
         } else {
           setInvalidCred(null);
         }
 
-        if(errors){
-          handleServerErrors(form, errors)
+        if (errors) {
+          handleServerErrors(form, errors);
           console.log(JSON.stringify(errors, null, 2));
         }
         return 'Failed to login';

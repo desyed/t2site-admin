@@ -1,9 +1,7 @@
-import { delay } from "@/lib/utils";
 import { InviteLink } from "./_components/invite-link";
 import { ManageMembers } from "./_components/manage-members";
 
 export async function loader() {
-	await delay(1000);
 	return {
 		title: "Team Settings",
 	};

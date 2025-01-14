@@ -1,27 +1,10 @@
 import Brand from "@/components/Brand";
 import { ModeToggle } from "@/components/mode-toggle";
-import { useAuth } from "@/contexts/AuthProvider";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Outlet } from  "react-router";
 
 export default function AuthLayout() {
-	const { isAuthenticated, isEmailVerified } = useAuth();
-	const location = useLocation();
 
-	const from = location.state?.from?.pathname || "/";
-
-	if (isAuthenticated && isEmailVerified) {
-		return <Navigate to={from} replace />;
-	}
-
-	if (isAuthenticated && !isEmailVerified) {
-		return (
-			<Navigate
-				state={{ from }}
-				to={"/verify"}
-			/>
-		);
-	}
-
+	
 	return (
 		<div className="relative flex min-h-screen flex-col">
 			<div className="flex h-[90px] items-center justify-between px-6 sm:px-10 absolute right-0">

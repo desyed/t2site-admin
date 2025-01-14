@@ -41,7 +41,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useApi } from '@/hooks/use-api';
 import { changeCurrentOrganizationMutation } from '@/app/organization/organizationApi';
 import { toast } from 'sonner';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from  "react-router";
 
 export function NavUser() {
   const authUser = useAuthStore((state) => state.user);
@@ -69,7 +69,7 @@ export function NavUser() {
       success: (result) => {
         if(result.data?.access_token) {
           setAccessToken(result.data.access_token);
-          navigate('/auth?auth_login=success&ocr=true');
+          navigate('/auth?ocr=true');
           return `Now organization switched to ${organization.name}`;
         }else {
           return `Failed to change organization!`;

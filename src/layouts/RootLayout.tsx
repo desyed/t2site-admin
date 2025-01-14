@@ -1,5 +1,5 @@
 import RevalidateLoader from "@/components/RevalidateLoader";
-import { Outlet, useNavigation } from "react-router-dom";
+import { Outlet, useNavigation } from "react-router";
 import TopBarProgress from "react-topbar-progress-indicator";
 
 TopBarProgress.config({

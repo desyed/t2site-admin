@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from  "react-router";
 
 // Function to trigger the revalidation event from anywhere in the app
 export const triggerRevalidate = () => {

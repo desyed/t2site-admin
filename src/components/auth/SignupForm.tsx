@@ -22,6 +22,7 @@ import { isValidPassword } from "@/lib/utils";
 import { toast } from "sonner";
 import { InputPassword } from "../ui/input-password";
 import { TAuthUser, useAuthStore } from "@/app/auth/authStore";
+import { useNavigate } from "react-router";
 
 const SignupSchema = z.object({
 	name: z
@@ -75,11 +76,11 @@ export default function SingupForm() {
 		},
 		shouldFocusError: true,
 	});
+	const navigate = useNavigate();
 
 	async function onSubmit(values: z.infer<typeof SignupSchema>) {
 		const result = await executeMutation(values);
 
-		console.log(result.message)
 		if (result.errors) {
 			return handleServerErrors(form, result.errors);
 		}
@@ -96,6 +97,7 @@ export default function SingupForm() {
 			if (result.data?.access_token && result.data.user.email) {
 				setAuth(result.data.user, result.data.access_token);
 			}
+			navigate('/verify', {replace: true});
 			form.reset();
 		}
 	}

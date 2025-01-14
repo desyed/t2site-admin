@@ -1,6 +1,6 @@
 import OAuthButton from "@/components/auth/OAuthButton";
 import SingupForm from "@/components/auth/SignupForm";
-import { Link } from "react-router-dom";
+import { Link } from  "react-router";
 
 export default function SignupPage() {
 	return (

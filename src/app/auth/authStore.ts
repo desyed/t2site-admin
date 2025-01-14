@@ -30,11 +30,12 @@ export type TAuthState = {
   updateAuthUser: (user: Partial<TAuthUser>) => void;
   setAuthUser: (user: TAuthUser) => void;
   resetAuth: () => void;
-  fetchSession: () => Promise<void>;
+  fetchSession: (refetch?: boolean) => Promise<void>;
   accessToken: string | null;
   setAccessToken: (token: string) => void;
   getAccessToken: () => string | null;
   setAuth: (user: TAuthUser, access_token: string) => void;
+  getAuthUser: () => TAuthUser | null;
   logout: () => Promise<void>;
   isLogingOut: boolean;
   userOrganization: TUserOrganization | null;
@@ -48,6 +49,7 @@ export const useAuthStore = create<TAuthState>((set, get) => ({
   accessToken: localStorage.getItem('t2_ac'),
   setUserOrganization: (userOrganization: TUserOrganization) => set({ userOrganization: userOrganization }),
   setAuthUser: (user) => set({ user: user }),
+  getAuthUser: () => get().user,
   updateAuthUser: (user) =>
     set((state) => ({
       user: state.user
@@ -61,22 +63,24 @@ export const useAuthStore = create<TAuthState>((set, get) => ({
     });
     localStorage.removeItem('t2_ac');
   },
-  fetchSession: async () => {
-    try {
-      const { data } = await handleApi(
-        getSessionQuery,
-        {},
-        {
-          toast: true,
+  fetchSession: async (refetch = false) => {
+    if(!get().user || refetch){
+      try {
+        const { data } = await handleApi(
+          getSessionQuery,
+          {},
+          {
+            toast: true,
+          }
+        );
+        if (data?.user) {
+          set({ user: data.user as TAuthUser, accessToken: data.access_token, userOrganization: data.userOrganization as TUserOrganization });
+          
+        } else {
+          get().logout();
         }
-      );
-      if (data?.user) {
-        set({ user: data.user as TAuthUser, accessToken: data.access_token, userOrganization: data.userOrganization as TUserOrganization });
-        
-      } else {
-        get().logout();
-      }
-    } catch (err) {}
+      } catch (err) {}
+    }
   },
   setAccessToken: (token: string) => {
     set({

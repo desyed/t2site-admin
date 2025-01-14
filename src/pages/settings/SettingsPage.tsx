@@ -1,8 +1,6 @@
-import { delay } from "@/lib/utils";
-import { redirect } from "react-router-dom";
+import { redirect } from  "react-router";
 
 export async function loader() {
-	await delay(500);
 	return redirect("/settings/general");
 }
 

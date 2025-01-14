@@ -2,7 +2,7 @@ import LoginForm from "@/components/auth/LoginForm";
 import OAuthButton from "@/components/auth/OAuthButton";
 import { getQuery, removeQueryFromUrl } from "@/lib/utils";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link } from  "react-router";
 import { toast } from "sonner";
 
 export default function LoginPage() {

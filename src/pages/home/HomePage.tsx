@@ -1,9 +1,7 @@
 import { getProfileQuery, getSessionQuery } from "@/app/auth/authApi";
 import { Button } from "@/components/ui/button";
-import { delay } from "@/lib/utils";
 
 export async function loader() {
-	await delay(1000);
 	return {
 		title: "Dashboard",
 	};

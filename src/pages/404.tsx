@@ -3,7 +3,7 @@ import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@iconify/react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from  "react-router";
 
 export default function NotFound() {
 	const navigate = useNavigate();

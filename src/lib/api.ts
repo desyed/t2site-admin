@@ -29,7 +29,6 @@ axiosAuthApiInstance.interceptors.response.use(
         return Promise.reject(error);
       }
       originalRequest._retry = true;
-
       try {
         const refreshResponse = await axiosAuthApiInstance.get('/auth/refresh');
         if (refreshResponse.status === 200) {
