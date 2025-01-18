@@ -1,12 +1,7 @@
 'use client';
 
 import {
-  AudioWaveform,
-  Command,
-  GalleryVerticalEnd,
   Home,
-  LifeBuoy,
-  Send,
   Settings,
   Tickets,
 } from 'lucide-react';
