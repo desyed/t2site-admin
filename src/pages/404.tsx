@@ -22,9 +22,9 @@ export default function NotFound() {
 				<p className="text-center text-lg text-muted-foreground">
 					Sorry, the page you are looking for does not exist.
 				</p>
-				<Button onClick={() => navigate(-1)} className="text-md" size="default">
+				<Button onClick={() => navigate('/')} className="text-md" size="default">
 					<Icon icon="line-md:arrow-left" className="w-8 h-8" />
-					Go Back
+					Go to home
 				</Button>
 			</div>
 		</div>

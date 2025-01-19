@@ -7,14 +7,15 @@ import NotFound from '@/pages/404';
 import LoginPage from '@/pages/login/LoginPage';
 import SignupPage from '@/pages/signup/SignupPage';
 
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter, Navigate } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
 import VerifyLayout from '@/layouts/VerifyLayout';
 import AuthCheckPoint from '@/pages/AuthCheckPoint';
-import { verifyMiddlewareLoader } from "./middlewares/verifyMiddlewareLoader";
-import { privateMiddlewareLoader } from "./middlewares/privateMiddlewareLoader";
-import { authMiddlewareLoader } from "./middlewares/authMiddlewareLoader";
-
+import { verifyMiddlewareLoader } from './middlewares/verifyMiddlewareLoader';
+import { privateMiddlewareLoader } from './middlewares/privateMiddlewareLoader';
+import { authMiddlewareLoader } from './middlewares/authMiddlewareLoader';
+import NavSettings from "./pages/settings/_components/nav-settings";
+import NotFoundPrivate from "./pages/404-private";
 
 const routes = createBrowserRouter([
   {
@@ -37,15 +38,36 @@ const routes = createBrowserRouter([
           },
           {
             path: '/settings',
-            lazy: () => import('@/pages/settings/SettingsPage'),
+            element: <NavSettings />,
+            children: [
+              {
+                index: true,
+                element: <Navigate to="/settings/project" />,
+              },
+              {
+                path: '/settings/project',
+                children: [
+                  {
+                    index: true,
+                    lazy: () =>
+                      import('@/pages/settings/project/ProjectSettingsPage'),
+                  },
+                ],
+              },
+              {
+                path: '/settings/organization',
+                children: [
+                  {
+                    index: true,
+                    lazy: ()=> import('@/pages/settings/organizaton/general/OrgGeneralSettingsPage'),
+                  },
+                ],  
+              },
+            ],
           },
           {
-            path: '/settings/general',
-            lazy: () => import('@/pages/settings/general/GeneralSettingsPage'),
-          },
-          {
-            path: '/settings/team',
-            lazy: () => import('@/pages/settings/team/TeamSettingsPage'),
+            path: '*',
+            element: <NotFoundPrivate />,
           },
         ],
       },

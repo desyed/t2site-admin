@@ -41,7 +41,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useApi } from '@/hooks/use-api';
 import { changeCurrentOrganizationMutation } from '@/app/organization/organizationApi';
 import { toast } from 'sonner';
-import { useNavigate } from  "react-router";
+import { useNavigate } from 'react-router';
 
 export function NavUser() {
   const authUser = useAuthStore((state) => state.user);
@@ -55,7 +55,7 @@ export function NavUser() {
   };
 
   const navigate = useNavigate();
-  
+
   const { logout } = useAuth();
 
   const { executeMutation } = useApi<{
@@ -67,19 +67,18 @@ export function NavUser() {
     toast.promise(executeMutation({ organizationId: organization.id }), {
       loading: 'Changing organization...',
       success: (result) => {
-        if(result.data?.access_token) {
+        if (result.data?.access_token) {
           setAccessToken(result.data.access_token);
           navigate('/auth?ocr=true');
           return `Now organization switched to ${organization.name}`;
-        }else {
+        } else {
           return `Failed to change organization!`;
         }
       },
       error: 'Failed to change organization!',
-      position: "top-center",
+      position: 'top-center',
       duration: 1000,
     });
-
   };
 
   return (
@@ -139,7 +138,9 @@ export function NavUser() {
                         {authUser?.email}
                       </span>
                     </div>
-                    <Settings />
+                    <DropdownMenuShortcut>
+                      <Settings />
+                    </DropdownMenuShortcut>
                   </div>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
@@ -149,7 +150,9 @@ export function NavUser() {
                       <DropdownMenuLabel className="uppercase">
                         Current Organization
                       </DropdownMenuLabel>
-                      <DropdownMenuItem>
+                      <DropdownMenuItem
+                        onSelect={() => navigate('/settings/organization')}
+                      >
                         <Avatar className="h-7 w-7 rounded-lg">
                           <AvatarImage
                             src={
@@ -172,10 +175,9 @@ export function NavUser() {
                             'none'
                           }
                         />
-
-                        <span className="ml-auto -mr-1">
+                        <DropdownMenuShortcut>
                           <Settings />
-                        </span>
+                        </DropdownMenuShortcut>
                       </DropdownMenuItem>
                       <DropdownMenuItem>
                         <CreditCard />
@@ -200,7 +202,9 @@ export function NavUser() {
                         organization.id !==
                           authOrganization?.currentOrganization?.id && (
                           <DropdownMenuItem
-                            onSelect={() => handleChangeOrganization(organization)}
+                            onSelect={() =>
+                              handleChangeOrganization(organization)
+                            }
                             key={organization.id}
                           >
                             <Avatar className="h-7 w-7 rounded-lg">

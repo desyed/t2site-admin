@@ -1,5 +1,5 @@
 import { Slot } from "@radix-ui/react-slot";
-import { ChevronRight, MoreHorizontal } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
@@ -83,7 +83,7 @@ const BreadcrumbSeparator = ({
 		className={cn("[&>svg]:h-3.5 [&>svg]:w-3.5", className)}
 		{...props}
 	>
-		{children ?? <ChevronRight />}
+		{children ?? '/'}
 	</li>
 );
 BreadcrumbSeparator.displayName = "BreadcrumbSeparator";

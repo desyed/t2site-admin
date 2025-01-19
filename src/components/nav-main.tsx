@@ -24,7 +24,8 @@ import {
 
 } from '@/components/ui/sidebar';
 
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
+import { cn, isActivePath } from "@/lib/utils";
 
 export function NavMain({
   items,
@@ -40,6 +41,7 @@ export function NavMain({
     }[];
   }[];
 }) {
+  const { pathname } = useLocation();
   return (
     <SidebarGroup>
       <SidebarMenu>
@@ -52,7 +54,9 @@ export function NavMain({
           >
             <SidebarMenuItem>
               <CollapsibleTrigger asChild>
-                <SidebarMenuButton asChild tooltip={item.title}>
+                <SidebarMenuButton className={cn({
+                  'bg-accent': isActivePath(pathname, item.url),
+                })} asChild tooltip={item.title}>
                   {!item.items?.length ? (
                     <Link to={item.url}>
                       {item.icon && <item.icon />}
@@ -72,7 +76,9 @@ export function NavMain({
                   <SidebarMenuSub>
                     {item.items?.map((subItem) => (
                       <SidebarMenuSubItem key={subItem.title}>
-                        <SidebarMenuSubButton asChild>
+                        <SidebarMenuSubButton className={cn({
+                          'bg-accent': isActivePath(pathname, subItem.url),
+                        })} asChild>
                           <Link to={subItem.url}>
                             <span>{subItem.title}</span>
                           </Link>
