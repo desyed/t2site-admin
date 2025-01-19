@@ -761,7 +761,7 @@ const SidebarLogo = React.forwardRef<
 		>
 			<img
 				src={logo.dark.url}
-				className={cn("hidden h-[35px] w-[100px]", {
+				className={cn("hidden h-[25px] w-[75px]", {
 					"!block": theme.colorMode.isDark && (open || isMobile),
 				})}
 				alt="t2site-logo"
@@ -770,7 +770,7 @@ const SidebarLogo = React.forwardRef<
 			
 			<img
 				src={logo.dark.mobileUrl}
-				className={cn("hidden h-[35px] w-[28px]", {
+				className={cn("hidden h-[25px] w-[25px]", {
 					"!block": theme.colorMode.isDark && !open && !isMobile,
 				})}
 				alt="t2site-logo"
@@ -778,7 +778,7 @@ const SidebarLogo = React.forwardRef<
 			/>
 			<img
 				src={logo.light.url}
-				className={cn("hidden h-[30px] w-[100px]", {
+				className={cn("hidden h-[25px] w-[90px]", {
 					"!block": theme.colorMode.isLight && (open || isMobile) ,
 				})}
 				alt="t2site-logo"
@@ -786,7 +786,7 @@ const SidebarLogo = React.forwardRef<
 			/>
 			<img
 				src={logo.light.mobileUrl}
-				className={cn("hidden h-[35px] w-[28px]", {
+				className={cn("hidden h-[25px] w-[25px]", {
 					"!block": theme.colorMode.isLight && !open && !isMobile,
 				})}
 				alt="t2site-logo"

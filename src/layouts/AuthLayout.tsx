@@ -13,7 +13,7 @@ export default function AuthLayout() {
 					<ModeToggle />
 				</div>
 			</div>
-			<div className="flex flex-1 justify-center gap-8 sm:items-center sm:p-8 flex-col mt-16">
+			<div className="flex flex-1 justify-center gap-6 sm:items-center sm:p-8 flex-col mt-16">
 				<a href="https://t2site.vercel.app" className="flex justify-center">
 					<Brand />
 				</a>
