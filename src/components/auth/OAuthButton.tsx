@@ -33,7 +33,11 @@ export default function OAuthButton(props: OAuthButtonProps) {
 
   return (
     <form
-      action={`/server/auth/${type}`}
+      action={`${
+        import.meta.env.PROD
+          ? import.meta.env.VITE_BACKEND_URL
+          : ''
+      }/server/auth/${type}`}
       method="post"
     >
       <input type="hidden" name="redirect_url" value={redirect_url} />
