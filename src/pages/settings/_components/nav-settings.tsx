@@ -102,7 +102,7 @@ export default function NavSettings() {
   }, [pathname]);
 
   return (
-    <div className="flex mx-4 sm:gap-5 lg:gap-10 items-start mt-5 md:flex-row flex-col">
+    <div className="flex lg:mx-6 sm:mx-4 sm:gap-5 lg:gap-10 items-start lg:mt-8 sm:mt-5 md:flex-row flex-col">
       <div className="md:sticky top-16 md:min-w-[12.4rem] max-md:w-full max-md:mb-6 max-md:pb-2 max-md:border-b bg-background">
         <Collapsible open={open} onOpenChange={setOpen}>
           <div className="max-md:block hidden ">
@@ -190,7 +190,7 @@ export default function NavSettings() {
         </Collapsible>
       </div>
 
-      <div className="flex-1 pt-5">
+      <div className="flex-1">
         <Outlet />
       </div>
     </div>

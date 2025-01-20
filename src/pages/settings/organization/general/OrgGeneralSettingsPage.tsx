@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -47,14 +46,12 @@ export function Component() {
 
   return (
     <div className="max-w-2xl">
-      <div className="space-y-6">
-        <Card >
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <CardTitle>Display Name</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
+      <div className="space-y-10">
+        <div className="border-none p-0 space-y-4">
+          <div className="flex items-center gap-2">
+            <h2 className="text-xl font-semibold">Display Name</h2>
+          </div>
+          <div className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="orgName">Organization name</Label>
               <Input
@@ -67,16 +64,14 @@ export function Component() {
             <Button onClick={handleRenameOrganization} variant="default">
               Rename organization
             </Button>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
-        <Card >
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <CardTitle>Logo</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
+        <div className="space-y-4">
+          <div className="flex items-center gap-2">
+            <h2 className="text-xl font-semibold">Logo</h2>
+          </div>
+          <div className="space-y-6">
             <div className="flex items-center gap-4">
               <Avatar className="h-16 w-16">
                 {logo && (
@@ -101,7 +96,7 @@ export function Component() {
                   className="hidden"
                 />
                 <div className="flex items-center gap-2">
-                    <UploadIcon className="h-7 w-7 text-muted-foreground" />
+                  <UploadIcon className="h-7 w-7 text-muted-foreground" />
                   <div>
                     <p>Click or drag and drop to upload logo image</p>
                     <p className="text-sm text-muted-foreground">
@@ -114,8 +109,8 @@ export function Component() {
             <Button onClick={handleSaveLogo} variant="default">
               Save logo
             </Button>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </div>
   );

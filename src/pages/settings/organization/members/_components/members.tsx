@@ -27,13 +27,13 @@ import {
 
 export default function Members() {
   return (
-    <div className="space-y-10 mb-10">
+    <div className="space-y-10 ">
       <section>
         <div className="flex items-center gap-5 flex-wrap justify-between mb-6">
           <h2 className="text-xl font-semibold flex items-center gap-2">
             Pending invites
           </h2>
-          <Button variant="secondary" size="sm" className="mt-4">
+          <Button variant="secondary" size="sm" >
           <PlusIcon className="mr-1 w-4 h-4" />
           Invite team member
         </Button>
@@ -70,7 +70,7 @@ export default function Members() {
           </h2>
         </div>
 
-        <div className="mb-4">
+        <div className="mb-2">
           <Input placeholder="Search for members" className="max-w-sm" />
         </div>
 
