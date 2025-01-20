@@ -289,6 +289,7 @@ export function NavUser() {
                   onSelect={() => {
                     logout();
                   }}
+                  className="w-full justify-start text-sm h-8 hover:bg-destructive/20 hover:text-destructive text-destructive/80 focus:text-destructive/80 focus:bg-destructive/20"
                 >
                   <LogOut />
                   Log out

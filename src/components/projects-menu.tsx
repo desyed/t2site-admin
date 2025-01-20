@@ -12,14 +12,16 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { CreateProjectDialog } from './dialogs/create-project-dialog';
 import { useNavigate } from 'react-router';
+import { useState } from "react";
 
 export function ProjectsMenu() {
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const handleChangeProject = (index: number) => {
     console.log(index);
   };
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <Button
           className="px-0 text-sm gap-1 [&_svg]:size-4 [&_svg]:mt-[3px] hover:no-underline text-muted-foreground hover:text-foreground"
@@ -41,6 +43,7 @@ export function ProjectsMenu() {
                 variant="ghost"
                 onClick={(e) => {
                   e.stopPropagation();
+                  setOpen(false);
                   navigate('/settings/project');
                 }}
                className="p-0 h-5"

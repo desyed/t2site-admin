@@ -16,6 +16,7 @@ import { privateMiddlewareLoader } from './middlewares/privateMiddlewareLoader';
 import { authMiddlewareLoader } from './middlewares/authMiddlewareLoader';
 import NavSettings from "./pages/settings/_components/nav-settings";
 import NotFoundPrivate from "./pages/404-private";
+import NotFoundSettings from "./pages/settings/404";
 
 const routes = createBrowserRouter([
   {
@@ -59,9 +60,17 @@ const routes = createBrowserRouter([
                 children: [
                   {
                     index: true,
-                    lazy: ()=> import('@/pages/settings/organizaton/general/OrgGeneralSettingsPage'),
+                    lazy: ()=> import('@/pages/settings/organization/general/OrgGeneralSettingsPage'),
+                  },
+                  {
+                    path: '/settings/organization/members',
+                    lazy: () => import('@/pages/settings/organization/members/MemberSettingsPage'),
                   },
                 ],  
+              },
+              {
+                path: '*',
+                element: <NotFoundSettings />,
               },
             ],
           },

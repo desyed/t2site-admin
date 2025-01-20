@@ -188,9 +188,9 @@ export async function handleApi<TResponse = any, TError = any>(
 }
 
 
-export function isActivePath(path: string, url: string): boolean {
+export function isActivePath(path: string, url: string, strict: boolean = false): boolean {
   if (url === '/') {
     return path === '/';
   }
-  return path.startsWith(url);
+  return strict ? path === url : path.startsWith(url);
 }

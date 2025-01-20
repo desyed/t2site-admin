@@ -3,13 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { InfoIcon, UploadIcon } from 'lucide-react';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
+import { UploadIcon } from 'lucide-react';
+
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 export async function loader() {
@@ -57,16 +52,6 @@ export function Component() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <CardTitle>Display Name</CardTitle>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <InfoIcon className="h-4 w-4 text-muted-foreground" />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Organization display name</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -89,16 +74,6 @@ export function Component() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <CardTitle>Logo</CardTitle>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <InfoIcon className="h-4 w-4 text-muted-foreground" />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Organization logo</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
             </div>
           </CardHeader>
           <CardContent className="space-y-4">

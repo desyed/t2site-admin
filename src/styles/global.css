@@ -25,7 +25,7 @@ html.dark {
 		--secondary-foreground: 24 9.8% 10%;
 		--muted: 60 4.8% 95.9%;
 		--muted-foreground: 0 0% 41.1%;
-		--accent: 60 4.8% 95.9%;
+		--accent: 54.17 38.51% 91.29%;
 		--accent-foreground: 24 9.8% 10%;
 		--destructive: 0 84.2% 60.2%;
 		--destructive-foreground: 60 9.1% 97.8%;
@@ -42,7 +42,7 @@ html.dark {
 		--sidebar-foreground: 240 5.3% 26.1%;
 		--sidebar-primary: 51.48 100% 51.42%;
 		--sidebar-primary-foreground: 0 0% 0%;
-		--sidebar-accent: 240 4.8% 95.9%;
+		--sidebar-accent: 54.17 38.51% 91.29%;
 		--sidebar-accent-foreground: 0 0% 5.51%;
 		--sidebar-border: 220 13% 91%;
 		--sidebar-ring: 217.2 91.2% 59.8%;
@@ -64,9 +64,9 @@ html.dark {
 		--muted-foreground: 0 0% 70.71%;
 		--accent: 240 3.7% 15.9%;
 		--accent-foreground: 240 4.8% 95.9%;
-		--destructive: 0 62.8% 30.6%;
-		--destructive-foreground: 60 9.1% 97.8%;
-		--border: 51.44 2.57% 8.44%;
+		--destructive: 0 100% 59.61%;
+		--destructive-foreground: 0 0% 100%;
+		--border: 0 0% 12.6%;
 		--input: 0 0% 15.11%;
 		--ring: 47.9 95.8% 53.1%;
 		--chart-1: 220 70% 50%;
@@ -99,4 +99,12 @@ html.dark {
 	.site-scrollbar {
 		@apply scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary/60;
 	}
+	.destructive-dropdown {
+		@apply w-full justify-start text-sm h-8 hover:bg-destructive/20 hover:text-destructive text-destructive/80 focus:text-destructive/80 focus:bg-destructive/20;
+	}
+}
+
+[data-scroll-locked][data-scroll-locked] {
+  overflow: auto !important;
+	width: 100%;
 }
