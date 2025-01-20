@@ -8,6 +8,8 @@ export default defineConfig(({ command:_c, mode })=> {
 
 	const env = loadEnv(mode, process.cwd(), '');
 
+	console.log('🚀 APP BACKEND URL', env.VITE_BACKEND_URL);
+	
 	return {
 		plugins: [react()],
 		build: {

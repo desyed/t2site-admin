@@ -62,6 +62,7 @@ export default function LoginForm() {
         if (result.data?.access_token && result.data.user.email) {
           if (!result.data.user.emailVerified) {
             setAuth(result.data.user, result.data.access_token);
+            navigate('/verify', {replace: true});
             toast.warning('Email Not Verified!', {
               description:
                 'You have successfully logged in, but your email is not verified. Please verify your email to enjoy full features.',

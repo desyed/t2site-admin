@@ -3,7 +3,10 @@ import axios from 'axios';
 import { toast } from 'sonner';
 
 const axiosAuthApiInstance = axios.create({
-  baseURL: `${import.meta.env.PROD ? import.meta.env.VITE_BACKEND_URL : ''}/server/api`,
+  baseURL: `${
+    import.meta.env.PROD ? import.meta.env.VITE_BACKEND_URL : '/server'
+  }/api`,
+  withCredentials: import.meta.env.PROD ? true : false,
 });
 
 axiosAuthApiInstance.interceptors.request.use(
@@ -25,7 +28,7 @@ axiosAuthApiInstance.interceptors.response.use(
           description:
             'Your session has expired. Please log in again to continue.',
           position: 'bottom-right',
-        });   
+        });
         return Promise.reject(error);
       }
       originalRequest._retry = true;
