@@ -4,10 +4,9 @@ import { toast } from "sonner";
 
 interface AuthContextType {
 	isAuthenticated: boolean;
-	logout: () => void | Promise<void>;
-	isLogingOut: boolean;
 	user: TAuthUser | null;
 	isEmailVerified: boolean;
+	logout: () => void | Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -26,8 +25,6 @@ interface AuthProviderProps {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
 	const user = useAuthStore((state) => state.user);
-	const isLogingOut = useAuthStore((state) => state.isLogingOut);
-
 	const logoutHandle = useAuthStore((state) => state.logout);
 
 	const isAuthenticated = !!user?.email;
@@ -35,14 +32,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
 	const logout = () => {
 		toast.promise(logoutHandle, {
-			loading: "Singing in...",
-			success: () => {
-				return "You have loged out";
-			},
-			finally: () => {},
+			loading: "Signing out...",
+			success: "You have logged out",
+			error: "Sign out failed!",
 			position: "top-center",
 			duration: 1000,
-			error: () => "Signed out failed !!",
+			finally: () => {},
 		});
 	};
 
@@ -50,10 +45,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 		<AuthContext.Provider
 			value={{
 				isAuthenticated,
-				logout,
 				user,
-				isLogingOut,
 				isEmailVerified,
+				logout,
 			}}
 		>
 			{children}
