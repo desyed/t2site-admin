@@ -46,7 +46,6 @@ import { useNavigate } from 'react-router';
 export function NavUser() {
   const authUser = useAuthStore((state) => state.user);
   const authOrganization = useAuthStore((state) => state.userOrganization);
-  const setAccessToken = useAuthStore((state) => state.setAccessToken);
   const isMobile = useIsMobile();
 
   const { theme, setTheme } = useTheme();

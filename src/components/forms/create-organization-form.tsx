@@ -15,7 +15,6 @@ import { Loader2 } from 'lucide-react';
 import * as z from 'zod';
 import { createOrganizationMutation } from '@/app/organization/organizationApi';
 import { useApi } from '@/hooks/use-api';
-import { useAuthStore } from '@/app/auth/authStore';
 import { handleServerErrors } from '@/lib/error';
 import { toast } from "sonner";
 import { useNavigate } from  "react-router";
@@ -36,7 +35,7 @@ export function CreateOrganizationForm({ onClose }: { onClose: () => void }) {
       name: '',
     },
   });
-  const setAccessToken = useAuthStore((state) => state.setAccessToken);
+
   const navigate = useNavigate();
 
   const { loading, executeMutation } = useApi<{
