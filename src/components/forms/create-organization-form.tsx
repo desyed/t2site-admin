@@ -52,8 +52,7 @@ export function CreateOrganizationForm({ onClose }: { onClose: () => void }) {
       if (result.errors) {
         return handleServerErrors(form, result.errors);
       }
-      if (result.data?.access_token && result.data?.organizationId) {
-        setAccessToken(result.data.access_token);
+      if (result.data?.organizationId) {
         toast.success("Organization created successfully!", {
           description: "You can now start building your organization.",
           position: "top-center",

@@ -93,10 +93,10 @@ export const useAuthStore = create<TAuthState>((set, get) => ({
           {},
           { toast: true }
         );
+
         if (data?.user) {
           set({ 
             user: data.user as TAuthUser, 
-            accessToken: data.access_token, 
             userOrganization: data.userOrganization as TUserOrganization 
           });
         } else {

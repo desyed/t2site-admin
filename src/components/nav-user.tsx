@@ -67,8 +67,7 @@ export function NavUser() {
     toast.promise(executeMutation({ organizationId: organization.id }), {
       loading: 'Changing organization...',
       success: (result) => {
-        if (result.data?.access_token) {
-          setAccessToken(result.data.access_token);
+        if (result.data?.currentOrganizationId) {
           navigate('/auth?ocr=true');
           return `Now organization switched to ${organization.name}`;
         } else {
