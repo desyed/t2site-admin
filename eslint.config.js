@@ -1,4 +1,5 @@
 import pluginJs from "@eslint/js";
+import pluginQuery from '@tanstack/eslint-plugin-query';
 import perfectionist from 'eslint-plugin-perfectionist';
 import pluginReact from "eslint-plugin-react";
 import pluginReactHooks from "eslint-plugin-react-hooks";
@@ -15,6 +16,7 @@ export default [
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
   ...tailwind.configs["flat/recommended"],
+  ...pluginQuery.configs['flat/recommended'],
   {
     plugins: {
       "react-hooks": pluginReactHooks,

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-console */
 import react from "@vitejs/plugin-react";
 import path from "node:path";
+import process from 'process';
 import { defineConfig, loadEnv } from "vite";
 
 
@@ -10,7 +10,7 @@ export default defineConfig(({ command: _c, mode }) => {
 
 	const env = loadEnv(mode, process.cwd(), '');
 
-	console.log('🚀 APP BACKEND URL', env.VITE_BACKEND_URL);
+	process.stdout.write(`🚀\x1b[36m API DOCS: ${env.VITE_BACKEND_URL}/docs \x1b[0m\n`);
 
 	return {
 		plugins: [react()],

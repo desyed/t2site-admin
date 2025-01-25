@@ -1,4 +1,4 @@
-import { Link } from  "react-router";
+import { Link } from "react-router";
 
 import OAuthButton from "@/components/auth/OAuthButton";
 import SingupForm from "@/components/auth/SignupForm";

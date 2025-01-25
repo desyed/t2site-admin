@@ -1,39 +1,62 @@
-import { getProfileQuery, getSessionQuery } from '@/app/auth/authApi';
-import { Button } from '@/components/ui/button';
-import { logDev } from '@/lib/utils';
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 export async function loader() {
   return {
     title: 'Dashboard',
   };
 }
+
+// Simulate a database
+let todos = [{ id: 1, title: 'Do Laundry' }];
+
+const getTodos = async () => {
+  return todos;
+};
+
+const postTodo = async (todo: { id: number; title: string }) => {
+  todos = [...todos, todo]; // Add the new todo to our list
+  return todo;
+};
+
 export function Component() {
+  // Access the client
+  const queryClient = useQueryClient();
+
+  // Queries
+  const { data } = useQuery({
+    queryKey: ['todos'],
+    queryFn: getTodos,
+  });
+
+  // Mutations
+  const mutation = useMutation({
+    mutationFn: postTodo,
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ['todos'] });
+    },
+  });
+
   return (
     <div className="mt-5 flex flex-1 flex-col gap-4 p-5 pt-0">
-      <div className="flex gap-4">
-        <Button
-          onClick={async () => {
-            const session = await getSessionQuery();
-            logDev(session.data);
+      <div>
+        <ul>{data?.map((todo) => <li key={todo.id}>{todo.title}</li>)}</ul>
+
+        <button
+          onClick={() => {
+            mutation.mutate({
+              id: Date.now(),
+              title: 'Do Laundry',
+            });
           }}
         >
-          Fetch Session If user is just authenticate
-        </Button>
-        <Button
-          onClick={async () => {
-            const profile = await getProfileQuery();
-            logDev(profile.data);
-          }}
-        >
-          Fetch Profile If user is verified
-        </Button>
+          Add Todo
+        </button>
       </div>
-      <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-        <div className="aspect-video rounded-xl bg-muted" />
-        <div className="aspect-video rounded-xl bg-muted" />
-        <div className="aspect-video rounded-xl bg-muted" />
-      </div>
-      <div className="min-h-screen flex-1 rounded-xl bg-muted md:min-h-min" />
     </div>
   );
 }
