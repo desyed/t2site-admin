@@ -1,6 +1,8 @@
-import { cn } from "@/lib/utils";
 import { Icon } from "@iconify/react";
 import * as React from "react";
+
+import { cn } from "@/lib/utils";
+
 import { Input, type InputProps } from "./input";
 
 export type InputIconProps = {
@@ -12,10 +14,10 @@ const InputIcon = React.forwardRef<HTMLInputElement, InputIconProps>(
 		return (
 			<div className="relative">
 				<div
-					className="bg-muted absolute left-0 top-0 h-full w-10 flex justify-center items-center rounded-md border border-input  rounded-r-none text-muted-foreground"
+					className="absolute left-0 top-0 flex h-full w-10 items-center justify-center rounded-md rounded-r-none border border-input  bg-muted text-muted-foreground"
 					aria-invalid={props["aria-invalid"]}
 				>
-					<Icon className="w-5 h-5" icon={icon} />
+					<Icon className="size-5" icon={icon} />
 				</div>
 				<Input className={cn("pl-12", className)} ref={ref} {...props} />
 			</div>

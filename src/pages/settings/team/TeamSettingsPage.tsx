@@ -9,7 +9,7 @@ export async function loader() {
 
 export function Component() {
 	return (
-		<div className="p-6 space-y-8">
+		<div className="space-y-8 p-6">
 			<InviteLink />
 			<ManageMembers />
 		</div>

@@ -1,10 +1,11 @@
+import { Copy, Globe, Settings } from "lucide-react";
+import { toast } from "sonner";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Copy, Globe, Settings } from "lucide-react";
-import { toast } from "sonner";
 
 export async function loader() {
 	// Fetch project data here
@@ -24,10 +25,10 @@ export function Component() {
 
 	return (
 		<div className="mx-auto space-y-8">
-			<div className="flex justify-between items-center">
+			<div className="flex items-center justify-between">
 				<h1 className="text-3xl font-bold">Project Settings</h1>
 				<Button variant="outline" size="sm">
-					<Settings className="mr-2 h-4 w-4" />
+					<Settings className="mr-2 size-4" />
 					Save Changes
 				</Button>
 			</div>
@@ -55,7 +56,7 @@ export function Component() {
 							<div className="space-y-2">
 								<Label>Project Region</Label>
 								<div className="flex items-center space-x-2">
-									<Globe className="h-4 w-4 text-muted-foreground" />
+									<Globe className="size-4 text-muted-foreground" />
 									<span>US Cloud</span>
 								</div>
 							</div>
@@ -88,7 +89,7 @@ export function Component() {
 												"API key copied to clipboard!"
 											)}
 										>
-											<Copy className="h-4 w-4" />
+											<Copy className="size-4" />
 										</Button>
 									</div>
 									<p className="text-sm text-muted-foreground">
@@ -108,7 +109,7 @@ export function Component() {
 												"Project ID copied to clipboard!"
 											)}
 										>
-											<Copy className="h-4 w-4" />
+											<Copy className="size-4" />
 										</Button>
 									</div>
 								</div>
@@ -119,11 +120,11 @@ export function Component() {
 							<CardHeader>
 								<CardTitle>Web Snippet</CardTitle>
 								<CardDescription>
-									PostHog's configurable web snippet allows you to autocapture events, record user sessions, and more.
+									{`PostHog's`} configurable web snippet allows you to autocapture events, record user sessions, and more.
 								</CardDescription>
 							</CardHeader>
 							<CardContent className="grid">
-								<pre className="bg-muted p-4 rounded-lg  overflow-y-hidden">
+								<pre className="overflow-y-hidden rounded-lg bg-muted  p-4">
 									<code>{`<script>
     !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
     posthog.init('phc_tcd1QR16c87pDuuORrvvrVpuEn7unHwuLYitmUU5oYy', {

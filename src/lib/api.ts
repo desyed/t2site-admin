@@ -1,6 +1,7 @@
-import { authStore } from '@/app/auth/authStore';
 import axios from 'axios';
 import { toast } from 'sonner';
+
+import { authStore } from '@/app/auth/authStore';
 
 const axiosAuthApiInstance = axios.create({
   baseURL: `${

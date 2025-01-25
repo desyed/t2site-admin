@@ -1,4 +1,6 @@
 import { ChevronDown, Settings } from 'lucide-react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -10,33 +12,33 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { logDev } from '@/lib/utils';
+
 import { CreateProjectDialog } from './dialogs/create-project-dialog';
-import { useNavigate } from 'react-router';
-import { useState } from "react";
 
 export function ProjectsMenu() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const handleChangeProject = (index: number) => {
-    console.log(index);
+    logDev(index);
   };
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <Button
-          className="px-0 text-sm gap-1 [&_svg]:size-4 [&_svg]:mt-[3px] hover:no-underline text-muted-foreground hover:text-foreground"
+          className="gap-1 px-0 text-sm text-muted-foreground hover:text-foreground hover:no-underline [&_svg]:mt-[3px] [&_svg]:size-4"
           variant="link"
         >
-          Default Projects <ChevronDown className="w-4 h-4" />
+          Default Projects <ChevronDown className="size-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent  className="w-56">
+      <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>PROJECTS</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
             <div className="flex  justify-between">
-              <Button className="px-0 h-2" variant="ghost">
+              <Button className="h-2 px-0" variant="ghost">
                 Default Projects
               </Button>
               <Button
@@ -46,7 +48,7 @@ export function ProjectsMenu() {
                   setOpen(false);
                   navigate('/settings/project');
                 }}
-               className="p-0 h-5"
+                className="h-5 p-0"
               >
                 <Settings />
               </Button>
@@ -55,7 +57,7 @@ export function ProjectsMenu() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <div className="max-h-[calc(100vh-55vh)] overflow-x-hidden site-scrollbar">
+          <div className="site-scrollbar max-h-[calc(100vh-55vh)] overflow-x-hidden">
             {Array.from({ length: 3 }).map((_, index) => (
               <DropdownMenuItem
                 onSelect={() => handleChangeProject(index)}

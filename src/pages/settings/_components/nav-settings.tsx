@@ -1,13 +1,14 @@
+import { ChevronDownIcon, ChevronRightIcon } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router';
+
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { SidebarMenu, SidebarMenuButton } from '@/components/ui/sidebar';
 import { SidebarGroup } from '@/components/ui/sidebar';
-import { ChevronDownIcon, ChevronRightIcon } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { isActivePath } from '@/lib/utils';
-import { useEffect, useMemo, useState } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 const projectMenu = [
   {
@@ -99,26 +100,26 @@ export default function NavSettings() {
     if (isMobile) {
       setOpen(false);
     }
-  }, [pathname]);
+  }, [pathname, navigate, isMobile]);
 
   return (
-    <div className="flex lg:mx-6 sm:mx-4 sm:gap-5 lg:gap-10 items-start lg:mt-8 sm:mt-5 md:flex-row flex-col">
-      <div className="md:sticky top-16 md:min-w-[12.4rem] max-md:w-full max-md:mb-6 max-md:pb-2 max-md:border-b bg-background">
+    <div className="flex flex-col items-start sm:mx-4 sm:mt-5 sm:gap-5 md:flex-row lg:mx-6 lg:mt-8 lg:gap-10">
+      <div className="top-16 bg-background max-md:mb-6 max-md:w-full max-md:border-b max-md:pb-2 md:sticky md:min-w-[12.4rem]">
         <Collapsible open={open} onOpenChange={setOpen}>
-          <div className="max-md:block hidden ">
+          <div className="hidden max-md:block ">
             <Button
               variant="ghost"
               size="default"
-              className="w-full text-start px-2 flex-start"
+              className="flex-start w-full px-2 text-start"
               onClick={() => setOpen(!open)}
             >
-              <div className="flex items-center justify-between w-full">
+              <div className="flex w-full items-center justify-between">
                 <span className="capitalize">{activeMenuLabel}</span>
                 <div>
                   {open ? (
-                    <ChevronDownIcon className="mt-[4px] h-4 w-4" />
+                    <ChevronDownIcon className="mt-[4px] size-4" />
                   ) : (
-                    <ChevronRightIcon className="mt-[2px] h-4 w-4" />
+                    <ChevronRightIcon className="mt-[2px] size-4" />
                   )}
                 </div>
               </div>
@@ -127,7 +128,7 @@ export default function NavSettings() {
 
           <CollapsibleContent>
             <SidebarGroup>
-              <span className="text-sm font-semibold text-muted-foreground mb-1 select-none">
+              <span className="mb-1 select-none text-sm font-semibold text-muted-foreground">
                 Project
               </span>
               <SidebarMenu className="mt-2 gap-[2.5px]">
@@ -147,7 +148,7 @@ export default function NavSettings() {
                   );
                 })}
               </SidebarMenu>
-              <span className="text-sm font-semibold text-muted-foreground mt-3 mb-1 select-none">
+              <span className="mb-1 mt-3 select-none text-sm font-semibold text-muted-foreground">
                 Organization
               </span>
               <SidebarMenu className="mt-2 gap-[2.5px]">
@@ -167,7 +168,7 @@ export default function NavSettings() {
                   );
                 })}
               </SidebarMenu>
-              <span className="text-sm font-semibold text-muted-foreground mt-3 mb-1 select-none">
+              <span className="mb-1 mt-3 select-none text-sm font-semibold text-muted-foreground">
                 User
               </span>
               <SidebarMenu className="mt-2 gap-[2.5px]">

@@ -1,3 +1,7 @@
+import { Plus } from 'lucide-react';
+import { useState } from 'react';
+
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -6,10 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
 
-import { useState } from 'react';
 import { CreateOrganizationForm } from '../forms/create-organization-form';
 import HyperLink from '../ui/hyper-link';
 import { Separator } from '../ui/separator';
@@ -38,7 +39,7 @@ export function CreateOrganizationDialog() {
           <DialogTitle className="mb-2 text-xl">
             Create Organization
           </DialogTitle>
-          <DialogDescription className="pb-2 text-md">
+          <DialogDescription className="text-md pb-2">
             Organizations gather people building together.
             <br />
             <div className="flex">

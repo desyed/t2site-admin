@@ -1,5 +1,11 @@
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2 } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
+import { toast } from 'sonner';
+import * as z from 'zod';
+
+import { createOrganizationMutation } from '@/app/organization/organizationApi';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -10,14 +16,9 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Loader2 } from 'lucide-react';
-
-import * as z from 'zod';
-import { createOrganizationMutation } from '@/app/organization/organizationApi';
 import { useApi } from '@/hooks/use-api';
 import { handleServerErrors } from '@/lib/error';
-import { toast } from "sonner";
-import { useNavigate } from  "react-router";
+import { logDev } from '@/lib/utils';
 
 export const createOrganizationSchema = z.object({
   name: z.string().min(2, 'Organization name must be at least 2 characters'),
@@ -52,23 +53,24 @@ export function CreateOrganizationForm({ onClose }: { onClose: () => void }) {
         return handleServerErrors(form, result.errors);
       }
       if (result.data?.organizationId) {
-        toast.success("Organization created successfully!", {
-          description: "You can now start building your organization.",
-          position: "top-center",
+        toast.success('Organization created successfully!', {
+          description: 'You can now start building your organization.',
+          position: 'top-center',
           duration: 3000,
         });
         navigate('/auth?ocr=true');
         onClose();
-      }else {
-        toast.error("Failed to create organization!", {
-          description: "Please try again.",
-          position: "top-center",
+      } else {
+        toast.error('Failed to create organization!', {
+          description: 'Please try again.',
+          position: 'top-center',
           duration: 3000,
         });
       }
     } catch (error) {
-      console.error(error);
+      logDev(error);
     } finally {
+      form.reset();
     }
   };
 
@@ -93,7 +95,7 @@ export function CreateOrganizationForm({ onClose }: { onClose: () => void }) {
           <Button type="submit" className="w-full" disabled={loading}>
             {loading ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <Loader2 className="mr-2 size-4 animate-spin" />
                 Creating...
               </>
             ) : (

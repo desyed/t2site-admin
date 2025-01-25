@@ -1,7 +1,8 @@
-import { Button } from '@/components/ui/button';
 import { Icon } from '@iconify/react';
 import { useMemo } from 'react';
 import { useLocation } from 'react-router';
+
+import { Button } from '@/components/ui/button';
 
 export type T2OAuthType = 'google' | 'github' | 'microsoft';
 

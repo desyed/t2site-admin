@@ -1,17 +1,17 @@
 
-import {
-  ChevronRight,
-  LucideIcon,
-} from 'lucide-react';
+import type {
+  LucideIcon} from 'lucide-react';
 
+import {
+  ChevronRight
+} from 'lucide-react';
+import { Link, useLocation } from 'react-router';
 
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
-
-
 import {
   SidebarGroup,
   SidebarMenu,
@@ -22,8 +22,6 @@ import {
   SidebarMenuSubItem,
 
 } from '@/components/ui/sidebar';
-
-import { Link, useLocation } from 'react-router';
 import { cn, isActivePath } from "@/lib/utils";
 
 export function NavMain({

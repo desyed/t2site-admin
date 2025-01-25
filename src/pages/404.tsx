@@ -1,9 +1,9 @@
+import { Icon } from "@iconify/react";
+import { Link, useNavigate } from  "react-router";
+
 import Brand from "@/components/Brand";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
-import { Icon } from "@iconify/react";
-
-import { Link, useNavigate } from  "react-router";
 
 export default function NotFound() {
 	const navigate = useNavigate();
@@ -22,8 +22,8 @@ export default function NotFound() {
 				<p className="text-center text-lg text-muted-foreground">
 					Sorry, the page you are looking for does not exist.
 				</p>
-				<Button onClick={() => navigate('/')} className="text-md" size="default">
-					<Icon icon="line-md:arrow-left" className="w-8 h-8" />
+				<Button onClick={() => navigate('/')} size="default">
+					<Icon icon="line-md:arrow-left" className="size-8" />
 					Go to home
 				</Button>
 			</div>

@@ -7,6 +7,9 @@ import {
 } from 'lucide-react';
 import * as React from 'react';
 
+import NavLogo from "@/components/nav-logo";
+import { NavMain } from "@/components/nav-main";
+import { NavUser } from '@/components/nav-user';
 import {
   Sidebar,
   SidebarContent,
@@ -15,10 +18,6 @@ import {
   SidebarInset,
   SidebarRail,
 } from '@/components/ui/sidebar';
-
-import { NavUser } from '@/components/nav-user';
-import { NavMain } from "@/components/nav-main";
-import NavLogo from "@/components/nav-logo";
 
 const data = {
   navMain: [

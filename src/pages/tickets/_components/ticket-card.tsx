@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+
 import { useTickets } from "./tickets-provider";
 
 interface TicketCardProps {
@@ -23,7 +24,7 @@ export const TicketCard = ({ ticketId }: TicketCardProps) => {
 						onClick={() => {
 							setSelectedTicketId(ticketId);
 						}}
-						className="text-sm font-semibold truncate w-44 cursor-pointer"
+						className="w-44 cursor-pointer truncate text-sm font-semibold"
 					>
 						Ticket #{ticketId}
 					</button>
@@ -34,7 +35,7 @@ export const TicketCard = ({ ticketId }: TicketCardProps) => {
 				<Badge variant="secondary">New</Badge>
 				<Badge variant="secondary">Open</Badge>
 			</div>
-			<p className="text-xs text-muted-foreground line-clamp-2">
+			<p className="line-clamp-2 text-xs text-muted-foreground">
 				Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi,
 				doloribus libero expedita dignissimos similique eum consectetur, non
 				atque mollitia magni ea, aperiam laudantium eos voluptatibus aliquid

@@ -1,7 +1,7 @@
-import { Button } from '@/components/ui/button';
 import { Icon } from '@iconify/react';
-
 import { useNavigate } from 'react-router';
+
+import { Button } from '@/components/ui/button';
 
 export default function NotFoundSettings() {
   const navigate = useNavigate();
@@ -14,10 +14,9 @@ export default function NotFoundSettings() {
         </p>
         <Button
           onClick={() => navigate('/settings')}
-          className="text-md"
           size="default"
         >
-          <Icon icon="line-md:arrow-left" className="w-8 h-8" />
+          <Icon icon="line-md:arrow-left" className="size-8" />
           Go to Settings
         </Button>
       </div>

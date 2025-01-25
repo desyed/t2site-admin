@@ -3,7 +3,7 @@ import { useTheme } from "./theme-provider";
 export default function SplashScreen() {
 	const { colorMode } = useTheme();
 	return (
-		<div className="fixed left-0 top-0 z-40 flex h-full w-full select-none items-center justify-center bg-background">
+		<div className="fixed left-0 top-0 z-40 flex size-full select-none items-center justify-center bg-background">
 			<div className="px-5">
 				<img
 					draggable="false"

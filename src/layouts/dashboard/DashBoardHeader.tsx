@@ -1,3 +1,5 @@
+import { Link, useLocation } from 'react-router';
+
 import { ProjectsMenu } from '@/components/projects-menu';
 import {
   Breadcrumb,
@@ -8,14 +10,13 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Separator } from '@/components/ui/separator';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { Link, useLocation } from 'react-router';
 
 export default function DashBoardHeader() {
   const location = useLocation();
   const pathSegments = location.pathname.split('/').filter(Boolean);
 
   return (
-    <header className="flex h-14 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-14 bg-sidebar border-b border-border/50 fixed w-full z-50 shadow-sm">
+    <header className="fixed z-50 flex h-14 w-full shrink-0 items-center gap-2 border-b border-border/50 bg-sidebar shadow-sm transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-14">
       <div className="flex items-center gap-2 px-4">
         <SidebarTrigger className="-ml-1" />
         <Separator orientation="vertical" className="mr-1 h-4" />

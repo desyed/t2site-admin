@@ -1,18 +1,24 @@
-import { Badge } from "@/components/ui/badge"
+import { Badge } from '@/components/ui/badge';
 
 type RoleVariant = {
-  [key in 'admin' | 'member' | 'owner' | 'none']: "default" | "secondary" | "destructive" | "outline" | "success" | "info"
-}
+  [key in 'admin' | 'member' | 'owner' | 'none']:
+    | 'default'
+    | 'secondary'
+    | 'destructive'
+    | 'outline'
+    | 'success'
+    | 'info';
+};
 
 const roleVariants: RoleVariant = {
-  admin: "success",
-  member: "info",
-  owner: "default",
-  none: "secondary"
-}
+  admin: 'success',
+  member: 'info',
+  owner: 'default',
+  none: 'secondary',
+};
 
 interface RoleBadgeProps {
-  role: 'admin' | 'member' | 'owner' | 'none'
+  role: 'admin' | 'member' | 'owner' | 'none';
 }
 
 export function RoleBadge({ role }: RoleBadgeProps) {
@@ -20,5 +26,5 @@ export function RoleBadge({ role }: RoleBadgeProps) {
     <Badge variant={roleVariants[role]} className="uppercase">
       {role}
     </Badge>
-  )
-} 
+  );
+}

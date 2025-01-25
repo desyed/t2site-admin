@@ -1,5 +1,7 @@
-import { handleApi } from '@/lib/utils';
 import { create } from 'zustand';
+
+import { handleApi } from '@/lib/utils';
+
 import { getSessionQuery, logoutMutation } from './authApi';
 
 // Types
@@ -31,19 +33,19 @@ export type TAuthState = {
   user: TAuthUser | null;
   accessToken: string | null;
   userOrganization: TUserOrganization | null;
-  
+
   // User methods
   getAuthUser: () => TAuthUser | null;
   setAuthUser: (user: TAuthUser) => void;
   updateAuthUser: (user: Partial<TAuthUser>) => void;
-  
+
   // Token methods
   getAccessToken: () => string | null;
   setAccessToken: (token: string) => void;
-  
+
   // Organization methods
   setUserOrganization: (userOrganization: TUserOrganization) => void;
-  
+
   // Auth flow methods
   setAuth: (user: TAuthUser, access_token: string) => void;
   fetchSession: (refetch?: boolean) => Promise<void>;
@@ -76,7 +78,7 @@ export const useAuthStore = create<TAuthState>((set, get) => ({
   },
 
   // Organization methods
-  setUserOrganization: (userOrganization: TUserOrganization) => 
+  setUserOrganization: (userOrganization: TUserOrganization) =>
     set({ userOrganization }),
 
   // Auth flow methods
@@ -84,7 +86,7 @@ export const useAuthStore = create<TAuthState>((set, get) => ({
     localStorage.setItem('t2_ac', accessToken);
     set({ user, accessToken });
   },
-  
+
   fetchSession: async (refetch = false) => {
     if (!get().user || refetch) {
       try {
@@ -95,14 +97,17 @@ export const useAuthStore = create<TAuthState>((set, get) => ({
         );
 
         if (data?.user) {
-          set({ 
-            user: data.user as TAuthUser, 
-            userOrganization: data.userOrganization as TUserOrganization 
+          set({
+            user: data.user as TAuthUser,
+            userOrganization: data.userOrganization as TUserOrganization
           });
         } else {
           get().logout();
         }
-      } catch (err) {}
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err);
+      }
     }
   },
 

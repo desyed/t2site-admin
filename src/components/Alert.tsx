@@ -1,5 +1,7 @@
-import { MouseEvent } from "react";
+import type { MouseEvent } from "react";
+
 import { Icon } from "@iconify/react";
+
 import { cn } from "@/lib/utils";
 
 type AlertType = "error" | "info" | "warning" | "success";
@@ -56,21 +58,21 @@ export default function Alert(
       )}
     >
       {title && (
-        <div className="flex gap-2 items-center">
-          <Icon className="w-6 h-6" icon={icon} />
+        <div className="flex items-center gap-2">
+          <Icon className="size-6" icon={icon} />
           <h3 className="font-semibold">{title}</h3>
         </div>
       )}
       {title
         ? (
-          <div className="mt-1 ml-8 text-sm">
+          <div className="ml-8 mt-1 text-sm">
             {message}
           </div>
         )
         : (
           <div className="mt-1 flex gap-2">
             <span>
-              <Icon className="w-6 h-6 mt-[2px]" icon={icon} />
+              <Icon className="mt-[2px] size-6" icon={icon} />
             </span>
             <span className="text-sm">
               {message}
@@ -80,10 +82,10 @@ export default function Alert(
 
       {close && (
         <button
-          className={`absolute top-2 right-2 active:scale-90 ${color}`}
+          className={`absolute right-2 top-2 active:scale-90 ${color}`}
           onClick={handleClose}
         >
-          <Icon icon="mdi:close" className="w-5 h-5" />
+          <Icon icon="mdi:close" className="size-5" />
         </button>
       )}
     </div>

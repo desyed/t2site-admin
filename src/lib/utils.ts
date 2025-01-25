@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AxiosError, type AxiosResponse } from 'axios';
 import { type ClassValue, clsx } from 'clsx';
 import { toast as toastMessage } from 'sonner';
@@ -147,7 +149,7 @@ export function handleApiErrorException<TError = any>(
       toastMessage.error(responseType, {
         description: message,
       });
-    console.error('Unexpected error:', err);
+    logDev('Unexpected error:', err);
   }
 
   return { errors, responseType, message, code };
@@ -179,7 +181,7 @@ export async function handleApi<TResponse = any, TError = any>(
       code: null,
     };
   } catch (err) {
-    const { errors, message, responseType, code} = handleApiErrorException(
+    const { errors, message, responseType, code } = handleApiErrorException(
       err,
       toast
     );
@@ -193,4 +195,11 @@ export function isActivePath(path: string, url: string, strict: boolean = false)
     return path === '/';
   }
   return strict ? path === url : path.startsWith(url);
+}
+
+export function logDev(...message: any[]) {
+  if (import.meta.env.DEV) {
+    // eslint-disable-next-line no-console
+    console.log(...message);
+  }
 }

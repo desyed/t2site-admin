@@ -2,9 +2,9 @@ import { PackageOpen } from "lucide-react";
 
 export const TicketDetailEmpty = () => {
 	return (
-		<div className="flex items-center gap-2 h-full justify-center flex-col">
-			<PackageOpen className="w-16 h-16 text-muted-foreground stroke-[1.5]" />
-			<p className="text-sm text-muted-foreground text-center">
+		<div className="flex h-full flex-col items-center justify-center gap-2">
+			<PackageOpen className="size-16 stroke-[1.5] text-muted-foreground" />
+			<p className="text-center text-sm text-muted-foreground">
 				No ticket selected. <br /> Select a ticket to view details.
 			</p>
 		</div>

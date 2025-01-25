@@ -1,5 +1,7 @@
 "use client";
 
+import { Filter, Search, SortAsc } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -9,7 +11,7 @@ import {
 } from "@/components/ui/resizable";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Filter, Search, SortAsc } from "lucide-react";
+
 import { TicketCard } from "./ticket-card";
 import { TicketDetails } from "./ticket-details";
 
@@ -30,13 +32,13 @@ export function Tickets({ defaultLayout = [20, 32, 48] }: TicketsProps) {
 				className="h-full max-h-[760px] items-stretch"
 			>
 				<ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-					<ScrollArea className="pb-4 h-[calc(100vh-50px)]">
-						<div className="bg-background/95 border-b sticky top-0 z-10 p-4 backdrop-blur-xl flex items-center justify-between supports-[backdrop-filter]:bg-background/60">
+					<ScrollArea className="h-[calc(100vh-50px)] pb-4">
+						<div className="sticky top-0 z-10 flex items-center justify-between border-b bg-background/95 p-4 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
 							<div className="relative">
-								<Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+								<Search className="absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
 								<Input
 									placeholder="Search ticket..."
-									className="pl-8 h-8 rounded-sm"
+									className="h-8 rounded-sm pl-8"
 								/>
 							</div>
 
@@ -57,7 +59,7 @@ export function Tickets({ defaultLayout = [20, 32, 48] }: TicketsProps) {
 								</Button>
 							</div>
 						</div>
-						<div className="px-4 pb-6 space-y-2 py-3">
+						<div className="space-y-2 px-4 py-3 pb-6">
 							{Array.from({ length: 6 }, (_, index) => (
 								<TicketCard
 									key={`ticket-${index + 1}`}

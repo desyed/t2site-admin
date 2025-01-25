@@ -1,8 +1,15 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
+import { loginMutation } from '@/app/auth/authApi';
+import { useAuthStore } from '@/app/auth/authStore';
+import Alert from '@/components/Alert';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -14,16 +21,10 @@ import {
 } from '@/components/ui/form';
 import { InputIcon } from '@/components/ui/input-icon';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
-import { InputPassword } from '../ui/input-password';
-import { toast } from 'sonner';
-import { useAuthStore } from '@/app/auth/authStore';
-import { loginMutation } from '@/app/auth/authApi';
-import Alert from '@/components/Alert';
-import { useState } from 'react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { handleApiErrorException } from '@/lib/utils';
-import { useNavigate } from 'react-router';
 import { handleServerErrors } from '@/lib/error';
+import { handleApiErrorException } from '@/lib/utils';
+
+import { InputPassword } from '../ui/input-password';
 
 const loginSchema = z.object({
   email: z
@@ -62,13 +63,13 @@ export default function LoginForm() {
         if (result.data?.access_token && result.data.user.email) {
           if (!result.data.user.emailVerified) {
             setAuth(result.data.user, result.data.access_token);
-            navigate('/verify', {replace: true});
+            navigate('/verify', { replace: true });
             toast.warning('Email Not Verified!', {
               description:
                 'You have successfully logged in, but your email is not verified. Please verify your email to enjoy full features.',
             });
           } else {
-            navigate('/auth?auth_login=success', {replace: true});
+            navigate('/auth?auth_login=success', { replace: true });
           }
           form.reset();
         }
@@ -91,7 +92,6 @@ export default function LoginForm() {
 
         if (errors) {
           handleServerErrors(form, errors);
-          console.log(JSON.stringify(errors, null, 2));
         }
         return 'Failed to login';
       },

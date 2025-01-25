@@ -1,6 +1,7 @@
 "use client";
 
 import type { ColumnDef } from "@tanstack/react-table";
+
 import { MoreHorizontal } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -14,6 +15,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
 import type { Member } from "../_types";
 
 export const columns: ColumnDef<Member>[] = [
@@ -24,7 +26,7 @@ export const columns: ColumnDef<Member>[] = [
 			const member = row.original;
 			return (
 				<div className="flex items-center gap-3">
-					<Avatar className="h-8 w-8">
+					<Avatar className="size-8">
 						<AvatarImage
 							src={`https://avatar.vercel.sh/${member.email}`}
 							alt={member.name}
@@ -67,9 +69,9 @@ export const columns: ColumnDef<Member>[] = [
 			return (
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
-						<Button variant="ghost" className="h-8 w-8 p-0">
+						<Button variant="ghost" className="size-8 p-0">
 							<span className="sr-only">Open menu</span>
-							<MoreHorizontal className="h-4 w-4" />
+							<MoreHorizontal className="size-4" />
 						</Button>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end">

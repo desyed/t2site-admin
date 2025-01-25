@@ -1,14 +1,3 @@
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import { Switch } from '@/components/ui/switch';
 import {
   MoreHorizontal,
   Link,
@@ -18,23 +7,35 @@ import {
   PlusIcon,
   SparklesIcon,
 } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
+import { Switch } from '@/components/ui/switch';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
 export default function Members() {
   return (
     <div className="space-y-10 ">
       <section>
-        <div className="flex items-center gap-5 flex-wrap justify-between mb-6">
-          <h2 className="text-xl font-semibold flex items-center gap-2">
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-5">
+          <h2 className="flex items-center gap-2 text-xl font-semibold">
             Pending invites
           </h2>
           <Button variant="secondary" size="sm" >
-          <PlusIcon className="mr-1 w-4 h-4" />
+          <PlusIcon className="mr-1 size-4" />
           Invite team member
         </Button>
         </div>
@@ -64,8 +65,8 @@ export default function Members() {
 
       {/* Organization Members Section */}
       <section>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold flex items-center gap-2">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="flex items-center gap-2 text-xl font-semibold">
             Organization members
           </h2>
         </div>
@@ -92,7 +93,7 @@ export default function Members() {
               <TableCell>ishanto722722@gmail.com</TableCell>
               <TableCell>Owner</TableCell>
               <TableCell>
-                <span className="bg-yellow-500/20 text-yellow-500 px-2 py-1 rounded-md text-xs">
+                <span className="rounded-md bg-yellow-500/20 px-2 py-1 text-xs text-yellow-500">
                   2FA not enabled
                 </span>
               </TableCell>
@@ -101,15 +102,15 @@ export default function Members() {
               <TableCell>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="h-8 w-8 p-0">
-                      <MoreHorizontal className="h-4 w-4" />
+                    <Button variant="ghost" className="size-8 p-0">
+                      <MoreHorizontal className="size-4" />
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
                     <DropdownMenuItem className="[&_svg]:size-4">
                       <PencilIcon /> Edit member
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="w-full justify-start text-sm h-8 hover:bg-destructive/20 hover:text-destructive text-destructive/80 focus:text-destructive/80 focus:bg-destructive/20">
+                    <DropdownMenuItem className="h-8 w-full justify-start text-sm text-destructive/80 hover:bg-destructive/20 hover:text-destructive focus:bg-destructive/20 focus:text-destructive/80">
                       <XIcon /> Remove member
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -121,32 +122,32 @@ export default function Members() {
       </section>
 
       {/* Two-factor Authentication Section */}
-      <section className="bg-card rounded-lg p-6 border">
-        <div className="flex items-center gap-2 mb-2">
-          <div className="bg-yellow-500/20 p-2 rounded-full">
-            <ShieldCheck className="h-5 w-5 text-yellow-500" />
+      <section className="rounded-lg border bg-card p-6">
+        <div className="mb-2 flex items-center gap-2">
+          <div className="rounded-full bg-yellow-500/20 p-2">
+            <ShieldCheck className="size-5 text-yellow-500" />
           </div>
           <h2 className="text-xl font-semibold">Enforce 2FA</h2>
         </div>
-        <p className="text-muted-foreground mb-4">
+        <p className="mb-4 text-muted-foreground">
           Require all users in your organization to enable two-factor
           authentication.
         </p>
-        <p className="text-muted-foreground mb-4">
+        <p className="mb-4 text-muted-foreground">
           Subscribe to the Teams addon to use this feature.
         </p>
         <Button variant="secondary">
-          <SparklesIcon className="mr-1 w-4 h-4" />
+          <SparklesIcon className="mr-1 size-4" />
           Upgrade now
         </Button>
       </section>
 
       {/* Notification Preferences Section */}
       <section>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold flex items-center gap-2">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="flex items-center gap-2 text-xl font-semibold">
             Notification preferences
-            <Link className="h-4 w-4 text-muted-foreground" />
+            <Link className="size-4 text-muted-foreground" />
           </h2>
         </div>
 

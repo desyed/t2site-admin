@@ -1,3 +1,5 @@
+import { Copy, RefreshCcw } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -6,11 +8,10 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Copy, RefreshCcw } from "lucide-react";
 
 export const InviteLink = () => {
 	return (
-		<div className="w-full space-y-4  max-w-xl">
+		<div className="w-full max-w-xl  space-y-4">
 			<div className="flex items-center justify-between">
 				<div>
 					<h3 className="text-lg font-medium">Invite Link</h3>
@@ -26,7 +27,7 @@ export const InviteLink = () => {
 					disabled
 					value={"https://app.getsupport.com/invite/123456"}
 					readOnly
-					className="w-full h-9"
+					className="h-9 w-full"
 				/>
 				<Tooltip>
 					<TooltipTrigger asChild>

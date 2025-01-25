@@ -1,15 +1,17 @@
-import path from "node:path";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-console */
 import react from "@vitejs/plugin-react";
+import path from "node:path";
 import { defineConfig, loadEnv } from "vite";
 
 
 
-export default defineConfig(({ command:_c, mode })=> {
+export default defineConfig(({ command: _c, mode }) => {
 
 	const env = loadEnv(mode, process.cwd(), '');
 
 	console.log('🚀 APP BACKEND URL', env.VITE_BACKEND_URL);
-	
+
 	return {
 		plugins: [react()],
 		build: {
@@ -56,5 +58,5 @@ export default defineConfig(({ command:_c, mode })=> {
 				}
 			},
 		},
-	}
+	};
 });

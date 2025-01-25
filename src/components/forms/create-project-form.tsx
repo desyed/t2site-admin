@@ -1,5 +1,14 @@
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2 } from 'lucide-react';
+// import { createProjectMutation } from '@/app/project/projectApi';
+// import { useApi } from '@/hooks/use-api';
+// import { handleServerErrors } from '@/lib/error';
+// import { toast } from "sonner";
+// import { useNavigate } from "react-router";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -10,14 +19,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Loader2 } from 'lucide-react';
-import * as z from 'zod';
-// import { createProjectMutation } from '@/app/project/projectApi';
-// import { useApi } from '@/hooks/use-api';
-// import { handleServerErrors } from '@/lib/error';
-// import { toast } from "sonner";
-// import { useNavigate } from "react-router";
-import { useState } from "react";
+import { logDev } from '@/lib/utils';
 
 export const createProjectSchema = z.object({
   name: z.string().min(2, 'Project name must be at least 2 characters'),
@@ -26,7 +28,7 @@ export const createProjectSchema = z.object({
 
 export type CreateProjectFormData = z.infer<typeof createProjectSchema>;
 
-export function CreateProjectForm({ onClose:_ }: { onClose: () => void }) {
+export function CreateProjectForm() {
   const form = useForm<CreateProjectFormData>({
     resolver: zodResolver(createProjectSchema),
     defaultValues: {
@@ -34,7 +36,7 @@ export function CreateProjectForm({ onClose:_ }: { onClose: () => void }) {
     },
   });
   // const navigate = useNavigate();
-  const [loading, _setLoading] = useState(false);
+  const [loading] = useState(false);
 
   // const { loading, executeMutation } = useApi<{
   //   projectId: string;
@@ -42,7 +44,7 @@ export function CreateProjectForm({ onClose:_ }: { onClose: () => void }) {
   //   toast: true,
   // });
 
-  const handleSubmit = async (_values: CreateProjectFormData) => {
+  const handleSubmit = async () => {
     try {
       // const result = await executeMutation(values);
       // if (result.errors) {
@@ -64,7 +66,7 @@ export function CreateProjectForm({ onClose:_ }: { onClose: () => void }) {
       //   });
       // }
     } catch (error) {
-      console.error(error);
+      logDev(error);
     }
   };
 
@@ -89,7 +91,7 @@ export function CreateProjectForm({ onClose:_ }: { onClose: () => void }) {
           <Button type="submit" className="w-full" disabled={loading}>
             {loading ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <Loader2 className="mr-2 size-4 animate-spin" />
                 Creating...
               </>
             ) : (
@@ -100,4 +102,4 @@ export function CreateProjectForm({ onClose:_ }: { onClose: () => void }) {
       </form>
     </Form>
   );
-} 
+}

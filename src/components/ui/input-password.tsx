@@ -1,7 +1,9 @@
-import { cn } from "@/lib/utils";
 import { Icon } from "@iconify/react";
 import * as React from "react";
 import { useState } from "react";
+
+import { cn } from "@/lib/utils";
+
 import { Input, type InputProps } from "./input";
 import { InputIcon } from "./input-icon";
 
@@ -33,11 +35,11 @@ const InputPassword = React.forwardRef<HTMLInputElement, InputPasswordProps>(
 				)}
 
 				<div
-					className="absolute right-0 top-0 h-full w-10 flex justify-center items-center rounded-md rounded-l-none"
+					className="absolute right-0 top-0 flex h-full w-10 items-center justify-center rounded-md rounded-l-none"
 					aria-invalid={props["aria-invalid"]}
 				>
 					<button
-						className="rounded-l-none active:scale-90 w-full h-full flex items-center justify-center text-muted-foreground hover:text-foreground mr-1"
+						className="mr-1 flex size-full items-center justify-center rounded-l-none text-muted-foreground hover:text-foreground active:scale-90"
 						type="button"
 						onClick={() => {
 							setShowPassword(!showPassword);

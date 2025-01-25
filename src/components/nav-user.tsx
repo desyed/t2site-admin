@@ -11,7 +11,13 @@ import {
   Plus,
   Settings,
 } from 'lucide-react';
+import { useNavigate } from 'react-router';
+import { toast } from 'sonner';
 
+import type { TOrganization} from '@/app/auth/authStore';
+
+import { useAuthStore } from '@/app/auth/authStore';
+import { changeCurrentOrganizationMutation } from '@/app/organization/organizationApi';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -31,17 +37,16 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { TOrganization, useAuthStore } from '@/app/auth/authStore';
-import { Theme, useTheme } from './theme-provider';
 import { useAuth } from '@/contexts/AuthProvider';
+import { useApi } from '@/hooks/use-api';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
+
+import type { Theme} from './theme-provider';
+
 import { CreateOrganizationDialog } from './dialogs/create-organization-dialog';
 import { RoleBadge } from './role-badge';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { useApi } from '@/hooks/use-api';
-import { changeCurrentOrganizationMutation } from '@/app/organization/organizationApi';
-import { toast } from 'sonner';
-import { useNavigate } from 'react-router';
+import { useTheme } from './theme-provider';
 
 export function NavUser() {
   const authUser = useAuthStore((state) => state.user);
@@ -87,9 +92,9 @@ export function NavUser() {
             <DropdownMenuTrigger asChild>
               <SidebarMenuButton
                 size="lg"
-                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground rounded-lg"
+                className="rounded-lg data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
               >
-                <Avatar className="h-8 w-8 rounded-full">
+                <Avatar className="size-8 rounded-full">
                   <AvatarImage
                     src={authUser?.avatar ?? ''}
                     alt={authUser?.name}
@@ -108,7 +113,7 @@ export function NavUser() {
               </SidebarMenuButton>
             </DropdownMenuTrigger>
             <DropdownMenuContent
-              className="md:min-w-80 rounded-md"
+              className="rounded-md md:min-w-80"
               side={isMobile ? 'top' : 'left'}
               align="end"
               sideOffset={4}
@@ -118,8 +123,8 @@ export function NavUser() {
                   Signed in as
                 </DropdownMenuLabel>
                 <DropdownMenuItem className="p-0 font-normal">
-                  <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm  flex-1">
-                    <Avatar className="h-9 w-9 rounded-full">
+                  <div className="flex flex-1 items-center gap-2 px-1 py-1.5 text-left  text-sm">
+                    <Avatar className="size-9 rounded-full">
                       <AvatarImage
                         src={authUser?.avatar ?? ''}
                         alt={authUser?.name}
@@ -129,7 +134,7 @@ export function NavUser() {
                       </AvatarFallback>
                     </Avatar>
                     <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-semibold text-md">
+                      <span className="text-md truncate font-semibold">
                         {authUser?.name}
                       </span>
                       <span className="truncate text-xs">
@@ -151,7 +156,7 @@ export function NavUser() {
                       <DropdownMenuItem
                         onSelect={() => navigate('/settings/organization')}
                       >
-                        <Avatar className="h-7 w-7 rounded-lg">
+                        <Avatar className="size-7 rounded-lg">
                           <AvatarImage
                             src={
                               authOrganization?.currentOrganization?.logo ?? ''
@@ -194,7 +199,7 @@ export function NavUser() {
                   <DropdownMenuLabel className="uppercase">
                     Other Organizations
                   </DropdownMenuLabel>
-                  <div className="max-h-[calc(100vh-55vh)] overflow-x-hidden site-scrollbar">
+                  <div className="site-scrollbar max-h-[calc(100vh-55vh)] overflow-x-hidden">
                     {authOrganization?.organizations.map(
                       (organization) =>
                         organization.id !==
@@ -205,7 +210,7 @@ export function NavUser() {
                             }
                             key={organization.id}
                           >
-                            <Avatar className="h-7 w-7 rounded-lg">
+                            <Avatar className="size-7 rounded-lg">
                               <AvatarImage
                                 src={organization.logo ?? ''}
                                 alt={organization.name ?? ''}
@@ -276,7 +281,7 @@ export function NavUser() {
                 </DropdownMenuSub>
                 <DropdownMenuItem>
                   <PartyPopper size={16} />
-                  What's new
+                  {`What's`} new
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <Sparkles />
@@ -287,7 +292,7 @@ export function NavUser() {
                   onSelect={() => {
                     logout();
                   }}
-                  className="w-full justify-start text-sm h-8 hover:bg-destructive/20 hover:text-destructive text-destructive/80 focus:text-destructive/80 focus:bg-destructive/20"
+                  className="h-8 w-full justify-start text-sm text-destructive/80 hover:bg-destructive/20 hover:text-destructive focus:bg-destructive/20 focus:text-destructive/80"
                 >
                   <LogOut />
                   Log out

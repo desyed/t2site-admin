@@ -1,13 +1,15 @@
-import Brand from "@/components/Brand";
-import { ModeToggle } from "@/components/mode-toggle";
-import { Alert } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
 import { AlertCircle, RefreshCw } from "lucide-react";
 import { useRouteError } from  "react-router";
 import { isRouteErrorResponse } from  "react-router";
 
+import Brand from "@/components/Brand";
+import { ModeToggle } from "@/components/mode-toggle";
+import { Alert } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+
 export default function ErrorBoundary() {
 	const error = useRouteError();
+	// eslint-disable-next-line no-console
 	console.error(error);
 
 	let errorMessage = "An unexpected error occurred";
@@ -39,7 +41,7 @@ export default function ErrorBoundary() {
 				{errorType === "fetch" ? (
 					<div>
 						<Alert className="mb-5 p-5">
-							<AlertCircle className="h-5 w-5" />
+							<AlertCircle className="size-5" />
 							<p>Check your internet connection or refresh the page.</p>
 						</Alert>
 						<Button
@@ -47,7 +49,7 @@ export default function ErrorBoundary() {
 							className="mt-5"
 							size="lg"
 						>
-							<RefreshCw className="mr-2 h-5 w-5" />
+							<RefreshCw className="mr-2 size-5" />
 							Refresh
 						</Button>
 					</div>
@@ -58,14 +60,14 @@ export default function ErrorBoundary() {
 						</h1>
 						<p className="text-lg text-muted">{errorMessage}</p>
 						<Button onClick={() => window.location.reload()} size="lg">
-							<RefreshCw className="mr-2 h-5 w-5" />
+							<RefreshCw className="mr-2 size-5" />
 							Refresh
 						</Button>
 					</div>
 				)}
 				{/* Show error stack in development mode */}
 				{import.meta.env.DEV && error instanceof Error && (
-					<div className="mt-5 rounded-lg dark:bg-red-700/20 p-4 dark:text-red-600 dark:border-red-600 border border-red-500 text-red-500 bg-red-400/10">
+					<div className="mt-5 rounded-lg border border-red-500 bg-red-400/10 p-4 text-red-500 dark:border-red-600 dark:bg-red-700/20 dark:text-red-600">
 						<pre className="whitespace-pre-wrap text-left">{error.stack}</pre>
 					</div>
 				)}

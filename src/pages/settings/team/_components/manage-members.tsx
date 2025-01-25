@@ -1,8 +1,11 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Search, UserPlus } from "lucide-react";
 import { useMemo } from "react";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
 import type { Member } from "../_types";
+
 import { columns } from "./members-column";
 import { MembersDataTable } from "./members-data-table";
 
@@ -42,10 +45,10 @@ export function ManageMembers() {
 
 	return (
 		<div>
-			<h3 className="text-lg font-medium mb-3">Manage Members</h3>
+			<h3 className="mb-3 text-lg font-medium">Manage Members</h3>
 			<div className="flex items-center justify-between">
 				<div className="relative">
-					<Search className="size-4 absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground" />
+					<Search className="absolute left-2 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
 					<Input placeholder="Search members..." className="h-8 w-72 pl-8" />
 				</div>
 

@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -11,7 +13,6 @@ import {
 import { buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
 
 interface DeleteProjectAlertProps {
 	children: React.ReactNode;
@@ -28,8 +29,9 @@ export const DeleteProjectAlert = ({ children }: DeleteProjectAlertProps) => {
 				<AlertDialogTitle>Delete Project</AlertDialogTitle>
 				<AlertDialogDescription>
 					Are you sure you want to delete this project? This action cannot be
-					undone. To confirm, please type the project name "
-					<span className="font-semibold">{projectName}</span>" below.
+					undone. To confirm, please type the project name {`"`}
+					<span className="font-semibold">{projectName}</span>
+					{`"`} below.
 				</AlertDialogDescription>
 				<Input
 					className="mt-2"
