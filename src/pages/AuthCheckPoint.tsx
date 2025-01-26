@@ -5,7 +5,6 @@ import { authStore } from '@/app/auth/authStore';
 import Brand from '@/components/Brand';
 import { ModeToggle } from '@/components/mode-toggle';
 import { getQuery } from '@/lib/utils';
-import { logDev } from '@/lib/utils';
 
 export default function AuthCheckPoint() {
   const navigate = useNavigate();
@@ -24,7 +23,6 @@ export default function AuthCheckPoint() {
         navigate(from, { replace: true });
       }
     }
-    logDev('initSession');
     initSession();
   }, [navigate]);
 
