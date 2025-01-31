@@ -14,6 +14,7 @@ export async function loader() {
 let todos = [{ id: 1, title: 'Do Laundry' }];
 
 const getTodos = async () => {
+  console.log('asd');
   return todos;
 };
 
@@ -30,6 +31,8 @@ export function Component() {
   const { data } = useQuery({
     queryKey: ['todos'],
     queryFn: getTodos,
+    staleTime: 45 * 1000,
+    refetchOnMount: true,
   });
 
   // Mutations
@@ -40,6 +43,7 @@ export function Component() {
       queryClient.invalidateQueries({ queryKey: ['todos'] });
     },
   });
+
 
   return (
     <div className="mt-5 flex flex-1 flex-col gap-4 p-5 pt-0">
