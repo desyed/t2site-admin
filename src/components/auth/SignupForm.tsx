@@ -6,10 +6,10 @@ import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-import type { TAuthUser } from '@/app/auth/authStore';
+import type { TAuthUser } from '@/app/auth/auth-store';
 
-import { singupMutation } from '@/app/auth/authApi';
-import { useAuthStore } from '@/app/auth/authStore';
+import { singupApi } from '@/app/auth/auth-api';
+import { useAuthStore } from '@/app/auth/auth-store';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -66,7 +66,7 @@ export default function SingupForm() {
   const { executeMutation, loading } = useApi<{
     user: TAuthUser;
     access_token: string;
-  }>(singupMutation, {
+  }>(singupApi, {
     toast: true,
   });
 

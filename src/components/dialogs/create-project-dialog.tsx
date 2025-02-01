@@ -27,21 +27,21 @@ export function CreateProjectDialog() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>
-          <DialogTitle className="mb-2 text-xl">Create Project</DialogTitle>
+          <DialogTitle className="mb-1 text-xl">Create Project</DialogTitle>
           <DialogDescription className="text-md pb-2">
             Projects help you organize and track your work efficiently.
             <br />
-           <div className="flex">
-           <HyperLink href="" className="flex max-sm:justify-center">Learn more about projects</HyperLink>
-           </div>
+            <div className="flex">
+              <HyperLink href="" className="flex max-sm:justify-center">Learn more about projects</HyperLink>
+            </div>
           </DialogDescription>
           <Separator />
         </DialogHeader>
-        <CreateProjectForm  />
+        <CreateProjectForm />
         <div className="my-2">
           <p className="text-sm text-muted-foreground">Continuing will start a monthly Pro plan subscription.</p>
           <HyperLink href="" className="flex max-sm:justify-center">Learn More</HyperLink>
-         </div>
+        </div>
       </DialogContent>
     </Dialog>
   );

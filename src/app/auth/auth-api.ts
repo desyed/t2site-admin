@@ -3,55 +3,55 @@ import { api } from '@/lib/api';
 /**
  * @POST /auth/login
  */
-export function loginMutation(payload: object) {
+export function loginApi(payload: object) {
   return api.post('/auth/login', payload);
 }
 
 /**
  * @POST /auth/signup
  */
-export function singupMutation(payload: object) {
+export function singupApi(payload: object) {
   return api.post('/auth/signup', payload);
 }
 
 /**
  * @GET /auth/refresh
  */
-export function getTokenQuery() {
+export function getTokenApi() {
   return api.get('/auth/refresh');
 }
 
 /**
  * @DELETE /auth/logout
  */
-export function logoutMutation() {
+export function logoutApi() {
   return api.delete('/auth/logout');
 }
 
 /**
  * @GET /session
  */
-export function getSessionQuery() {
+export function getSessionApi() {
   return api.get('/session');
 }
 
 /**
  * @GET /session
  */
-export function getProfileQuery() {
+export function getProfileApi() {
   return api.get('/profile');
 }
 
 /**
  * @POST /send-email-verification
  */
-export async function sendEmailVericationMutation() {
+export async function sendEmailVericationApi() {
   return api.post('/verification/email/send');
 }
 
 /**
  * @POST /verify-email
  */
-export function verifyEmailMutation(payload: object) {
+export function verifyEmailApi(payload: object) {
   return api.post('/verification/email/verify', payload);
 }

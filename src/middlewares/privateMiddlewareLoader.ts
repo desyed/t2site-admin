@@ -1,6 +1,6 @@
 import { redirect } from "react-router";
 
-import { authPreSessionLoader } from "@/app/auth/authLoader";
+import { authPreSessionLoader } from "@/app/auth/auth-loader";
 
 export async function privateMiddlewareLoader() {
   const authUser = await authPreSessionLoader();

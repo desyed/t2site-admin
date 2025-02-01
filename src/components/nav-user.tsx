@@ -14,10 +14,10 @@ import {
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
-import type { TOrganization} from '@/app/auth/authStore';
+import type { TOrganization } from '@/app/auth/auth-store';
 
-import { useAuthStore } from '@/app/auth/authStore';
-import { changeCurrentOrganizationMutation } from '@/app/organization/organizationApi';
+import { useAuthStore } from '@/app/auth/auth-store';
+import { changeCurrentOrganizationApi } from '@/app/organization/organization-api';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -42,15 +42,17 @@ import { useApi } from '@/hooks/use-api';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 
-import type { Theme} from './theme-provider';
+import type { Theme } from './theme-provider';
 
 import { CreateOrganizationDialog } from './dialogs/create-organization-dialog';
-import { RoleBadge } from './role-badge';
 import { useTheme } from './theme-provider';
+import MemberRoleBadge from "./organization/member-role-badge";
 
 export function NavUser() {
   const authUser = useAuthStore((state) => state.user);
-  const authOrganization = useAuthStore((state) => state.userOrganization);
+
+  const userOrganizations = useAuthStore((state) => state.userOrganization);
+
   const isMobile = useIsMobile();
 
   const { theme, setTheme } = useTheme();
@@ -65,14 +67,14 @@ export function NavUser() {
   const { executeMutation } = useApi<{
     currentOrganizationId: string;
     access_token: string;
-  }>(changeCurrentOrganizationMutation);
+  }>(changeCurrentOrganizationApi);
 
   const handleChangeOrganization = async (organization: TOrganization) => {
     toast.promise(executeMutation({ organizationId: organization.id }), {
       loading: 'Changing organization...',
       success: (result) => {
         if (result.data?.currentOrganizationId) {
-          navigate('/auth?ocr=true');
+          navigate(`/auth?ocr=true&rp=${window.location.pathname}`);
           return `Now organization switched to ${organization.name}`;
         } else {
           return `Failed to change organization!`;
@@ -147,7 +149,7 @@ export function NavUser() {
                   </div>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                {authOrganization?.currentOrganization && (
+                {userOrganizations?.currentOrganization && (
                   <>
                     <DropdownMenuGroup>
                       <DropdownMenuLabel className="uppercase">
@@ -159,22 +161,22 @@ export function NavUser() {
                         <Avatar className="size-7 rounded-lg">
                           <AvatarImage
                             src={
-                              authOrganization?.currentOrganization?.logo ?? ''
+                              userOrganizations?.currentOrganization?.logo ?? ''
                             }
                             alt={
-                              authOrganization?.currentOrganization?.name ?? ''
+                              userOrganizations?.currentOrganization?.name ?? ''
                             }
                           />
                           <AvatarFallback className="rounded-lg">
-                            {authOrganization?.currentOrganization?.name ?? ''}
+                            {userOrganizations?.currentOrganization?.name ?? ''}
                           </AvatarFallback>
                         </Avatar>
                         <span className="line-clamp-2">
-                          {authOrganization?.currentOrganization?.name}
+                          {userOrganizations?.currentOrganization?.name}
                         </span>
-                        <RoleBadge
+                        <MemberRoleBadge
                           role={
-                            authOrganization?.currentOrganization?.role ??
+                            userOrganizations?.currentOrganization?.role ??
                             'none'
                           }
                         />
@@ -200,10 +202,10 @@ export function NavUser() {
                     Other Organizations
                   </DropdownMenuLabel>
                   <div className="site-scrollbar max-h-[calc(100vh-55vh)] overflow-x-hidden">
-                    {authOrganization?.organizations.map(
+                    {userOrganizations?.organizations.map(
                       (organization) =>
                         organization.id !==
-                          authOrganization?.currentOrganization?.id && (
+                        userOrganizations?.currentOrganization?.id && (
                           <DropdownMenuItem
                             onSelect={() =>
                               handleChangeOrganization(organization)
@@ -220,7 +222,7 @@ export function NavUser() {
                               </AvatarFallback>
                             </Avatar>
                             <span>{organization.name}</span>
-                            <RoleBadge role={organization.role} />
+                            <MemberRoleBadge role={organization.role} />
                           </DropdownMenuItem>
                         )
                     )}

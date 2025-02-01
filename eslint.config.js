@@ -53,6 +53,7 @@ export default [
       "no-console": "warn",
       "@typescript-eslint/consistent-type-imports": "error",
       "tailwindcss/no-custom-classname": "off",
+      "typescript-eslint/no-explicit-any": "off",
     },
     settings: {
       react: {

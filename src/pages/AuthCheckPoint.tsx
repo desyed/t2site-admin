@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
-import { authStore } from '@/app/auth/authStore';
+import { authStore } from '@/app/auth/auth-store';
 import Brand from '@/components/Brand';
 import { ModeToggle } from '@/components/mode-toggle';
 import { getQuery } from '@/lib/utils';
+import { queryClient } from "@/query-client";
 
 export default function AuthCheckPoint() {
   const navigate = useNavigate();
@@ -20,7 +21,9 @@ export default function AuthCheckPoint() {
       if (getQuery('ocr') === 'true') {
         const from = getQuery('rp') ?? '/';
         await authStore.fetchSession(true);
+        queryClient.resetQueries()
         navigate(from, { replace: true });
+
       }
     }
     initSession();

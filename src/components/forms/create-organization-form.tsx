@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import * as z from 'zod';
 
-import { createOrganizationMutation } from '@/app/organization/organizationApi';
+import { createOrganizationApi } from '@/app/organization/organization-api';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -42,7 +42,7 @@ export function CreateOrganizationForm({ onClose }: { onClose: () => void }) {
   const { loading, executeMutation } = useApi<{
     access_token: string;
     organizationId: string;
-  }>(createOrganizationMutation, {
+  }>(createOrganizationApi, {
     toast: true,
   });
 
@@ -58,7 +58,7 @@ export function CreateOrganizationForm({ onClose }: { onClose: () => void }) {
           position: 'top-center',
           duration: 3000,
         });
-        navigate('/auth?ocr=true');
+        navigate(`/auth?ocr=true&rp=${window.location.pathname}`);
         onClose();
       } else {
         toast.error('Failed to create organization!', {

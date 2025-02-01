@@ -1,7 +1,7 @@
 import { createContext, type ReactNode, useContext } from "react";
 import { toast } from "sonner";
 
-import { type TAuthUser, useAuthStore } from "@/app/auth/authStore";
+import { type TAuthUser, useAuthStore } from "@/app/auth/auth-store";
 
 interface AuthContextType {
 	isAuthenticated: boolean;
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 			error: "Sign out failed!",
 			position: "top-center",
 			duration: 1000,
-			finally: () => {},
+			finally: () => { },
 		});
 	};
 

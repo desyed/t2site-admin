@@ -36,7 +36,7 @@ export function CreateOrganizationDialog() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>
-          <DialogTitle className="mb-2 text-xl">
+          <DialogTitle className="mb-1 text-xl">
             Create Organization
           </DialogTitle>
           <DialogDescription className="text-md pb-2">

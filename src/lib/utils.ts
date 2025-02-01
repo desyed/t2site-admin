@@ -73,9 +73,9 @@ export function handleApiErrorException<TError = any>(
   let errors: TError | null = null;
   let responseType = null;
   let code = 'UNKNOWN';
-
+  let status = null;
   if (err instanceof AxiosError) {
-    const status = err.response?.status;
+    status = err.response?.status;
     code = err.response?.data?.code ?? err.code;
 
     if (err.code === 'ERR_NETWORK') {
@@ -84,6 +84,7 @@ export function handleApiErrorException<TError = any>(
       toast &&
         toastMessage.warning(responseType, {
           description: message,
+          position: 'top-center',
         });
     } else if (status === 422) {
       message = 'Request is unprocessable.';
@@ -92,6 +93,7 @@ export function handleApiErrorException<TError = any>(
       toast &&
         toastMessage.warning(responseType, {
           description: message,
+          position: 'top-center',
         });
     } else if (status === 400) {
       responseType = 'Bad Request';
@@ -99,6 +101,7 @@ export function handleApiErrorException<TError = any>(
       toast &&
         toastMessage.warning(responseType, {
           description: message,
+          position: 'top-center',
         });
     } else if (status === 401) {
       message =
@@ -108,6 +111,7 @@ export function handleApiErrorException<TError = any>(
       toast &&
         toastMessage.warning(responseType, {
           description: message,
+          position: 'top-center',
         });
     } else if (status === 403) {
       message =
@@ -117,6 +121,7 @@ export function handleApiErrorException<TError = any>(
       toast &&
         toastMessage.warning(responseType, {
           description: message,
+          position: 'top-center',
         });
     } else if (status === 404) {
       message =
@@ -126,6 +131,7 @@ export function handleApiErrorException<TError = any>(
       toast &&
         toastMessage.warning(responseType, {
           description: message,
+          position: 'top-center',
         });
     } else if (status === 500) {
       message = 'Server Error: Please try again later.';
@@ -140,6 +146,7 @@ export function handleApiErrorException<TError = any>(
       toast &&
         toastMessage.error(responseType, {
           description: message,
+          position: 'top-center',
         });
     }
   } else {
@@ -152,7 +159,7 @@ export function handleApiErrorException<TError = any>(
     logDev('Unexpected error:', err);
   }
 
-  return { errors, responseType, message, code };
+  return { errors, responseType, message, code, status };
 }
 
 export async function handleApi<TResponse = any, TError = any>(

@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 import { handleApi } from '@/lib/utils';
 
-import { getSessionQuery, logoutMutation } from './authApi';
+import { getSessionApi, logoutApi } from './auth-api';
 
 // Types
 export type TOrganization = {
@@ -91,7 +91,7 @@ export const useAuthStore = create<TAuthState>((set, get) => ({
     if (!get().user || refetch) {
       try {
         const { data } = await handleApi(
-          getSessionQuery,
+          getSessionApi,
           {},
           { toast: true }
         );
@@ -120,7 +120,7 @@ export const useAuthStore = create<TAuthState>((set, get) => ({
   },
 
   logout: async () => {
-    const { success } = await handleApi(logoutMutation, {}, { toast: true });
+    const { success } = await handleApi(logoutApi, {}, { toast: true });
     if (success) {
       get().resetAuth();
     }

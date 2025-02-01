@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-import { loginMutation } from '@/app/auth/authApi';
-import { useAuthStore } from '@/app/auth/authStore';
+import { loginApi } from '@/app/auth/auth-api';
+import { useAuthStore } from '@/app/auth/auth-store';
 import Alert from '@/components/Alert';
 import { Button } from '@/components/ui/button';
 import {
@@ -57,7 +57,7 @@ export default function LoginForm() {
   async function onSubmit(values: z.infer<typeof loginSchema>) {
     setLoading(true);
 
-    toast.promise(loginMutation(values), {
+    toast.promise(loginApi(values), {
       loading: 'Logging in...',
       success: async (result) => {
         if (result.data?.access_token && result.data.user.email) {

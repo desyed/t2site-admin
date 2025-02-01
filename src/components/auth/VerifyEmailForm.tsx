@@ -6,10 +6,10 @@ import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-import type { TAuthUser } from '@/app/auth/authStore';
+import type { TAuthUser } from '@/app/auth/auth-store';
 
-import { verifyEmailMutation } from '@/app/auth/authApi';
-import { useAuthStore } from '@/app/auth/authStore';
+import { verifyEmailApi } from '@/app/auth/auth-api';
+import { useAuthStore } from '@/app/auth/auth-store';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -36,7 +36,7 @@ export default function VerifyEmailForm() {
   const { executeMutation: verifyEmail, loading } = useApi<{
     user: TAuthUser;
     access_token: string;
-  }>(verifyEmailMutation, {
+  }>(verifyEmailApi, {
     toast: true,
   });
   const form = useForm<z.infer<typeof FormSchema>>({

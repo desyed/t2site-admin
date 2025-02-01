@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { sendEmailVericationMutation } from "@/app/auth/authApi";
+import { sendEmailVericationApi } from "@/app/auth/auth-api";
 import VerifyEmailForm from "@/components/auth/VerifyEmailForm";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthProvider";
@@ -15,7 +15,7 @@ export function Component() {
 	const handleSendVerificationCode = () => {
 		setLoading(true);
 		toast.promise(
-			sendEmailVericationMutation(),
+			sendEmailVericationApi(),
 			{
 				position: "top-center",
 				duration: 1000,
