@@ -2,7 +2,6 @@ import { z } from "zod";
 
 export const MAX_MEMBERS = 10;
 export const roles = ["member", "admin", "owner"] as const;
-export type Role = typeof roles[number];
 
 export const inviteMemberSchema = z.object({
   members: z
@@ -17,4 +16,3 @@ export const inviteMemberSchema = z.object({
   message: z.string().optional(),
 });
 
-export type InviteMemberInput = z.infer<typeof inviteMemberSchema>;

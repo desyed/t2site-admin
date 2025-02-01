@@ -46,8 +46,8 @@ export function inviteOrganizationMembersApi(payload: object, organizationId = '
 /**
  * @GET /organizations/invited-members/:organizationId?
  */
-export function getInvitedMembersApi(organizationId = '') {
-  return api.get(`/organizations/invited-members/${organizationId}`);
+export function getInvitedMembersApi<T = any>(organizationId = '') {
+  return api.get<T>(`/organizations/invited-members/${organizationId}`);
 }
 
 
