@@ -1,6 +1,6 @@
 import { AlertCircle, RefreshCw } from "lucide-react";
-import { useRouteError } from  "react-router";
-import { isRouteErrorResponse } from  "react-router";
+import { useRouteError } from "react-router";
+import { isRouteErrorResponse } from "react-router";
 
 import Brand from "@/components/Brand";
 import { ModeToggle } from "@/components/mode-toggle";

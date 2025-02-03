@@ -4,16 +4,37 @@ import { cn } from "@/lib/utils";
 
 const Table = React.forwardRef<
 	HTMLTableElement,
-	React.HTMLAttributes<HTMLTableElement>
->(({ className, ...props }, ref) => (
-	<div className="relative w-full overflow-auto">
+	React.HTMLAttributes<HTMLTableElement> & {
+		responsive?: boolean;
+		minWidth?: string;
+		bgBorder?: boolean;
+	}
+>(({ className, responsive = true, bgBorder = true, ...props }, ref) => {
+
+	if (responsive) {
+		return <div className="grid">
+			<div className={cn("w-full overflow-x-auto site-scrollbar", {
+				"border rounded-lg bg-accent/5": bgBorder
+			})}>
+				<table
+					ref={ref}
+					className={cn("w-full caption-bottom text-sm", className)}
+					{...props}
+				/>
+			</div>
+		</div>
+	}
+	return <div className={cn("relative w-full overflow-auto", {
+		"border rounded-lg bg-accent/5": bgBorder
+	})} >
 		<table
 			ref={ref}
 			className={cn("w-full caption-bottom text-sm", className)}
 			{...props}
 		/>
 	</div>
-));
+
+});
 Table.displayName = "Table";
 
 const TableHeader = React.forwardRef<
@@ -73,7 +94,7 @@ const TableHead = React.forwardRef<
 	<th
 		ref={ref}
 		className={cn(
-			"h-12 px-2 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
+			"h-12 px-2 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&:first-child]:pl-3 [&:last-child]:pr-3",
 			className,
 		)}
 		{...props}
@@ -87,7 +108,7 @@ const TableCell = React.forwardRef<
 >(({ className, ...props }, ref) => (
 	<td
 		ref={ref}
-		className={cn("px-1 py-1.5 align-middle [&:has([role=checkbox])]:pr-0", className)}
+		className={cn("px-1 py-1.5 align-middle [&:has([role=checkbox])]:pr-0 [&:first-child]:pl-3 [&:last-child]:pr-3", className)}
 		{...props}
 	/>
 ));
@@ -104,6 +125,7 @@ const TableCaption = React.forwardRef<
 	/>
 ));
 TableCaption.displayName = "TableCaption";
+
 
 export {
 	Table,

@@ -11,7 +11,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
-import { CreateOrganizationForm } from '../forms/create-organization-form';
+import { CreateOrganizationForm } from './create-organization-form';
 import HyperLink from '../ui/hyper-link';
 import { Separator } from '../ui/separator';
 

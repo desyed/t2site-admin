@@ -1,20 +1,23 @@
 import { createBrowserRouter, Navigate } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
 
-import ErrorBoundary from '@/components/ErrorBoundary';
-import SplashScreen from '@/components/SplashScreen';
-import AuthLayout from '@/layouts/AuthLayout';
-import PrivateLayout from '@/layouts/PrivateLayout';
-import RootLayout from '@/layouts/RootLayout';
-import VerifyLayout from '@/layouts/VerifyLayout';
+import ErrorBoundary from '@/components/error-boundary';
+import SplashScreen from '@/components/splash-screen';
+import AuthLayout from '@/layouts/auth-layout';
+import PrivateLayout from '@/layouts/private-layout';
+import RootLayout from '@/layouts/root-layout';
+import VerifyLayout from '@/layouts/verify-layout';
 import NotFound from '@/pages/404';
-import AuthCheckPoint from '@/pages/AuthCheckPoint';
-import LoginPage from '@/pages/login/LoginPage';
-import SignupPage from '@/pages/signup/SignupPage';
+import AuthCheckPoint from '@/pages/auth-check-point';
+import LoginPage from '@/pages/login';
+import SignupPage from '@/pages/signup';
 
-import { authMiddlewareLoader } from './middlewares/authMiddlewareLoader';
-import { privateMiddlewareLoader } from './middlewares/privateMiddlewareLoader';
-import { verifyMiddlewareLoader } from './middlewares/verifyMiddlewareLoader';
+import {
+  authMiddlewareLoader,
+  privateMiddlewareLoader,
+  verifyMiddlewareLoader
+} from './middlewares/auth-middleware';
+
 import NotFoundPrivate from './pages/404-private';
 import NavSettings from './pages/settings/_components/nav-settings';
 import NotFoundSettings from './pages/settings/404';
@@ -32,11 +35,11 @@ const routes = createBrowserRouter([
         children: [
           {
             index: true,
-            lazy: () => import('@/pages/home/HomePage'),
+            lazy: () => import('@/pages/home'),
           },
           {
             path: '/tickets',
-            lazy: () => import('@/pages/tickets/TicketsPage'),
+            lazy: () => import('@/pages/tickets'),
           },
           {
             path: '/settings',
@@ -52,7 +55,7 @@ const routes = createBrowserRouter([
                   {
                     index: true,
                     lazy: () =>
-                      import('@/pages/settings/project/ProjectSettingsPage'),
+                      import('@/pages/settings/project'),
                   },
                 ],
               },
@@ -63,14 +66,14 @@ const routes = createBrowserRouter([
                     index: true,
                     lazy: () =>
                       import(
-                        '@/pages/settings/organization/general/OrgGeneralSettingsPage'
+                        '@/pages/settings/organization/general'
                       ),
                   },
                   {
                     path: '/settings/organization/members',
                     lazy: () =>
                       import(
-                        '@/pages/settings/organization/members/MemberSettingsPage'
+                        '@/pages/settings/organization/members'
                       ),
                   },
                 ],
@@ -108,7 +111,7 @@ const routes = createBrowserRouter([
         children: [
           {
             index: true,
-            lazy: () => import('@/pages/verify/VerifyPage'),
+            lazy: () => import('@/pages/verify'),
           },
         ],
       },

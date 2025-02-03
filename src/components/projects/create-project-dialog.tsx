@@ -11,7 +11,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
-import { CreateProjectForm } from "../forms/create-project-form";
+import { CreateProjectForm } from "./create-project-form";
 import HyperLink from "../ui/hyper-link";
 import { Separator } from "../ui/separator";
 

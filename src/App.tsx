@@ -6,7 +6,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
-import { AuthProvider } from '@/contexts/AuthProvider';
+import { AuthProvider } from '@/contexts/auth-provider';
 
 import Routers from './routes';
 import { queryClient } from "./query-client";

@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { logDev } from '@/lib/utils';
 
-import { CreateProjectDialog } from './dialogs/create-project-dialog';
+import { CreateProjectDialog } from './create-project-dialog';
 
 export function ProjectsMenu() {
   const [open, setOpen] = useState(false);

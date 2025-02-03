@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 
-import OAuthButton from "@/components/auth/OAuthButton";
-import SingupForm from "@/components/auth/SignupForm";
+import OAuthButton from "@/components/auth/oauth-button";
+import SingupForm from "@/components/auth/signup-form";
 
 export default function SignupPage() {
 	return (

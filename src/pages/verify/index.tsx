@@ -3,9 +3,9 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { sendEmailVericationApi } from "@/app/auth/auth-api";
-import VerifyEmailForm from "@/components/auth/VerifyEmailForm";
+import VerifyEmailForm from "@/components/auth/verify-email-form";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/contexts/AuthProvider";
+import { useAuth } from "@/contexts/auth-provider";
 import { handleApiErrorException } from "@/lib/utils";
 
 export function Component() {

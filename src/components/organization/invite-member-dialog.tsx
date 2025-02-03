@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useAuthStore } from "@/app/auth/auth-store";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
-import { InviteMemberForm } from "../forms/invite-member-form";
+import { InviteMemberForm } from "./invite-member-form";
 import { Button } from "../ui/button";
 
 

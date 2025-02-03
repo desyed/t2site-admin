@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { Link } from 'react-router';
 import { toast } from 'sonner';
 
-import LoginForm from '@/components/auth/LoginForm';
-import OAuthButton from '@/components/auth/OAuthButton';
+import LoginForm from '@/components/auth/login-form';
+import OAuthButton from '@/components/auth/oauth-button';
 import { getQuery, removeQueryFromUrl } from '@/lib/utils';
 
 export default function LoginPage() {

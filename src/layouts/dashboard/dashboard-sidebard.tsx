@@ -32,7 +32,7 @@ const data = {
       url: '/tickets',
       icon: Tickets,
     },
-    
+
   ],
   navSecondary: [
     {
@@ -56,7 +56,7 @@ export default function DashBoardSidebar(props: DashBoardSidebarProps) {
         <SidebarContent>
           <NavMain items={data.navMain} />
         </SidebarContent>
-				<NavMain items={data.navSecondary} />
+        <NavMain items={data.navSecondary} />
         <SidebarFooter className="py-0 pb-2">
           <NavUser />
         </SidebarFooter>

@@ -1,4 +1,4 @@
-import DashBoardHeader from './DashBoardHeader';
+import DashBoardHeader from './dashboard-header';
 
 export type DashBoardContentProps = {
   children: React.ReactNode;
@@ -11,7 +11,7 @@ export default function DashBoardContent(props: DashBoardContentProps) {
   return (
     <>
       <DashBoardHeader />
-      <div className="mt-12">{props.children}</div>
+      <div className="mt-12 flex-1 min-w-0 min-h-0 whitespace-normal">{props.children}</div>
     </>
   );
 }

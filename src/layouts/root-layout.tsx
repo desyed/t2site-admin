@@ -1,7 +1,7 @@
 import { Outlet, useNavigation } from "react-router";
 import TopBarProgress from "react-topbar-progress-indicator";
 
-import RevalidateLoader from "@/components/RevalidateLoader";
+import RevalidateLoader from "@/components/revalidate-loader";
 
 TopBarProgress.config({
 	barColors: {

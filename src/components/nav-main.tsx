@@ -1,11 +1,12 @@
 
 import type {
-  LucideIcon} from 'lucide-react';
+  LucideIcon
+} from 'lucide-react';
 
 import {
   ChevronRight
 } from 'lucide-react';
-import { Link, useLocation } from 'react-router';
+import { Link, NavLink, useLocation } from 'react-router';
 
 import {
   Collapsible,
@@ -19,6 +20,7 @@ import {
   SidebarMenuItem,
   SidebarMenuSub,
   SidebarMenuSubButton,
+  useSidebar,
   SidebarMenuSubItem,
 
 } from '@/components/ui/sidebar';
@@ -39,6 +41,7 @@ export function NavMain({
   }[];
 }) {
   const { pathname } = useLocation();
+  const { toggleSidebar, isMobile } = useSidebar();
   return (
     <SidebarGroup>
       <SidebarMenu>
@@ -51,14 +54,24 @@ export function NavMain({
           >
             <SidebarMenuItem>
               <CollapsibleTrigger asChild>
-                <SidebarMenuButton className={cn({
-                  'bg-accent': isActivePath(pathname, item.url),
-                })} asChild tooltip={item.title}>
+                <SidebarMenuButton asChild tooltip={item.title}>
                   {!item.items?.length ? (
-                    <Link to={item.url}>
-                      {item.icon && <item.icon />}
-                      <span className="font-semibold">{item.title}</span>
-                    </Link>
+                    <NavLink to={item.url} onClick={() => {
+                      if (isMobile) {
+                        toggleSidebar();
+                      }
+                    }}>
+                      {({ isActive }) => {
+                        return (
+                          <span className={cn("flex items-center gap-2 [&_svg]:size-4", {
+                            'text-primary': isActive,
+                          })}>
+                            {item.icon && <item.icon />}
+                            <span className="font-semibold">{item.title}</span>
+                          </span>
+                        )
+                      }}
+                    </NavLink>
                   ) : (
                     <span>
                       {item.icon && <item.icon />}

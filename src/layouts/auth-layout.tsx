@@ -1,11 +1,11 @@
-import { Outlet } from  "react-router";
+import { Outlet } from "react-router";
 
 import Brand from "@/components/Brand";
 import { ModeToggle } from "@/components/mode-toggle";
 
 export default function AuthLayout() {
 
-	
+
 	return (
 		<div className="relative flex min-h-screen flex-col">
 			<div className="absolute right-0 flex h-[90px] items-center justify-between px-6 sm:px-10">

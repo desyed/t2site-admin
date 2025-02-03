@@ -37,14 +37,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { useAuth } from '@/contexts/AuthProvider';
+import { useAuth } from '@/contexts/auth-provider';
 import { useApi } from '@/hooks/use-api';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 
 import type { Theme } from './theme-provider';
 
-import { CreateOrganizationDialog } from './dialogs/create-organization-dialog';
+import { CreateOrganizationDialog } from './organization/create-organization-dialog';
 import { useTheme } from './theme-provider';
 import MemberRoleBadge from "./organization/member-role-badge";
 

@@ -1,19 +1,19 @@
 import { useEffect } from "react";
-import { Outlet, useNavigate } from  "react-router";
+import { Outlet, useNavigate } from "react-router";
 
 import Brand from "@/components/Brand";
 import { ModeToggle } from "@/components/mode-toggle";
-import { useAuth } from "@/contexts/AuthProvider";
+import { useAuth } from "@/contexts/auth-provider";
 
 export default function VerifyLayout() {
-	const {isAuthenticated} = useAuth();
+	const { isAuthenticated } = useAuth();
 	const navigate = useNavigate();
 
-  useEffect(()=>{
-		if(!isAuthenticated){
+	useEffect(() => {
+		if (!isAuthenticated) {
 			navigate('/login');
-		}	
-	},[isAuthenticated, navigate]);
+		}
+	}, [isAuthenticated, navigate]);
 
 	return (
 		<div className="relative flex min-h-screen flex-col">

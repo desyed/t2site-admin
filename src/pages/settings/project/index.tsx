@@ -52,7 +52,7 @@ export function Component() {
 								<Label htmlFor="projectName">Display Name</Label>
 								<Input id="projectName" defaultValue="Default project" />
 							</div>
-							
+
 							<div className="space-y-2">
 								<Label>Project Region</Label>
 								<div className="flex items-center space-x-2">

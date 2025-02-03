@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { Link, useNavigate } from  "react-router";
+import { Link, useNavigate } from "react-router";
 
 import Brand from "@/components/Brand";
 import { ModeToggle } from "@/components/mode-toggle";

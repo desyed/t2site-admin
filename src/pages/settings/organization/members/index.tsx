@@ -8,11 +8,9 @@ export async function loader() {
 }
 
 export function Component() {
-  return (
-    <div>
-      <Members />
-    </div>
-  );
+  return <div>
+    <Members />
+  </div>
 }
 
 
