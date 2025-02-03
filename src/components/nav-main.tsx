@@ -6,7 +6,7 @@ import type {
 import {
   ChevronRight
 } from 'lucide-react';
-import { Link, NavLink, useLocation } from 'react-router';
+import { Link, useLocation } from 'react-router';
 
 import {
   Collapsible,
