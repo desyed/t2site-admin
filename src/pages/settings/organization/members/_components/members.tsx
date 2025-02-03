@@ -1,5 +1,5 @@
 import { MoreHorizontal, Link, ShieldCheck, PencilIcon, XIcon, SparklesIcon, SendIcon } from "lucide-react"
-import { InviteMemberDialog } from "@/components/organization/invite-member-dialog"
+import InviteMemberDialog from "@/components/organization/invite-member-dialog"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"

@@ -36,10 +36,10 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from '@/components/ui/sidebar';
 import { useAuth } from '@/contexts/auth-provider';
 import { useApi } from '@/hooks/use-api';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 
 import type { Theme } from './theme-provider';
@@ -47,13 +47,18 @@ import type { Theme } from './theme-provider';
 import { CreateOrganizationDialog } from './organization/create-organization-dialog';
 import { useTheme } from './theme-provider';
 import MemberRoleBadge from "./organization/member-role-badge";
+import { useState } from "react";
+import InviteMemberDialog from "./organization/invite-member-dialog";
 
 export function NavUser() {
+
+  const [inviteMemberDialogOpen, setInviteMemberDialogOpen] = useState(false);
+
   const authUser = useAuthStore((state) => state.user);
 
   const userOrganizations = useAuthStore((state) => state.userOrganization);
 
-  const isMobile = useIsMobile();
+  const { toggleSidebar, isMobile } = useSidebar();
 
   const { theme, setTheme } = useTheme();
   const handleThemeSelect = (theme: Theme) => {
@@ -90,7 +95,11 @@ export function NavUser() {
     <>
       <SidebarMenu>
         <SidebarMenuItem>
-          <DropdownMenu>
+          <DropdownMenu onOpenChange={(open) => {
+            if (!open && isMobile) {
+              toggleSidebar();
+            }
+          }}>
             <DropdownMenuTrigger asChild>
               <SidebarMenuButton
                 size="lg"
@@ -188,7 +197,7 @@ export function NavUser() {
                         <CreditCard />
                         Billing
                       </DropdownMenuItem>
-                      <DropdownMenuItem>
+                      <DropdownMenuItem onSelect={() => setInviteMemberDialogOpen(true)}>
                         <Plus />
                         <span>Invite members</span>
                       </DropdownMenuItem>
@@ -304,6 +313,10 @@ export function NavUser() {
           </DropdownMenu>
         </SidebarMenuItem>
       </SidebarMenu>
+      <InviteMemberDialog
+        openFromParent={inviteMemberDialogOpen}
+        setOpenFromParent={setInviteMemberDialogOpen}
+      />
     </>
   );
 }
