@@ -54,24 +54,24 @@ export function NavMain({
           >
             <SidebarMenuItem>
               <CollapsibleTrigger asChild>
-                <SidebarMenuButton asChild tooltip={item.title}>
+                <SidebarMenuButton asChild tooltip={item.title}
+                  className={cn({
+                    'bg-accent': isActivePath(pathname, item.url),
+                  })}
+                >
                   {!item.items?.length ? (
-                    <NavLink to={item.url} onClick={() => {
+                    <Link to={item.url} onClick={() => {
                       if (isMobile) {
                         toggleSidebar();
                       }
                     }}>
-                      {({ isActive }) => {
-                        return (
-                          <span className={cn("flex items-center gap-2 [&_svg]:size-4", {
-                            'text-primary': isActive,
-                          })}>
-                            {item.icon && <item.icon />}
-                            <span className="font-semibold">{item.title}</span>
-                          </span>
-                        )
-                      }}
-                    </NavLink>
+                      <span className={cn("flex items-center gap-2 [&_svg]:size-4", {
+                        'text-primary': isActivePath(pathname, item.url),
+                      })}>
+                        {item.icon && <item.icon />}
+                        <span className="font-semibold">{item.title}</span>
+                      </span>
+                    </Link>
                   ) : (
                     <span>
                       {item.icon && <item.icon />}
