@@ -196,7 +196,7 @@ export default function NavSettings() {
           </CollapsibleContent>
         </Collapsible>
       </div>
-      <div className="flex-1 min-w-0 min-h-0 whitespace-normal overflow-auto">
+      <div className="flex-1 min-w-0 min-h-0 whitespace-normal">
         <Outlet />
       </div>
     </div>

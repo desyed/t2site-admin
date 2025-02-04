@@ -133,7 +133,7 @@ export function NavUser() {
                 <DropdownMenuLabel className="uppercase">
                   Signed in as
                 </DropdownMenuLabel>
-                <DropdownMenuItem className="p-0 font-normal">
+                <DropdownMenuItem onSelect={() => navigate('/settings/user/profile')} className="p-0 font-normal">
                   <div className="flex flex-1 items-center gap-2 px-1 py-1.5 text-left  text-sm">
                     <Avatar className="size-9 rounded-full">
                       <AvatarImage
@@ -167,7 +167,7 @@ export function NavUser() {
                       <DropdownMenuItem
                         onSelect={() => navigate('/settings/organization')}
                       >
-                        <Avatar className="size-7 rounded-lg">
+                        <Avatar className="size-7 rounded-full">
                           <AvatarImage
                             src={
                               userOrganizations?.currentOrganization?.logo ?? ''
@@ -221,7 +221,7 @@ export function NavUser() {
                             }
                             key={organization.id}
                           >
-                            <Avatar className="size-7 rounded-lg">
+                            <Avatar className="size-7 rounded-full">
                               <AvatarImage
                                 src={organization.logo ?? ''}
                                 alt={organization.name ?? ''}
