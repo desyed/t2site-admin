@@ -7,7 +7,7 @@ export const inviteMemberSchema = z.object({
   members: z
     .array(
       z.object({
-        email: z.string().email({ message: "Invalid email address" }),
+        email: z.string().min(1, { message: "Email is required" }).email({ message: "Invalid email address" }),
         name: z.string().optional(),
         role: z.enum(roles),
       })

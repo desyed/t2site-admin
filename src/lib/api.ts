@@ -4,10 +4,8 @@ import { toast } from 'sonner';
 import { authStore } from '@/app/auth/auth-store';
 
 const axiosAuthApiInstance = axios.create({
-  baseURL: `${
-    import.meta.env.PROD ? import.meta.env.VITE_BACKEND_URL : '/server'
-  }/api`,
-  withCredentials: import.meta.env.PROD ? true : false,
+  baseURL: `${import.meta.env.VITE_BACKEND_URL}/api`,
+  withCredentials: true
 });
 
 axiosAuthApiInstance.interceptors.request.use(
