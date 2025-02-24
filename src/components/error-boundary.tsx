@@ -55,10 +55,10 @@ export default function ErrorBoundary() {
 					</div>
 				) : (
 					<div>
-						<h1 className="mb-5 text-2xl font-bold">
+						<h1 className="text-2xl font-bold">
 							There is a problem with the application.
 						</h1>
-						<p className="text-lg text-muted">{errorMessage}</p>
+						<p className="text-lg mb-4">{errorMessage}</p>
 						<Button onClick={() => window.location.reload()} size="lg">
 							<RefreshCw className="mr-2 size-5" />
 							Refresh

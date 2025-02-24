@@ -11,9 +11,9 @@ export async function preFetchInvitedMembers() {
 }
 
 export async function preFetchInvitedMember(invitedMemberId: string) {
-  return await queryClient.fetchQuery({
+  return await queryClient.prefetchQuery({
     queryKey: invitedMemberQueryKeys.invitedMemberDetails(invitedMemberId),
-    queryFn: () => fetchInvitedMember(invitedMemberId),
+    queryFn: ({ queryKey }) => fetchInvitedMember(queryKey[1]),
     retry: false,
   });
 }
