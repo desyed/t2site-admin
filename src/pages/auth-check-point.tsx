@@ -23,7 +23,6 @@ export default function AuthCheckPoint() {
         await authStore.fetchSession(true);
         queryClient.resetQueries()
         navigate(from, { replace: true });
-
       }
     }
     initSession();

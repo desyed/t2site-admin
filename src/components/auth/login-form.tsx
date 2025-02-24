@@ -69,7 +69,7 @@ export default function LoginForm() {
                 'You have successfully logged in, but your email is not verified. Please verify your email to enjoy full features.',
             });
           } else {
-            navigate('/auth?auth_login=success', { replace: true });
+            navigate('/auth?auth_login=success&rp=' + window.localStorage.getItem('redirect_to') || '/', { replace: true });
           }
           form.reset();
         }

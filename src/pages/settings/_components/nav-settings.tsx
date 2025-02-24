@@ -144,7 +144,7 @@ export default function NavSettings() {
                       key={item.path}
                     >
                       <span className={cn("font-semibold", {
-                        'text-primary': isActivePath(pathname, item.path, true),
+                        'text-yellow-600 dark:!text-primary': isActivePath(pathname, item.path, true),
                       })}>{item.label}</span>
                     </SidebarMenuButton>
                   );
@@ -166,7 +166,7 @@ export default function NavSettings() {
                       key={item.path}
                     >
                       <span className={cn("font-semibold", {
-                        'text-primary': isActivePath(pathname, item.path, true),
+                        'text-yellow-600 dark:!text-primary': isActivePath(pathname, item.path, true),
                       })}>{item.label}</span>
                     </SidebarMenuButton>
                   );
@@ -187,7 +187,7 @@ export default function NavSettings() {
                     key={item.path}
                   >
                     <span className={cn("font-semibold", {
-                      'text-primary': isActivePath(pathname, item.path, true),
+                      'text-yellow-600 dark:!text-primary': isActivePath(pathname, item.path, true),
                     })}>{item.label}</span>
                   </SidebarMenuButton>
                 ))}

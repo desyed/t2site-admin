@@ -57,6 +57,11 @@ export function isValidPassword(password: string) {
   return passwordRegex.test(password);
 }
 
+export function validUUID(uuid: string) {
+  return uuid.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);
+}
+
+
 export type EmailAddress = string & {
   __brand: 'EmailAddress';
 };

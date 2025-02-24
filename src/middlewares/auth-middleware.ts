@@ -1,36 +1,50 @@
-import { redirect } from "react-router";
+import { LoaderFunction, replace } from "react-router";
 
 import { authPreSessionLoader } from "@/app/auth/auth-loader";
 
-export async function authMiddlewareLoader() {
+export const authMiddlewareLoader: LoaderFunction = async () => {
   const authUser = await authPreSessionLoader();
   if (authUser && authUser?.emailVerified) {
-    return redirect('/');
+    return replace('/');
   }
   if (authUser && !authUser?.emailVerified) {
-    return redirect('/verify');
+    return replace('/verify');
   }
   return null;
 }
 
-export async function privateMiddlewareLoader() {
+export const verifyMiddlewareLoader: LoaderFunction = async ({ request }) => {
   const authUser = await authPreSessionLoader();
+  const pathname = new URL(request.url).pathname;
   if (!authUser) {
-    return redirect('/login');
-  }
-  if (!authUser.emailVerified) {
-    return redirect('/verify');
-  }
-  return null;
-}
-
-export async function verifyMiddlewareLoader() {
-  const authUser = await authPreSessionLoader();
-  if (!authUser) {
-    return redirect('/login');
+    window.localStorage.setItem('redirect_to', pathname);
+    return replace('/login');
   }
   if (authUser?.emailVerified) {
-    return redirect('/');
+    window.localStorage.setItem('redirect_to', pathname);
+    return replace('/');
   }
   return null;
 }
+
+
+export const createPrivateLoader = (loader?: LoaderFunction): LoaderFunction => {
+  return async (context) => {
+    const { request } = context;
+    const authUser = await authPreSessionLoader();
+    if (!authUser) {
+      const pathname = new URL(request.url).pathname;
+      window.localStorage.setItem('redirect_to', pathname);
+      return replace('/login');
+    }
+    if (authUser && !authUser.emailVerified) {
+      const pathname = new URL(request.url).pathname;
+      window.localStorage.setItem('redirect_to', pathname);
+      return replace('/verify');
+    }
+    return loader ? loader(context) : null;
+  };
+};
+
+
+export const privateMiddlewareLoader: LoaderFunction = createPrivateLoader()

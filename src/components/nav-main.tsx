@@ -1,4 +1,3 @@
-
 import type {
   LucideIcon
 } from 'lucide-react';
@@ -22,7 +21,6 @@ import {
   SidebarMenuSubButton,
   useSidebar,
   SidebarMenuSubItem,
-
 } from '@/components/ui/sidebar';
 import { cn, isActivePath } from "@/lib/utils";
 
@@ -53,46 +51,47 @@ export function NavMain({
             className="group/collapsible"
           >
             <SidebarMenuItem>
-              <CollapsibleTrigger asChild>
-                <SidebarMenuButton asChild tooltip={item.title}
-                  className={cn({
-                    'bg-accent': isActivePath(pathname, item.url),
-                  })}
-                >
-                  {!item.items?.length ? (
-                    <Link to={item.url} onClick={() => {
-                      if (isMobile) {
-                        toggleSidebar();
-                      }
-                    }}>
-                      <span className={cn("flex items-center gap-2 [&_svg]:size-4", {
-                        'text-primary': isActivePath(pathname, item.url),
-                      })}>
-                        {item.icon && <item.icon />}
-                        <span className="font-semibold">{item.title}</span>
-                      </span>
-                    </Link>
-                  ) : (
-                    <span>
-                      {item.icon && <item.icon />}
-                      <span className="font-semibold">{item.title}</span>
-                      <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                    </span>
-                  )}
-                </SidebarMenuButton>
-              </CollapsibleTrigger>
+              {item.items?.length ? (
+                <CollapsibleTrigger asChild>
+                  <SidebarMenuButton tooltip={item.title}>
+                    {item.icon && <item.icon />}
+                    <span>{item.title}</span>
+                    <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                  </SidebarMenuButton>
+                </CollapsibleTrigger>
+              ) : (
+                <Link to={item.url} onClick={() => {
+                  if (isMobile) {
+                    toggleSidebar();
+                  }
+                }}>
+                  <SidebarMenuButton tooltip={item.title}
+                    className={cn('font-semibold', {
+                      'bg-accent dark:!text-primary !text-yellow-600': isActivePath(pathname, item.url),
+                    })}
+                  >
+                    {item.icon && <item.icon />}
+                    {item.title}
+                  </SidebarMenuButton>
+                </Link>
+              )}
               {item.items?.length && (
                 <CollapsibleContent>
                   <SidebarMenuSub>
                     {item.items?.map((subItem) => (
                       <SidebarMenuSubItem key={subItem.title}>
-                        <SidebarMenuSubButton className={cn({
-                          'bg-accent': isActivePath(pathname, subItem.url),
-                        })} asChild>
-                          <Link to={subItem.url}>
+                        <Link to={subItem.url} onClick={() => {
+                          if (isMobile) {
+                            toggleSidebar();
+                          }
+                        }}>
+                          <SidebarMenuSubButton className={cn('font-semibold', {
+                            'bg-accent dark:!text-primary !text-yellow-600': isActivePath(pathname, subItem.url),
+                          })} asChild>
+
                             <span>{subItem.title}</span>
-                          </Link>
-                        </SidebarMenuSubButton>
+                          </SidebarMenuSubButton>
+                        </Link>
                       </SidebarMenuSubItem>
                     ))}
                   </SidebarMenuSub>

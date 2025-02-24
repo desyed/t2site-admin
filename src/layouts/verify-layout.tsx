@@ -31,7 +31,6 @@ export default function VerifyLayout() {
 					<div className="overflow-x-hidden rounded-xl border-border/60 bg-transparent px-6 pb-10 sm:border sm:bg-muted/50 sm:pt-6 dark:sm:bg-muted/30">
 						<Outlet />
 					</div>
-
 					<div className="px-5 pb-10 text-center text-sm text-muted-foreground">
 						By clicking continue, you agree to our{" "}
 						<a className="underline hover:text-foreground" href="/terms">

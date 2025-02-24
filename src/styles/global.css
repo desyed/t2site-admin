@@ -114,3 +114,31 @@ select {
   -webkit-background-clip: text !important;
   background-clip: text !important;
 }
+
+
+@keyframes loading-line {
+  0% {
+    transform: translateX(-150%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(350%);
+  }
+}
+
+.animate-loading-line {
+  animation: loading-line 2s linear infinite;
+}
+
+
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+	}
+  body {
+    @apply bg-background text-foreground;
+	}
+}

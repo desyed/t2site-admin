@@ -4,8 +4,7 @@ import { AxiosError } from "axios";
 import { Loader2, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-
-
+import { useQueryClient } from "@tanstack/react-query";
 import { useInviteMembersMutaion } from "@/app/organization/organization-hooks";
 import { inviteMemberSchema, MAX_MEMBERS, roles } from "@/app/organization/organization-schema";
 import { Button } from "@/components/ui/button";
@@ -16,6 +15,7 @@ import { useSmoothScroll, useCallWithScroll } from "@/hooks/use-scroll";
 import { delay, handleApiErrorException } from "@/lib/utils";
 import { toast } from "sonner";
 import { InviteMemberInput } from "@/app/organization/organizaion-type";
+import { invitedMemberQueryKeys } from "@/app/organization/organization-keys";
 
 
 interface InviteMemberFormProps {
@@ -23,9 +23,6 @@ interface InviteMemberFormProps {
 }
 
 export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
-
-  const [membersError, setMembersError] = useState<any>(null);
-  const { mutateAsync, isPending } = useInviteMembersMutaion();
 
   const [scrollContainerRef, smoothScrollToBottom] = useSmoothScroll<HTMLDivElement>();
 
@@ -44,30 +41,38 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
 
   const handleAppend = useCallWithScroll(() => append({ email: "", name: "", role: "member" }), smoothScrollToBottom);
 
+  const [membersError, setMembersError] = useState<any>(null);
+
+  const queryClient = useQueryClient();
+
+
+  const { mutate, isPending } = useInviteMembersMutaion();
+
   const handleSubmitInvitation = async (values: InviteMemberInput) => {
-    try {
-      await mutateAsync(values);
-      toast.success("🎉 Invitation Sent Successfully!", {
-        description: "Your team members will receive an email invitation to join your organization. 📧",
-      });
-      await delay(200)
-      onClose();
-    } catch (err) {
-      handleApiErrorException(err, true);
-      if (err instanceof AxiosError) {
-        const code = err.response?.data.code;
-        if (code === "members-already-exist") {
-          const membersError: any = {};
-          err.response?.data.membersError?.members?.forEach((member: any) => {
-            membersError[member.email] = err.response?.data.membersError?.message;
-          });
-          setMembersError(membersError);
+    mutate(values, {
+      onSuccess: async () => {
+        toast.success("🎉 Invitation Sent Successfully!", {
+          description: "Your team members will receive an email invitation to join your organization. 📧",
+        });
+        await delay(200)
+        queryClient.invalidateQueries({ queryKey: invitedMemberQueryKeys.invitedMemberList() });
+        onClose();
+      },
+      onError: (error) => {
+        handleApiErrorException(error, true);
+        if (error instanceof AxiosError) {
+          const code = error.response?.data.code;
+          if (code === "members-already-exist") {
+            const membersError: any = {};
+            error.response?.data.membersError?.members?.forEach((member: any) => {
+              membersError[member.email] = error.response?.data.membersError?.message;
+            });
+            setMembersError(membersError);
+          }
         }
       }
-    }
-
+    });
   };
-
 
   return (
     <Form {...form}>
@@ -152,11 +157,15 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
             ))}
           </div>
           <div className="mt-5">
-            {fields.length < MAX_MEMBERS && (
+            {fields.length < MAX_MEMBERS ? (
               <Button type="button" effect="none" variant="outline" className="w-full" onClick={handleAppend}>
                 <Plus className="mr-2 size-4" />
                 Add email address
               </Button>
+            ) : (
+              <p className="text-sm text-muted-foreground text-center">
+                Maximum number of {MAX_MEMBERS} members reached
+              </p>
             )}
           </div>
           <div className="mt-4">

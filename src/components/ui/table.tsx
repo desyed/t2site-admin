@@ -2,6 +2,11 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
+export type TableLoaderProps = {
+	loading?: boolean;
+	fetching?: boolean;
+}
+
 const Table = React.forwardRef<
 	HTMLTableElement,
 	React.HTMLAttributes<HTMLTableElement> & {
@@ -41,14 +46,14 @@ const TableHeader = React.forwardRef<
 	HTMLTableSectionElement,
 	React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
-	<thead ref={ref} className={cn("[&_tr]:border-b", className)} {...props} />
+	<thead ref={ref} className={cn("[&_tr]:border-b text-xs", className)} {...props} />
 ));
 TableHeader.displayName = "TableHeader";
 
 const TableBody = React.forwardRef<
 	HTMLTableSectionElement,
-	React.HTMLAttributes<HTMLTableSectionElement>
->(({ className, ...props }, ref) => (
+	React.HTMLAttributes<HTMLTableSectionElement> & TableLoaderProps
+>(({ className, loading, fetching, ...props }, ref) => (
 	<tbody
 		ref={ref}
 		className={cn("[&_tr:last-child]:border-0", className)}
@@ -94,7 +99,7 @@ const TableHead = React.forwardRef<
 	<th
 		ref={ref}
 		className={cn(
-			"h-12 px-2 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&:first-child]:pl-3 [&:last-child]:pr-3",
+			"h-12 px-2 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&:first-child]:pl-3 [&:last-child]:pr-3 text-xs",
 			className,
 		)}
 		{...props}

@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from 'react-router';
+import { createBrowserRouter } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
 
 import ErrorBoundary from '@/components/error-boundary';
@@ -11,18 +11,17 @@ import NotFound from '@/pages/404';
 import AuthCheckPoint from '@/pages/auth-check-point';
 import LoginPage from '@/pages/login';
 import SignupPage from '@/pages/signup';
-
+import InvitationLayout from '@/layouts/invitation-layout';
 import {
   authMiddlewareLoader,
   privateMiddlewareLoader,
   verifyMiddlewareLoader
-} from './middlewares/auth-middleware';
+} from '@/middlewares/auth-middleware';
+import NotFoundPrivate from '@/pages/404-private';
+import NavSettings from '@/pages/settings/_components/nav-settings';
+import { settingsRoutes } from '@/routers/settings.routes';
 
-import NotFoundPrivate from './pages/404-private';
-import NavSettings from './pages/settings/_components/nav-settings';
-import NotFoundSettings from './pages/settings/404';
-
-const routes = createBrowserRouter([
+export const routes = createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
@@ -44,45 +43,7 @@ const routes = createBrowserRouter([
           {
             path: '/settings',
             element: <NavSettings />,
-            children: [
-              {
-                index: true,
-                element: <Navigate to="/settings/project" />,
-              },
-              {
-                path: '/settings/project',
-                children: [
-                  {
-                    index: true,
-                    lazy: () =>
-                      import('@/pages/settings/project'),
-                  },
-                ],
-              },
-              {
-                path: '/settings/organization',
-                children: [
-                  {
-                    index: true,
-                    lazy: () =>
-                      import(
-                        '@/pages/settings/organization/general'
-                      ),
-                  },
-                  {
-                    path: '/settings/organization/members',
-                    lazy: () =>
-                      import(
-                        '@/pages/settings/organization/members'
-                      ),
-                  },
-                ],
-              },
-              {
-                path: '*',
-                element: <NotFoundSettings />,
-              },
-            ],
+            children: settingsRoutes,
           },
           {
             path: '*',
@@ -112,6 +73,16 @@ const routes = createBrowserRouter([
           {
             index: true,
             lazy: () => import('@/pages/verify'),
+          },
+        ],
+      },
+      {
+        path: '/invitation/:invitedMemberId',
+        element: <InvitationLayout />,
+        children: [
+          {
+            index: true,
+            lazy: () => import('@/pages/invitation'),
           },
         ],
       },

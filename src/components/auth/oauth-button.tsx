@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react';
 import { useMemo } from 'react';
-import { useLocation } from 'react-router';
 
 import { Button } from '@/components/ui/button';
 
@@ -13,9 +12,8 @@ export type OAuthButtonProps = {
 
 export default function OAuthButton(props: OAuthButtonProps) {
   const { type, label = true } = props;
-  const location = useLocation();
 
-  const from = location.state?.from || '/';
+  const from = window.localStorage.getItem('redirect_to') || '/';
 
   const OAuthIcon = useMemo(() => {
     switch (type) {
@@ -28,7 +26,9 @@ export default function OAuthButton(props: OAuthButtonProps) {
     }
   }, [type]);
 
+
   const redirect_url = `${window.location.origin}/auth/?rp=${from}&auth_login=success`;
+
 
   const redirect_error = `${window.location.origin}/login`;
 

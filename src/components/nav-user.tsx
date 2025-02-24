@@ -44,11 +44,11 @@ import { cn } from '@/lib/utils';
 
 import type { Theme } from './theme-provider';
 
-import { CreateOrganizationDialog } from './organization/create-organization-dialog';
+import { CreateOrganizationDialog } from '@/components/organization/create-organization-dialog';
 import { useTheme } from './theme-provider';
 import MemberRoleBadge from "./organization/member-role-badge";
 import { useState } from "react";
-import InviteMemberDialog from "./organization/invite-member-dialog";
+import InviteMemberDialog from "../pages/settings/organization/members/_components/invited-members/invite-member-dialog";
 
 export function NavUser() {
 

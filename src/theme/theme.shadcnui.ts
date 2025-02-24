@@ -1,7 +1,7 @@
 import defaultTheme from "tailwindcss/defaultTheme";
 import plugin from "tailwindcss/plugin";
 
-export default plugin(() => {}, {
+export default plugin(() => { }, {
 	theme: {
 		container: {
 			center: true,
@@ -86,11 +86,16 @@ export default plugin(() => {}, {
 				border: {
 					to: { "--border-angle": "360deg" },
 				},
+				fadeOut: {
+					from: { opacity: '1' },
+					to: { opacity: '0' },
+				},
 			},
 			animation: {
 				"accordion-down": "accordion-down 0.2s ease-out",
 				"accordion-up": "accordion-up 0.2s ease-out",
 				border: "border var(--border-animation-speed) linear infinite",
+				fadeOut: "fadeOut 0.5s ease-out",
 			},
 		},
 	},

@@ -1,4 +1,5 @@
 import { api } from "@/lib/api";
+import { UpdateInvitationPayload } from "./organizaion-type";
 
 /**
  * @GET /session
@@ -6,7 +7,6 @@ import { api } from "@/lib/api";
 export function getOrganizationsApi() {
   return api.get('/organizations');
 }
-
 
 /**
  * @GET /organizations/:id
@@ -50,6 +50,26 @@ export function getInvitedMembersApi<T = any>(organizationId = '') {
   return api.get<T>(`/organizations/invited-members/${organizationId}`);
 }
 
+/**
+ * @PUT /organizations/invite/resend/:memberId/:organizationId?
+ */
+export function resendInvitationApi<T = any>(payload: UpdateInvitationPayload) {
+  return api.put<T>(`/organizations/invite/resend/${payload.memberId}/${payload.organizationId}`);
+}
+
+/**
+ * @DELETE organizations/invite/cancel/:memberId/:organizationId?
+ */
+export function cancelInvitationApi<T = any>(payload: UpdateInvitationPayload) {
+  return api.delete<T>(`/organizations/invite/cancel/${payload.memberId}/${payload.organizationId}`);
+}
+
+/**
+ * @GET /organizations/invitations/:invitedId
+ */
+export function getInvitedMemberApi(invitedId: string) {
+  return api.get(`/organizations/invitations/${invitedId}`);
+}
 
 /**
  * @POST /organizations/:id/join

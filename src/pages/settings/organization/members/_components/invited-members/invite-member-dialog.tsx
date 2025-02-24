@@ -8,7 +8,7 @@ import { useAuthStore } from "@/app/auth/auth-store";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 import { InviteMemberForm } from "./invite-member-form";
-import { Button } from "../ui/button";
+import { Button } from "../../../../../../components/ui/button";
 
 
 export type InviteMemberDialogProps = {
@@ -30,7 +30,7 @@ const InviteMemberDialog = forwardRef<HTMLDivElement, InviteMemberDialogProps>((
       <Dialog open={openFromParent ?? open} onOpenChange={setOpenFromParent ?? setOpen}>
         {openFromParent === undefined ? (
           <DialogTrigger asChild>
-            <Button size="sm" >
+            <Button size="sm" id="invite-member-trigger">
               <PlusIcon className="mr-1 size-4" />
 
               Invite team member
