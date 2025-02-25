@@ -1,6 +1,5 @@
 'use client';
 
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { PlusIcon, UserIcon, ShieldIcon, CrownIcon, InfoIcon } from 'lucide-react';
 import { forwardRef } from 'react';
 import { useState } from 'react';
@@ -15,6 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 import { InviteMemberForm } from './invite-member-form';
