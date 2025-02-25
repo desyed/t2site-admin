@@ -22,11 +22,9 @@ export function UserLabel({
         <AvatarImage src={avatarUrl ?? undefined} alt={name} />
         <AvatarFallback>{name ?? ''}</AvatarFallback>
       </Avatar>
-      <span className={cn('truncate', currentUser && 'font-medium text-primary')}>
+      <span className={cn('truncate', currentUser && '')}>
         {name}
-        {currentUser && (
-          <span className="ml-0.5 text-sm font-normal text-muted-foreground">(you)</span>
-        )}
+        {currentUser && <span className="ml-0.5 text-sm font-normal text-yellow-500">(you)</span>}
       </span>
     </div>
   );

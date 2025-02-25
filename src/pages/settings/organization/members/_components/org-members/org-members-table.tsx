@@ -8,6 +8,8 @@ import SiteTable from '@/components/site-table';
 import { UserLabel } from '@/components/user-label';
 import { tableTimeRelativeFormat } from '@/lib/time';
 
+import MemberActions from './members-actions';
+
 type OrgMembersTableProps = {
   members: OrganizationMember[];
   isLoading: boolean;
@@ -60,10 +62,7 @@ export function OrgMembersTable({
     {
       title: '',
       width: 'w-[100px]',
-      render: (member) =>
-        member.currentUser ? (
-          <span className="text-xs text-muted-foreground">Current user</span>
-        ) : null, // Could add member actions here in the future
+      render: (member) => <MemberActions member={member} />,
     },
   ];
 

@@ -50,3 +50,9 @@ export interface OrganizationMember {
   organizationId: string;
   createdAt: string;
 }
+
+export type MemberActionPayload<T = unknown> = {
+  memberId: string;
+  organizationId?: string;
+  payload?: T;
+};

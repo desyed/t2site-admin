@@ -1,5 +1,4 @@
 import { CreditCard, Settings, Users } from 'lucide-react';
-import { NavigateFunction } from 'react-router';
 import { useNavigate } from 'react-router';
 
 import { useAuthStore } from '@/app/auth/auth-store';

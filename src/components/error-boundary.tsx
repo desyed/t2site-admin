@@ -58,7 +58,11 @@ export default function ErrorBoundary() {
         )}
         {/* Show error stack in development mode */}
         {import.meta.env.DEV && error instanceof Error && (
-          <div className="mt-5 rounded-lg border border-red-500 bg-red-400/10 p-4 text-red-500 dark:border-red-600 dark:bg-red-700/20 dark:text-red-600">
+          <div
+            className="mt-5 rounded-lg border
+           border-red-500 bg-red-400/10 p-4 text-red-500
+           dark:border-red-600 dark:bg-red-700/20 dark:text-red-600"
+          >
             <pre className="whitespace-pre-wrap text-left">{error.stack}</pre>
           </div>
         )}

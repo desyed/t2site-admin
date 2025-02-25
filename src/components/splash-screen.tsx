@@ -18,10 +18,11 @@ export default function SplashScreen() {
     return () => {
       if (node) {
         node.style.opacity = '0';
+        node.style.transform = 'scale(1.02)';
         setTimeout(() => {
           document.body.removeChild(node!);
           node = null;
-        }, 320);
+        }, 400);
       }
     };
   }, [showSplash]);
@@ -37,7 +38,11 @@ export default function SplashScreen() {
   return (
     <div
       ref={splashRef}
-      className="fixed left-0 top-0 z-40 flex size-full select-none items-center justify-center bg-background transition-all duration-300 ease-in-out fade-out"
+      className="duration-400 fixed left-0 top-0 z-40 flex size-full select-none items-center justify-center bg-background transition-all ease-in-out fade-out"
+      style={{
+        transition:
+          'opacity 400ms cubic-bezier(0.4, 0, 0.2, 1), transform 400ms cubic-bezier(0.4, 0, 0.2, 1)',
+      }}
     >
       <div className="px-5">
         <img

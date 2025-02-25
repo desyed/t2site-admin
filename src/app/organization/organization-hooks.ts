@@ -1,16 +1,27 @@
 import type { UseMutationOptions } from '@tanstack/react-query';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useCallback } from 'react';
+import { useNavigate, useLocation } from 'react-router';
+import { toast } from 'sonner';
 
 import { handleApiErrorException } from '@/lib/utils';
 
-import type { InvitedMember, InviteMemberInput, UpdateInvitationPayload } from './organizaion-type';
+import type {
+  InvitedMember,
+  InviteMemberInput,
+  MemberActionPayload,
+  UpdateInvitationPayload,
+} from './organizaion-type';
 
 import {
   inviteOrganizationMembersApi,
   resendInvitationApi,
   cancelInvitationApi,
   promptInvitationApi,
+  leaveOrganizationApi,
+  changeMemberRoleApi,
+  removeMemberApi,
 } from './organization-api';
 import {
   fetchInvitedMember,
@@ -18,6 +29,30 @@ import {
   fetchOrganizationMembers,
 } from './organization-fetch';
 import { invitedMemberQueryKeys, memberQueryKeys } from './organization-keys';
+
+export function useRedirectIfOrganizationNotExists() {
+  const navigate = useNavigate();
+  const redirect = useCallback(() => {
+    toast.warning('Organization not found', {
+      description: 'This organization may no longer exist or you may not have access to it',
+      duration: 3000,
+    });
+    navigate(`/auth?ocr=true&rp=/`, { replace: true });
+  }, [navigate]);
+  return redirect;
+}
+
+export function useRefreshOrganization() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const refresh = useCallback(
+    (pathname?: string) => {
+      navigate(`/auth?ocr=true&rp=${pathname ?? location.pathname}`, { replace: true });
+    },
+    [navigate, location.pathname]
+  );
+  return refresh;
+}
 
 export function useInviteMembersQuery() {
   const query = useQuery({
@@ -34,15 +69,22 @@ export function useInvitedMemberQuery(invitedMemberId: string) {
     retry: 1,
     staleTime: 0,
   });
+
   return query;
 }
 
 export function useInviteMembersMutaion<T = unknown>(
   options?: UseMutationOptions<T, unknown, InviteMemberInput>
 ) {
+  const queryClient = useQueryClient();
+
   const mutation = useMutation({
-    mutationFn: (payload: InviteMemberInput) => {
+    mutationFn: (payload) => {
       return inviteOrganizationMembersApi(payload) as Promise<T>;
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: invitedMemberQueryKeys.invitedMemberList() });
+      queryClient.invalidateQueries({ queryKey: memberQueryKeys.memberList() });
     },
     ...options,
   });
@@ -52,9 +94,15 @@ export function useInviteMembersMutaion<T = unknown>(
 export function useResendInvitationMutation<T = unknown>(
   options?: UseMutationOptions<T, unknown, UpdateInvitationPayload>
 ) {
+  const queryClient = useQueryClient();
+
   const mutation = useMutation({
-    mutationFn: (payload: UpdateInvitationPayload) => {
+    mutationFn: (payload) => {
       return resendInvitationApi(payload) as Promise<T>;
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: invitedMemberQueryKeys.invitedMemberList() });
+      queryClient.invalidateQueries({ queryKey: memberQueryKeys.memberList() });
     },
     ...options,
   });
@@ -64,9 +112,15 @@ export function useResendInvitationMutation<T = unknown>(
 export function useCancelInvitationMutation<T = unknown>(
   options?: UseMutationOptions<T, unknown, UpdateInvitationPayload>
 ) {
+  const queryClient = useQueryClient();
+
   const mutation = useMutation({
-    mutationFn: (payload: UpdateInvitationPayload) => {
+    mutationFn: (payload) => {
       return cancelInvitationApi(payload) as Promise<T>;
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: invitedMemberQueryKeys.invitedMemberList() });
+      queryClient.invalidateQueries({ queryKey: memberQueryKeys.memberList() });
     },
     ...options,
   });
@@ -77,7 +131,7 @@ export function useRejectedInvitationMutation<T = unknown>(
   options?: UseMutationOptions<T, unknown, UpdateInvitationPayload>
 ) {
   const mutation = useMutation({
-    mutationFn: (payload: UpdateInvitationPayload) => {
+    mutationFn: (payload) => {
       return promptInvitationApi(payload.invitedMemberId, {
         promptType: 'reject',
       }) as Promise<T>;
@@ -151,4 +205,60 @@ export function useOrganizationMembersQuery() {
     queryFn: () => fetchOrganizationMembers(),
   });
   return query;
+}
+
+export function useLeaveOrganizationMutation<T = unknown>(
+  options?: UseMutationOptions<T, unknown, string | undefined>
+) {
+  const mutation = useMutation({
+    mutationFn: (organizationId: string) => {
+      return leaveOrganizationApi(organizationId) as Promise<T>;
+    },
+    ...options,
+  });
+  return mutation;
+}
+
+export function useChangeMemberRoleMutation<T = unknown, P = unknown>(
+  options?: UseMutationOptions<T, unknown, MemberActionPayload<P>>
+) {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (payload) => {
+      return changeMemberRoleApi(payload) as Promise<T>;
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: memberQueryKeys.memberList(),
+      });
+      queryClient.invalidateQueries({
+        queryKey: invitedMemberQueryKeys.invitedMemberList(),
+      });
+    },
+    ...options,
+  });
+  return mutation;
+}
+
+export function useRemoveMemberMutation<T = unknown, P = unknown>(
+  options?: UseMutationOptions<T, unknown, MemberActionPayload<P>>
+) {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (payload) => {
+      return removeMemberApi(payload) as Promise<T>;
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: memberQueryKeys.memberList(),
+      });
+      queryClient.invalidateQueries({
+        queryKey: invitedMemberQueryKeys.invitedMemberList(),
+      });
+    },
+    ...options,
+  });
+  return mutation;
 }

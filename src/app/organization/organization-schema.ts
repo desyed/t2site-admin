@@ -3,6 +3,16 @@ import { z } from 'zod';
 export const MAX_MEMBERS = 10;
 export const roles = ['member', 'admin', 'owner'] as const;
 
+export const rolesOptionForMember = ['member'] as const;
+export const rolesOptionForAdmin = ['member', 'admin'] as const;
+export const rolesOptionForOwner = ['member', 'admin', 'owner'] as const;
+
+export const rolesOptions = {
+  member: rolesOptionForMember,
+  admin: rolesOptionForAdmin,
+  owner: rolesOptionForOwner,
+} as const;
+
 export const inviteMemberSchema = z.object({
   members: z
     .array(

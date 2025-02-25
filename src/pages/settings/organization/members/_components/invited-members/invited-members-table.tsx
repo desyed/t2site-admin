@@ -75,6 +75,7 @@ export default function InvitedMembersTable({
             {!hasExpired && (
               <CopyButton
                 showToasterMessage="Copied invited link to clipboard"
+                className="size-6 [&_svg]:size-3"
                 size="sm"
                 text={inviteLink}
               />

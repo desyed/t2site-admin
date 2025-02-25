@@ -43,6 +43,7 @@ export type SiteTableProps<T> = {
   onRefresh?: () => void;
   onRowClick?: (item: T) => void;
   selection?: SiteTableSelection<T>;
+  skeletonRowClass?: string;
   emptyStateAction?: {
     label: string;
     icon?: React.ReactNode;
@@ -73,6 +74,7 @@ const SiteTable = forwardRef<HTMLTableElement, SiteTableProps<any>>((props, ref)
     onRowClick,
     selection,
     emptyStateAction,
+    skeletonRowClass,
     errorActions,
     rowKey,
     title,
@@ -150,7 +152,7 @@ const SiteTable = forwardRef<HTMLTableElement, SiteTableProps<any>>((props, ref)
   const skeletonRows = React.useMemo(
     () =>
       [...Array(3)].map((_, rowIndex) => (
-        <TableRow key={`skeleton-${rowIndex}`} className="h-11">
+        <TableRow key={`skeleton-${rowIndex}`} className={skeletonRowClass || 'h-9'}>
           {selection && (
             <TableCell className="w-[40px]">
               <div className="size-4 animate-pulse rounded bg-muted" />
@@ -166,7 +168,7 @@ const SiteTable = forwardRef<HTMLTableElement, SiteTableProps<any>>((props, ref)
           ))}
         </TableRow>
       )),
-    [columns, selection]
+    [columns, selection, skeletonRowClass]
   );
 
   const allSelected = React.useMemo(() => {

@@ -1,7 +1,11 @@
+import { AxiosError } from 'axios';
 import { useEffect } from 'react';
 
-import { useOrganizationMembersQuery } from '@/app/organization/organization-hooks';
-import { Input } from '@/components/ui/input';
+import {
+  useOrganizationMembersQuery,
+  useRedirectIfOrganizationNotExists,
+} from '@/app/organization/organization-hooks';
+import { InputSearch } from '@/components/ui/search-input';
 
 import { OrgMembersTable } from './org-members-table';
 
@@ -14,12 +18,20 @@ export default function OrgMembers({
 }) {
   const { data: members, isLoading, isFetching, error, refetch } = useOrganizationMembersQuery();
 
+  const redirect = useRedirectIfOrganizationNotExists();
+
   useEffect(() => {
     if (refresh && !isFetching) {
       refetch();
       setRefresh(false);
     }
   }, [refresh, refetch, setRefresh, isFetching]);
+
+  useEffect(() => {
+    if (error && error instanceof AxiosError && error.response?.status === 404) {
+      redirect();
+    }
+  }, [error, redirect]);
 
   return (
     <section>
@@ -28,7 +40,7 @@ export default function OrgMembers({
       </div>
 
       <div className="mb-3 flex items-center justify-between gap-2">
-        <Input placeholder="Search for members" className="h-9 max-w-sm" />
+        <InputSearch placeholder="Search for members" className="h-9 max-w-sm" />
       </div>
       <OrgMembersTable
         members={members || []}

@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { Loader2, Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
@@ -8,9 +7,13 @@ import { toast } from 'sonner';
 
 import type { InviteMemberInput } from '@/app/organization/organizaion-type';
 
+import { useAuthStore } from '@/app/auth/auth-store';
 import { useInviteMembersMutaion } from '@/app/organization/organization-hooks';
-import { invitedMemberQueryKeys } from '@/app/organization/organization-keys';
-import { inviteMemberSchema, MAX_MEMBERS, roles } from '@/app/organization/organization-schema';
+import {
+  inviteMemberSchema,
+  MAX_MEMBERS,
+  rolesOptions,
+} from '@/app/organization/organization-schema';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -30,6 +33,8 @@ interface InviteMemberFormProps {
 }
 
 export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
+  const currentOrganization = useAuthStore((state) => state.userOrganization?.currentOrganization);
+
   const [scrollContainerRef, smoothScrollToBottom] = useSmoothScroll<HTMLDivElement>();
 
   const form = useForm<InviteMemberInput>({
@@ -52,8 +57,6 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
 
   const [membersError, setMembersError] = useState<any>(null);
 
-  const queryClient = useQueryClient();
-
   const { mutate, isPending } = useInviteMembersMutaion();
 
   const handleSubmitInvitation = async (values: InviteMemberInput) => {
@@ -64,7 +67,6 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
             'Your team members will receive an email invitation to join your organization. 📧',
         });
         await delay(200);
-        queryClient.invalidateQueries({ queryKey: invitedMemberQueryKeys.invitedMemberList() });
         onClose();
       },
       onError: (error) => {
@@ -82,6 +84,8 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
       },
     });
   };
+
+  const roles = rolesOptions[currentOrganization?.role as keyof typeof rolesOptions];
 
   return (
     <Form {...form}>
@@ -135,6 +139,7 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
                         </FormItem>
                       )}
                     />
+
                     <FormField
                       control={form.control}
                       name={`members.${index}.role`}

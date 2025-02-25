@@ -47,15 +47,29 @@ export function ThemeProvider({
   useEffect(() => {
     const root = window.document.documentElement;
 
+    // Disable transitions before theme change
+    root.classList.add('no-transitions');
+
+    // Force a reflow to ensure the no-transitions class takes effect immediately
+    // This is crucial - without it, the browser might batch the changes
+    window.getComputedStyle(root).getPropertyValue('opacity');
+
     root.classList.remove('light', 'dark');
 
     if (theme === 'system') {
       const systemTheme = getSystemThemeMode();
       root.classList.add(systemTheme);
-      return;
+    } else {
+      root.classList.add(theme);
     }
 
-    root.classList.add(theme);
+    // Re-enable transitions after a short delay
+    const timeoutId = setTimeout(() => {
+      root.classList.remove('no-transitions');
+    }, 150); // Increasing timeout slightly for reliability
+
+    // Clean up timeout if component unmounts
+    return () => clearTimeout(timeoutId);
   }, [theme]);
 
   const colorMode = useMemo(() => {

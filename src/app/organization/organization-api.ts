@@ -1,6 +1,6 @@
 import { api } from '@/lib/api';
 
-import type { UpdateInvitationPayload } from './organizaion-type';
+import type { MemberActionPayload, UpdateInvitationPayload } from './organizaion-type';
 
 /**
  * @GET /session
@@ -42,13 +42,6 @@ export function deleteOrganizationApi(id: string) {
  */
 export function changeCurrentOrganizationApi(payload: object) {
   return api.put(`/organizations/change-current`, payload);
-}
-
-/**
- * @POST /organizations/:id/leave
- */
-export function leaveOrganizationApi(id: string) {
-  return api.post(`/organizations/${id}/leave`);
 }
 
 /**
@@ -102,4 +95,28 @@ export function promptInvitationApi(invitedMemberId: string, payload: object) {
  */
 export function getOrganizationMembersApi<T = unknown>(organizationId = '') {
   return api.get<T>(`/organizations/members/${organizationId}`);
+}
+
+/**
+ * @PUT organizations/members/:memberId/change-role/:organizationId?
+ */
+export function changeMemberRoleApi(payload: MemberActionPayload) {
+  return api.put(
+    `/organizations/members/${payload.memberId}/change-role/${payload.organizationId ?? ''}`,
+    payload.payload
+  );
+}
+
+/**
+ * @DELETE organizations/members/:memberId/:organizationId
+ */
+export function removeMemberApi(payload: MemberActionPayload) {
+  return api.delete(`/organizations/members/${payload.memberId}/${payload.organizationId ?? ''}`);
+}
+
+/**
+ * /organizations/leave/:organizationId?
+ */
+export function leaveOrganizationApi(organizationId = '') {
+  return api.delete(`/organizations/leave/${organizationId}`);
 }

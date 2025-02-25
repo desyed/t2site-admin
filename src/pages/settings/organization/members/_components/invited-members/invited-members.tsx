@@ -1,7 +1,11 @@
+import { AxiosError } from 'axios';
 import { useEffect } from 'react';
 
-import { useInviteMembersQuery } from '@/app/organization/organization-hooks';
-import { Input } from '@/components/ui/input';
+import {
+  useInviteMembersQuery,
+  useRedirectIfOrganizationNotExists,
+} from '@/app/organization/organization-hooks';
+import { InputSearch } from '@/components/ui/search-input';
 
 import InvitedMembersTable from './invited-members-table';
 export default function InvitedMembers({
@@ -13,12 +17,20 @@ export default function InvitedMembers({
 }) {
   const { data: invitedMembers, isFetching, error, refetch, isLoading } = useInviteMembersQuery();
 
+  const redirect = useRedirectIfOrganizationNotExists();
+
   useEffect(() => {
     if (refresh && !isFetching) {
       refetch();
       setRefresh(false);
     }
   }, [refresh, refetch, setRefresh, isFetching]);
+
+  useEffect(() => {
+    if (error && error instanceof AxiosError && error.response?.status === 404) {
+      redirect();
+    }
+  }, [error, redirect, setRefresh]);
 
   return (
     <section>
@@ -27,7 +39,11 @@ export default function InvitedMembers({
       </div>
 
       <div className="mb-3 flex items-center justify-between gap-2">
-        <Input placeholder="Search for invited members" className="h-9 max-w-sm" />
+        <InputSearch
+          onClear={() => {}}
+          placeholder="Search for invited members"
+          className="h-9 max-w-sm"
+        />
       </div>
 
       <InvitedMembersTable

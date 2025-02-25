@@ -36,9 +36,7 @@ export default function InvitationActions({ invitedMember }: InvitationActionsPr
       invitedMember.status === 'accepted' &&
       !invitedMember?.optimisticallyUpdatedAt
     ) {
-      setTimeout(() => {
-        navigate(`/auth?ocr=true&rp=/settings/organization/members`, { replace: true });
-      }, 1000);
+      navigate(`/auth?ocr=true&rp=/settings/organization/members`, { replace: true });
     }
   }, [isSuccess, invitedMember, navigate]);
 
