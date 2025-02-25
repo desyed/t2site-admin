@@ -16,7 +16,7 @@ export default function DashBoardHeader() {
   const pathSegments = location.pathname.split('/').filter(Boolean);
 
   return (
-    <header className="fixed z-50 flex  sm:h-14 w-full shrink-0 items-center gap-2 border-b border-border/50 bg-sidebar shadow-sm transition-[width,height] max-sm:py-2 ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-14">
+    <header className="fixed z-50 flex  w-full shrink-0 items-center gap-2 border-b border-border/50 bg-sidebar shadow-sm transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-14 max-sm:py-2 sm:h-14">
       <div className="flex items-center gap-2 px-4">
         <SidebarTrigger className="-ml-1" />
         <Separator orientation="vertical" className="mr-1 h-4" />
@@ -26,11 +26,10 @@ export default function DashBoardHeader() {
               <ProjectsMenu />
             </BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem >
+            <BreadcrumbItem>
               <Link to={pathSegments[0]}>
                 {pathSegments.length > 0
-                  ? pathSegments[0].charAt(0).toUpperCase() +
-                  pathSegments[0].slice(1)
+                  ? pathSegments[0].charAt(0).toUpperCase() + pathSegments[0].slice(1)
                   : 'Dashboard'}
               </Link>
             </BreadcrumbItem>
@@ -40,8 +39,7 @@ export default function DashBoardHeader() {
                 <BreadcrumbItem>
                   <BreadcrumbPage>
                     <Link to={pathSegments[1]}>
-                      {pathSegments[1].charAt(0).toUpperCase() +
-                        pathSegments[1].slice(1)}
+                      {pathSegments[1].charAt(0).toUpperCase() + pathSegments[1].slice(1)}
                     </Link>
                   </BreadcrumbPage>
                 </BreadcrumbItem>

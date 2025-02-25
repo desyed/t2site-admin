@@ -1,42 +1,52 @@
-import { z } from "zod";
-import { inviteMemberSchema, roles } from "./organization-schema";
+import type { z } from 'zod';
+
+import type { inviteMemberSchema, roles } from './organization-schema';
 
 export type InviteMemberInput = z.infer<typeof inviteMemberSchema>;
-export type Role = typeof roles[number];
+export type Role = (typeof roles)[number];
 
 export interface Organization {
-  id: string,
-  name: string,
-  slug: string | null,
-  logo: string | null
+  id: string;
+  name: string;
+  slug: string | null;
+  logo: string | null;
 }
-
-export interface InvitedBy {
-  id: string,
-  name: string,
-  email: string,
-  avatar: string | null
+export interface MemberUser {
+  id: string;
+  name: string;
+  email: string;
+  avatar: string | null;
+  currentUser: boolean;
 }
 
 export interface InvitedMember {
-  id: string,
-  email: string,
-  role: Role,
-  name: string,
-  organizationId: string,
-  invitedBy: InvitedBy,
-  status: string,
-  expiresAt: string,
-  createdAt: string
+  id: string;
+  email: string;
+  role: Role;
+  name: string;
+  organizationId: string;
+  invitedBy: MemberUser;
+  status: string;
+  expiresAt: string;
+  createdAt: string;
+  optimisticallyUpdatedAt?: string;
 }
 
 export interface UpdateInvitationPayload {
   organizationId?: string;
-  memberId: string;
+  invitedMemberId: string;
 }
 
 export interface InvitedMemberResponse extends InvitedMember {
   organization: Organization;
 }
 
-
+export interface OrganizationMember {
+  id: string;
+  email: string;
+  role: Role;
+  user: MemberUser;
+  currentUser: boolean;
+  organizationId: string;
+  createdAt: string;
+}

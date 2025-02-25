@@ -5,17 +5,9 @@ export type HyperLinkProps = {
   children: React.ReactNode;
 } & React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
-export default function HyperLink({
-  icon = true,
-  children,
-  className,
-  ...props
-}: HyperLinkProps) {
+export default function HyperLink({ icon = true, children, className, ...props }: HyperLinkProps) {
   return (
-    <a
-      className={cn('text-sm text-yellow-600 flex gap-0.5', className)}
-      {...props}
-    >
+    <a className={cn('text-sm text-yellow-600 flex gap-0.5', className)} {...props}>
       {children}{' '}
       {icon && (
         <span className="mt-1">

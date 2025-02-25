@@ -11,9 +11,9 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
-import { CreateProjectForm } from "./create-project-form";
-import HyperLink from "../ui/hyper-link";
-import { Separator } from "../ui/separator";
+import HyperLink from '../ui/hyper-link';
+import { Separator } from '../ui/separator';
+import { CreateProjectForm } from './create-project-form';
 
 export function CreateProjectDialog() {
   const [open, setOpen] = useState(false);
@@ -32,17 +32,23 @@ export function CreateProjectDialog() {
             Projects help you organize and track your work efficiently.
             <br />
             <div className="flex">
-              <HyperLink href="" className="flex max-sm:justify-center">Learn more about projects</HyperLink>
+              <HyperLink href="" className="flex max-sm:justify-center">
+                Learn more about projects
+              </HyperLink>
             </div>
           </DialogDescription>
           <Separator />
         </DialogHeader>
         <CreateProjectForm />
         <div className="my-2">
-          <p className="text-sm text-muted-foreground">Continuing will start a monthly Pro plan subscription.</p>
-          <HyperLink href="" className="flex max-sm:justify-center">Learn More</HyperLink>
+          <p className="text-sm text-muted-foreground">
+            Continuing will start a monthly Pro plan subscription.
+          </p>
+          <HyperLink href="" className="flex max-sm:justify-center">
+            Learn More
+          </HyperLink>
         </div>
       </DialogContent>
     </Dialog>
   );
-} 
+}

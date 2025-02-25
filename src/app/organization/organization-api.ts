@@ -1,5 +1,6 @@
-import { api } from "@/lib/api";
-import { UpdateInvitationPayload } from "./organizaion-type";
+import { api } from '@/lib/api';
+
+import type { UpdateInvitationPayload } from './organizaion-type';
 
 /**
  * @GET /session
@@ -20,6 +21,20 @@ export function getOrganizationApi(id: string) {
  */
 export function createOrganizationApi(payload: object) {
   return api.post('/organizations', payload);
+}
+
+/**
+ * @PUT /organizations/:id
+ */
+export function updateOrganizationApi(id: string, payload: object) {
+  return api.put(`/organizations/${id}`, payload);
+}
+
+/**
+ * @DELETE /organizations/:id
+ */
+export function deleteOrganizationApi(id: string) {
+  return api.delete(`/organizations/${id}`);
 }
 
 /**
@@ -46,49 +61,45 @@ export function inviteOrganizationMembersApi(payload: object, organizationId = '
 /**
  * @GET /organizations/invited-members/:organizationId?
  */
-export function getInvitedMembersApi<T = any>(organizationId = '') {
+export function getInvitedMembersApi<T = unknown>(organizationId = '') {
   return api.get<T>(`/organizations/invited-members/${organizationId}`);
 }
 
 /**
- * @PUT /organizations/invite/resend/:memberId/:organizationId?
+ * @PUT /organizations/invite/resend/:invitedMemberId/:organizationId?
  */
-export function resendInvitationApi<T = any>(payload: UpdateInvitationPayload) {
-  return api.put<T>(`/organizations/invite/resend/${payload.memberId}/${payload.organizationId}`);
+export function resendInvitationApi<T = unknown>(payload: UpdateInvitationPayload) {
+  return api.put<T>(
+    `/organizations/invite/resend/${payload.invitedMemberId}/${payload.organizationId}`
+  );
 }
 
 /**
- * @DELETE organizations/invite/cancel/:memberId/:organizationId?
+ * @DELETE organizations/invite/cancel/:invitedMemberId/:organizationId?
  */
-export function cancelInvitationApi<T = any>(payload: UpdateInvitationPayload) {
-  return api.delete<T>(`/organizations/invite/cancel/${payload.memberId}/${payload.organizationId}`);
+export function cancelInvitationApi<T = unknown>(payload: UpdateInvitationPayload) {
+  return api.delete<T>(
+    `/organizations/invite/cancel/${payload.invitedMemberId}/${payload.organizationId}`
+  );
 }
 
 /**
- * @GET /organizations/invitations/:invitedId
+ * @GET /organizations/invitations/:invitedMemberId
  */
-export function getInvitedMemberApi(invitedId: string) {
-  return api.get(`/organizations/invitations/${invitedId}`);
+export function getInvitedMemberApi(invitedMemberId: string) {
+  return api.get(`/organizations/invitations/${invitedMemberId}`);
 }
 
 /**
- * @POST /organizations/:id/join
+ * @POST /organizations/invitations/:invitedMemberId
  */
-export function joinOrganizationApi(id: string, payload: object) {
-  return api.post(`/organizations/${id}/join`, payload);
+export function promptInvitationApi(invitedMemberId: string, payload: object) {
+  return api.post(`/organizations/invitations/prompt/${invitedMemberId}`, payload);
 }
 
 /**
- * @PUT /organizations/:id
+ * @GET /organizations/members/:organizationId?
  */
-export function updateOrganizationApi(id: string, payload: object) {
-  return api.put(`/organizations/${id}`, payload);
+export function getOrganizationMembersApi<T = unknown>(organizationId = '') {
+  return api.get<T>(`/organizations/members/${organizationId}`);
 }
-
-/**
- * @DELETE /organizations/:id
- */
-export function deleteOrganizationApi(id: string) {
-  return api.delete(`/organizations/${id}`);
-}
-

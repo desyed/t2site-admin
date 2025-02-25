@@ -1,8 +1,4 @@
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 export async function loader() {
   return {
@@ -14,7 +10,6 @@ export async function loader() {
 let todos = [{ id: 1, title: 'Do Laundry' }];
 
 const getTodos = async () => {
-  console.log('asd');
   return todos;
 };
 
@@ -43,7 +38,6 @@ export function Component() {
       queryClient.invalidateQueries({ queryKey: ['todos'] });
     },
   });
-
 
   return (
     <div className="mt-5 flex flex-1 flex-col gap-4 p-5 pt-0">

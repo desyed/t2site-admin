@@ -65,9 +65,7 @@ export const useAuthStore = create<TAuthState>((set, get) => ({
   setAuthUser: (user) => set({ user }),
   updateAuthUser: (user) =>
     set((state) => ({
-      user: state.user
-        ? { ...state.user, ...user }
-        : ({ ...user } as TAuthUser),
+      user: state.user ? { ...state.user, ...user } : ({ ...user } as TAuthUser),
     })),
 
   // Token methods
@@ -78,8 +76,7 @@ export const useAuthStore = create<TAuthState>((set, get) => ({
   },
 
   // Organization methods
-  setUserOrganization: (userOrganization: TUserOrganization) =>
-    set({ userOrganization }),
+  setUserOrganization: (userOrganization: TUserOrganization) => set({ userOrganization }),
 
   // Auth flow methods
   setAuth: (user, accessToken) => {
@@ -90,16 +87,12 @@ export const useAuthStore = create<TAuthState>((set, get) => ({
   fetchSession: async (refetch = false) => {
     if (!get().user || refetch) {
       try {
-        const { data } = await handleApi(
-          getSessionApi,
-          {},
-          { toast: true }
-        );
+        const { data } = await handleApi(getSessionApi, {}, { toast: true });
 
         if (data?.user) {
           set({
             user: data.user as TAuthUser,
-            userOrganization: data.userOrganization as TUserOrganization
+            userOrganization: data.userOrganization as TUserOrganization,
           });
         } else {
           get().logout();
@@ -122,6 +115,7 @@ export const useAuthStore = create<TAuthState>((set, get) => ({
   logout: async () => {
     const { success } = await handleApi(logoutApi, {}, { toast: true });
     if (success) {
+      localStorage.removeItem('redirect_to');
       get().resetAuth();
     }
   },

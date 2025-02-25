@@ -25,9 +25,7 @@ export const createOrganizationSchema = z.object({
   description: z.string().optional(),
 });
 
-export type CreateOrganizationFormData = z.infer<
-  typeof createOrganizationSchema
->;
+export type CreateOrganizationFormData = z.infer<typeof createOrganizationSchema>;
 
 export function CreateOrganizationForm({ onClose }: { onClose: () => void }) {
   const form = useForm<CreateOrganizationFormData>({

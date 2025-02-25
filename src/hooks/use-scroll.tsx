@@ -35,16 +35,16 @@ export function useSmoothScroll<T extends HTMLElement>(): [RefObject<T>, () => v
   return [ref, smoothScrollToBottom];
 }
 
-export function useCallWithScroll<T>(
-  append: (value: T) => void,
-  smoothScrollToBottom: () => void
-) {
-  const handleAppend = useCallback((value: T) => {
-    append(value);
-    requestAnimationFrame(() => {
-      requestAnimationFrame(smoothScrollToBottom);
-    });
-  }, [append, smoothScrollToBottom]);
+export function useCallWithScroll<T>(append: (value: T) => void, smoothScrollToBottom: () => void) {
+  const handleAppend = useCallback(
+    (value: T) => {
+      append(value);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(smoothScrollToBottom);
+      });
+    },
+    [append, smoothScrollToBottom]
+  );
 
   return handleAppend;
 }

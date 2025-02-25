@@ -20,10 +20,7 @@ export function Component() {
       <form className="space-y-5">
         <div className="flex items-center gap-5">
           <Avatar className="size-20 rounded-sm">
-            <AvatarImage
-              src="https://github.com/shadcn.png"
-              alt="Workspace Avatar"
-            />
+            <AvatarImage src="https://github.com/shadcn.png" alt="Workspace Avatar" />
             <AvatarFallback>WS</AvatarFallback>
           </Avatar>
           <div className="space-y-1">
@@ -62,8 +59,7 @@ export function Component() {
         <div className="w-7/12">
           <h3 className="font-medium text-destructive">Delete Workspace</h3>
           <p className="text-xs text-muted-foreground">
-            Once you delete your workspace, there is no going back. Please be
-            certain.
+            Once you delete your workspace, there is no going back. Please be certain.
           </p>
         </div>
         <DeleteProjectAlert>

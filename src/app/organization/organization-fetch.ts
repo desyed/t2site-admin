@@ -1,5 +1,10 @@
-import { InvitedMember, InvitedMemberResponse } from "./organizaion-type";
-import { getInvitedMemberApi, getInvitedMembersApi } from "./organization-api";
+import type { InvitedMember, InvitedMemberResponse, OrganizationMember } from './organizaion-type';
+
+import {
+  getInvitedMemberApi,
+  getInvitedMembersApi,
+  getOrganizationMembersApi,
+} from './organization-api';
 
 export async function fetchInvitedMembers() {
   const result = await getInvitedMembersApi();
@@ -11,4 +16,7 @@ export async function fetchInvitedMember(invitedMemberId: string) {
   return result?.data?.data as InvitedMemberResponse;
 }
 
-
+export async function fetchOrganizationMembers(organizationId?: string) {
+  const result = await getOrganizationMembersApi(organizationId);
+  return result?.data?.data?.members as OrganizationMember[];
+}

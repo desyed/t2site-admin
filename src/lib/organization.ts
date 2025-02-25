@@ -1,4 +1,3 @@
-
 export function createOrganizationInvitationLink(key: string) {
   if (typeof window === 'object') {
     return `${window.location.origin}/invitation/${key}`;

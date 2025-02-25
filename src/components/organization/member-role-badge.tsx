@@ -1,13 +1,19 @@
-import { Role } from "@/app/organization/organizaion-type";
-import { Badge } from "@/components/ui/badge";
-import { Shield, User, Crown } from "lucide-react";
-import { LucideIcon } from "lucide-react";
+import type { LucideIcon } from 'lucide-react';
+
+import { Shield, User, Crown } from 'lucide-react';
+
+import type { Role } from '@/app/organization/organizaion-type';
+
+import { Badge } from '@/components/ui/badge';
 
 // Define a mapping from Role to the Badge variant
-const roleVariantMap: Record<Role, "default" | "secondary" | "destructive" | "outline" | "success" | "warning" | "info"> = {
-  admin: "success",
-  member: "info",
-  owner: "warning",
+const roleVariantMap: Record<
+  Role,
+  'default' | 'secondary' | 'destructive' | 'outline' | 'success' | 'warning' | 'info'
+> = {
+  admin: 'success',
+  member: 'info',
+  owner: 'warning',
 };
 
 // Change the type to use LucideIcon
@@ -22,12 +28,16 @@ interface MemberRoleBadgeProps {
 }
 
 export default function MemberRoleBadge({ role }: MemberRoleBadgeProps) {
-  // Look up the variant for this role; if no mapping exists, use "default"
-  const variant = roleVariantMap[role] || "default";
+  const variant = roleVariantMap[role] || 'default';
   const Icon = roleIconMap[role];
 
   return (
-    <Badge className="sm:text-[11px] uppercase inline-flex items-center gap-1" variant={variant}>
+    <Badge
+      className="![&_svg]:size-4 inline-flex items-center gap-1 uppercase
+    sm:text-[11px]
+    "
+      variant={variant}
+    >
       {Icon && <Icon size={14} />}
       {role}
     </Badge>

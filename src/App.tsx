@@ -1,17 +1,12 @@
-
-import {
-  QueryClientProvider,
-} from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
 import { AuthProvider } from '@/contexts/auth-provider';
 
+import { queryClient } from './query-client';
 import Routers from './routes';
-import { queryClient } from "./query-client";
-
-
 
 export default function App() {
   return (

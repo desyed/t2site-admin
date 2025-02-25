@@ -1,18 +1,29 @@
-import { Link, ShieldCheck, SparklesIcon } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Switch } from "@/components/ui/switch"
+import { Link, ShieldCheck, SparklesIcon } from 'lucide-react';
+import { RefreshCw } from 'lucide-react';
+import { useState } from 'react';
 
-import InvitedMembers from "./invited-members/invited-members"
-import OrgMembers from "./org-members"
+import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
+
+import InviteMemberDialog from './invited-members/invite-member-dialog';
+import InvitedMembers from './invited-members/invited-members';
+import OrgMembers from './org-members/org-members';
 export default function Members() {
+  const [refresh, setRefresh] = useState(false);
 
   return (
     <div className="space-y-10">
       {/* Invited Members Section */}
-      <InvitedMembers />
-
+      <InvitedMembers refresh={refresh} setRefresh={setRefresh} />
+      <div className="mt-5 flex items-center justify-between gap-4">
+        <InviteMemberDialog />
+        <Button variant="outline" size="sm" onClick={() => setRefresh(!refresh)} disabled={refresh}>
+          <RefreshCw className={`mr-2 size-4 ${refresh ? 'animate-spin' : ''}`} />
+          Refresh
+        </Button>
+      </div>
       {/* Organization Members Section */}
-      <OrgMembers />
+      <OrgMembers refresh={refresh} setRefresh={setRefresh} />
 
       <section className="rounded-lg border bg-card p-6">
         <div className="mb-2 flex items-center gap-2">
@@ -24,7 +35,9 @@ export default function Members() {
         <p className="mb-4 text-muted-foreground">
           Require all users in your organization to enable two-factor authentication.
         </p>
-        <p className="mb-4 text-muted-foreground">Subscribe to the Teams addon to use this feature.</p>
+        <p className="mb-4 text-muted-foreground">
+          Subscribe to the Teams addon to use this feature.
+        </p>
         <Button variant="secondary">
           <SparklesIcon className="mr-1 size-4" />
           Upgrade now
@@ -41,10 +54,11 @@ export default function Members() {
 
         <div className="flex items-center space-x-2">
           <Switch id="email-notifications" />
-          <label htmlFor="email-notifications">Email all current members when a new member joins</label>
+          <label htmlFor="email-notifications">
+            Email all current members when a new member joins
+          </label>
         </div>
       </section>
     </div>
-  )
+  );
 }
-

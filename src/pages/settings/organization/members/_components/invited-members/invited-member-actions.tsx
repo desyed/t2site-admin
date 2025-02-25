@@ -1,7 +1,15 @@
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { MoreHorizontal, XIcon, SendIcon, Loader2 } from "lucide-react"
-import { InvitedMember } from "@/app/organization/organizaion-type"
+import { useQueryClient } from '@tanstack/react-query';
+import { MoreHorizontal, XIcon, SendIcon, Loader2, BanIcon } from 'lucide-react';
+import { useState } from 'react';
+import { toast } from 'sonner';
+
+import type { InvitedMember } from '@/app/organization/organizaion-type';
+
+import {
+  useResendInvitationMutation,
+  useCancelInvitationMutation,
+} from '@/app/organization/organization-hooks';
+import { invitedMemberQueryKeys } from '@/app/organization/organization-keys';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -10,69 +18,88 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
-import { useState } from "react"
-import { useResendInvitationMutation, useCancelInvitationMutation } from "@/app/organization/organization-hooks"
-import { toast } from "sonner"
-import { useQueryClient } from "@tanstack/react-query"
-import { invitedMemberQueryKeys } from "@/app/organization/organization-keys"
-import { delay, handleApiErrorException } from "@/lib/utils"
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { delay, handleApiErrorException } from '@/lib/utils';
 
 type InvitedMemberActionsProps = {
-  member: InvitedMember
-}
+  member: InvitedMember;
+};
 
 export default function InvitedMemberActions({ member }: InvitedMemberActionsProps) {
-  const [showResendDialog, setShowResendDialog] = useState(false)
-  const [showCancelDialog, setShowCancelDialog] = useState(false)
+  const [showResendDialog, setShowResendDialog] = useState(false);
+  const [showCancelDialog, setShowCancelDialog] = useState(false);
 
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
-  const { mutate: resendInvitation, isPending: isResending } = useResendInvitationMutation()
-  const { mutate: cancelInvitation, isPending: isCanceling } = useCancelInvitationMutation()
-
+  const { mutate: resendInvitation, isPending: isResending } = useResendInvitationMutation<{
+    data: {
+      data: {
+        invitedMember: InvitedMember;
+      };
+    };
+  }>();
+  const { mutate: cancelInvitation, isPending: isCanceling } = useCancelInvitationMutation<{
+    data: {
+      data: {
+        invitedMember: InvitedMember;
+      };
+    };
+  }>();
   const handleResendInvitation = () => {
-    resendInvitation({
-      memberId: member.id,
-      organizationId: member.organizationId,
-    }, {
-      onSuccess: async ({ data = {} }) => {
-        setShowResendDialog(false);
-        const memeberEmail = data?.data?.invitedMember?.email;
-        const memberRole = data?.data?.invitedMember?.role;
-        queryClient.invalidateQueries({ queryKey: invitedMemberQueryKeys.invitedMemberList() })
-
-        await delay(200)
-        toast.success('Invitation resent successfully', {
-          description: `Invitation resent for ${memeberEmail} with role ${memberRole}`
-        });
+    resendInvitation(
+      {
+        invitedMemberId: member.id,
+        organizationId: member.organizationId,
       },
-      onError: (error) => {
-        handleApiErrorException(error, true);
+      {
+        onSuccess: async ({ data }) => {
+          setShowResendDialog(false);
+          const memeberEmail = data?.data?.invitedMember?.email;
+          const memberRole = data?.data?.invitedMember?.role;
+          queryClient.invalidateQueries({ queryKey: invitedMemberQueryKeys.invitedMemberList() });
+
+          await delay(200);
+          toast.success('Invitation resent successfully', {
+            description: `Invitation resent for ${memeberEmail} with role ${memberRole}`,
+          });
+        },
+        onError: (error) => {
+          handleApiErrorException(error, true);
+        },
       }
-    })
-  }
+    );
+  };
 
   const handleCancelInvitation = () => {
-    cancelInvitation({
-      memberId: member.id,
-      organizationId: member.organizationId,
-    }, {
-      onSuccess: async ({ data = {} }) => {
-        setShowCancelDialog(false)
-        const memeberEmail = data?.data?.invitedMember?.email;
-        const memberRole = data?.data?.invitedMember?.role;
-        queryClient.invalidateQueries({ queryKey: invitedMemberQueryKeys.invitedMemberList() })
-        await delay(200)
-        toast.success('Invitation removed successfully', {
-          description: `Invitation removed for ${memeberEmail} with role ${memberRole}`
-        });
+    cancelInvitation(
+      {
+        invitedMemberId: member.id,
+        organizationId: member.organizationId,
       },
-      onError: (error: any) => {
-        handleApiErrorException(error, true);
+      {
+        onSuccess: async ({ data }) => {
+          setShowCancelDialog(false);
+          const memeberEmail = data?.data?.invitedMember?.email;
+          const memberRole = data?.data?.invitedMember?.role;
+          queryClient.invalidateQueries({ queryKey: invitedMemberQueryKeys.invitedMemberList() });
+          await delay(200);
+          toast.success('Invitation removed successfully', {
+            description: `Invitation removed for ${memeberEmail} with role ${memberRole}`,
+          });
+        },
+        onError: (error: any) => {
+          handleApiErrorException(error, true);
+        },
       }
-    })
-  }
+    );
+  };
   return (
     <>
       <DropdownMenu>
@@ -83,10 +110,7 @@ export default function InvitedMemberActions({ member }: InvitedMemberActionsPro
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem
-            className="[&_svg]:size-4"
-            onSelect={() => setShowResendDialog(true)}
-          >
+          <DropdownMenuItem className="[&_svg]:size-4" onSelect={() => setShowResendDialog(true)}>
             <SendIcon className="mr-2" /> Resend invitation
           </DropdownMenuItem>
           <DropdownMenuItem
@@ -108,12 +132,11 @@ export default function InvitedMemberActions({ member }: InvitedMemberActionsPro
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline">
+                <BanIcon className="size-3 sm:size-4" /> Cancel
+              </Button>
             </AlertDialogCancel>
-            <Button variant="default"
-              onClick={handleResendInvitation}
-              disabled={isResending}
-            >
+            <Button variant="default" onClick={handleResendInvitation} disabled={isResending}>
               {isResending ? (
                 <>
                   <Loader2 className="size-4 animate-spin" />
@@ -129,20 +152,24 @@ export default function InvitedMemberActions({ member }: InvitedMemberActionsPro
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-
       <AlertDialog open={showCancelDialog} onOpenChange={setShowCancelDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Cancel Invitation</AlertDialogTitle>
             <AlertDialogDescription>
-              This will cancel the pending invitation for {member.email}. This action cannot be undone.
+              This will cancel the pending invitation for {member.email}. This action cannot be
+              undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline">
+                <BanIcon className="size-3 sm:size-4" /> Cancel
+              </Button>
             </AlertDialogCancel>
-            <Button variant="destructive" className="bg-destructive hover:bg-destructive/90 text-foreground"
+            <Button
+              variant="destructive"
+              className="bg-destructive text-foreground hover:bg-destructive/90"
               onClick={handleCancelInvitation}
             >
               {isCanceling ? (
@@ -161,5 +188,5 @@ export default function InvitedMemberActions({ member }: InvitedMemberActionsPro
         </AlertDialogContent>
       </AlertDialog>
     </>
-  )
+  );
 }

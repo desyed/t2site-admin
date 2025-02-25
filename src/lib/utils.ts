@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AxiosError, type AxiosResponse } from 'axios';
 import { type ClassValue, clsx } from 'clsx';
 import { toast as toastMessage } from 'sonner';
@@ -58,9 +57,8 @@ export function isValidPassword(password: string) {
 }
 
 export function validUUID(uuid: string) {
-  return uuid.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);
+  return uuid.match(/^[\da-f]{8}(?:-[\da-f]{4}){3}-[\da-f]{12}$/i);
 }
-
 
 export type EmailAddress = string & {
   __brand: 'EmailAddress';
@@ -70,10 +68,7 @@ export function isValidEmail(email: string): email is EmailAddress {
   return z.string().email().safeParse(email).success;
 }
 
-export function handleApiErrorException<TError = any>(
-  err: unknown,
-  toast: boolean = false
-) {
+export function handleApiErrorException<TError = any>(err: unknown, toast: boolean = false) {
   let message = 'An unexpected error occurred. Please try again.';
   let errors: TError | null = null;
   let responseType = null;
@@ -104,7 +99,7 @@ export function handleApiErrorException<TError = any>(
       responseType = 'Bad Request';
       message = err.response?.data?.message ?? 'Please check your input.';
       toast &&
-        toastMessage.warning(responseType, {
+        toastMessage.warning('Request Failed', {
           description: message,
           position: 'top-center',
         });
@@ -119,9 +114,7 @@ export function handleApiErrorException<TError = any>(
           position: 'top-center',
         });
     } else if (status === 403) {
-      message =
-        err.response?.data?.message ??
-        "You don't have permission to perform this action.";
+      message = err.response?.data?.message ?? "You don't have permission to perform this action.";
       responseType = 'Forbidden';
       toast &&
         toastMessage.warning(responseType, {
@@ -129,9 +122,7 @@ export function handleApiErrorException<TError = any>(
           position: 'top-center',
         });
     } else if (status === 404) {
-      message =
-        err.response?.data?.message ??
-        'The requested resource could not be found.';
+      message = err.response?.data?.message ?? 'The requested resource could not be found.';
       responseType = 'Not Found';
       toast &&
         toastMessage.warning(responseType, {
@@ -193,14 +184,10 @@ export async function handleApi<TResponse = any, TError = any>(
       code: null,
     };
   } catch (err) {
-    const { errors, message, responseType, code } = handleApiErrorException(
-      err,
-      toast
-    );
+    const { errors, message, responseType, code } = handleApiErrorException(err, toast);
     return { success: false, message, errors, data: null, responseType, code };
   }
 }
-
 
 export function isActivePath(path: string, url: string, strict: boolean = false): boolean {
   if (url === '/') {

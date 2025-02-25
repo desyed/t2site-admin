@@ -5,7 +5,7 @@ import { authStore } from '@/app/auth/auth-store';
 
 const axiosAuthApiInstance = axios.create({
   baseURL: `${import.meta.env.VITE_BACKEND_URL}/api`,
-  withCredentials: true
+  withCredentials: true,
 });
 
 axiosAuthApiInstance.interceptors.request.use(
@@ -24,8 +24,7 @@ axiosAuthApiInstance.interceptors.response.use(
       if (originalRequest.url.includes('/auth/refresh')) {
         authStore.resetAuth();
         toast.warning('Unauthorized Request or Session Expired', {
-          description:
-            'Your session has expired. Please log in again to continue.',
+          description: 'Your session has expired. Please log in again to continue.',
           position: 'bottom-right',
         });
         return Promise.reject(error);

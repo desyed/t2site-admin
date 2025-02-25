@@ -1,6 +1,8 @@
-import { LoaderFunction, replace } from "react-router";
+import type { LoaderFunction } from 'react-router';
 
-import { authPreSessionLoader } from "@/app/auth/auth-loader";
+import { replace } from 'react-router';
+
+import { authPreSessionLoader } from '@/app/auth/auth-loader';
 
 export const authMiddlewareLoader: LoaderFunction = async () => {
   const authUser = await authPreSessionLoader();
@@ -11,7 +13,7 @@ export const authMiddlewareLoader: LoaderFunction = async () => {
     return replace('/verify');
   }
   return null;
-}
+};
 
 export const verifyMiddlewareLoader: LoaderFunction = async ({ request }) => {
   const authUser = await authPreSessionLoader();
@@ -25,8 +27,7 @@ export const verifyMiddlewareLoader: LoaderFunction = async ({ request }) => {
     return replace('/');
   }
   return null;
-}
-
+};
 
 export const createPrivateLoader = (loader?: LoaderFunction): LoaderFunction => {
   return async (context) => {
@@ -46,5 +47,4 @@ export const createPrivateLoader = (loader?: LoaderFunction): LoaderFunction => 
   };
 };
 
-
-export const privateMiddlewareLoader: LoaderFunction = createPrivateLoader()
+export const privateMiddlewareLoader: LoaderFunction = createPrivateLoader();

@@ -4,21 +4,21 @@ import { RouterProvider } from 'react-router/dom';
 import ErrorBoundary from '@/components/error-boundary';
 import SplashScreen from '@/components/splash-screen';
 import AuthLayout from '@/layouts/auth-layout';
+import InvitationLayout from '@/layouts/invitation-layout';
 import PrivateLayout from '@/layouts/private-layout';
 import RootLayout from '@/layouts/root-layout';
 import VerifyLayout from '@/layouts/verify-layout';
-import NotFound from '@/pages/404';
-import AuthCheckPoint from '@/pages/auth-check-point';
-import LoginPage from '@/pages/login';
-import SignupPage from '@/pages/signup';
-import InvitationLayout from '@/layouts/invitation-layout';
 import {
   authMiddlewareLoader,
   privateMiddlewareLoader,
-  verifyMiddlewareLoader
+  verifyMiddlewareLoader,
 } from '@/middlewares/auth-middleware';
+import NotFound from '@/pages/404';
 import NotFoundPrivate from '@/pages/404-private';
+import AuthCheckPoint from '@/pages/auth-check-point';
+import LoginPage from '@/pages/login';
 import NavSettings from '@/pages/settings/_components/nav-settings';
+import SignupPage from '@/pages/signup';
 import { settingsRoutes } from '@/routers/settings.routes';
 
 export const routes = createBrowserRouter([

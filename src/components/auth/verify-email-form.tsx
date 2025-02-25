@@ -11,13 +11,7 @@ import type { TAuthUser } from '@/app/auth/auth-store';
 import { verifyEmailApi } from '@/app/auth/auth-api';
 import { useAuthStore } from '@/app/auth/auth-store';
 import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { useApi } from '@/hooks/use-api';
 import { handleServerErrors } from '@/lib/error';
@@ -57,7 +51,10 @@ export default function VerifyEmailForm() {
     if (success) {
       if (data?.access_token && data.user.email && data.user.emailVerified) {
         setAuth(data.user, data.access_token);
-        navigate('/auth?auth_login=success&rp=' + window.localStorage.getItem('redirect_to') || '/', { replace: true });
+        navigate(
+          '/auth?auth_login=success&rp=' + window.localStorage.getItem('redirect_to') || '/',
+          { replace: true }
+        );
         toast.success('Email Verified!', {
           description: 'Your email has been successfully verified. 🎉',
           duration: 3000,
@@ -70,10 +67,7 @@ export default function VerifyEmailForm() {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-3"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-3">
         <div>
           <FormField
             control={form.control}
@@ -90,12 +84,7 @@ export default function VerifyEmailForm() {
         </div>
         <div className="mt-5 flex flex-col sm:mt-2">
           <Button type="submit" size="sm" disabled={loading}>
-            {!loading && (
-              <Icon
-                className="size-8"
-                icon="material-symbols:domain-verification"
-              />
-            )}
+            {!loading && <Icon className="size-8" icon="material-symbols:domain-verification" />}
             <LoadingSpinner visable={loading} /> Verify
           </Button>
         </div>

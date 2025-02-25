@@ -26,9 +26,7 @@ export default function OAuthButton(props: OAuthButtonProps) {
     }
   }, [type]);
 
-
   const redirect_url = `${window.location.origin}/auth/?rp=${from}&auth_login=success`;
-
 
   const redirect_error = `${window.location.origin}/login`;
 
@@ -47,6 +45,9 @@ export default function OAuthButton(props: OAuthButtonProps) {
           className="capitalize"
           type="submit"
           data-oauth-type={type}
+          onClick={() => {
+            window.localStorage.removeItem('redirect_to');
+          }}
         >
           {OAuthIcon}
           {label && `Continue With ${type}`}

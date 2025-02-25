@@ -1,7 +1,11 @@
-import { queryClient } from "@/query-client";
-import { fetchInvitedMember, fetchInvitedMembers } from "./organization-fetch";
-import { invitedMemberQueryKeys } from "./organization-keys";
+import { queryClient } from '@/query-client';
 
+import {
+  fetchInvitedMember,
+  fetchInvitedMembers,
+  fetchOrganizationMembers,
+} from './organization-fetch';
+import { invitedMemberQueryKeys, memberQueryKeys } from './organization-keys';
 
 export async function preFetchInvitedMembers() {
   await queryClient.prefetchQuery({
@@ -18,3 +22,9 @@ export async function preFetchInvitedMember(invitedMemberId: string) {
   });
 }
 
+export async function preFetchOrganizationMembers() {
+  return await queryClient.prefetchQuery({
+    queryKey: memberQueryKeys.memberList(),
+    queryFn: () => fetchOrganizationMembers(),
+  });
+}

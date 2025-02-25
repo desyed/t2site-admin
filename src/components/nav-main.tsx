@@ -1,17 +1,9 @@
-import type {
-  LucideIcon
-} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 
-import {
-  ChevronRight
-} from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { Link, useLocation } from 'react-router';
 
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
   SidebarGroup,
   SidebarMenu,
@@ -22,7 +14,7 @@ import {
   useSidebar,
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
-import { cn, isActivePath } from "@/lib/utils";
+import { cn, isActivePath } from '@/lib/utils';
 
 export function NavMain({
   items,
@@ -60,14 +52,21 @@ export function NavMain({
                   </SidebarMenuButton>
                 </CollapsibleTrigger>
               ) : (
-                <Link to={item.url} onClick={() => {
-                  if (isMobile) {
-                    toggleSidebar();
-                  }
-                }}>
-                  <SidebarMenuButton tooltip={item.title}
+                <Link
+                  to={item.url}
+                  onClick={() => {
+                    if (isMobile) {
+                      toggleSidebar();
+                    }
+                  }}
+                >
+                  <SidebarMenuButton
+                    tooltip={item.title}
                     className={cn('font-semibold', {
-                      'bg-accent dark:!text-primary !text-yellow-600': isActivePath(pathname, item.url),
+                      'bg-accent dark:!text-primary !text-yellow-600': isActivePath(
+                        pathname,
+                        item.url
+                      ),
                     })}
                   >
                     {item.icon && <item.icon />}
@@ -80,15 +79,23 @@ export function NavMain({
                   <SidebarMenuSub>
                     {item.items?.map((subItem) => (
                       <SidebarMenuSubItem key={subItem.title}>
-                        <Link to={subItem.url} onClick={() => {
-                          if (isMobile) {
-                            toggleSidebar();
-                          }
-                        }}>
-                          <SidebarMenuSubButton className={cn('font-semibold', {
-                            'bg-accent dark:!text-primary !text-yellow-600': isActivePath(pathname, subItem.url),
-                          })} asChild>
-
+                        <Link
+                          to={subItem.url}
+                          onClick={() => {
+                            if (isMobile) {
+                              toggleSidebar();
+                            }
+                          }}
+                        >
+                          <SidebarMenuSubButton
+                            className={cn('font-semibold', {
+                              'bg-accent dark:!text-primary !text-yellow-600': isActivePath(
+                                pathname,
+                                subItem.url
+                              ),
+                            })}
+                            asChild
+                          >
                             <span>{subItem.title}</span>
                           </SidebarMenuSubButton>
                         </Link>

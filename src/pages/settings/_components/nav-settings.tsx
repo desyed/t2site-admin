@@ -103,7 +103,7 @@ export default function NavSettings() {
   }, [pathname, navigate, isMobile]);
 
   return (
-    <div className="flex flex-col items-start max-sm:mt-4 sm:mt-5 sm:gap-5 md:flex-row lg:mx-6 mx-4 lg:mt-8 lg:gap-10">
+    <div className="mx-4 flex flex-col items-start max-sm:mt-4 sm:mt-5 sm:gap-5 md:flex-row lg:mx-6 lg:mt-8 lg:gap-10">
       <div className="top-20 bg-background max-md:mb-6 max-md:w-full max-md:border-b max-md:pb-2 md:sticky md:min-w-[12.4rem]">
         <Collapsible open={open} onOpenChange={setOpen}>
           <div className="hidden max-md:block ">
@@ -143,9 +143,17 @@ export default function NavSettings() {
                       }}
                       key={item.path}
                     >
-                      <span className={cn("font-semibold", {
-                        'text-yellow-600 dark:!text-primary': isActivePath(pathname, item.path, true),
-                      })}>{item.label}</span>
+                      <span
+                        className={cn('font-semibold', {
+                          'text-yellow-600 dark:!text-primary': isActivePath(
+                            pathname,
+                            item.path,
+                            true
+                          ),
+                        })}
+                      >
+                        {item.label}
+                      </span>
                     </SidebarMenuButton>
                   );
                 })}
@@ -165,9 +173,17 @@ export default function NavSettings() {
                       }}
                       key={item.path}
                     >
-                      <span className={cn("font-semibold", {
-                        'text-yellow-600 dark:!text-primary': isActivePath(pathname, item.path, true),
-                      })}>{item.label}</span>
+                      <span
+                        className={cn('font-semibold', {
+                          'text-yellow-600 dark:!text-primary': isActivePath(
+                            pathname,
+                            item.path,
+                            true
+                          ),
+                        })}
+                      >
+                        {item.label}
+                      </span>
                     </SidebarMenuButton>
                   );
                 })}
@@ -186,9 +202,17 @@ export default function NavSettings() {
                     }}
                     key={item.path}
                   >
-                    <span className={cn("font-semibold", {
-                      'text-yellow-600 dark:!text-primary': isActivePath(pathname, item.path, true),
-                    })}>{item.label}</span>
+                    <span
+                      className={cn('font-semibold', {
+                        'text-yellow-600 dark:!text-primary': isActivePath(
+                          pathname,
+                          item.path,
+                          true
+                        ),
+                      })}
+                    >
+                      {item.label}
+                    </span>
                   </SidebarMenuButton>
                 ))}
               </SidebarMenu>
@@ -196,7 +220,7 @@ export default function NavSettings() {
           </CollapsibleContent>
         </Collapsible>
       </div>
-      <div className="flex-1 min-w-0 min-h-0 whitespace-normal">
+      <div className="min-h-0 min-w-0 flex-1 whitespace-normal">
         <Outlet />
       </div>
     </div>

@@ -1,10 +1,9 @@
-import { Outlet } from "react-router";
+import { Outlet } from 'react-router';
 
-import Brand from "@/components/Brand";
-import { ModeToggle } from "@/components/mode-toggle";
+import Brand from '@/components/Brand';
+import { ModeToggle } from '@/components/mode-toggle';
 
 export default function InvitationLayout() {
-
   return (
     <div className="relative flex min-h-screen flex-col">
       <div className="absolute right-0 flex h-[90px] items-center justify-between px-6 sm:px-10">
@@ -22,15 +21,12 @@ export default function InvitationLayout() {
             <Outlet />
           </div>
           <div className="px-5 pb-10 text-center text-sm text-muted-foreground">
-            By clicking continue, you agree to our{" "}
+            By clicking continue, you agree to our{' '}
             <a className="underline hover:text-foreground" href="/terms">
               Terms of Service
-            </a>{" "}
-            and{" "}
-            <a
-              className="underline hover:text-foreground"
-              href="/privacy-policy"
-            >
+            </a>{' '}
+            and{' '}
+            <a className="underline hover:text-foreground" href="/privacy-policy">
               Privacy Policy
             </a>
             .
@@ -39,5 +35,4 @@ export default function InvitationLayout() {
       </div>
     </div>
   );
-
 }

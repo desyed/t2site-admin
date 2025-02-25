@@ -1,60 +1,69 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { AxiosError } from "axios";
-import { Loader2, Plus, Trash2 } from "lucide-react";
-import { useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
-import { useQueryClient } from "@tanstack/react-query";
-import { useInviteMembersMutaion } from "@/app/organization/organization-hooks";
-import { inviteMemberSchema, MAX_MEMBERS, roles } from "@/app/organization/organization-schema";
-import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useSmoothScroll, useCallWithScroll } from "@/hooks/use-scroll";
-import { delay, handleApiErrorException } from "@/lib/utils";
-import { toast } from "sonner";
-import { InviteMemberInput } from "@/app/organization/organizaion-type";
-import { invitedMemberQueryKeys } from "@/app/organization/organization-keys";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { Loader2, Plus, Trash2 } from 'lucide-react';
+import { useState } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
+import type { InviteMemberInput } from '@/app/organization/organizaion-type';
+
+import { useInviteMembersMutaion } from '@/app/organization/organization-hooks';
+import { invitedMemberQueryKeys } from '@/app/organization/organization-keys';
+import { inviteMemberSchema, MAX_MEMBERS, roles } from '@/app/organization/organization-schema';
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { useSmoothScroll, useCallWithScroll } from '@/hooks/use-scroll';
+import { delay, handleApiErrorException } from '@/lib/utils';
 
 interface InviteMemberFormProps {
   onClose: () => void;
 }
 
 export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
-
   const [scrollContainerRef, smoothScrollToBottom] = useSmoothScroll<HTMLDivElement>();
 
   const form = useForm<InviteMemberInput>({
     resolver: zodResolver(inviteMemberSchema),
     defaultValues: {
-      members: [{ email: "", name: undefined, role: "member" }],
+      members: [{ email: '', name: undefined, role: 'member' }],
       message: undefined,
     },
   });
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: "members",
+    name: 'members',
   });
 
-  const handleAppend = useCallWithScroll(() => append({ email: "", name: "", role: "member" }), smoothScrollToBottom);
+  const handleAppend = useCallWithScroll(
+    () => append({ email: '', name: '', role: 'member' }),
+    smoothScrollToBottom
+  );
 
   const [membersError, setMembersError] = useState<any>(null);
 
   const queryClient = useQueryClient();
-
 
   const { mutate, isPending } = useInviteMembersMutaion();
 
   const handleSubmitInvitation = async (values: InviteMemberInput) => {
     mutate(values, {
       onSuccess: async () => {
-        toast.success("🎉 Invitation Sent Successfully!", {
-          description: "Your team members will receive an email invitation to join your organization. 📧",
+        toast.success('🎉 Invitation Sent Successfully!', {
+          description:
+            'Your team members will receive an email invitation to join your organization. 📧',
         });
-        await delay(200)
+        await delay(200);
         queryClient.invalidateQueries({ queryKey: invitedMemberQueryKeys.invitedMemberList() });
         onClose();
       },
@@ -62,7 +71,7 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
         handleApiErrorException(error, true);
         if (error instanceof AxiosError) {
           const code = error.response?.data.code;
-          if (code === "members-already-exist") {
+          if (code === 'members-already-exist') {
             const membersError: any = {};
             error.response?.data.membersError?.members?.forEach((member: any) => {
               membersError[member.email] = error.response?.data.membersError?.message;
@@ -70,19 +79,24 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
             setMembersError(membersError);
           }
         }
-      }
+      },
     });
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmitInvitation)} className="space-y-4">
-        <div ref={scrollContainerRef} className="site-scrollbar max-h-[60vh] overflow-y-auto overflow-x-hidden px-5 pb-2">
+        <div
+          ref={scrollContainerRef}
+          className="site-scrollbar max-h-[60vh] overflow-y-auto overflow-x-hidden px-5 pb-2"
+        >
           <div className="flex  max-sm:hidden">
             <div className="grid flex-1 grid-cols-1 gap-3 px-1 sm:grid-cols-2">
               <span className="px-1">Email address</span>
               <div className="grid flex-1 grid-cols-2 gap-3 font-semibold">
-                <span className="px-1">Name <span className="text-sm text-muted-foreground">(optional)</span></span>
+                <span className="px-1">
+                  Name <span className="text-sm text-muted-foreground">(optional)</span>
+                </span>
                 <span className="px-1">Role</span>
               </div>
             </div>
@@ -91,7 +105,7 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
           <div className="space-y-6 sm:space-y-4">
             {fields.map((field, index) => (
               <div key={field.id} className="flex flex-col gap-3 sm:flex-row sm:gap-1">
-                <div className="grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2" >
+                <div className="grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2">
                   <FormField
                     control={form.control}
                     name={`members.${index}.email`}
@@ -110,8 +124,10 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
                       control={form.control}
                       name={`members.${index}.name`}
                       render={({ field }) => (
-                        <FormItem >
-                          <span className="px-1 sm:hidden">Name <span className="text-sm text-muted-foreground ">(optional)</span></span>
+                        <FormItem>
+                          <span className="px-1 sm:hidden">
+                            Name <span className="text-sm text-muted-foreground ">(optional)</span>
+                          </span>
                           <FormControl>
                             <Input placeholder="Ryan" {...field} />
                           </FormControl>
@@ -147,7 +163,12 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
                 </div>
                 {fields.length > 1 && (
                   <div className="sm:mt-1.5">
-                    <Button onClick={() => remove(index)} size="icon" variant="ghost" className="border-dashed border-destructive/15 text-destructive/80 hover:bg-destructive/15 hover:text-destructive/80 max-sm:w-full max-sm:border">
+                    <Button
+                      onClick={() => remove(index)}
+                      size="icon"
+                      variant="ghost"
+                      className="border-dashed border-destructive/15 text-destructive/80 hover:bg-destructive/15 hover:text-destructive/80 max-sm:w-full max-sm:border"
+                    >
                       <Trash2 className="size-4" />
                       <span className="sr-only">Remove member</span>
                     </Button>
@@ -158,12 +179,18 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
           </div>
           <div className="mt-5">
             {fields.length < MAX_MEMBERS ? (
-              <Button type="button" effect="none" variant="outline" className="w-full" onClick={handleAppend}>
+              <Button
+                type="button"
+                effect="none"
+                variant="outline"
+                className="w-full"
+                onClick={handleAppend}
+              >
                 <Plus className="mr-2 size-4" />
                 Add email address
               </Button>
             ) : (
-              <p className="text-sm text-muted-foreground text-center">
+              <p className="text-center text-sm text-muted-foreground">
                 Maximum number of {MAX_MEMBERS} members reached
               </p>
             )}
@@ -191,7 +218,9 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
           </div>
         </div>
         <div className="mt-4 flex flex-col justify-end gap-4 p-5 pt-0 sm:flex-row">
-          <Button type="button" variant="ghost" onClick={onClose}>Cancel</Button>
+          <Button type="button" variant="ghost" onClick={onClose}>
+            Cancel
+          </Button>
           <Button type="submit" disabled={isPending} className="w-[180px]">
             {isPending ? (
               <>
@@ -199,7 +228,7 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
                 Sending Invitation...
               </>
             ) : (
-              "Invite Team Members"
+              'Invite Team Members'
             )}
           </Button>
         </div>

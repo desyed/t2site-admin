@@ -1,13 +1,16 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const MAX_MEMBERS = 10;
-export const roles = ["member", "admin", "owner"] as const;
+export const roles = ['member', 'admin', 'owner'] as const;
 
 export const inviteMemberSchema = z.object({
   members: z
     .array(
       z.object({
-        email: z.string().min(1, { message: "Email is required" }).email({ message: "Invalid email address" }),
+        email: z
+          .string()
+          .min(1, { message: 'Email is required' })
+          .email({ message: 'Invalid email address' }),
         name: z.string().optional(),
         role: z.enum(roles),
       })
@@ -15,4 +18,3 @@ export const inviteMemberSchema = z.object({
     .max(MAX_MEMBERS, `You can invite up to ${MAX_MEMBERS} members at once`),
   message: z.string().optional(),
 });
-

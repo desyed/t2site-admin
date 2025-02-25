@@ -75,12 +75,7 @@ export function Component() {
           <div className="space-y-6">
             <div className="flex items-center gap-4">
               <Avatar className="size-16">
-                {logo && (
-                  <AvatarImage
-                    src={URL.createObjectURL(logo)}
-                    alt="Organization logo"
-                  />
-                )}
+                {logo && <AvatarImage src={URL.createObjectURL(logo)} alt="Organization logo" />}
                 <AvatarFallback className="text-2xl">A</AvatarFallback>
               </Avatar>
               <Label
@@ -100,9 +95,7 @@ export function Component() {
                   <UploadIcon className="size-7 text-muted-foreground" />
                   <div>
                     <p>Click or drag and drop to upload logo image</p>
-                    <p className="text-sm text-muted-foreground">
-                      (192×192 px or larger)
-                    </p>
+                    <p className="text-sm text-muted-foreground">(192×192 px or larger)</p>
                   </div>
                 </div>
               </Label>

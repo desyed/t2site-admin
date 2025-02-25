@@ -12,10 +12,7 @@ export default function NotFoundSettings() {
         <p className="text-center text-lg text-muted-foreground">
           Sorry, the page you are looking for does not exist.
         </p>
-        <Button
-          onClick={() => navigate('/settings')}
-          size="default"
-        >
+        <Button onClick={() => navigate('/settings')} size="default">
           <Icon icon="line-md:arrow-left" className="size-8" />
           Go to Settings
         </Button>

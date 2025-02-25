@@ -5,7 +5,7 @@ import { authStore } from '@/app/auth/auth-store';
 import Brand from '@/components/Brand';
 import { ModeToggle } from '@/components/mode-toggle';
 import { getQuery } from '@/lib/utils';
-import { queryClient } from "@/query-client";
+import { queryClient } from '@/query-client';
 
 export default function AuthCheckPoint() {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ export default function AuthCheckPoint() {
       if (getQuery('ocr') === 'true') {
         const from = getQuery('rp') ?? '/';
         await authStore.fetchSession(true);
-        queryClient.resetQueries()
+        queryClient.resetQueries();
         navigate(from, { replace: true });
       }
     }
@@ -50,12 +50,9 @@ export default function AuthCheckPoint() {
     </div>
   ) : (
     <div className="flex min-h-screen flex-col items-center justify-center gap-4 px-4">
-      <h1 className="text-2xl font-bold tracking-tight">
-        🎉 Welcome to Your New Organization!
-      </h1>
+      <h1 className="text-2xl font-bold tracking-tight">🎉 Welcome to Your New Organization!</h1>
       <p className="text-center text-muted-foreground">
-        ✨ Your organization has been created successfully. Setting things up
-        for you...
+        ✨ Your organization has been created successfully. Setting things up for you...
       </p>
       <div className="mt-4 animate-pulse">
         <div className="h-2 w-24 rounded-full bg-primary/40" />

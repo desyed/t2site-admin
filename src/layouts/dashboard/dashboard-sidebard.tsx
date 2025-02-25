@@ -1,14 +1,10 @@
 'use client';
 
-import {
-  Home,
-  Settings,
-  Tickets,
-} from 'lucide-react';
+import { Home, Settings, Tickets } from 'lucide-react';
 import * as React from 'react';
 
-import NavLogo from "@/components/nav-logo";
-import { NavMain } from "@/components/nav-main";
+import NavLogo from '@/components/nav-logo';
+import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import {
   Sidebar,
@@ -32,7 +28,6 @@ const data = {
       url: '/tickets',
       icon: Tickets,
     },
-
   ],
   navSecondary: [
     {

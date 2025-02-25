@@ -32,7 +32,7 @@ export function handleServerErrors<T extends FieldValues>(
       }
     }
     for (const [key, message] of Object.entries(fieldErrors)) {
-      if (typeof message === "string") {
+      if (typeof message === 'string') {
         form.setError(key as Path<T>, { message });
       }
     }
