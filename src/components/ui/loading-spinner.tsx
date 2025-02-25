@@ -6,7 +6,12 @@ export interface ISVGProps extends React.SVGProps<SVGSVGElement> {
   visable?: boolean;
 }
 
-export const LoadingSpinner = ({ size = 24, className, visable, ...props }: ISVGProps) => {
+export const LoadingSpinner = ({
+  size = 24,
+  className,
+  visable,
+  ...props
+}: ISVGProps) => {
   return (
     visable && (
       // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>

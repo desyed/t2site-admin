@@ -36,11 +36,10 @@ export function useApi<TResponse = unknown, TError = any>(
       errors: null,
     }));
 
-    const { success, data, message, errors, code } = await handleApi<TResponse, TError>(
-      apiHandler,
-      payload,
-      config
-    );
+    const { success, data, message, errors, code } = await handleApi<
+      TResponse,
+      TError
+    >(apiHandler, payload, config);
 
     setState({
       data,

@@ -17,8 +17,15 @@ export default function Members() {
       <InvitedMembers refresh={refresh} setRefresh={setRefresh} />
       <div className="mt-5 flex items-center justify-between gap-4">
         <InviteMemberDialog />
-        <Button variant="outline" size="sm" onClick={() => setRefresh(!refresh)} disabled={refresh}>
-          <RefreshCw className={`mr-2 size-4 ${refresh ? 'animate-spin' : ''}`} />
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setRefresh(!refresh)}
+          disabled={refresh}
+        >
+          <RefreshCw
+            className={`mr-2 size-4 ${refresh ? 'animate-spin' : ''}`}
+          />
           Refresh
         </Button>
       </div>
@@ -33,7 +40,8 @@ export default function Members() {
           <h2 className="text-xl font-semibold">Enforce 2FA</h2>
         </div>
         <p className="mb-4 text-muted-foreground">
-          Require all users in your organization to enable two-factor authentication.
+          Require all users in your organization to enable two-factor
+          authentication.
         </p>
         <p className="mb-4 text-muted-foreground">
           Subscribe to the Teams addon to use this feature.

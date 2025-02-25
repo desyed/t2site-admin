@@ -25,7 +25,9 @@ export default function LoginPage() {
 
   return (
     <>
-      <h3 className="mb-5 text-center text-2xl font-semibold sm:mb-5 ">Login</h3>
+      <h3 className="mb-5 text-center text-2xl font-semibold sm:mb-5 ">
+        Login
+      </h3>
       <LoginForm />
       <div className="my-3 flex items-center justify-between gap-5">
         <div className="h-px w-1/2 bg-border" />
@@ -39,7 +41,10 @@ export default function LoginPage() {
 
       <div className="mt-5 text-center text-muted-foreground">
         {`Don't`} have an account?{' '}
-        <Link className="font-semibold underline hover:text-foreground" to="/signup">
+        <Link
+          className="font-semibold underline hover:text-foreground"
+          to="/signup"
+        >
           {' '}
           Sign up
         </Link>

@@ -80,7 +80,8 @@ export function OrgMembersTable({
       emptyStateAction={{
         label: 'Invite member',
         icon: <UserPlusIcon className="size-4" />,
-        onClick: () => document.getElementById('invite-member-trigger')?.click(),
+        onClick: () =>
+          document.getElementById('invite-member-trigger')?.click(),
       }}
     />
   );

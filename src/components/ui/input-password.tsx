@@ -26,7 +26,12 @@ const InputPassword = React.forwardRef<HTMLInputElement, InputPasswordProps>(
             icon={icon}
           />
         ) : (
-          <Input ref={ref} className={cn('pr-9', className)} {...props} type={type} />
+          <Input
+            ref={ref}
+            className={cn('pr-9', className)}
+            {...props}
+            type={type}
+          />
         )}
 
         <div
@@ -41,9 +46,15 @@ const InputPassword = React.forwardRef<HTMLInputElement, InputPasswordProps>(
             }}
           >
             {!showPassword ? (
-              <Icon className={cn('w-5 h-5', className)} icon="mdi:eye-outline" />
+              <Icon
+                className={cn('w-5 h-5', className)}
+                icon="mdi:eye-outline"
+              />
             ) : (
-              <Icon className={cn('w-5 h-5', className)} icon="mdi:eye-off-outline" />
+              <Icon
+                className={cn('w-5 h-5', className)}
+                icon="mdi:eye-off-outline"
+              />
             )}
           </button>
         </div>

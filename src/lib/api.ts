@@ -24,7 +24,8 @@ axiosAuthApiInstance.interceptors.response.use(
       if (originalRequest.url.includes('/auth/refresh')) {
         authStore.resetAuth();
         toast.warning('Unauthorized Request or Session Expired', {
-          description: 'Your session has expired. Please log in again to continue.',
+          description:
+            'Your session has expired. Please log in again to continue.',
           position: 'bottom-right',
         });
         return Promise.reject(error);

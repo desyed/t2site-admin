@@ -1,4 +1,8 @@
-import type { InvitedMember, InvitedMemberResponse, OrganizationMember } from './organizaion-type';
+import type {
+  InvitedMember,
+  InvitedMemberResponse,
+  OrganizationMember,
+} from './organizaion-type';
 
 import {
   getInvitedMemberApi,

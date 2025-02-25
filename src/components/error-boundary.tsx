@@ -16,10 +16,13 @@ export default function ErrorBoundary() {
   let errorType = 'default';
 
   if (isRouteErrorResponse(error)) {
-    errorMessage = error.statusText || 'An error occurred while fetching the route';
+    errorMessage =
+      error.statusText || 'An error occurred while fetching the route';
   } else if (error instanceof Error) {
     errorMessage = error.message;
-    if (error.message.startsWith('Failed to fetch dynamically imported module')) {
+    if (
+      error.message.startsWith('Failed to fetch dynamically imported module')
+    ) {
       errorType = 'fetch';
     }
   }
@@ -41,14 +44,20 @@ export default function ErrorBoundary() {
               <AlertCircle className="size-5" />
               <p>Check your internet connection or refresh the page.</p>
             </Alert>
-            <Button onClick={() => window.location.reload()} className="mt-5" size="lg">
+            <Button
+              onClick={() => window.location.reload()}
+              className="mt-5"
+              size="lg"
+            >
               <RefreshCw className="mr-2 size-5" />
               Refresh
             </Button>
           </div>
         ) : (
           <div>
-            <h1 className="text-2xl font-bold">There is a problem with the application.</h1>
+            <h1 className="text-2xl font-bold">
+              There is a problem with the application.
+            </h1>
             <p className="mb-4 text-lg">{errorMessage}</p>
             <Button onClick={() => window.location.reload()} size="lg">
               <RefreshCw className="mr-2 size-5" />

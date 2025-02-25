@@ -15,7 +15,13 @@ import {
   rolesOptions,
 } from '@/app/organization/organization-schema';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -33,9 +39,12 @@ interface InviteMemberFormProps {
 }
 
 export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
-  const currentOrganization = useAuthStore((state) => state.userOrganization?.currentOrganization);
+  const currentOrganization = useAuthStore(
+    (state) => state.userOrganization?.currentOrganization
+  );
 
-  const [scrollContainerRef, smoothScrollToBottom] = useSmoothScroll<HTMLDivElement>();
+  const [scrollContainerRef, smoothScrollToBottom] =
+    useSmoothScroll<HTMLDivElement>();
 
   const form = useForm<InviteMemberInput>({
     resolver: zodResolver(inviteMemberSchema),
@@ -75,9 +84,12 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
           const code = error.response?.data.code;
           if (code === 'members-already-exist') {
             const membersError: any = {};
-            error.response?.data.membersError?.members?.forEach((member: any) => {
-              membersError[member.email] = error.response?.data.membersError?.message;
-            });
+            error.response?.data.membersError?.members?.forEach(
+              (member: any) => {
+                membersError[member.email] =
+                  error.response?.data.membersError?.message;
+              }
+            );
             setMembersError(membersError);
           }
         }
@@ -85,11 +97,15 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
     });
   };
 
-  const roles = rolesOptions[currentOrganization?.role as keyof typeof rolesOptions];
+  const roles =
+    rolesOptions[currentOrganization?.role as keyof typeof rolesOptions];
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmitInvitation)} className="space-y-4">
+      <form
+        onSubmit={form.handleSubmit(handleSubmitInvitation)}
+        className="space-y-4"
+      >
         <div
           ref={scrollContainerRef}
           className="site-scrollbar max-h-[60vh] overflow-y-auto overflow-x-hidden px-5 pb-2"
@@ -99,7 +115,10 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
               <span className="px-1">Email address</span>
               <div className="grid flex-1 grid-cols-2 gap-3 font-semibold">
                 <span className="px-1">
-                  Name <span className="text-sm text-muted-foreground">(optional)</span>
+                  Name{' '}
+                  <span className="text-sm text-muted-foreground">
+                    (optional)
+                  </span>
                 </span>
                 <span className="px-1">Role</span>
               </div>
@@ -108,7 +127,10 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
           </div>
           <div className="space-y-6 sm:space-y-4">
             {fields.map((field, index) => (
-              <div key={field.id} className="flex flex-col gap-3 sm:flex-row sm:gap-1">
+              <div
+                key={field.id}
+                className="flex flex-col gap-3 sm:flex-row sm:gap-1"
+              >
                 <div className="grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2">
                   <FormField
                     control={form.control}
@@ -119,7 +141,9 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
                         <FormControl>
                           <Input placeholder="ryan@example.com" {...field} />
                         </FormControl>
-                        <FormMessage>{membersError?.[field?.value]}</FormMessage>
+                        <FormMessage>
+                          {membersError?.[field?.value]}
+                        </FormMessage>
                       </FormItem>
                     )}
                   />
@@ -130,7 +154,10 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
                       render={({ field }) => (
                         <FormItem>
                           <span className="px-1 sm:hidden">
-                            Name <span className="text-sm text-muted-foreground ">(optional)</span>
+                            Name{' '}
+                            <span className="text-sm text-muted-foreground ">
+                              (optional)
+                            </span>
                           </span>
                           <FormControl>
                             <Input placeholder="Ryan" {...field} />
@@ -147,14 +174,22 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
                         <FormItem>
                           <span className="px-1 sm:hidden">Role</span>
                           <FormControl>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
                               <SelectTrigger>
                                 <SelectValue placeholder="Select role" />
                               </SelectTrigger>
                               <SelectContent>
                                 {roles.map((role) => (
-                                  <SelectItem key={role} value={role} className="capitalize">
-                                    {role.slice(0, 1).toUpperCase() + role.slice(1)}
+                                  <SelectItem
+                                    key={role}
+                                    value={role}
+                                    className="capitalize"
+                                  >
+                                    {role.slice(0, 1).toUpperCase() +
+                                      role.slice(1)}
                                   </SelectItem>
                                 ))}
                               </SelectContent>
@@ -207,7 +242,10 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
               render={({ field }) => (
                 <FormItem>
                   <span className="px-1">
-                    Message <span className="text-sm text-muted-foreground">(optional)</span>
+                    Message{' '}
+                    <span className="text-sm text-muted-foreground">
+                      (optional)
+                    </span>
                   </span>
                   <FormControl>
                     <Textarea

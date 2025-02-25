@@ -26,7 +26,10 @@ export default function InvitationLayout() {
               Terms of Service
             </a>{' '}
             and{' '}
-            <a className="underline hover:text-foreground" href="/privacy-policy">
+            <a
+              className="underline hover:text-foreground"
+              href="/privacy-policy"
+            >
               Privacy Policy
             </a>
             .

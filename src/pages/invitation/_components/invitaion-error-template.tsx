@@ -36,7 +36,9 @@ export default function InvitationErrorTemplate({
         >
           {title}
         </h1>
-        <p className="mt-2 text-center text-sm text-muted-foreground">{message}</p>
+        <p className="mt-2 text-center text-sm text-muted-foreground">
+          {message}
+        </p>
       </div>
       <div className="mt-6">
         <Link to="/" replace>

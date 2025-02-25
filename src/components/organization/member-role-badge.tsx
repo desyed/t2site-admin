@@ -9,7 +9,13 @@ import { Badge } from '@/components/ui/badge';
 // Define a mapping from Role to the Badge variant
 const roleVariantMap: Record<
   Role,
-  'default' | 'secondary' | 'destructive' | 'outline' | 'success' | 'warning' | 'info'
+  | 'default'
+  | 'secondary'
+  | 'destructive'
+  | 'outline'
+  | 'success'
+  | 'warning'
+  | 'info'
 > = {
   admin: 'success',
   member: 'info',

@@ -6,7 +6,9 @@ import SingupForm from '@/components/auth/signup-form';
 export default function SignupPage() {
   return (
     <>
-      <h3 className="mb-5 text-center text-2xl font-semibold sm:mb-5 ">Signup</h3>
+      <h3 className="mb-5 text-center text-2xl font-semibold sm:mb-5 ">
+        Signup
+      </h3>
       <SingupForm />
       <div className="my-3 flex items-center justify-between gap-5">
         <div className="h-px w-1/2 bg-border" />
@@ -20,7 +22,10 @@ export default function SignupPage() {
 
       <div className="mt-5 text-center text-muted-foreground">
         I already have an account
-        <Link className="cursor-pointer font-semibold underline hover:text-foreground" to="/login">
+        <Link
+          className="cursor-pointer font-semibold underline hover:text-foreground"
+          to="/login"
+        >
           {' '}
           Log in
         </Link>

@@ -107,7 +107,10 @@ export default function SingupForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-3">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-3"
+      >
         <div>
           <FormField
             control={form.control}
@@ -116,7 +119,11 @@ export default function SingupForm() {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <InputIcon icon="mdi:rename" placeholder="John Doe" {...field} />
+                  <InputIcon
+                    icon="mdi:rename"
+                    placeholder="John Doe"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -132,7 +139,11 @@ export default function SingupForm() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <InputIcon icon="mdi:email" placeholder="example@example.com" {...field} />
+                  <InputIcon
+                    icon="mdi:email"
+                    placeholder="example@example.com"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -147,7 +158,11 @@ export default function SingupForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <InputPassword icon="mdi:lock" placeholder="•••••••••••••••••••" {...field} />
+                  <InputPassword
+                    icon="mdi:lock"
+                    placeholder="•••••••••••••••••••"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

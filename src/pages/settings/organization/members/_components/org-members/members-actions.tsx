@@ -52,7 +52,9 @@ type MembersActionsProps = {
 export function CurrentUserDropdownMenu({ member }: MembersActionsProps) {
   const refreshOrganization = useRefreshOrganization();
 
-  const currentOrganization = useAuthStore((state) => state.userOrganization?.currentOrganization);
+  const currentOrganization = useAuthStore(
+    (state) => state.userOrganization?.currentOrganization
+  );
 
   const navigate = useNavigate();
 
@@ -124,7 +126,9 @@ export function CurrentUserDropdownMenu({ member }: MembersActionsProps) {
         description={
           <>
             Are you sure you want to leave{' '}
-            <span className="font-semibold text-foreground">{currentOrganization?.name} ?</span>
+            <span className="font-semibold text-foreground">
+              {currentOrganization?.name} ?
+            </span>
           </>
         }
         onConfirm={handleLeaveOrganization}
@@ -138,8 +142,13 @@ export function CurrentUserDropdownMenu({ member }: MembersActionsProps) {
   );
 }
 
-export function RemoveMemberDropdownMenuItem({ member, handleRemoveMember }: MembersActionsProps) {
-  const currentOrganization = useAuthStore((state) => state.userOrganization?.currentOrganization);
+export function RemoveMemberDropdownMenuItem({
+  member,
+  handleRemoveMember,
+}: MembersActionsProps) {
+  const currentOrganization = useAuthStore(
+    (state) => state.userOrganization?.currentOrganization
+  );
 
   if (!checkRemoveMemberPermission(currentOrganization?.role, member.role)) {
     return null;
@@ -158,16 +167,25 @@ export function RemoveMemberDropdownMenuItem({ member, handleRemoveMember }: Mem
   );
 }
 
-export function ChangeRoleDropdownMenuItem({ member, handleChangeRole }: MembersActionsProps) {
-  const currentOrganization = useAuthStore((state) => state.userOrganization?.currentOrganization);
+export function ChangeRoleDropdownMenuItem({
+  member,
+  handleChangeRole,
+}: MembersActionsProps) {
+  const currentOrganization = useAuthStore(
+    (state) => state.userOrganization?.currentOrganization
+  );
 
-  const currentMemberRoleIndex = roles[currentOrganization?.role as keyof typeof roles];
+  const currentMemberRoleIndex =
+    roles[currentOrganization?.role as keyof typeof roles];
   const memberRoleIndex = roles[member.role as keyof typeof roles];
 
   return (
     <>
       {Object.entries(roles).map(([role, roleIndex]) => {
-        if (roleIndex < currentMemberRoleIndex || roleIndex == memberRoleIndex) {
+        if (
+          roleIndex < currentMemberRoleIndex ||
+          roleIndex == memberRoleIndex
+        ) {
           return null;
         }
         if (roleIndex > memberRoleIndex) {
@@ -237,11 +255,15 @@ export function ChangeRoleDropdownMenuItem({ member, handleChangeRole }: Members
 }
 
 export default function MembersActions({ member }: MembersActionsProps) {
-  const currentOrganization = useAuthStore((state) => state.userOrganization?.currentOrganization);
+  const currentOrganization = useAuthStore(
+    (state) => state.userOrganization?.currentOrganization
+  );
 
   const refreshOrganization = useRefreshOrganization();
 
-  const [changeRoleInfo, setChangeRoleInfo] = useState<ChangeRoleInfo | null>(null);
+  const [changeRoleInfo, setChangeRoleInfo] = useState<ChangeRoleInfo | null>(
+    null
+  );
 
   const { mutateAsync: changeMemberRole, isPending: isChangingMemberRole } =
     useChangeMemberRoleMutation<
@@ -253,7 +275,8 @@ export default function MembersActions({ member }: MembersActionsProps) {
       }
     >();
 
-  const [isRemoveMemberDialogOpen, setIsRemoveMemberDialogOpen] = useState(false);
+  const [isRemoveMemberDialogOpen, setIsRemoveMemberDialogOpen] =
+    useState(false);
 
   const { mutateAsync: removeMember } = useRemoveMemberMutation<{
     success: boolean;
@@ -281,7 +304,10 @@ export default function MembersActions({ member }: MembersActionsProps) {
     );
   }
 
-  const handleChangeRole = (info: ChangeRoleInfo, hasConfirmed: boolean = false) => {
+  const handleChangeRole = (
+    info: ChangeRoleInfo,
+    hasConfirmed: boolean = false
+  ) => {
     if (!hasConfirmed) {
       setChangeRoleInfo(info);
     } else {
@@ -351,8 +377,14 @@ export default function MembersActions({ member }: MembersActionsProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <ChangeRoleDropdownMenuItem handleChangeRole={handleChangeRole} member={member} />
-          <RemoveMemberDropdownMenuItem member={member} handleRemoveMember={handleRemoveMember} />
+          <ChangeRoleDropdownMenuItem
+            handleChangeRole={handleChangeRole}
+            member={member}
+          />
+          <RemoveMemberDropdownMenuItem
+            member={member}
+            handleRemoveMember={handleRemoveMember}
+          />
         </DropdownMenuContent>
       </DropdownMenu>
 
@@ -370,9 +402,11 @@ export default function MembersActions({ member }: MembersActionsProps) {
           }
           description={
             <>
-              <span className="text-foreground ">{member.user.email}</span> will be added as an{' '}
-              <span className="text-foreground ">owner</span> to{' '}
-              <span className="text-foreground ">{currentOrganization?.name}</span>
+              <span className="text-foreground ">{member.user.email}</span> will
+              be added as an <span className="text-foreground ">owner</span> to{' '}
+              <span className="text-foreground ">
+                {currentOrganization?.name}
+              </span>
             </>
           }
           loadingText={'Making owner'}
@@ -392,8 +426,16 @@ export default function MembersActions({ member }: MembersActionsProps) {
         description={
           <>
             Are you sure you want to remove{' '}
-            <span className="font-semibold text-foreground"> {member.user.email}</span> from the
-            <span className="font-semibold text-foreground"> {currentOrganization?.name}</span>?
+            <span className="font-semibold text-foreground">
+              {' '}
+              {member.user.email}
+            </span>{' '}
+            from the
+            <span className="font-semibold text-foreground">
+              {' '}
+              {currentOrganization?.name}
+            </span>
+            ?
           </>
         }
         open={isRemoveMemberDialogOpen}

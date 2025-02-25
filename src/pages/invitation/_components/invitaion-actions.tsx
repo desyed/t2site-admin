@@ -10,9 +10,12 @@ type InvitationActionsProps = {
   invitedMember: InvitedMember;
 };
 
-export default function InvitationActions({ invitedMember }: InvitationActionsProps) {
+export default function InvitationActions({
+  invitedMember,
+}: InvitationActionsProps) {
   const navigate = useNavigate();
-  const { mutate: invitePrompt, isSuccess } = useOptimisticInvitationPromptMutation();
+  const { mutate: invitePrompt, isSuccess } =
+    useOptimisticInvitationPromptMutation();
 
   const handleDeclineInvitation = () => {
     invitePrompt({
@@ -36,7 +39,9 @@ export default function InvitationActions({ invitedMember }: InvitationActionsPr
       invitedMember.status === 'accepted' &&
       !invitedMember?.optimisticallyUpdatedAt
     ) {
-      navigate(`/auth?ocr=true&rp=/settings/organization/members`, { replace: true });
+      navigate(`/auth?ocr=true&rp=/settings/organization/members`, {
+        replace: true,
+      });
     }
   }, [isSuccess, invitedMember, navigate]);
 
@@ -48,7 +53,12 @@ export default function InvitationActions({ invitedMember }: InvitationActionsPr
           Accept
         </Button>
 
-        <Button onClick={handleDeclineInvitation} variant="outline" className="flex-1" size="sm">
+        <Button
+          onClick={handleDeclineInvitation}
+          variant="outline"
+          className="flex-1"
+          size="sm"
+        >
           <X className="size-3 sm:size-4" />
           Decline
         </Button>
@@ -64,7 +74,11 @@ export default function InvitationActions({ invitedMember }: InvitationActionsPr
             You have rejected the invitation.
           </p>
           {!invitedMember?.optimisticallyUpdatedAt && (
-            <Button variant="outline" onClick={handleAcceptInvitation} size="sm">
+            <Button
+              variant="outline"
+              onClick={handleAcceptInvitation}
+              size="sm"
+            >
               <Check className="size-3 sm:size-4 " />
               Accept
             </Button>

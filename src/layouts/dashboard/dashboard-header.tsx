@@ -29,7 +29,8 @@ export default function DashBoardHeader() {
             <BreadcrumbItem>
               <Link to={pathSegments[0]}>
                 {pathSegments.length > 0
-                  ? pathSegments[0].charAt(0).toUpperCase() + pathSegments[0].slice(1)
+                  ? pathSegments[0].charAt(0).toUpperCase() +
+                    pathSegments[0].slice(1)
                   : 'Dashboard'}
               </Link>
             </BreadcrumbItem>
@@ -39,7 +40,8 @@ export default function DashBoardHeader() {
                 <BreadcrumbItem>
                   <BreadcrumbPage>
                     <Link to={pathSegments[1]}>
-                      {pathSegments[1].charAt(0).toUpperCase() + pathSegments[1].slice(1)}
+                      {pathSegments[1].charAt(0).toUpperCase() +
+                        pathSegments[1].slice(1)}
                     </Link>
                   </BreadcrumbPage>
                 </BreadcrumbItem>

@@ -10,7 +10,11 @@ import { dayJs } from '@/lib/time';
 import InvitationActions from './invitaion-actions';
 import InvitationErrorTemplate from './invitaion-error-template';
 
-export default function Invitation({ invitedMemberId }: { invitedMemberId: string }) {
+export default function Invitation({
+  invitedMemberId,
+}: {
+  invitedMemberId: string;
+}) {
   const {
     data: invitedMember,
     error,
@@ -48,7 +52,8 @@ export default function Invitation({ invitedMemberId }: { invitedMemberId: strin
     );
   }
 
-  const hasExpired = invitedMember.expiresAt && dayJs(invitedMember.expiresAt).isBefore(dayJs());
+  const hasExpired =
+    invitedMember.expiresAt && dayJs(invitedMember.expiresAt).isBefore(dayJs());
 
   return (
     <div>
@@ -71,11 +76,17 @@ export default function Invitation({ invitedMemberId }: { invitedMemberId: strin
         <div className="flex items-center rounded-lg bg-muted/50 p-2 sm:p-3">
           <Avatar className="size-8 sm:size-10">
             <AvatarImage src={invitedMember?.invitedBy.avatar ?? undefined} />
-            <AvatarFallback>{invitedMember?.invitedBy.name?.[0]}</AvatarFallback>
+            <AvatarFallback>
+              {invitedMember?.invitedBy.name?.[0]}
+            </AvatarFallback>
           </Avatar>
           <div className="ml-2 sm:ml-3">
-            <p className="text-xs font-medium sm:text-sm">{invitedMember?.invitedBy.name}</p>
-            <p className="text-xs text-muted-foreground">{invitedMember?.invitedBy.email}</p>
+            <p className="text-xs font-medium sm:text-sm">
+              {invitedMember?.invitedBy.name}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              {invitedMember?.invitedBy.email}
+            </p>
           </div>
         </div>
 
@@ -102,7 +113,8 @@ export default function Invitation({ invitedMemberId }: { invitedMemberId: strin
       {hasExpired ? (
         <div className="mt-5">
           <p className="rounded-lg border border-orange-500/5 bg-orange-400/10 p-2 text-center text-sm text-orange-400/90">
-            This invitation has expired. Please contact your administrator to get a new link.
+            This invitation has expired. Please contact your administrator to
+            get a new link.
           </p>
         </div>
       ) : (

@@ -18,23 +18,27 @@ export type InviationLoaderData = {
 };
 
 const paramsSchema = z.object({
-  invitedMemberId: z.string().refine(validInvitedMemberId, { message: 'Invalid invitation link' }),
+  invitedMemberId: z
+    .string()
+    .refine(validInvitedMemberId, { message: 'Invalid invitation link' }),
 });
 
-export const loader: LoaderFunction<Params> = createPrivateLoader(async ({ params }) => {
-  const paramsResult = paramsSchema.safeParse(params);
-  if (paramsResult.error) {
+export const loader: LoaderFunction<Params> = createPrivateLoader(
+  async ({ params }) => {
+    const paramsResult = paramsSchema.safeParse(params);
+    if (paramsResult.error) {
+      return {
+        error: {
+          invalidInvitationLink: true,
+        },
+      };
+    }
+    await preFetchInvitedMember(paramsResult.data.invitedMemberId);
     return {
-      error: {
-        invalidInvitationLink: true,
-      },
+      invitedMemberId: paramsResult.data.invitedMemberId,
     };
   }
-  await preFetchInvitedMember(paramsResult.data.invitedMemberId);
-  return {
-    invitedMemberId: paramsResult.data.invitedMemberId,
-  };
-});
+);
 
 export function Component() {
   const { error, invitedMemberId } = useLoaderData<InviationLoaderData>();

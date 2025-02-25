@@ -45,9 +45,15 @@ export default function CopyButton({
       className={`flex items-center gap-2 ${className || ''}`}
       {...props}
     >
-      {copied ? <Check className="size-4 text-green-500" /> : <Copy className="size-4" />}
+      {copied ? (
+        <Check className="size-4 text-green-500" />
+      ) : (
+        <Copy className="size-4" />
+      )}
       {title && (
-        <span className="block truncate ">{copied && afterCopyTitle ? 'Copied!' : title}</span>
+        <span className="block truncate ">
+          {copied && afterCopyTitle ? 'Copied!' : title}
+        </span>
       )}
     </Button>
   );

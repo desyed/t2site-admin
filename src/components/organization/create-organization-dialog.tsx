@@ -31,10 +31,17 @@ export function CreateOrganizationDialog({
   };
 
   return (
-    <Dialog open={openFromParent ?? open} onOpenChange={setOpenFromParent ?? setOpen}>
+    <Dialog
+      open={openFromParent ?? open}
+      onOpenChange={setOpenFromParent ?? setOpen}
+    >
       {openFromParent === undefined ? (
         <DialogTrigger asChild>
-          <Button variant="ghost" size="sm" className="w-full justify-start text-sm">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start text-sm"
+          >
             <Plus className="mr-1" />
             New organization
           </Button>
@@ -42,7 +49,9 @@ export function CreateOrganizationDialog({
       ) : null}
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>
-          <DialogTitle className="mb-1 text-xl">Create Organization</DialogTitle>
+          <DialogTitle className="mb-1 text-xl">
+            Create Organization
+          </DialogTitle>
           <DialogDescription className="text-md pb-2">
             Organizations gather people building together.
             <br />

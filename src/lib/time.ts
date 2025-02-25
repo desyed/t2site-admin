@@ -12,7 +12,10 @@ dayjs.extend(relativeTime);
  * @param formatStr - The desired format string. Defaults to "YYYY-MM-DD hh:mm A".
  * @returns The formatted date string or a fallback message if the date is invalid.
  */
-export const tableTimeFormat = (time: string, formatStr: string = 'YYYY-MM-DD hh:mm A'): string => {
+export const tableTimeFormat = (
+  time: string,
+  formatStr: string = 'YYYY-MM-DD hh:mm A'
+): string => {
   const date = dayjs(time);
 
   if (!date.isValid()) {

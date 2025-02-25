@@ -1,14 +1,21 @@
 import { InfoIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card';
 
 type HoverCardMessageProps = {
   title?: React.ReactNode;
   description?: React.ReactNode;
 };
 
-export function HoverCardMessage({ title, description }: HoverCardMessageProps) {
+export function HoverCardMessage({
+  title,
+  description,
+}: HoverCardMessageProps) {
   return (
     <HoverCard openDelay={400}>
       <HoverCardTrigger asChild>

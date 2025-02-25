@@ -67,7 +67,9 @@ export const useAuthStore = create<TAuthState>((set, get) => ({
   setAuthUser: (user) => set({ user }),
   updateAuthUser: (user) =>
     set((state) => ({
-      user: state.user ? { ...state.user, ...user } : ({ ...user } as TAuthUser),
+      user: state.user
+        ? { ...state.user, ...user }
+        : ({ ...user } as TAuthUser),
     })),
 
   // Token methods
@@ -78,7 +80,8 @@ export const useAuthStore = create<TAuthState>((set, get) => ({
   },
 
   // Organization methods
-  setUserOrganization: (userOrganization: TUserOrganization) => set({ userOrganization }),
+  setUserOrganization: (userOrganization: TUserOrganization) =>
+    set({ userOrganization }),
 
   // Auth flow methods
   setAuth: (user, accessToken) => {

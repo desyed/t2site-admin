@@ -2,7 +2,13 @@ import { Copy, Globe, Settings } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -43,7 +49,9 @@ export function Component() {
           <Card>
             <CardHeader>
               <CardTitle>Project Information</CardTitle>
-              <CardDescription>These settings only apply to the current project.</CardDescription>
+              <CardDescription>
+                These settings only apply to the current project.
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-2">
@@ -67,13 +75,18 @@ export function Component() {
             <Card>
               <CardHeader>
                 <CardTitle>API Credentials</CardTitle>
-                <CardDescription>Your API keys and project identifiers.</CardDescription>
+                <CardDescription>
+                  Your API keys and project identifiers.
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="space-y-2">
                   <Label>Project API Key</Label>
                   <div className="flex space-x-2">
-                    <Input readOnly value="phc_tcd1QR16c87pDuuORrvvrVpuEn7unHwuLYitmUU5oYy" />
+                    <Input
+                      readOnly
+                      value="phc_tcd1QR16c87pDuuORrvvrVpuEn7unHwuLYitmUU5oYy"
+                    />
                     <Button
                       variant="outline"
                       size="icon"
@@ -99,7 +112,12 @@ export function Component() {
                     <Button
                       variant="outline"
                       size="icon"
-                      onClick={() => copyToClipboard('116765', 'Project ID copied to clipboard!')}
+                      onClick={() =>
+                        copyToClipboard(
+                          '116765',
+                          'Project ID copied to clipboard!'
+                        )
+                      }
                     >
                       <Copy className="size-4" />
                     </Button>
@@ -112,8 +130,8 @@ export function Component() {
               <CardHeader>
                 <CardTitle>Web Snippet</CardTitle>
                 <CardDescription>
-                  {`PostHog's`} configurable web snippet allows you to autocapture events, record
-                  user sessions, and more.
+                  {`PostHog's`} configurable web snippet allows you to
+                  autocapture events, record user sessions, and more.
                 </CardDescription>
               </CardHeader>
               <CardContent className="grid">

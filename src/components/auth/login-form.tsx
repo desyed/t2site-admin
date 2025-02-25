@@ -60,7 +60,8 @@ export default function LoginForm() {
     toast.promise(loginApi(values), {
       loading: 'Logging in...',
       success: async (result) => {
-        const redirectTo = window.localStorage.getItem('redirect_to') + '' || '/';
+        const redirectTo =
+          window.localStorage.getItem('redirect_to') + '' || '/';
 
         if (result.data?.access_token && result.data.user.email) {
           if (!result.data.user.emailVerified) {
@@ -71,7 +72,9 @@ export default function LoginForm() {
                 'You have successfully logged in, but your email is not verified. Please verify your email to enjoy full features.',
             });
           } else {
-            navigate('/auth?auth_login=success&rp=' + redirectTo, { replace: true });
+            navigate('/auth?auth_login=success&rp=' + redirectTo, {
+              replace: true,
+            });
             window.localStorage.removeItem('redirect_to');
           }
           form.reset();
@@ -103,7 +106,10 @@ export default function LoginForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-3">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-3"
+      >
         <div>
           <FormField
             control={form.control}
@@ -112,7 +118,11 @@ export default function LoginForm() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <InputIcon icon="mdi:email" placeholder="example@example.com" {...field} />
+                  <InputIcon
+                    icon="mdi:email"
+                    placeholder="example@example.com"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -128,7 +138,11 @@ export default function LoginForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <InputPassword icon="mdi:lock" placeholder="•••••••••••••••••••" {...field} />
+                  <InputPassword
+                    icon="mdi:lock"
+                    placeholder="•••••••••••••••••••"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -21,7 +21,9 @@ interface TicketsProviderProps {
   children: ReactNode;
 }
 
-export const TicketsProvider: React.FC<TicketsProviderProps> = ({ children }) => {
+export const TicketsProvider: React.FC<TicketsProviderProps> = ({
+  children,
+}) => {
   const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
 
   return (

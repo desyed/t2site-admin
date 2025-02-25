@@ -1,4 +1,12 @@
-import { Bell, LogOut, MoonIcon, SunIcon, Laptop2, PartyPopper, Sparkles } from 'lucide-react';
+import {
+  Bell,
+  LogOut,
+  MoonIcon,
+  SunIcon,
+  Laptop2,
+  PartyPopper,
+  Sparkles,
+} from 'lucide-react';
 
 import type { Theme } from '@/components/theme-provider';
 
@@ -35,7 +43,9 @@ export function UserPreferencesSection() {
             {theme === 'system' && <Laptop2 className="size-4" />}
           </span>
           <span className="flex-1 translate-x-[7.5px]">Color theme</span>
-          <span className="text-xs capitalize text-muted-foreground">{theme} mode</span>
+          <span className="text-xs capitalize text-muted-foreground">
+            {theme} mode
+          </span>
         </DropdownMenuSubTrigger>
         <DropdownMenuSubContent>
           <DropdownMenuItem

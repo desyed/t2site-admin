@@ -20,7 +20,11 @@ export function CreateProjectDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="sm" className="w-full justify-start text-sm">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="w-full justify-start text-sm"
+        >
           <Plus className="mr-1" />
           New project
         </Button>

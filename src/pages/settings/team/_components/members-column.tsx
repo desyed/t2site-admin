@@ -27,8 +27,13 @@ export const columns: ColumnDef<Member>[] = [
       return (
         <div className="flex items-center gap-3">
           <Avatar className="size-8">
-            <AvatarImage src={`https://avatar.vercel.sh/${member.email}`} alt={member.name} />
-            <AvatarFallback>{member.name.slice(0, 2).toUpperCase()}</AvatarFallback>
+            <AvatarImage
+              src={`https://avatar.vercel.sh/${member.email}`}
+              alt={member.name}
+            />
+            <AvatarFallback>
+              {member.name.slice(0, 2).toUpperCase()}
+            </AvatarFallback>
           </Avatar>
           <div>
             <p className="font-medium">{member.name}</p>
@@ -43,7 +48,9 @@ export const columns: ColumnDef<Member>[] = [
     header: 'Role',
     cell: ({ row }) => {
       return (
-        <Badge variant={row.original.role === 'admin' ? 'default' : 'secondary'}>
+        <Badge
+          variant={row.original.role === 'admin' ? 'default' : 'secondary'}
+        >
           {row.original.role}
         </Badge>
       );
@@ -69,12 +76,16 @@ export const columns: ColumnDef<Member>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(row.original.email)}>
+            <DropdownMenuItem
+              onClick={() => navigator.clipboard.writeText(row.original.email)}
+            >
               Copy email
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Change role</DropdownMenuItem>
-            <DropdownMenuItem className="text-destructive">Remove from team</DropdownMenuItem>
+            <DropdownMenuItem className="text-destructive">
+              Remove from team
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

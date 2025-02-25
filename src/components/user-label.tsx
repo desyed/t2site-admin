@@ -24,7 +24,11 @@ export function UserLabel({
       </Avatar>
       <span className={cn('truncate', currentUser && '')}>
         {name}
-        {currentUser && <span className="ml-0.5 text-sm font-normal text-yellow-500">(you)</span>}
+        {currentUser && (
+          <span className="ml-0.5 text-sm font-normal text-yellow-500">
+            (you)
+          </span>
+        )}
       </span>
     </div>
   );

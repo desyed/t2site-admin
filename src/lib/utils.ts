@@ -68,7 +68,10 @@ export function isValidEmail(email: string): email is EmailAddress {
   return z.string().email().safeParse(email).success;
 }
 
-export function handleApiErrorException<TError = any>(err: unknown, toast: boolean = false) {
+export function handleApiErrorException<TError = any>(
+  err: unknown,
+  toast: boolean = false
+) {
   let message = 'An unexpected error occurred. Please try again.';
   let errors: TError | null = null;
   let responseType = null;
@@ -114,7 +117,9 @@ export function handleApiErrorException<TError = any>(err: unknown, toast: boole
           position: 'top-center',
         });
     } else if (status === 403) {
-      message = err.response?.data?.message ?? "You don't have permission to perform this action.";
+      message =
+        err.response?.data?.message ??
+        "You don't have permission to perform this action.";
       responseType = 'Forbidden';
       toast &&
         toastMessage.warning(responseType, {
@@ -122,7 +127,9 @@ export function handleApiErrorException<TError = any>(err: unknown, toast: boole
           position: 'top-center',
         });
     } else if (status === 404) {
-      message = err.response?.data?.message ?? 'The requested resource could not be found.';
+      message =
+        err.response?.data?.message ??
+        'The requested resource could not be found.';
       responseType = 'Not Found';
       toast &&
         toastMessage.warning(responseType, {
@@ -184,12 +191,19 @@ export async function handleApi<TResponse = any, TError = any>(
       code: null,
     };
   } catch (err) {
-    const { errors, message, responseType, code } = handleApiErrorException(err, toast);
+    const { errors, message, responseType, code } = handleApiErrorException(
+      err,
+      toast
+    );
     return { success: false, message, errors, data: null, responseType, code };
   }
 }
 
-export function isActivePath(path: string, url: string, strict: boolean = false): boolean {
+export function isActivePath(
+  path: string,
+  url: string,
+  strict: boolean = false
+): boolean {
   if (url === '/') {
     return path === '/';
   }

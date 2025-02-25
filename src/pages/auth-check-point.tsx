@@ -50,9 +50,12 @@ export default function AuthCheckPoint() {
     </div>
   ) : (
     <div className="flex min-h-screen flex-col items-center justify-center gap-4 px-4">
-      <h1 className="text-2xl font-bold tracking-tight">🎉 Welcome to Your New Organization!</h1>
+      <h1 className="text-2xl font-bold tracking-tight">
+        🎉 Welcome to Your New Organization!
+      </h1>
       <p className="text-center text-muted-foreground">
-        ✨ Your organization has been created successfully. Setting things up for you...
+        ✨ Your organization has been created successfully. Setting things up
+        for you...
       </p>
       <div className="mt-4 animate-pulse">
         <div className="h-2 w-24 rounded-full bg-primary/40" />

@@ -4,7 +4,11 @@ import { Filter, Search, SortAsc } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from '@/components/ui/resizable';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { TooltipProvider } from '@/components/ui/tooltip';
 
@@ -30,21 +34,35 @@ export function Tickets({ defaultLayout = [20, 32, 48] }: TicketsProps) {
             <div className="sticky top-0 z-10 flex items-center justify-between border-b bg-background/95 p-4 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
               <div className="relative">
                 <Search className="absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-                <Input placeholder="Search ticket..." className="h-8 rounded-sm pl-8" />
+                <Input
+                  placeholder="Search ticket..."
+                  className="h-8 rounded-sm pl-8"
+                />
               </div>
 
               <div className="flex items-center gap-2">
-                <Button className="size-8 rounded-sm" size={'icon'} variant="outline">
+                <Button
+                  className="size-8 rounded-sm"
+                  size={'icon'}
+                  variant="outline"
+                >
                   <Filter className="size-3" />
                 </Button>
-                <Button className="size-8 rounded-sm" size={'icon'} variant="outline">
+                <Button
+                  className="size-8 rounded-sm"
+                  size={'icon'}
+                  variant="outline"
+                >
                   <SortAsc className="size-3" />
                 </Button>
               </div>
             </div>
             <div className="space-y-2 px-4 py-3 pb-6">
               {Array.from({ length: 6 }, (_, index) => (
-                <TicketCard key={`ticket-${index + 1}`} ticketId={crypto.randomUUID()} />
+                <TicketCard
+                  key={`ticket-${index + 1}`}
+                  ticketId={crypto.randomUUID()}
+                />
               ))}
             </div>
           </ScrollArea>

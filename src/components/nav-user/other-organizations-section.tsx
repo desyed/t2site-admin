@@ -66,12 +66,17 @@ export function OtherOrganizationsSection({
                   className="flex items-center gap-3 py-2"
                 >
                   <Avatar className="size-6 rounded-full">
-                    <AvatarImage src={organization.logo ?? ''} alt={organization.name ?? ''} />
+                    <AvatarImage
+                      src={organization.logo ?? ''}
+                      alt={organization.name ?? ''}
+                    />
                     <AvatarFallback className="rounded-lg">
                       {organization.name ?? ''}
                     </AvatarFallback>
                   </Avatar>
-                  <span className="line-clamp-1 flex-1">{organization.name}</span>
+                  <span className="line-clamp-1 flex-1">
+                    {organization.name}
+                  </span>
                   <MemberRoleBadge role={organization.role} />
                 </DropdownMenuItem>
               )

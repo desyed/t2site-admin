@@ -2,7 +2,10 @@ import type { RefObject } from 'react';
 
 import { useCallback, useRef } from 'react';
 
-export function useSmoothScroll<T extends HTMLElement>(): [RefObject<T>, () => void] {
+export function useSmoothScroll<T extends HTMLElement>(): [
+  RefObject<T>,
+  () => void,
+] {
   const ref = useRef<T>(null);
 
   const smoothScrollToBottom = useCallback(() => {
@@ -21,7 +24,8 @@ export function useSmoothScroll<T extends HTMLElement>(): [RefObject<T>, () => v
         if (elapsedTime < duration) {
           const progress = elapsedTime / duration;
           const easeProgress = 0.5 - Math.cos(progress * Math.PI) / 2;
-          container.scrollTop = startScrollTop + (maxScrollTop - startScrollTop) * easeProgress;
+          container.scrollTop =
+            startScrollTop + (maxScrollTop - startScrollTop) * easeProgress;
           requestAnimationFrame(animateScroll);
         } else {
           container.scrollTop = maxScrollTop;
@@ -35,7 +39,10 @@ export function useSmoothScroll<T extends HTMLElement>(): [RefObject<T>, () => v
   return [ref, smoothScrollToBottom];
 }
 
-export function useCallWithScroll<T>(append: (value: T) => void, smoothScrollToBottom: () => void) {
+export function useCallWithScroll<T>(
+  append: (value: T) => void,
+  smoothScrollToBottom: () => void
+) {
   const handleAppend = useCallback(
     (value: T) => {
       append(value);

@@ -29,7 +29,9 @@ export const verifyMiddlewareLoader: LoaderFunction = async ({ request }) => {
   return null;
 };
 
-export const createPrivateLoader = (loader?: LoaderFunction): LoaderFunction => {
+export const createPrivateLoader = (
+  loader?: LoaderFunction
+): LoaderFunction => {
   return async (context) => {
     const { request } = context;
     const authUser = await authPreSessionLoader();

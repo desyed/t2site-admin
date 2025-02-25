@@ -13,7 +13,9 @@ export type InputSearchProps = {
 
 const InputSearch = React.forwardRef<HTMLInputElement, InputSearchProps>(
   ({ className, icon, onClear, ...props }, ref) => {
-    const [inputValue, setInputValue] = React.useState(props.defaultValue || props.value || '');
+    const [inputValue, setInputValue] = React.useState(
+      props.defaultValue || props.value || ''
+    );
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setInputValue(e.target.value);

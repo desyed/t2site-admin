@@ -3,7 +3,11 @@ import { Copy, RefreshCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 export const InviteLink = () => {
   return (
@@ -27,7 +31,11 @@ export const InviteLink = () => {
         />
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button size={'icon'} className="size-9 shrink-0" variant={'outline'}>
+            <Button
+              size={'icon'}
+              className="size-9 shrink-0"
+              variant={'outline'}
+            >
               <RefreshCcw className="size-4" />
             </Button>
           </TooltipTrigger>

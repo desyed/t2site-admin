@@ -1,6 +1,9 @@
 import { api } from '@/lib/api';
 
-import type { MemberActionPayload, UpdateInvitationPayload } from './organizaion-type';
+import type {
+  MemberActionPayload,
+  UpdateInvitationPayload,
+} from './organizaion-type';
 
 /**
  * @GET /session
@@ -47,7 +50,10 @@ export function changeCurrentOrganizationApi(payload: object) {
 /**
  * @POST /organizations/:id/invite/:organizationId?
  */
-export function inviteOrganizationMembersApi(payload: object, organizationId = '') {
+export function inviteOrganizationMembersApi(
+  payload: object,
+  organizationId = ''
+) {
   return api.post(`/organizations/invite/${organizationId}`, payload);
 }
 
@@ -61,7 +67,9 @@ export function getInvitedMembersApi<T = unknown>(organizationId = '') {
 /**
  * @PUT /organizations/invite/resend/:invitedMemberId/:organizationId?
  */
-export function resendInvitationApi<T = unknown>(payload: UpdateInvitationPayload) {
+export function resendInvitationApi<T = unknown>(
+  payload: UpdateInvitationPayload
+) {
   return api.put<T>(
     `/organizations/invite/resend/${payload.invitedMemberId}/${payload.organizationId}`
   );
@@ -70,7 +78,9 @@ export function resendInvitationApi<T = unknown>(payload: UpdateInvitationPayloa
 /**
  * @DELETE organizations/invite/cancel/:invitedMemberId/:organizationId?
  */
-export function cancelInvitationApi<T = unknown>(payload: UpdateInvitationPayload) {
+export function cancelInvitationApi<T = unknown>(
+  payload: UpdateInvitationPayload
+) {
   return api.delete<T>(
     `/organizations/invite/cancel/${payload.invitedMemberId}/${payload.organizationId}`
   );
@@ -87,7 +97,10 @@ export function getInvitedMemberApi(invitedMemberId: string) {
  * @POST /organizations/invitations/:invitedMemberId
  */
 export function promptInvitationApi(invitedMemberId: string, payload: object) {
-  return api.post(`/organizations/invitations/prompt/${invitedMemberId}`, payload);
+  return api.post(
+    `/organizations/invitations/prompt/${invitedMemberId}`,
+    payload
+  );
 }
 
 /**
@@ -111,7 +124,9 @@ export function changeMemberRoleApi(payload: MemberActionPayload) {
  * @DELETE organizations/members/:memberId/:organizationId
  */
 export function removeMemberApi(payload: MemberActionPayload) {
-  return api.delete(`/organizations/members/${payload.memberId}/${payload.organizationId ?? ''}`);
+  return api.delete(
+    `/organizations/members/${payload.memberId}/${payload.organizationId ?? ''}`
+  );
 }
 
 /**

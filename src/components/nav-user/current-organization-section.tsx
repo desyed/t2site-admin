@@ -37,7 +37,9 @@ export function CurrentOrganizationSection() {
               {currentOrganization?.name ?? ''}
             </AvatarFallback>
           </Avatar>
-          <span className="line-clamp-1 flex-1">{currentOrganization?.name}</span>
+          <span className="line-clamp-1 flex-1">
+            {currentOrganization?.name}
+          </span>
           <MemberRoleBadge role={currentOrganization?.role ?? 'member'} />
           <Settings className="ml-1 size-4 text-muted-foreground" />
         </DropdownMenuItem>

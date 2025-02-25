@@ -34,7 +34,8 @@ export function useRedirectIfOrganizationNotExists() {
   const navigate = useNavigate();
   const redirect = useCallback(() => {
     toast.warning('Organization not found', {
-      description: 'This organization may no longer exist or you may not have access to it',
+      description:
+        'This organization may no longer exist or you may not have access to it',
       duration: 3000,
     });
     navigate(`/auth?ocr=true&rp=/`, { replace: true });
@@ -47,7 +48,9 @@ export function useRefreshOrganization() {
   const location = useLocation();
   const refresh = useCallback(
     (pathname?: string) => {
-      navigate(`/auth?ocr=true&rp=${pathname ?? location.pathname}`, { replace: true });
+      navigate(`/auth?ocr=true&rp=${pathname ?? location.pathname}`, {
+        replace: true,
+      });
     },
     [navigate, location.pathname]
   );
@@ -83,7 +86,9 @@ export function useInviteMembersMutaion<T = unknown>(
       return inviteOrganizationMembersApi(payload) as Promise<T>;
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: invitedMemberQueryKeys.invitedMemberList() });
+      queryClient.invalidateQueries({
+        queryKey: invitedMemberQueryKeys.invitedMemberList(),
+      });
       queryClient.invalidateQueries({ queryKey: memberQueryKeys.memberList() });
     },
     ...options,
@@ -101,7 +106,9 @@ export function useResendInvitationMutation<T = unknown>(
       return resendInvitationApi(payload) as Promise<T>;
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: invitedMemberQueryKeys.invitedMemberList() });
+      queryClient.invalidateQueries({
+        queryKey: invitedMemberQueryKeys.invitedMemberList(),
+      });
       queryClient.invalidateQueries({ queryKey: memberQueryKeys.memberList() });
     },
     ...options,
@@ -119,7 +126,9 @@ export function useCancelInvitationMutation<T = unknown>(
       return cancelInvitationApi(payload) as Promise<T>;
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: invitedMemberQueryKeys.invitedMemberList() });
+      queryClient.invalidateQueries({
+        queryKey: invitedMemberQueryKeys.invitedMemberList(),
+      });
       queryClient.invalidateQueries({ queryKey: memberQueryKeys.memberList() });
     },
     ...options,
@@ -164,7 +173,9 @@ export function useOptimisticInvitationPromptMutation() {
       });
 
       // Snapshot the previous value
-      const previousDetails = client.getQueryData(getKey(payload.invitedMemberId)) as InvitedMember;
+      const previousDetails = client.getQueryData(
+        getKey(payload.invitedMemberId)
+      ) as InvitedMember;
 
       // Optimistically update the cache
       const newDetails = {
@@ -181,7 +192,10 @@ export function useOptimisticInvitationPromptMutation() {
     onError: (_err, variables, context) => {
       handleApiErrorException(_err, true);
       if (context?.previousDetails) {
-        client.setQueryData(getKey(variables.invitedMemberId), context.previousDetails);
+        client.setQueryData(
+          getKey(variables.invitedMemberId),
+          context.previousDetails
+        );
         client.invalidateQueries({
           queryKey: getKey(variables.invitedMemberId),
         });

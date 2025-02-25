@@ -28,8 +28,8 @@ export const DeleteProjectAlert = ({ children }: DeleteProjectAlertProps) => {
       <AlertDialogContent>
         <AlertDialogTitle>Delete Project</AlertDialogTitle>
         <AlertDialogDescription>
-          Are you sure you want to delete this project? This action cannot be undone. To confirm,
-          please type the project name {`"`}
+          Are you sure you want to delete this project? This action cannot be
+          undone. To confirm, please type the project name {`"`}
           <span className="font-semibold">{projectName}</span>
           {`"`} below.
         </AlertDialogDescription>
@@ -40,11 +40,15 @@ export const DeleteProjectAlert = ({ children }: DeleteProjectAlertProps) => {
           onChange={(e) => setInputValue(e.target.value)}
         />
         <AlertDialogFooter>
-          <AlertDialogCancel className={cn(buttonVariants({ size: 'sm', variant: 'secondary' }))}>
+          <AlertDialogCancel
+            className={cn(buttonVariants({ size: 'sm', variant: 'secondary' }))}
+          >
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
-            className={cn(buttonVariants({ size: 'sm', variant: 'destructive' }))}
+            className={cn(
+              buttonVariants({ size: 'sm', variant: 'destructive' })
+            )}
             disabled={inputValue !== projectName}
           >
             Delete Project

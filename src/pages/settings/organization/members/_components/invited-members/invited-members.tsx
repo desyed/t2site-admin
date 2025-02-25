@@ -15,7 +15,13 @@ export default function InvitedMembers({
   refresh: boolean;
   setRefresh: (refresh: boolean) => void;
 }) {
-  const { data: invitedMembers, isFetching, error, refetch, isLoading } = useInviteMembersQuery();
+  const {
+    data: invitedMembers,
+    isFetching,
+    error,
+    refetch,
+    isLoading,
+  } = useInviteMembersQuery();
 
   const redirect = useRedirectIfOrganizationNotExists();
 
@@ -27,7 +33,11 @@ export default function InvitedMembers({
   }, [refresh, refetch, setRefresh, isFetching]);
 
   useEffect(() => {
-    if (error && error instanceof AxiosError && error.response?.status === 404) {
+    if (
+      error &&
+      error instanceof AxiosError &&
+      error.response?.status === 404
+    ) {
       redirect();
     }
   }, [error, redirect, setRefresh]);
@@ -35,7 +45,9 @@ export default function InvitedMembers({
   return (
     <section>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-5">
-        <h2 className="flex items-center gap-2 text-xl font-semibold">Invited Members</h2>
+        <h2 className="flex items-center gap-2 text-xl font-semibold">
+          Invited Members
+        </h2>
       </div>
 
       <div className="mb-3 flex items-center justify-between gap-2">

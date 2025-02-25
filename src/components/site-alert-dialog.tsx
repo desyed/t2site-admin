@@ -54,7 +54,9 @@ const SiteAlertDialog = forwardRef<HTMLDivElement, SiteAlertDialogProps>(
     const [inputValue, setInputValue] = useState<string>('');
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const [promptConfirmError, setPromptConfirmError] = useState<string | null>(null);
+    const [promptConfirmError, setPromptConfirmError] = useState<string | null>(
+      null
+    );
 
     const handleConfirm = () => {
       if (confirmInput) {
@@ -64,7 +66,9 @@ const SiteAlertDialog = forwardRef<HTMLDivElement, SiteAlertDialogProps>(
         } else {
           inputRef.current?.focus();
           setPromptConfirmError(
-            'Please confirm by typing the ' + (confirmInputValue ?? 'Yes') + ' to confirm'
+            'Please confirm by typing the ' +
+              (confirmInputValue ?? 'Yes') +
+              ' to confirm'
           );
         }
       } else {
@@ -87,7 +91,9 @@ const SiteAlertDialog = forwardRef<HTMLDivElement, SiteAlertDialogProps>(
               <div className="flex flex-col gap-1">
                 <Label className="mb-1 text-sm">
                   Type{' '}
-                  <span className="font-semibold text-primary">{confirmInputValue ?? 'Yes'}</span>{' '}
+                  <span className="font-semibold text-primary">
+                    {confirmInputValue ?? 'Yes'}
+                  </span>{' '}
                   to confirm
                 </Label>
                 <Input
@@ -96,7 +102,10 @@ const SiteAlertDialog = forwardRef<HTMLDivElement, SiteAlertDialogProps>(
                   className="h-8"
                   placeholder={inputValue ?? 'Yes'}
                   onChange={(e) => {
-                    if (e.target.value?.toLowerCase() === confirmInputValue?.toLowerCase()) {
+                    if (
+                      e.target.value?.toLowerCase() ===
+                      confirmInputValue?.toLowerCase()
+                    ) {
                       setPromptConfirmError(null);
                     } else {
                       setPromptConfirmError(
@@ -108,14 +117,17 @@ const SiteAlertDialog = forwardRef<HTMLDivElement, SiteAlertDialogProps>(
                     setInputValue(e.target.value);
                   }}
                 />
-                <span className="text-sm text-red-500">{promptConfirmError}</span>
+                <span className="text-sm text-red-500">
+                  {promptConfirmError}
+                </span>
               </div>
             )}
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel asChild>
               <Button variant="outline" onClick={onCancel}>
-                <BanIcon className="size-3 sm:size-4" /> {cancelText || 'Cancel'}
+                <BanIcon className="size-3 sm:size-4" />{' '}
+                {cancelText || 'Cancel'}
               </Button>
             </AlertDialogCancel>
             <Button

@@ -1,6 +1,12 @@
 'use client';
 
-import { PlusIcon, UserIcon, ShieldIcon, CrownIcon, InfoIcon } from 'lucide-react';
+import {
+  PlusIcon,
+  UserIcon,
+  ShieldIcon,
+  CrownIcon,
+  InfoIcon,
+} from 'lucide-react';
 import { forwardRef } from 'react';
 import { useState } from 'react';
 
@@ -14,7 +20,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 import { InviteMemberForm } from './invite-member-form';
@@ -26,13 +36,15 @@ function RolePermissions() {
         <li className="text-ce flex items-start gap-2">
           <UserIcon className="mt-1 size-4 text-primary" />
           <span>
-            <span className="font-semibold">Members</span> can only invite new Members.
+            <span className="font-semibold">Members</span> can only invite new
+            Members.
           </span>
         </li>
         <li className="flex items-start gap-2">
           <ShieldIcon className="mt-1 size-4 text-primary" />
           <span>
-            <b className="font-semibold">Admins</b> can invite Admins or Members.
+            <b className="font-semibold">Admins</b> can invite Admins or
+            Members.
           </span>
         </li>
         <li className="flex items-start gap-2">
@@ -65,15 +77,18 @@ const InviteMemberDialog = forwardRef<HTMLDivElement, InviteMemberDialogProps>(
 
     const instrauction = (
       <p>
-        Invite others to your organization to collaborate together. An invite is specific to an
-        email address and expires after 3 days. Name can be provided for the team {`member's`}{' '}
-        convenience.
+        Invite others to your organization to collaborate together. An invite is
+        specific to an email address and expires after 3 days. Name can be
+        provided for the team {`member's`} convenience.
       </p>
     );
 
     return (
       <div ref={ref}>
-        <Dialog open={openFromParent ?? open} onOpenChange={setOpenFromParent ?? setOpen}>
+        <Dialog
+          open={openFromParent ?? open}
+          onOpenChange={setOpenFromParent ?? setOpen}
+        >
           {openFromParent === undefined ? (
             <DialogTrigger asChild>
               <Button size="sm" id="invite-member-trigger">
@@ -92,7 +107,11 @@ const InviteMemberDialog = forwardRef<HTMLDivElement, InviteMemberDialogProps>(
                 {isMobile && (
                   <Popover>
                     <PopoverTrigger asChild>
-                      <Button size="icon" variant="ghost" className="[&_svg]:text-primary/90">
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="[&_svg]:text-primary/90"
+                      >
                         <InfoIcon className="size-4" />
                       </Button>
                     </PopoverTrigger>
@@ -106,7 +125,9 @@ const InviteMemberDialog = forwardRef<HTMLDivElement, InviteMemberDialogProps>(
               </DialogTitle>
               {!isMobile && (
                 <>
-                  <DialogDescription className="pb-1 text-base ">{instrauction}</DialogDescription>
+                  <DialogDescription className="pb-1 text-base ">
+                    {instrauction}
+                  </DialogDescription>
                   <RolePermissions />
                 </>
               )}

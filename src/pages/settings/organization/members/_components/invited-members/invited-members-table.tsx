@@ -127,7 +127,8 @@ export default function InvitedMembersTable({
       emptyStateAction={{
         label: 'Invite member',
         icon: <SendIcon className="size-4" />,
-        onClick: () => document.getElementById('invite-member-trigger')?.click(),
+        onClick: () =>
+          document.getElementById('invite-member-trigger')?.click(),
       }}
     />
   );

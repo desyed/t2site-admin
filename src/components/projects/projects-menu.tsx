@@ -59,7 +59,10 @@ export function ProjectsMenu() {
         <DropdownMenuGroup>
           <div className="site-scrollbar max-h-[calc(100vh-55vh)] overflow-x-hidden">
             {Array.from({ length: 3 }).map((_, index) => (
-              <DropdownMenuItem onSelect={() => handleChangeProject(index)} key={index}>
+              <DropdownMenuItem
+                onSelect={() => handleChangeProject(index)}
+                key={index}
+              >
                 Project {index + 1}
               </DropdownMenuItem>
             ))}

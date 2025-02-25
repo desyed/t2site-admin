@@ -56,7 +56,12 @@ export default function Alert({
   const { color, icon, border, bg } = alertStyles[type];
 
   return (
-    <div className={cn(`my-2 border p-3 rounded-md ${bg} ${color} ${border} relative`, className)}>
+    <div
+      className={cn(
+        `my-2 border p-3 rounded-md ${bg} ${color} ${border} relative`,
+        className
+      )}
+    >
       {title && (
         <div className="flex items-center gap-2">
           <Icon className="size-6" icon={icon} />
@@ -75,7 +80,10 @@ export default function Alert({
       )}
 
       {close && (
-        <button className={`absolute right-2 top-2 active:scale-90 ${color}`} onClick={handleClose}>
+        <button
+          className={`absolute right-2 top-2 active:scale-90 ${color}`}
+          onClick={handleClose}
+        >
           <Icon icon="mdi:close" className="size-5" />
         </button>
       )}

@@ -19,7 +19,9 @@ type ThemeProviderState = {
 };
 
 export function getSystemThemeMode() {
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light';
 }
 
 const initialState: ThemeProviderState = {
@@ -74,7 +76,8 @@ export function ThemeProvider({
 
   const colorMode = useMemo(() => {
     if (theme === 'system') {
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
+        .matches
         ? 'dark'
         : 'light';
 

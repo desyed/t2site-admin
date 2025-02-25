@@ -36,9 +36,10 @@ export const TicketCard = ({ ticketId }: TicketCardProps) => {
         <Badge variant="secondary">Open</Badge>
       </div>
       <p className="line-clamp-2 text-xs text-muted-foreground">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, doloribus libero expedita
-        dignissimos similique eum consectetur, non atque mollitia magni ea, aperiam laudantium eos
-        voluptatibus aliquid maxime magnam dolorum ab.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi,
+        doloribus libero expedita dignissimos similique eum consectetur, non
+        atque mollitia magni ea, aperiam laudantium eos voluptatibus aliquid
+        maxime magnam dolorum ab.
       </p>
     </Card>
   );

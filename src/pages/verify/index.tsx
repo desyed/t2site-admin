@@ -35,9 +35,12 @@ export function Component() {
       <div className="mb-5">
         <h3 className="text-center text-xl font-semibold">Verify Your Email</h3>
         <p className="mt-2 text-foreground/80">
-          To complete your registration, please check your inbox and click on the verification link
-          sent to{' '}
-          <strong className="font-semibold text-blue-500 hover:underline">{user?.email}</strong>.
+          To complete your registration, please check your inbox and click on
+          the verification link sent to{' '}
+          <strong className="font-semibold text-blue-500 hover:underline">
+            {user?.email}
+          </strong>
+          .
         </p>
         <p className="mt-3 text-muted-foreground">
           {`Didn't`} receive the email? Check your spam or junk folder, or{'  '}

@@ -3,7 +3,11 @@ import type { LucideIcon } from 'lucide-react';
 import { ChevronRight } from 'lucide-react';
 import { Link, useLocation } from 'react-router';
 
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible';
 import {
   SidebarGroup,
   SidebarMenu,
@@ -63,10 +67,8 @@ export function NavMain({
                   <SidebarMenuButton
                     tooltip={item.title}
                     className={cn('font-semibold', {
-                      'bg-accent dark:!text-primary !text-yellow-600': isActivePath(
-                        pathname,
-                        item.url
-                      ),
+                      'bg-accent dark:!text-primary !text-yellow-600':
+                        isActivePath(pathname, item.url),
                     })}
                   >
                     {item.icon && <item.icon />}
@@ -89,10 +91,8 @@ export function NavMain({
                         >
                           <SidebarMenuSubButton
                             className={cn('font-semibold', {
-                              'bg-accent dark:!text-primary !text-yellow-600': isActivePath(
-                                pathname,
-                                subItem.url
-                              ),
+                              'bg-accent dark:!text-primary !text-yellow-600':
+                                isActivePath(pathname, subItem.url),
                             })}
                             asChild
                           >

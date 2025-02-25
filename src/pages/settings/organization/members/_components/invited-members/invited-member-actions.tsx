@@ -27,8 +27,12 @@ type InvitedMemberActionsProps = {
   member: InvitedMember;
 };
 
-export default function InvitedMemberActions({ member }: InvitedMemberActionsProps) {
-  const currentOrganization = useAuthStore((state) => state.userOrganization?.currentOrganization);
+export default function InvitedMemberActions({
+  member,
+}: InvitedMemberActionsProps) {
+  const currentOrganization = useAuthStore(
+    (state) => state.userOrganization?.currentOrganization
+  );
 
   const hasSendInvitationPermission = checkSendInvitationPermission(
     currentOrganization?.role,
@@ -42,20 +46,22 @@ export default function InvitedMemberActions({ member }: InvitedMemberActionsPro
   const [showResendDialog, setShowResendDialog] = useState(false);
   const [showCancelDialog, setShowCancelDialog] = useState(false);
 
-  const { mutate: resendInvitation, isPending: isResending } = useResendInvitationMutation<{
-    data: {
+  const { mutate: resendInvitation, isPending: isResending } =
+    useResendInvitationMutation<{
       data: {
-        invitedMember: InvitedMember;
+        data: {
+          invitedMember: InvitedMember;
+        };
       };
-    };
-  }>();
-  const { mutate: cancelInvitation, isPending: isCanceling } = useCancelInvitationMutation<{
-    data: {
+    }>();
+  const { mutate: cancelInvitation, isPending: isCanceling } =
+    useCancelInvitationMutation<{
       data: {
-        invitedMember: InvitedMember;
+        data: {
+          invitedMember: InvitedMember;
+        };
       };
-    };
-  }>();
+    }>();
   const handleResendInvitation = () => {
     resendInvitation(
       {
@@ -111,7 +117,10 @@ export default function InvitedMemberActions({ member }: InvitedMemberActionsPro
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           {hasSendInvitationPermission && (
-            <DropdownMenuItem className="[&_svg]:size-4" onSelect={() => setShowResendDialog(true)}>
+            <DropdownMenuItem
+              className="[&_svg]:size-4"
+              onSelect={() => setShowResendDialog(true)}
+            >
               <SendIcon className="mr-2" /> Resend invitation
             </DropdownMenuItem>
           )}

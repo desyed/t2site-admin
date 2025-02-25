@@ -25,7 +25,8 @@ import { UserProfileSection } from './user-profile-section';
 
 export function NavUser() {
   const [inviteMemberDialogOpen, setInviteMemberDialogOpen] = useState(false);
-  const [createOrganizationDialogOpen, setCreateOrganizationDialogOpen] = useState(false);
+  const [createOrganizationDialogOpen, setCreateOrganizationDialogOpen] =
+    useState(false);
 
   const authUser = useAuthStore((state) => state.user);
   const userOrganizations = useAuthStore((state) => state.userOrganization);
@@ -48,11 +49,18 @@ export function NavUser() {
                 className="rounded-lg data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
               >
                 <Avatar className="size-8 rounded-full">
-                  <AvatarImage src={authUser?.avatar ?? ''} alt={authUser?.name} />
-                  <AvatarFallback className="rounded-full">{authUser?.name ?? ''}</AvatarFallback>
+                  <AvatarImage
+                    src={authUser?.avatar ?? ''}
+                    alt={authUser?.name}
+                  />
+                  <AvatarFallback className="rounded-full">
+                    {authUser?.name ?? ''}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{authUser?.name}</span>
+                  <span className="truncate font-semibold">
+                    {authUser?.name}
+                  </span>
                 </div>
                 <ChevronsUpDown className="ml-auto size-4 opacity-70" />
               </SidebarMenuButton>
@@ -66,10 +74,14 @@ export function NavUser() {
               <div>
                 <UserProfileSection />
 
-                {userOrganizations?.currentOrganization && <CurrentOrganizationSection />}
+                {userOrganizations?.currentOrganization && (
+                  <CurrentOrganizationSection />
+                )}
 
                 <OtherOrganizationsSection
-                  setCreateOrganizationDialogOpen={setCreateOrganizationDialogOpen}
+                  setCreateOrganizationDialogOpen={
+                    setCreateOrganizationDialogOpen
+                  }
                 />
 
                 <UserPreferencesSection />
