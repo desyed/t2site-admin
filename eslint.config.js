@@ -53,17 +53,7 @@ export default [
       prettier: pluginPrettier,
     },
     rules: {
-      'prettier/prettier': [
-        'error',
-        {
-          singleQuote: true,
-          trailingComma: 'es5',
-          tabWidth: 2,
-          semi: true,
-          printWidth: 100,
-          endOfLine: 'auto',
-        },
-      ],
+      'prettier/prettier': ['error'],
     },
   },
   {
