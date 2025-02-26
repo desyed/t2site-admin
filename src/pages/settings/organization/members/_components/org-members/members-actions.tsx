@@ -88,7 +88,7 @@ export function CurrentUserDropdownMenu({ member }: MembersActionsProps) {
       onError: (error) => {
         const { status } = handleApiErrorException(error, true);
         if (status && status < 501) {
-          refreshOrganization('/');
+          refreshOrganization();
         }
       },
       onSettled: () => {
