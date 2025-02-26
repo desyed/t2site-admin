@@ -108,7 +108,7 @@ export default function SingupForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-3"
+        className="flex flex-col gap-2"
       >
         <div>
           <FormField
@@ -166,7 +166,7 @@ export default function SingupForm() {
             )}
           />
         </div>
-        <div className="mt-5 flex flex-col sm:mt-2">
+        <div className="mt-5 flex flex-col sm:mt-4">
           <Button type="submit" size="sm" disabled={loading}>
             <LoadingSpinner visable={loading} /> Signup
           </Button>

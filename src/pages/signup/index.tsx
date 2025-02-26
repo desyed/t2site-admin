@@ -6,19 +6,25 @@ import SingupForm from '@/components/auth/signup-form';
 export default function SignupPage() {
   return (
     <>
-      <h3 className="mb-5 text-center text-2xl font-semibold sm:mb-5 ">
-        Signup
-      </h3>
+      <h3 className="text-center text-2xl font-semibold ">Signup</h3>
+      <p className="mb-2 mt-4 text-center text-sm text-muted-foreground">
+        Signup with your Google or Github account
+      </p>
+
+      <div className="mt-2 grid grid-cols-2 gap-6">
+        <OAuthButton type="google" label={false} />
+        <OAuthButton type="github" label={false} />
+      </div>
+
+      <div className="mb-2 mt-4 flex items-center justify-between gap-2.5">
+        <div className="h-px w-1/2 bg-border" />
+        <div className="shrink-0 text-xs text-muted-foreground">
+          OR CONTINUE WITH
+        </div>
+        <div className="h-px w-1/2 bg-border" />
+      </div>
+
       <SingupForm />
-      <div className="my-3 flex items-center justify-between gap-5">
-        <div className="h-px w-1/2 bg-border" />
-        <div>OR</div>
-        <div className="h-px w-1/2 bg-border" />
-      </div>
-      <div className="flex flex-col gap-2">
-        <OAuthButton type="google" />
-        <OAuthButton type="github" />
-      </div>
 
       <div className="mt-5 text-center text-muted-foreground">
         I already have an account

@@ -25,21 +25,27 @@ export default function LoginPage() {
 
   return (
     <>
-      <h3 className="mb-5 text-center text-2xl font-semibold sm:mb-5 ">
-        Login
-      </h3>
-      <LoginForm />
-      <div className="my-3 flex items-center justify-between gap-5">
-        <div className="h-px w-1/2 bg-border" />
-        <div>OR</div>
-        <div className="h-px w-1/2 bg-border" />
-      </div>
-      <div className="flex flex-col gap-2">
-        <OAuthButton type="google" />
-        <OAuthButton type="github" />
+      <h3 className="text-center text-2xl font-semibold ">Welcome back</h3>
+      <p className="mb-2 mt-4 text-center text-sm text-muted-foreground">
+        Login with your Google or Github account
+      </p>
+
+      <div className="mt-2 grid grid-cols-2 gap-6">
+        <OAuthButton type="google" label={false} />
+        <OAuthButton type="github" label={false} />
       </div>
 
-      <div className="mt-5 text-center text-muted-foreground">
+      <div className="mb-2 mt-4 flex items-center justify-between gap-2.5">
+        <div className="h-px w-1/2 bg-border" />
+        <div className="shrink-0 text-xs text-muted-foreground">
+          OR CONTINUE WITH
+        </div>
+        <div className="h-px w-1/2 bg-border" />
+      </div>
+
+      <LoginForm />
+
+      <div className="mt-4 text-center text-muted-foreground">
         {`Don't`} have an account?{' '}
         <Link
           className="font-semibold underline hover:text-foreground"
