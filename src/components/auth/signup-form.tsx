@@ -10,6 +10,7 @@ import type { TAuthUser } from '@/app/auth/auth-store';
 
 import { singupApi } from '@/app/auth/auth-api';
 import { useAuthStore } from '@/app/auth/auth-store';
+import SitePassword from '@/components/site-password';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -23,9 +24,7 @@ import { InputIcon } from '@/components/ui/input-icon';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { useApi } from '@/hooks/use-api';
 import { handleServerErrors } from '@/lib/error';
-import { isValidPassword } from '@/lib/utils';
-
-import { InputPassword } from '../ui/input-password';
+import { passwordRegex } from '@/lib/utils';
 
 const SignupSchema = z.object({
   name: z
@@ -55,8 +54,8 @@ const SignupSchema = z.object({
       message: 'Password cannot exceed 30 characters',
     })
     .refine(
-      isValidPassword,
-      'Password must be at least 8 characters and include upper, lower, number, and special.'
+      (value) => passwordRegex.test(value),
+      'Password must be at least 8 characters and include uppercase, lowercase, number, and special character.'
     ),
 });
 
@@ -130,7 +129,6 @@ export default function SingupForm() {
             )}
           />
         </div>
-
         <div>
           <FormField
             control={form.control}
@@ -158,13 +156,12 @@ export default function SingupForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <InputPassword
-                    icon="mdi:lock"
-                    placeholder="•••••••••••••••••••"
-                    {...field}
+                  <SitePassword
+                    value={field.value}
+                    onChange={(value) => field.onChange(value)}
+                    id={field.name}
                   />
                 </FormControl>
-                <FormMessage />
               </FormItem>
             )}
           />

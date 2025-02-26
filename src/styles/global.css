@@ -31,7 +31,7 @@ html.dark {
     --secondary-foreground: 24 9.8% 10%;
     --muted: 60 4.8% 95.9%;
     --muted-foreground: 0 0% 41.1%;
-    --accent: 54.17 38.51% 91.29%;
+    --accent: 54.17 68.8% 94.45%;
     --accent-foreground: 24 9.8% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 60 9.1% 97.8%;
@@ -92,18 +92,6 @@ html.dark {
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground antialiased overflow-x-hidden;
-    font-feature-settings:
-      'rlig' 1,
-      'calt' 1;
-  }
-}
-
 @layer components {
   .site-scrollbar {
     scrollbar-width: thin;
@@ -156,12 +144,6 @@ html.dark {
   width: 100%;
 }
 
-input,
-select {
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-}
-
 @keyframes loading-line {
   0% {
     transform: translateX(-150%);
@@ -184,19 +166,13 @@ select {
   }
   body {
     @apply bg-background text-foreground !min-w-full dark:selection:bg-primary/20 dark:selection:text-primary selection:bg-yellow-500/20 selection:text-yellow-700;
+    font-feature-settings:
+      'rlig' 1,
+      'calt' 1;
   }
 }
 
 html body[data-scroll-locked] {
   --removed-body-scroll-bar-size: 0 !important;
   margin-right: 0 !important;
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
 }
