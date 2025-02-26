@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
 
@@ -9,7 +11,7 @@ interface UserLabelProps {
   avatarClassName?: string | null;
 }
 
-export function UserLabel({
+export const UserLabel = memo(function UserLabel({
   name,
   avatarUrl,
   className,
@@ -32,4 +34,4 @@ export function UserLabel({
       </span>
     </div>
   );
-}
+});

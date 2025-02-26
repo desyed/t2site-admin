@@ -76,11 +76,11 @@ const InviteMemberDialog = forwardRef<HTMLDivElement, InviteMemberDialogProps>(
     };
 
     const instrauction = (
-      <p>
+      <span className="text-base">
         Invite others to your organization to collaborate together. An invite is
         specific to an email address and expires after 3 days. Name can be
         provided for the team {`member's`} convenience.
-      </p>
+      </span>
     );
 
     return (
@@ -125,7 +125,7 @@ const InviteMemberDialog = forwardRef<HTMLDivElement, InviteMemberDialogProps>(
               </DialogTitle>
               {!isMobile && (
                 <>
-                  <DialogDescription className="pb-1 text-base ">
+                  <DialogDescription className="text-base">
                     {instrauction}
                   </DialogDescription>
                   <RolePermissions />
