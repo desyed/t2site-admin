@@ -1,6 +1,6 @@
 import type React from 'react';
 
-import { type ReactNode, createContext, useContext, useState } from 'react';
+import { type ReactNode, createContext, use, useState } from 'react';
 
 interface TicketsContextType {
   selectedTicketId: string | null;
@@ -10,7 +10,7 @@ interface TicketsContextType {
 const TicketsContext = createContext<TicketsContextType | undefined>(undefined);
 
 export const useTickets = () => {
-  const context = useContext(TicketsContext);
+  const context = use(TicketsContext);
   if (context === undefined) {
     throw new Error('useTickets must be used within a TicketsProvider');
   }

@@ -16,7 +16,7 @@ export default function DashBoardHeader() {
   const pathSegments = location.pathname.split('/').filter(Boolean);
 
   return (
-    <header className="4 fixed z-50  flex w-full shrink-0 items-center gap-2 border-b border-border/50 bg-sidebar/70 shadow-sm backdrop-blur-xl transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-14 max-sm:py-2 sm:h-1">
+    <header className="4 fixed z-50 flex w-full shrink-0 items-center gap-2 border-b border-border/50 bg-sidebar/70 shadow-sm backdrop-blur-xl transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-14 max-sm:py-2 sm:h-1">
       <div className="flex items-center gap-2 px-4">
         <SidebarTrigger className="-ml-1" />
         <Separator orientation="vertical" className="mr-1 h-4" />
