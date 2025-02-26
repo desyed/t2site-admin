@@ -17,6 +17,7 @@ export const loader: LoaderFunction = createPrivateLoader(async () => {
 export function Component() {
   return (
     <div>
+      <title>Settings | Organization - Members</title>
       <Members />
     </div>
   );

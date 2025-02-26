@@ -47,6 +47,7 @@ export function Component() {
 
   return (
     <div className="max-w-2xl">
+      <title>Settings | Organization - General</title>
       <div className="space-y-10">
         <div className="space-y-4 border-none p-0">
           <div className="flex items-center gap-2">
