@@ -2,12 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-html.light {
-  color-scheme: light;
-}
-
 html.dark {
-  color-scheme: dark;
+  color-scheme: dark light;
 }
 
 .no-transitions * {
@@ -175,4 +171,10 @@ html.dark {
 html body[data-scroll-locked] {
   --removed-body-scroll-bar-size: 0 !important;
   margin-right: 0 !important;
+}
+
+input,
+select {
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
 }

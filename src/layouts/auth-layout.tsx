@@ -17,7 +17,7 @@ export default function AuthLayout() {
           <Brand />
         </a>
         <div className="flex flex-1 flex-col gap-5  max-sm:justify-between sm:max-w-[420px]">
-          <div className="overflow-x-hidden rounded-xl border-border/70 bg-transparent px-6 pb-10 sm:border  sm:pt-6 dark:sm:bg-muted/30">
+          <div className="overflow-x-hidden rounded-xl bg-transparent px-6 pb-10 dark:border-border/60 sm:border sm:bg-accent/40 sm:pt-6 sm:shadow-sm dark:sm:bg-muted/30">
             <Outlet />
           </div>
 

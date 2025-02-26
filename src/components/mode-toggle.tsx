@@ -21,7 +21,7 @@ export function ModeToggle() {
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent className="[&_svg]:size-4" align="end">
         <DropdownMenuItem onClick={() => setTheme('light')}>
           <SunIcon /> Light
         </DropdownMenuItem>
