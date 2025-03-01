@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 import type { InvitedMember } from '@/app/organization/organizaion-type';
 
 import { useOptimisticInvitationPromptMutation } from '@/app/organization/organization-hooks';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/site-button';
 type InvitationActionsProps = {
   invitedMember: InvitedMember;
 };

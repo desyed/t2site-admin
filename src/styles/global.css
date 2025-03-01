@@ -167,6 +167,15 @@ html.dark {
       'calt' 1;
   }
 }
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
 
 html body[data-scroll-locked] {
   --removed-body-scroll-bar-size: 0 !important;

@@ -2,7 +2,7 @@ import { Copy, Check } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
-import { Button, type ButtonProps } from '@/components/ui/button';
+import { Button, type ButtonProps } from '@/components/site-button';
 
 interface CopyButtonProps extends ButtonProps {
   text: string;

@@ -10,8 +10,8 @@ import type { TAuthUser } from '@/app/auth/auth-store';
 
 import { singupApi } from '@/app/auth/auth-api';
 import { useAuthStore } from '@/app/auth/auth-store';
+import { Button } from '@/components/site-button';
 import SitePassword from '@/components/site-password';
-import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,

@@ -2,7 +2,7 @@ import { ChevronDown, Settings } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/site-button';
 import {
   DropdownMenu,
   DropdownMenuContent,

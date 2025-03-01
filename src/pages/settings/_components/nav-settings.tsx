@@ -2,10 +2,10 @@ import { ChevronDownIcon, ChevronRightIcon } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router';
 
-import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { SidebarMenu, SidebarMenuButton } from '@/components/ui/sidebar';
 import { SidebarGroup } from '@/components/ui/sidebar';
+import { Button } from '@/components/site-button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { isActivePath } from '@/lib/utils';

@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 
 import { sendEmailVericationApi } from '@/app/auth/auth-api';
 import VerifyEmailForm from '@/components/auth/verify-email-form';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/site-button';
 import { useAuth } from '@/contexts/auth-provider';
 import { handleApiErrorException } from '@/lib/utils';
 

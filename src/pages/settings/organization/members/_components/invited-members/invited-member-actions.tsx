@@ -14,7 +14,7 @@ import {
   checkCancelInvitationPermission,
 } from '@/app/organization/organization-service';
 import SiteAlertDialog from '@/components/site-alert-dialog';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/site-button';
 import {
   DropdownMenu,
   DropdownMenuContent,

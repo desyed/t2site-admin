@@ -2,7 +2,7 @@ import { UploadIcon } from 'lucide-react';
 import { useState } from 'react';
 
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/site-button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { logDev } from '@/lib/utils';

@@ -3,7 +3,7 @@ import { type VariantProps, cva } from 'class-variance-authority';
 import { Menu, PanelLeft } from 'lucide-react';
 import * as React from 'react';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/site-button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';

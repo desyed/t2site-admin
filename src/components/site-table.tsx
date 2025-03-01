@@ -3,7 +3,7 @@
 import { RefreshCw } from 'lucide-react';
 import React from 'react';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/site-button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   Table,

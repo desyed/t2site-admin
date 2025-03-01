@@ -3,7 +3,7 @@ import { Link, Outlet } from 'react-router';
 
 import Brand from '@/components/Brand';
 import { ModeToggle } from '@/components/mode-toggle';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/site-button';
 
 export default function AuthLayout() {
   return (

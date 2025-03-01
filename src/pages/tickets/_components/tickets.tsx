@@ -2,7 +2,6 @@
 
 import { Filter, Search, SortAsc } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
   ResizableHandle,
@@ -10,6 +9,7 @@ import {
   ResizablePanelGroup,
 } from '@/components/ui/resizable';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Button } from '@/components/site-button';
 import { TooltipProvider } from '@/components/ui/tooltip';
 
 import { TicketCard } from './ticket-card';

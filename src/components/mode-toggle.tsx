@@ -1,7 +1,7 @@
 import { Moon, MoonIcon, Sun, SunIcon, SunMoon } from 'lucide-react';
 
+import { Button } from '@/components/site-button';
 import { useTheme } from '@/components/theme-provider';
-import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,

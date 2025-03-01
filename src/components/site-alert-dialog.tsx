@@ -2,8 +2,8 @@ import { InfoIcon, Loader2 } from 'lucide-react';
 import { BanIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
 
+import { Button } from '@/components/site-button';
 import { AlertDialog } from '@/components/ui/alert-dialog';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';

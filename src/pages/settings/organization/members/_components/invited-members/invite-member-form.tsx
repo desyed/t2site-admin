@@ -14,7 +14,7 @@ import {
   MAX_MEMBERS,
   rolesOptions,
 } from '@/app/organization/organization-schema';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/site-button';
 import {
   Form,
   FormControl,

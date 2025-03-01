@@ -2,7 +2,7 @@ import { Link, ShieldCheck, SparklesIcon } from 'lucide-react';
 import { RefreshCw } from 'lucide-react';
 import { useState } from 'react';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/site-button';
 import { Switch } from '@/components/ui/switch';
 
 import InviteMemberDialog from './invited-members/invite-member-dialog';
@@ -48,8 +48,10 @@ export default function Members() {
         <p className="mb-4 text-muted-foreground">
           Subscribe to the Teams addon to use this feature.
         </p>
-        <Button variant="secondary">
-          <SparklesIcon className="mr-1 size-4" />
+        <Button
+          variant="secondary"
+          icon={<SparklesIcon className="mr-1 size-4" />}
+        >
           Upgrade now
         </Button>
       </section>

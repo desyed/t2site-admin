@@ -10,7 +10,7 @@ import { z } from 'zod';
 import { loginApi } from '@/app/auth/auth-api';
 import { useAuthStore } from '@/app/auth/auth-store';
 import Alert from '@/components/Alert';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/site-button';
 import {
   Form,
   FormControl,

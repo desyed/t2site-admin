@@ -40,17 +40,17 @@ const data = {
   navServices: [
     {
       title: 'Web analytics',
-      url: '/web-analytics',
+      url: '/services/web-analytics',
       icon: ChartLine,
     },
     {
       title: 'Chat Assistant',
-      url: '/chat-assistant',
+      url: '/services/chat-assistant',
       icon: MessageCircle,
     },
     {
       title: 'Cookie consent',
-      url: '/cookie-consent',
+      url: '/services/cookie-consent',
       icon: Cookie,
     },
   ],

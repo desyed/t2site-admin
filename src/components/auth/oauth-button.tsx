@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react';
 import { useMemo } from 'react';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/site-button';
 
 export type T2OAuthType = 'google' | 'github' | 'microsoft';
 

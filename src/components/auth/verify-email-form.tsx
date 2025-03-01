@@ -10,7 +10,7 @@ import type { TAuthUser } from '@/app/auth/auth-store';
 
 import { verifyEmailApi } from '@/app/auth/auth-api';
 import { useAuthStore } from '@/app/auth/auth-store';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/site-button';
 import {
   Form,
   FormControl,

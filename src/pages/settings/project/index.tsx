@@ -1,7 +1,7 @@
 import { Copy, Globe, Settings } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/site-button';
 import {
   Card,
   CardContent,

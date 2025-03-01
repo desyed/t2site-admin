@@ -10,7 +10,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { buttonVariants } from '@/components/ui/button';
+import { buttonVariants } from '@/components/site-button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 

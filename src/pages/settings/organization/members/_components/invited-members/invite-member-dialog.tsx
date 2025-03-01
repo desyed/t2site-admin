@@ -11,7 +11,7 @@ import { forwardRef } from 'react';
 import { useState } from 'react';
 
 import { useAuthStore } from '@/app/auth/auth-store';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/site-button';
 import {
   Dialog,
   DialogContent,

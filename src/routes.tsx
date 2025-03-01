@@ -19,8 +19,8 @@ import AuthCheckPoint from '@/pages/auth-check-point';
 import LoginPage from '@/pages/login';
 import NavSettings from '@/pages/settings/_components/nav-settings';
 import SignupPage from '@/pages/signup';
+import { servicesRoutes } from '@/routers/services.routes';
 import { settingsRoutes } from '@/routers/settings.routes';
-
 export const routes = createBrowserRouter([
   {
     path: '/',
@@ -39,6 +39,10 @@ export const routes = createBrowserRouter([
           {
             path: '/tickets',
             lazy: () => import('@/pages/tickets'),
+          },
+          {
+            path: '/services',
+            children: servicesRoutes,
           },
           {
             path: '/settings',

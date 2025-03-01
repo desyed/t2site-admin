@@ -28,7 +28,7 @@ import {
 } from '@/app/organization/organization-service';
 import { HoverCardMessage } from '@/components/hover-card-message';
 import SiteAlertDialog from '@/components/site-alert-dialog';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/site-button';
 import {
   DropdownMenu,
   DropdownMenuContent,

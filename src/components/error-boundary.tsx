@@ -5,7 +5,7 @@ import { isRouteErrorResponse } from 'react-router';
 import Brand from '@/components/Brand';
 import { ModeToggle } from '@/components/mode-toggle';
 import { Alert } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/site-button';
 
 export default function ErrorBoundary() {
   const error = useRouteError();

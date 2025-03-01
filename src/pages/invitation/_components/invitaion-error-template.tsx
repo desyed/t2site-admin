@@ -1,7 +1,7 @@
 import { ArrowLeftIcon, XCircleIcon, CircleAlertIcon } from 'lucide-react';
 import { Link } from 'react-router';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/site-button';
 import { cn } from '@/lib/utils';
 
 export default function InvitationErrorTemplate({
