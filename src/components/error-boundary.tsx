@@ -48,8 +48,8 @@ export default function ErrorBoundary() {
               onClick={() => window.location.reload()}
               className="mt-5"
               size="lg"
+              icon={<RefreshCw className="mr-2 size-5" />}
             >
-              <RefreshCw className="mr-2 size-5" />
               Refresh
             </Button>
           </div>
@@ -59,8 +59,11 @@ export default function ErrorBoundary() {
               There is a problem with the application.
             </h1>
             <p className="mb-4 text-lg">{errorMessage}</p>
-            <Button onClick={() => window.location.reload()} size="lg">
-              <RefreshCw className="mr-2 size-5" />
+            <Button
+              onClick={() => window.location.reload()}
+              size="lg"
+              icon={<RefreshCw className="mr-2 size-5" />}
+            >
               Refresh
             </Button>
           </div>

@@ -246,8 +246,8 @@ export default function SiteTable<T>(props: SiteTableProps<T>) {
                             variant="outline"
                             size="sm"
                             onClick={errorActions.secondary.onClick}
+                            icon={<RefreshCw className="mr-2 size-4" />}
                           >
-                            <RefreshCw className="mr-2 size-4" />{' '}
                             {errorActions.secondary.label}
                           </Button>
                         ) : (
@@ -255,9 +255,10 @@ export default function SiteTable<T>(props: SiteTableProps<T>) {
                             <Button
                               variant="outline"
                               size="sm"
+                              icon={<RefreshCw className="mr-2 size-4" />}
                               onClick={() => window.location.reload()}
                             >
-                              <RefreshCw className="mr-2 size-4" /> Reload page
+                              Reload page
                             </Button>
                           )
                         )}
@@ -265,14 +266,18 @@ export default function SiteTable<T>(props: SiteTableProps<T>) {
                           <Button
                             size="sm"
                             onClick={errorActions.primary.onClick}
+                            icon={<RefreshCw className="mr-2 size-4" />}
                           >
-                            <RefreshCw className="mr-2 size-4" />{' '}
                             {errorActions.primary.label}
                           </Button>
                         ) : (
                           onRefresh && (
-                            <Button size="sm" onClick={onRefresh}>
-                              <RefreshCw className="mr-2 size-4" /> Try again
+                            <Button
+                              size="sm"
+                              onClick={onRefresh}
+                              icon={<RefreshCw className="mr-2 size-4" />}
+                            >
+                              Try again
                             </Button>
                           )
                         )}
@@ -302,12 +307,11 @@ export default function SiteTable<T>(props: SiteTableProps<T>) {
                         )}
                       </div>
                       {emptyStateAction && (
-                        <Button size="sm" onClick={emptyStateAction.onClick}>
-                          {emptyStateAction.icon && (
-                            <span className="mr-2">
-                              {emptyStateAction.icon}
-                            </span>
-                          )}
+                        <Button
+                          size="sm"
+                          onClick={emptyStateAction.onClick}
+                          icon={emptyStateAction.icon}
+                        >
                           {emptyStateAction.label}
                         </Button>
                       )}

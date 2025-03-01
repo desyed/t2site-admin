@@ -20,7 +20,6 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { InputIcon } from '@/components/ui/input-icon';
-import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { handleServerErrors } from '@/lib/error';
 import { handleApiErrorException } from '@/lib/utils';
 
@@ -161,9 +160,9 @@ export default function LoginForm() {
           />
         )}
 
-        <div className="mt-5 flex flex-col sm:mt-4">
+        <div className="mt-3 flex flex-col sm:mt-4">
           <Button type="submit" size="sm" disabled={loading}>
-            <LoadingSpinner visable={loading} /> Login
+            Login
           </Button>
         </div>
       </form>

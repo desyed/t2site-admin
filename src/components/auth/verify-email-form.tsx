@@ -18,7 +18,6 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { useApi } from '@/hooks/use-api';
 import { handleServerErrors } from '@/lib/error';
 
@@ -93,14 +92,14 @@ export default function VerifyEmailForm() {
           />
         </div>
         <div className="mt-5 flex flex-col sm:mt-2">
-          <Button type="submit" size="sm" disabled={loading}>
-            {!loading && (
-              <Icon
-                className="size-8"
-                icon="material-symbols:domain-verification"
-              />
-            )}
-            <LoadingSpinner visable={loading} /> Verify
+          <Button
+            type="submit"
+            size="sm"
+            disabled={loading}
+            icon={<Icon icon="material-symbols:domain-verification" />}
+            loading={loading}
+          >
+            Verify
           </Button>
         </div>
       </form>

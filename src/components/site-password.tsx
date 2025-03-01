@@ -4,17 +4,20 @@ import { CheckIcon, EyeIcon, EyeOffIcon, XIcon } from 'lucide-react';
 import { useId, useMemo, useState } from 'react';
 
 import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 
 interface SitePasswordProps {
   value: string;
   onChange: (value: string) => void;
   id?: string;
+  error?: boolean;
 }
 
 export default function SitePassword({
   value,
   onChange,
   id,
+  error,
 }: SitePasswordProps) {
   const defaultId = useId();
   const actualId = id || defaultId;
@@ -107,7 +110,9 @@ export default function SitePassword({
       {/* Password strength description */}
       <p
         id={`${actualId}-description`}
-        className="mb-2 text-sm font-medium text-foreground"
+        className={cn('mb-2 text-sm font-medium text-foreground', {
+          'text-red-500': error,
+        })}
       >
         {getStrengthText(strengthScore)}. Must contain:
       </p>

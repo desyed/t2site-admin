@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Plus } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
@@ -92,15 +92,15 @@ export function CreateOrganizationForm({ onClose }: { onClose: () => void }) {
         />
 
         <div className="pt-2">
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? (
-              <>
-                <Loader2 className="mr-2 size-4 animate-spin" />
-                Creating...
-              </>
-            ) : (
-              'Create Organization'
-            )}
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={loading}
+            loading={loading}
+            loadingText="Creating..."
+            icon={<Plus className="mr-1 size-4" />}
+          >
+            Create Organization
           </Button>
         </div>
       </form>

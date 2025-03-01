@@ -28,8 +28,10 @@ export function ProjectsMenu() {
         <Button
           className="gap-1 px-0 text-sm text-muted-foreground hover:text-foreground hover:no-underline [&_svg]:mt-[3px] [&_svg]:size-4"
           variant="link"
+          icon={<ChevronDown className="size-4" />}
+          iconPosition="right"
         >
-          Default Projects <ChevronDown className="size-4" />
+          Default Projects
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">

@@ -225,8 +225,8 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
                 variant="outline"
                 className="w-full"
                 onClick={handleAppend}
+                icon={<Plus className="mr-2 size-4" />}
               >
-                <Plus className="mr-2 size-4" />
                 Add email address
               </Button>
             ) : (
@@ -264,15 +264,14 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
           <Button type="button" variant="ghost" onClick={onClose}>
             Cancel
           </Button>
-          <Button type="submit" disabled={isPending} className="w-[180px]">
-            {isPending ? (
-              <>
-                <Loader2 className="mr-1 size-4 animate-spin" />
-                Sending Invitation...
-              </>
-            ) : (
-              'Invite Team Members'
-            )}
+          <Button
+            type="submit"
+            disabled={isPending}
+            className="w-[180px]"
+            loading={isPending}
+            loadingText="Sending Invitation..."
+          >
+            Invite Team Members
           </Button>
         </div>
       </form>

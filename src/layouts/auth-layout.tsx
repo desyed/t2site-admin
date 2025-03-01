@@ -1,14 +1,26 @@
-import { Outlet } from 'react-router';
+import { ChevronLeft } from 'lucide-react';
+import { Link, Outlet } from 'react-router';
 
 import Brand from '@/components/Brand';
 import { ModeToggle } from '@/components/mode-toggle';
+import { Button } from '@/components/ui/button';
 
 export default function AuthLayout() {
   return (
     <div className="relative flex min-h-screen flex-col">
-      <div className="absolute right-0 flex h-[90px] items-center justify-between px-6 sm:px-10">
-        <div></div>
+      <div className="absolute right-0 flex h-[60px] w-full items-center justify-between">
         <div>
+          <Link to="https://t2site.com">
+            <Button
+              variant="ghost"
+              className="text-muted-foreground hover:bg-transparent hover:text-foreground"
+              icon={<ChevronLeft className="size-4" />}
+            >
+              Back to the website
+            </Button>
+          </Link>
+        </div>
+        <div className="mt-6 pr-4">
           <ModeToggle />
         </div>
       </div>

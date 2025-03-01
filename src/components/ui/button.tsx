@@ -1,5 +1,6 @@
-import { Slot, Slottable } from '@radix-ui/react-slot';
+import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
+import { Loader2 } from 'lucide-react';
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
@@ -10,7 +11,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-primary text-primary-foreground hover:bg-primary/90 ',
+        default: 'bg-primary text-primary-foreground hover:bg-primary/90',
         destructive:
           'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         outline:
@@ -18,8 +19,31 @@ const buttonVariants = cva(
         secondary:
           'bg-secondary text-secondary-foreground hover:bg-secondary/80',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
-        distructiveGhost: 'hover:bg-accent hover:text-destructive-foreground',
+        destructiveGhost:
+          'text-destructive hover:bg-destructive/10 hover:text-destructive',
+        primaryDim:
+          'border-0 bg-yellow-500/20 text-yellow-500 transition-colors hover:bg-yellow-600/20 hover:text-yellow-600 dark:border dark:border-primary/20 dark:bg-primary/10 dark:hover:bg-primary/20 dark:hover:text-primary',
+        primaryGhost:
+          'text-yellow-500 hover:bg-yellow-500/10 hover:text-yellow-600 dark:text-primary dark:hover:bg-primary/10 dark:hover:text-primary',
         link: 'text-primary underline-offset-4 hover:underline',
+        soft: 'bg-primary/10 text-primary hover:bg-primary/20 dark:bg-primary/20 dark:hover:bg-primary/30',
+        glass:
+          'bg-white/10 text-white backdrop-blur-sm hover:bg-white/20 dark:bg-black/10 dark:hover:bg-black/20',
+        flat: 'bg-muted/50 text-muted-foreground hover:bg-muted',
+        premium:
+          'bg-gradient-to-r from-yellow-500 to-yellow-600 text-white hover:from-yellow-600 hover:to-yellow-700',
+        success: 'bg-emerald-500 text-white hover:bg-emerald-600',
+        successGhost:
+          'text-emerald-500 hover:bg-emerald-500/10 hover:text-emerald-600',
+        warning: 'bg-orange-500 text-white hover:bg-orange-600',
+        warningGhost:
+          'text-orange-500 hover:bg-orange-500/10 hover:text-orange-600',
+        info: 'bg-blue-500 text-white hover:bg-blue-600',
+        infoGhost: 'text-blue-500 hover:bg-blue-500/10 hover:text-blue-600',
+        subtle:
+          'bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700',
+        outline3D:
+          'border-2 border-primary bg-background shadow-[4px_4px_0] shadow-primary hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none',
       },
       effect: {
         expandIcon: 'group relative gap-0',
@@ -37,6 +61,28 @@ const buttonVariants = cva(
           'relative !no-underline after:absolute after:bottom-2 after:h-px after:w-2/3 after:origin-bottom-left after:scale-x-100 after:bg-primary after:transition-transform after:duration-300 after:ease-in-out hover:after:origin-bottom-right hover:after:scale-x-0',
         hoverUnderline:
           'relative !no-underline after:absolute after:bottom-2 after:h-px after:w-2/3 after:origin-bottom-right after:scale-x-0 after:bg-primary after:transition-transform after:duration-300 after:ease-in-out hover:after:origin-bottom-left hover:after:scale-x-100',
+        pulse: 'hover:animate-pulse',
+        bounce: 'transition hover:animate-bounce',
+        scale:
+          'transition-transform duration-300 hover:scale-105 active:scale-95',
+        rotateLeft: 'transition-transform duration-300 hover:rotate-[358deg]',
+        rotateRight: 'transition-transform duration-300 hover:rotate-2',
+        slideUp:
+          'transition-transform duration-300 hover:translate-y-[calc(-0.25rem)]',
+        slideDown: 'transition-transform duration-300 hover:translate-y-1',
+        glowPulse: 'animate-glow-pulse hover:animate-none',
+        neonPulse:
+          'shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(255,255,255,0.5)]',
+        ripple:
+          'relative overflow-hidden transition-all duration-300 before:absolute before:left-1/2 before:top-1/2 before:size-0 before:rounded-full before:bg-white/20 before:opacity-0 before:transition-all before:duration-500 hover:before:size-[300%] hover:before:opacity-100',
+        shake: 'hover:animate-shake',
+        jelly: 'hover:animate-jelly active:animate-jelly',
+        float:
+          'transition-all duration-300 hover:translate-y-[calc(-0.5rem)] hover:shadow-lg',
+        magnetic:
+          'transition-transform duration-300 [transform-style:preserve-3d] hover:scale-105 hover:[transform:perspective(1000px)_rotateX(10deg)] active:scale-95',
+        glitch:
+          'hover:before:animate-glitch-1 hover:after:animate-glitch-2 relative before:absolute before:inset-0 before:translate-x-[2px] before:bg-inherit before:content-[""] after:absolute after:inset-0 after:translate-x-[2px] after:content-[""]',
         none: '',
       },
       size: {
@@ -49,74 +95,104 @@ const buttonVariants = cva(
     defaultVariants: {
       variant: 'default',
       size: 'default',
+      effect: 'none',
     },
   }
 );
 
-interface IconProps {
-  icon: React.ElementType;
-  iconPlacement: 'left' | 'right';
+type SpinnerType = 'circle' | 'dots' | 'bars';
+
+interface LoadingProps {
+  loading?: boolean;
+  spinnerType?: SpinnerType;
+  loadingText?: string;
 }
 
-interface IconRefProps {
-  icon?: never;
-  iconPlacement?: undefined;
+interface IconProps {
+  icon?: React.ReactNode;
+  iconPosition?: 'left' | 'right';
 }
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+    VariantProps<typeof buttonVariants>,
+    LoadingProps,
+    IconProps {
   asChild?: boolean;
 }
 
-export type ButtonIconProps = IconProps | IconRefProps;
+const DotsSpinner = () => (
+  <div className="flex gap-1">
+    {[...Array(3)].map((_, i) => (
+      <div
+        key={i}
+        className="size-1.5 animate-pulse rounded-full bg-current"
+        style={{ animationDelay: `${i * 150}ms` }}
+      />
+    ))}
+  </div>
+);
 
-const Button = React.forwardRef<
-  HTMLButtonElement,
-  ButtonProps & ButtonIconProps
->(
+const BarsSpinner = () => (
+  <div className="flex gap-0.5">
+    {[...Array(3)].map((_, i) => (
+      <div
+        key={i}
+        className="h-4 w-1 animate-pulse rounded-full bg-current"
+        style={{ animationDelay: `${i * 150}ms` }}
+      />
+    ))}
+  </div>
+);
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       className,
       variant,
       effect,
       size,
-      icon: Icon,
-      iconPlacement,
+      icon,
+      iconPosition = 'left',
+      loading = false,
+      loadingText,
+      spinnerType = 'circle',
       asChild = false,
+      children,
       ...props
     },
     ref
   ) => {
     const Comp = asChild ? Slot : 'button';
-    if (variant === 'default' || variant === null || variant === undefined) {
+    if ((!variant || variant === 'default') && !effect) {
       effect = 'gooeyLeft';
     }
+
+    const Spinner = {
+      circle: () => <Loader2 className="size-4 animate-spin" />,
+      dots: DotsSpinner,
+      bars: BarsSpinner,
+    }[spinnerType];
+
+    const renderContent = () => (
+      <span className="inline-flex items-center gap-2">
+        {iconPosition === 'left' && (loading ? <Spinner /> : icon)}
+        <span>{loading ? loadingText || children : children}</span>
+        {iconPosition === 'right' && (loading ? <Spinner /> : icon)}
+      </span>
+    );
+
     return (
       <Comp
-        className={cn(buttonVariants({ variant, effect, size, className }))}
+        className={cn(
+          buttonVariants({ variant, effect, size, className }),
+          loading && 'cursor-wait'
+        )}
+        disabled={loading || props.disabled}
         ref={ref}
         {...props}
       >
-        {Icon &&
-          iconPlacement === 'left' &&
-          (effect === 'expandIcon' ? (
-            <div className="group-hover:translate-x-100 w-0 translate-x-0 pr-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:pr-2 group-hover:opacity-100">
-              <Icon />
-            </div>
-          ) : (
-            <Icon />
-          ))}
-        <Slottable>{props.children}</Slottable>
-        {Icon &&
-          iconPlacement === 'right' &&
-          (effect === 'expandIcon' ? (
-            <div className="w-0 translate-x-full pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-2 group-hover:opacity-100">
-              <Icon />
-            </div>
-          ) : (
-            <Icon />
-          ))}
+        {renderContent()}
       </Comp>
     );
   }

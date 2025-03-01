@@ -42,8 +42,12 @@ export default function InvitationErrorTemplate({
       </div>
       <div className="mt-6">
         <Link to="/" replace>
-          <Button variant="ghost" size="sm">
-            <ArrowLeftIcon className="mr-2 size-5" />
+          <Button
+            variant="ghost"
+            size="sm"
+            icon={<ArrowLeftIcon className="mr-2 size-5" />}
+            iconPosition="left"
+          >
             Return to Home
           </Button>
         </Link>

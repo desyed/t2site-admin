@@ -110,25 +110,26 @@ export default function NavSettings() {
             <Button
               variant="ghost"
               size="default"
-              className="flex-start w-full px-2 text-start"
+              className="flex-start h-2 w-full justify-start px-2 text-start capitalize hover:bg-transparent"
               onClick={() => setOpen(!open)}
-            >
-              <div className="flex w-full items-center justify-between">
-                <span className="capitalize">{activeMenuLabel}</span>
-                <div>
+              icon={
+                <>
                   {open ? (
                     <ChevronDownIcon className="mt-[4px] size-4" />
                   ) : (
                     <ChevronRightIcon className="mt-[2px] size-4" />
                   )}
-                </div>
-              </div>
+                </>
+              }
+              iconPosition="right"
+            >
+              {activeMenuLabel}
             </Button>
           </div>
 
           <CollapsibleContent>
             <SidebarGroup>
-              <span className="mb-1 select-none text-sm font-semibold text-muted-foreground">
+              <span className="mb-1 mt-4 select-none text-sm font-semibold text-muted-foreground">
                 Project
               </span>
               <SidebarMenu className="mt-2 gap-[2.5px]">

@@ -21,7 +21,6 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { InputIcon } from '@/components/ui/input-icon';
-import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { useApi } from '@/hooks/use-api';
 import { handleServerErrors } from '@/lib/error';
 import { passwordRegex } from '@/lib/utils';
@@ -160,6 +159,7 @@ export default function SingupForm() {
                     value={field.value}
                     onChange={(value) => field.onChange(value)}
                     id={field.name}
+                    error={!!form.formState.errors.password?.message}
                   />
                 </FormControl>
               </FormItem>
@@ -167,8 +167,8 @@ export default function SingupForm() {
           />
         </div>
         <div className="mt-5 flex flex-col sm:mt-4">
-          <Button type="submit" size="sm" disabled={loading}>
-            <LoadingSpinner visable={loading} /> Signup
+          <Button type="submit" size="sm" disabled={loading} loading={loading}>
+            Signup
           </Button>
         </div>
       </form>

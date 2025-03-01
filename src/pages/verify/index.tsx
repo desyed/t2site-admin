@@ -61,8 +61,13 @@ export function Component() {
         <div className="h-px w-1/2 bg-border" />
       </div>
       <div className="flex flex-col gap-2">
-        <Button onClick={logout} size="sm" variant="destructive">
-          <Icon icon="material-symbols:logout" /> Logout
+        <Button
+          onClick={logout}
+          size="sm"
+          variant="destructive"
+          icon={<Icon icon="material-symbols:logout" />}
+        >
+          Logout
         </Button>
       </div>
     </>

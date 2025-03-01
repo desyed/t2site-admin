@@ -52,7 +52,7 @@ export function NavMain({
                   <SidebarMenuButton tooltip={item.title}>
                     {item.icon && <item.icon />}
                     <span>{item.title}</span>
-                    <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                    <ChevronRight className="ml-auto whitespace-nowrap transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                   </SidebarMenuButton>
                 </CollapsibleTrigger>
               ) : (
@@ -66,7 +66,7 @@ export function NavMain({
                 >
                   <SidebarMenuButton
                     tooltip={item.title}
-                    className={cn('font-semibold', {
+                    className={cn('font-semibold whitespace-nowrap', {
                       'bg-accent dark:!text-primary !text-yellow-600':
                         isActivePath(pathname, item.url),
                     })}

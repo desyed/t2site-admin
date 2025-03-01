@@ -24,8 +24,9 @@ export function CreateProjectDialog() {
           variant="ghost"
           size="sm"
           className="w-full justify-start text-sm"
+          icon={<Plus className="mr-1 size-4" />}
+          iconPosition="left"
         >
-          <Plus className="mr-1" />
           New project
         </Button>
       </DialogTrigger>

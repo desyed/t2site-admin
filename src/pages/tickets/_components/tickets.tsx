@@ -45,16 +45,14 @@ export function Tickets({ defaultLayout = [20, 32, 48] }: TicketsProps) {
                   className="size-8 rounded-sm"
                   size={'icon'}
                   variant="outline"
-                >
-                  <Filter className="size-3" />
-                </Button>
+                  icon={<Filter className="size-3" />}
+                />
                 <Button
                   className="size-8 rounded-sm"
                   size={'icon'}
                   variant="outline"
-                >
-                  <SortAsc className="size-3" />
-                </Button>
+                  icon={<SortAsc className="size-3" />}
+                />
               </div>
             </div>
             <div className="space-y-2 px-4 py-3 pb-6">

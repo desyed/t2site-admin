@@ -133,15 +133,11 @@ export default function SiteAlertDialog({
             )}
             onClick={handleConfirm}
             disabled={loading}
+            icon={
+              loading ? <Loader2 className="size-4 animate-spin" /> : undefined
+            }
           >
-            {loading ? (
-              <>
-                <Loader2 className="size-4 animate-spin" />
-                {loadingText || ''}
-              </>
-            ) : (
-              confirmText || 'Confirm'
-            )}
+            {confirmText || 'Confirm'}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -91,8 +91,11 @@ const InviteMemberDialog = forwardRef<HTMLDivElement, InviteMemberDialogProps>(
         >
           {openFromParent === undefined ? (
             <DialogTrigger asChild>
-              <Button size="sm" id="invite-member-trigger">
-                <PlusIcon className="mr-1 size-4" />
+              <Button
+                size="sm"
+                id="invite-member-trigger"
+                icon={<PlusIcon className="mr-1 size-4" />}
+              >
                 Invite team member
               </Button>
             </DialogTrigger>
@@ -111,9 +114,8 @@ const InviteMemberDialog = forwardRef<HTMLDivElement, InviteMemberDialogProps>(
                         size="icon"
                         variant="ghost"
                         className="[&_svg]:text-primary/90"
-                      >
-                        <InfoIcon className="size-4" />
-                      </Button>
+                        icon={<InfoIcon className="size-4" />}
+                      />
                     </PopoverTrigger>
 
                     <PopoverContent>

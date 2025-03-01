@@ -1,11 +1,21 @@
 'use client';
 
-import { Home, Settings, Tickets } from 'lucide-react';
+import {
+  Activity,
+  ChartLine,
+  Cookie,
+  CreditCard,
+  Home,
+  LayoutGrid,
+  MessageCircle,
+  Settings,
+} from 'lucide-react';
 import * as React from 'react';
 
 import NavLogo from '@/components/nav-logo';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
+import { Separator } from '@/components/ui/separator';
 import {
   Sidebar,
   SidebarContent,
@@ -21,15 +31,36 @@ const data = {
       title: 'Dashboard',
       url: '/',
       icon: Home,
-      isActive: true,
     },
     {
-      title: 'Tickets',
-      url: '/tickets',
-      icon: Tickets,
+      title: 'Activity',
+      url: '/activity',
+      icon: Activity,
+    },
+  ],
+  navServices: [
+    {
+      title: 'Web analytics',
+      url: '/web-analytics',
+      icon: ChartLine,
+    },
+    {
+      title: 'Chat Assistant',
+      url: '/chat-assistant',
+      icon: MessageCircle,
+    },
+    {
+      title: 'Cookie consent',
+      url: '/cookie-consent',
+      icon: Cookie,
     },
   ],
   navSecondary: [
+    {
+      title: 'Billing',
+      url: '/billing',
+      icon: CreditCard,
+    },
     {
       title: 'Settings',
       url: '/settings',
@@ -50,6 +81,8 @@ export default function DashBoardSidebar(props: DashBoardSidebarProps) {
         </SidebarHeader>
         <SidebarContent>
           <NavMain items={data.navMain} />
+          <Separator />
+          <NavMain items={data.navServices} />
         </SidebarContent>
         <NavMain items={data.navSecondary} />
         <SidebarFooter className="py-0 pb-2">

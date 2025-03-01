@@ -36,8 +36,8 @@ export default function DashBoardHeader() {
             </BreadcrumbItem>
             {pathSegments.length > 1 && (
               <>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
+                <BreadcrumbSeparator className="max-sm:hidden" />
+                <BreadcrumbItem className="max-sm:hidden">
                   <BreadcrumbPage>
                     <Link to={pathSegments[1]}>
                       {pathSegments[1].charAt(0).toUpperCase() +

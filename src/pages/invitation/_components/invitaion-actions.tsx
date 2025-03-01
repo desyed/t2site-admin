@@ -48,8 +48,12 @@ export default function InvitationActions({
   if (invitedMember.status === 'pending') {
     return (
       <div className="mt-5 flex gap-2">
-        <Button onClick={handleAcceptInvitation} className="flex-1" size="sm">
-          <Check className="size-3 sm:size-4 " />
+        <Button
+          onClick={handleAcceptInvitation}
+          className="flex-1"
+          size="sm"
+          icon={<Check className="size-3 sm:size-4 " />}
+        >
           Accept
         </Button>
 
@@ -58,8 +62,8 @@ export default function InvitationActions({
           variant="outline"
           className="flex-1"
           size="sm"
+          icon={<X className="size-3 sm:size-4" />}
         >
-          <X className="size-3 sm:size-4" />
           Decline
         </Button>
       </div>
@@ -78,8 +82,8 @@ export default function InvitationActions({
               variant="outline"
               onClick={handleAcceptInvitation}
               size="sm"
+              icon={<Check className="size-3 sm:size-4 " />}
             >
-              <Check className="size-3 sm:size-4 " />
               Accept
             </Button>
           )}

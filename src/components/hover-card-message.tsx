@@ -20,8 +20,8 @@ export function HoverCardMessage({
     <HoverCard openDelay={400}>
       <HoverCardTrigger asChild>
         <Button variant="ghost" className="size-6 p-0">
-          <span className="sr-only">Open menu</span>
           <InfoIcon className="size-4" />
+          <span className="sr-only">Open menu</span>
         </Button>
       </HoverCardTrigger>
       <HoverCardContent align="end" className="w-72 border-l-4 p-4">

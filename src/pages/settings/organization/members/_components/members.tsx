@@ -22,10 +22,12 @@ export default function Members() {
           size="sm"
           onClick={() => setRefresh(!refresh)}
           disabled={refresh}
+          icon={
+            <RefreshCw
+              className={`mr-2 size-4 ${refresh ? 'animate-spin' : ''}`}
+            />
+          }
         >
-          <RefreshCw
-            className={`mr-2 size-4 ${refresh ? 'animate-spin' : ''}`}
-          />
           Refresh
         </Button>
       </div>
