@@ -136,6 +136,7 @@ export default function SiteAlertDialog({
             icon={
               loading ? <Loader2 className="size-4 animate-spin" /> : undefined
             }
+            loadingText={loadingText}
           >
             {confirmText || 'Confirm'}
           </Button>

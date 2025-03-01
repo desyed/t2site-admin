@@ -105,7 +105,7 @@ type SpinnerType = 'circle' | 'dots' | 'bars';
 interface LoadingProps {
   loading?: boolean;
   spinnerType?: SpinnerType;
-  loadingText?: string;
+  loadingText?: React.ReactNode;
 }
 
 interface IconProps {

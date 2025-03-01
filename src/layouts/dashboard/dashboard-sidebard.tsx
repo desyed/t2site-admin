@@ -6,7 +6,6 @@ import {
   Cookie,
   CreditCard,
   Home,
-  LayoutGrid,
   MessageCircle,
   Settings,
 } from 'lucide-react';
