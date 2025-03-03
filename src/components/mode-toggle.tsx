@@ -1,4 +1,4 @@
-import { Moon, MoonIcon, Sun, SunIcon, SunMoon } from 'lucide-react';
+import { Moon, Sun } from 'lucide-react';
 
 import { Button } from '@/components/site-button';
 import { useTheme } from '@/components/theme-provider';
@@ -7,10 +7,11 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 
 export function ModeToggle() {
-  const { setTheme } = useTheme();
+  const { setTheme, theme } = useTheme();
 
   return (
     <DropdownMenu>
@@ -18,25 +19,58 @@ export function ModeToggle() {
         <Button
           variant="outline"
           size="icon"
-          icon={
-            <>
-              <Sun className="size-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute size-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            </>
-          }
+          className="relative size-9 border-muted-foreground/20"
         >
+          {theme === 'light' ? <Sun /> : <Moon />}
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="[&_svg]:size-4" align="end">
-        <DropdownMenuItem onClick={() => setTheme('light')}>
-          <SunIcon /> Light
+      <DropdownMenuContent align="end" className="w-36">
+        <DropdownMenuItem
+          onClick={() => setTheme('light')}
+          className="flex items-center gap-2 px-3 py-2"
+          data-state={theme === 'light' ? 'active' : ''}
+        >
+          <Sun className="size-4" />
+          <span>Light</span>
+          {theme === 'light' && (
+            <span className="absolute right-2 flex size-2">
+              <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary/40 opacity-75"></span>
+              <span className="relative inline-flex size-2 rounded-full bg-primary"></span>
+            </span>
+          )}
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('dark')}>
-          <MoonIcon /> Dark
+
+        <DropdownMenuItem
+          onClick={() => setTheme('dark')}
+          className="flex items-center gap-2 px-3 py-2"
+          data-state={theme === 'dark' ? 'active' : ''}
+        >
+          <Moon className="size-4" />
+          <span>Dark</span>
+          {theme === 'dark' && (
+            <span className="absolute right-2 flex size-2">
+              <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary/40 opacity-75"></span>
+              <span className="relative inline-flex size-2 rounded-full bg-primary"></span>
+            </span>
+          )}
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('system')}>
-          <SunMoon /> System
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem
+          onClick={() => setTheme('system')}
+          className="flex items-center gap-2 px-3 py-2"
+          data-state={theme === 'system' ? 'active' : ''}
+        >
+          <Sun className="size-4" />
+          <span>System</span>
+          {theme === 'system' && (
+            <span className="absolute right-2 flex size-2">
+              <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary/40 opacity-75"></span>
+              <span className="relative inline-flex size-2 rounded-full bg-primary"></span>
+            </span>
+          )}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

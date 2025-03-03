@@ -77,6 +77,7 @@ export default function DashBoardSidebar(props: DashBoardSidebarProps) {
       <Sidebar collapsible="icon" variant="sidebar">
         <SidebarHeader>
           <NavLogo />
+          <img src="/11.png" alt="" />
         </SidebarHeader>
         <SidebarContent>
           <NavMain items={data.navMain} />
