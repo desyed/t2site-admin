@@ -6,10 +6,10 @@ import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-import type { TAuthUser } from '@/app/auth/auth-store';
+import type { TAuthUser } from '@/app/auth/auth.store';
 
-import { verifyEmailApi } from '@/app/auth/auth-api';
-import { useAuthStore } from '@/app/auth/auth-store';
+import { verifyEmailApi } from '@/app/auth/auth.api';
+import { useAuthStore } from '@/app/auth/auth.store';
 import { Button } from '@/components/site-button';
 import {
   Form,

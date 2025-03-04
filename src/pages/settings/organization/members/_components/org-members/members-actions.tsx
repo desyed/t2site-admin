@@ -10,22 +10,22 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
-import type { OrganizationMember } from '@/app/organization/organizaion-type';
+import type { OrganizationMember } from '@/app/organization/organizaion.type';
 import type { RoleName } from '@/constants/roles';
 
-import { useAuthStore } from '@/app/auth/auth-store';
+import { useAuthStore } from '@/app/auth/auth.store';
 import {
   useChangeMemberRoleMutation,
   useLeaveOrganizationMutation,
   useRefreshOrganization,
   useRemoveMemberMutation,
-} from '@/app/organization/organization-hooks';
+} from '@/app/organization/organization.hooks';
 import {
   checkMemberHasPermission,
   checkRemoveMemberPermission,
   isMemberRole,
   isOwnerRole,
-} from '@/app/organization/organization-service';
+} from '@/app/organization/organization.service';
 import { HoverCardMessage } from '@/components/hover-card-message';
 import SiteAlertDialog from '@/components/site-alert-dialog';
 import { Button } from '@/components/site-button';
@@ -82,7 +82,7 @@ export function CurrentUserDropdownMenu({ member }: MembersActionsProps) {
   const handleLeaveOrganization = () => {
     leaveOrganization(currentOrganization?.id ?? '', {
       onSuccess: () => {
-        navigate(`/auth?ocr=true&rp=/`, { replace: true });
+        navigate(`/auth?ocr=true&rp=/dashboard`, { replace: true });
         setIsLeaveDialogOpen(false);
       },
       onError: (error) => {

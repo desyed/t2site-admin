@@ -52,7 +52,10 @@ export function CreateOrganizationDialog({
           <DialogTitle className="mb-1 text-xl">
             Create Organization
           </DialogTitle>
-          <DialogDescription className="text-md pb-2">
+          <DialogDescription
+            aria-description="Create Organization Description"
+            className="text-md pb-2"
+          >
             Organizations gather people building together.
             <br />
             <div className="flex">

@@ -2,10 +2,10 @@ import { Plus } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
-import type { TOrganization } from '@/app/auth/auth-store';
+import type { TOrganization } from '@/app/auth/auth.store';
 
-import { useAuthStore } from '@/app/auth/auth-store';
-import { changeCurrentOrganizationApi } from '@/app/organization/organization-api';
+import { useAuthStore } from '@/app/auth/auth.store';
+import { changeCurrentOrganizationApi } from '@/app/organization/organization.api';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenuItem,
@@ -37,7 +37,7 @@ export function OtherOrganizationsSection({
       loading: 'Changing organization...',
       success: (result) => {
         if (result.data?.currentOrganizationId) {
-          navigate(`/auth?ocr=true&rp=${window.location.pathname}`);
+          navigate(`/auth?ocr=true&rp=/dashboard`);
           return `Now organization switched to ${organization.name}`;
         } else {
           return `Failed to change organization!`;

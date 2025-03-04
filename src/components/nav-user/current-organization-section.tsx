@@ -1,7 +1,7 @@
 import { CreditCard, Settings, Users } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
-import { useAuthStore } from '@/app/auth/auth-store';
+import { useAuthStore } from '@/app/auth/auth.store';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenuItem,

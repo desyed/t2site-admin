@@ -41,7 +41,7 @@ export default function CopyButton({
   return (
     <Button
       onClick={handleCopy}
-      variant="outline"
+      variant="ghost"
       className={`flex items-center gap-2 ${className || ''}`}
       {...props}
     >

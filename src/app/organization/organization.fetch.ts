@@ -2,13 +2,13 @@ import type {
   InvitedMember,
   InvitedMemberResponse,
   OrganizationMember,
-} from './organizaion-type';
+} from './organizaion.type';
 
 import {
   getInvitedMemberApi,
   getInvitedMembersApi,
   getOrganizationMembersApi,
-} from './organization-api';
+} from './organization.api';
 
 export async function fetchInvitedMembers() {
   const result = await getInvitedMembersApi();

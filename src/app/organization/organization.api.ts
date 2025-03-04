@@ -3,7 +3,7 @@ import { api } from '@/lib/api';
 import type {
   MemberActionPayload,
   UpdateInvitationPayload,
-} from './organizaion-type';
+} from './organizaion.type';
 
 /**
  * @GET /session

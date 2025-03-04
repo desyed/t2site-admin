@@ -1,6 +1,6 @@
 import type { z } from 'zod';
 
-import type { inviteMemberSchema, roles } from './organization-schema';
+import type { inviteMemberSchema, roles } from './organization.schema';
 
 export type InviteMemberInput = z.infer<typeof inviteMemberSchema>;
 export type Role = (typeof roles)[number];

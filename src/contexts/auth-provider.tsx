@@ -1,7 +1,7 @@
 import { createContext, type ReactNode, use } from 'react';
 import { toast } from 'sonner';
 
-import { type TAuthUser, useAuthStore } from '@/app/auth/auth-store';
+import { type TAuthUser, useAuthStore } from '@/app/auth/auth.store';
 
 interface AuthContextType {
   isAuthenticated: boolean;

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
-import { authStore } from '@/app/auth/auth-store';
+import { authStore } from '@/app/auth/auth.store';
 import Brand from '@/components/Brand';
 import { ModeToggle } from '@/components/mode-toggle';
 import { getQuery } from '@/lib/utils';

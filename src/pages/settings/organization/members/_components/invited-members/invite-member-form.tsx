@@ -5,15 +5,15 @@ import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-import type { InviteMemberInput } from '@/app/organization/organizaion-type';
+import type { InviteMemberInput } from '@/app/organization/organizaion.type';
 
-import { useAuthStore } from '@/app/auth/auth-store';
-import { useInviteMembersMutaion } from '@/app/organization/organization-hooks';
+import { useAuthStore } from '@/app/auth/auth.store';
+import { useInviteMembersMutaion } from '@/app/organization/organization.hooks';
 import {
   inviteMemberSchema,
   MAX_MEMBERS,
   rolesOptions,
-} from '@/app/organization/organization-schema';
+} from '@/app/organization/organization.schema';
 import { Button } from '@/components/site-button';
 import {
   Form,
@@ -261,11 +261,12 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
           </div>
         </div>
         <div className="mt-4 flex flex-col justify-end gap-4 p-5 pt-0 sm:flex-row">
-          <Button type="button" variant="ghost" onClick={onClose}>
+          <Button type="button" variant="ghost" onClick={onClose} size="sm">
             Cancel
           </Button>
           <Button
             type="submit"
+            size="sm"
             disabled={isPending}
             className="w-[180px]"
             loading={isPending}

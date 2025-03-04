@@ -11,9 +11,9 @@ import {
 } from 'lucide-react';
 import * as React from 'react';
 
-import NavLogo from '@/components/nav-logo';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
+import ProjectPopup from '@/components/projects/project-popup';
 import { Separator } from '@/components/ui/separator';
 import {
   Sidebar,
@@ -40,17 +40,17 @@ const data = {
   navServices: [
     {
       title: 'Web analytics',
-      url: '/services/web-analytics',
+      url: '/web-analytics',
       icon: ChartLine,
     },
     {
       title: 'Chat Assistant',
-      url: '/services/chat-assistant',
+      url: '/chat-assistant',
       icon: MessageCircle,
     },
     {
       title: 'Cookie consent',
-      url: '/services/cookie-consent',
+      url: '/cookie-consent',
       icon: Cookie,
     },
   ],
@@ -76,9 +76,9 @@ export default function DashBoardSidebar(props: DashBoardSidebarProps) {
     <>
       <Sidebar collapsible="icon" variant="sidebar">
         <SidebarHeader>
-          <NavLogo />
-          <img src="/11.png" alt="" />
+          <ProjectPopup />
         </SidebarHeader>
+        <Separator className="mb-2" />
         <SidebarContent>
           <NavMain items={data.navMain} />
           <Separator />

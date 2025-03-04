@@ -4,7 +4,7 @@ import type { RoleName } from '@/constants/roles';
 
 import { handleApi } from '@/lib/utils';
 
-import { getSessionApi, logoutApi } from './auth-api';
+import { getSessionApi, logoutApi } from './auth.api';
 
 // Types
 export type TOrganization = {

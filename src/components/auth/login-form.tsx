@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-import { loginApi } from '@/app/auth/auth-api';
-import { useAuthStore } from '@/app/auth/auth-store';
+import { loginApi } from '@/app/auth/auth.api';
+import { useAuthStore } from '@/app/auth/auth.store';
 import Alert from '@/components/Alert';
 import { Button } from '@/components/site-button';
 import {

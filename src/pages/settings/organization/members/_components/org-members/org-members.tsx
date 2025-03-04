@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import {
   useOrganizationMembersQuery,
   useRedirectIfOrganizationNotExists,
-} from '@/app/organization/organization-hooks';
+} from '@/app/organization/organization.hooks';
 import { InputSearch } from '@/components/ui/search-input';
 
 import { OrgMembersTable } from './org-members-table';

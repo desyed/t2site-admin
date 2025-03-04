@@ -2,10 +2,10 @@ import { ChevronDownIcon, ChevronRightIcon } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router';
 
+import { Button } from '@/components/site-button';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { SidebarMenu, SidebarMenuButton } from '@/components/ui/sidebar';
 import { SidebarGroup } from '@/components/ui/sidebar';
-import { Button } from '@/components/site-button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { isActivePath } from '@/lib/utils';
@@ -103,8 +103,8 @@ export default function NavSettings() {
   }, [pathname, navigate, isMobile]);
 
   return (
-    <div className="mx-4 flex flex-col items-start max-sm:mt-4 sm:mt-5 sm:gap-5 md:flex-row lg:mx-6 lg:mt-8 lg:gap-10">
-      <div className="top-20 bg-background max-md:mb-6 max-md:w-full max-md:border-b max-md:pb-2 md:sticky md:min-w-[12.4rem]">
+    <div className="m-4 flex flex-col items-start gap-4 md:flex-row">
+      <div className="top-16 bg-background max-md:mb-6 max-md:w-full max-md:border-b max-md:pb-2 md:sticky md:min-w-[12.4rem]">
         <Collapsible open={open} onOpenChange={setOpen}>
           <div className="hidden max-md:block ">
             <Button
@@ -221,7 +221,7 @@ export default function NavSettings() {
           </CollapsibleContent>
         </Collapsible>
       </div>
-      <div className="min-h-0 min-w-0 flex-1 whitespace-normal">
+      <div className="mt-3 min-h-0 min-w-0 flex-1 whitespace-normal">
         <Outlet />
       </div>
     </div>

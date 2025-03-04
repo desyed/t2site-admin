@@ -2,7 +2,7 @@ import type { LoaderFunction } from 'react-router';
 
 import { replace } from 'react-router';
 
-import { authPreSessionLoader } from '@/app/auth/auth-loader';
+import { authPreSessionLoader } from '@/app/auth/auth.loader';
 
 export const authMiddlewareLoader: LoaderFunction = async () => {
   const authUser = await authPreSessionLoader();

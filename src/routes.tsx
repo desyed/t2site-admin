@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter, Navigate } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
 
 import ErrorBoundary from '@/components/error-boundary';
@@ -34,6 +34,10 @@ export const routes = createBrowserRouter([
         children: [
           {
             index: true,
+            element: <Navigate to="/dashboard" />,
+          },
+          {
+            path: '/dashboard',
             lazy: () => import('@/pages/home'),
           },
           {
@@ -41,14 +45,15 @@ export const routes = createBrowserRouter([
             lazy: () => import('@/pages/tickets'),
           },
           {
-            path: '/services',
-            children: servicesRoutes,
+            path: '/new-project',
+            lazy: () => import('@/pages/new-project'),
           },
           {
             path: '/settings',
             element: <NavSettings />,
             children: settingsRoutes,
           },
+          ...servicesRoutes,
           {
             path: '*',
             element: <NotFoundPrivate />,
@@ -89,6 +94,10 @@ export const routes = createBrowserRouter([
             lazy: () => import('@/pages/invitation'),
           },
         ],
+      },
+      {
+        path: '/checkpoint/new-project',
+        lazy: () => import('@/pages/new-project'),
       },
       {
         path: '/auth',

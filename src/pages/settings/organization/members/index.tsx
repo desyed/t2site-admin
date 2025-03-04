@@ -3,7 +3,7 @@ import type { LoaderFunction } from 'react-router';
 import {
   preFetchInvitedMembers,
   preFetchOrganizationMembers,
-} from '@/app/organization/organization-prefetch';
+} from '@/app/organization/organization.prefetch';
 import { createPrivateLoader } from '@/middlewares/auth-middleware';
 
 import Members from './_components/members';

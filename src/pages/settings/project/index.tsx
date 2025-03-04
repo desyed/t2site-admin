@@ -1,7 +1,9 @@
 import { Copy, Globe, Settings } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { Button } from '@/components/site-button';
+import { createProjectScriptTag } from '@/app/project/project.service';
+import SiteCodeBlock from '@/components/site-code-block';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -135,15 +137,10 @@ export function Component() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="grid">
-                <pre className="overflow-y-hidden rounded-lg bg-muted  p-4">
-                  <code>{`<script>
-    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
-    posthog.init('phc_tcd1QR16c87pDuuORrvvrVpuEn7unHwuLYitmUU5oYy', {
-        api_host: 'https://us.1.posthog.com',
-        person_profiles: 'identified_only'  // or 'always' to create profiles for anonymous users as well
-    })
-</script>`}</code>
-                </pre>
+                <SiteCodeBlock
+                  code={createProjectScriptTag('Default project')}
+                  language="html"
+                />
               </CardContent>
             </Card>
           </div>

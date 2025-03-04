@@ -4,8 +4,8 @@ import {
   fetchInvitedMember,
   fetchInvitedMembers,
   fetchOrganizationMembers,
-} from './organization-fetch';
-import { invitedMemberQueryKeys, memberQueryKeys } from './organization-keys';
+} from './organization.fetch';
+import { invitedMemberQueryKeys, memberQueryKeys } from './organization.keys';
 
 export async function preFetchInvitedMembers() {
   await queryClient.prefetchQuery({

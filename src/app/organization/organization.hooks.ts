@@ -12,7 +12,7 @@ import type {
   InviteMemberInput,
   MemberActionPayload,
   UpdateInvitationPayload,
-} from './organizaion-type';
+} from './organizaion.type';
 
 import {
   inviteOrganizationMembersApi,
@@ -22,13 +22,13 @@ import {
   leaveOrganizationApi,
   changeMemberRoleApi,
   removeMemberApi,
-} from './organization-api';
+} from './organization.api';
 import {
   fetchInvitedMember,
   fetchInvitedMembers,
   fetchOrganizationMembers,
-} from './organization-fetch';
-import { invitedMemberQueryKeys, memberQueryKeys } from './organization-keys';
+} from './organization.fetch';
+import { invitedMemberQueryKeys, memberQueryKeys } from './organization.keys';
 
 export function useRedirectIfOrganizationNotExists() {
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ export function useRedirectIfOrganizationNotExists() {
         'This organization may no longer exist or you may not have access to it',
       duration: 3000,
     });
-    navigate(`/auth?ocr=true&rp=/`, { replace: true });
+    navigate(`/auth?ocr=true&rp=/dashboard`, { replace: true });
   }, [navigate]);
   return redirect;
 }
