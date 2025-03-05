@@ -54,11 +54,11 @@ export const createDashboardLoader = (
 ): LoaderFunction => {
   return createPrivateLoader(async (context) => {
     // const authUser = await authPreSessionLoader();
-    const { currentProject } = await authPreSessionLoader();
+    // const { currentProject } = await authPreSessionLoader();
 
-    if (!currentProject) {
-      return replace('/projects');
-    }
+    // if (!currentProject) {
+    //   return replace('/projects');
+    // }
 
     return loader ? loader(context) : null;
   });
