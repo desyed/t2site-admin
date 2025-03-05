@@ -67,8 +67,10 @@ export function NavMain({
                   <SidebarMenuButton
                     tooltip={item.title}
                     className={cn('font-semibold whitespace-nowrap', {
-                      'bg-accent dark:!text-primary !text-yellow-600':
-                        isActivePath(pathname, item.url),
+                      'dark:!text-primary !text-yellow-600': isActivePath(
+                        pathname,
+                        item.url
+                      ),
                     })}
                   >
                     {item.icon && <item.icon />}
@@ -91,7 +93,7 @@ export function NavMain({
                         >
                           <SidebarMenuSubButton
                             className={cn('font-semibold', {
-                              'bg-accent dark:!text-primary !text-yellow-600':
+                              'dark:!text-primary !text-yellow-600':
                                 isActivePath(pathname, subItem.url),
                             })}
                             asChild

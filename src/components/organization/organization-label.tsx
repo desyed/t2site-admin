@@ -1,34 +1,33 @@
 import { useMemo } from 'react';
 
-import type { Project } from '@/app/project/project.type';
+import type { Organization } from '@/app/organization/organizaion.type';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { Tooltip } from '@/components/ui/tooltip';
 import { TooltipProvider } from '@/components/ui/tooltip';
 
-export default function ProjectLabel({
-  project,
+export default function OrganizationLabel({
+  organization,
   titleTruncateLimit = 120,
-  siteTruncateLimit = 130,
   collapsed = false,
 }: {
-  project: Project;
+  organization: Organization;
   titleTruncateLimit?: number;
-  siteTruncateLimit?: number;
   collapsed?: boolean;
 }) {
   const LogoImage = useMemo(
     () => (
       <Avatar className="size-6 bg-muted">
-        <AvatarImage src={project.icon ?? undefined} />
-        <AvatarFallback>{project.name}</AvatarFallback>
+        <AvatarImage src={organization?.logo ?? undefined} />
+        <AvatarFallback>{organization?.name}</AvatarFallback>
       </Avatar>
     ),
-    [project.icon, project.name]
+    [organization?.logo, organization?.name]
   );
+  if (!organization) return null;
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex w-full items-center gap-2">
       {collapsed ? (
         LogoImage
       ) : (
@@ -44,28 +43,11 @@ export default function ProjectLabel({
                       maxWidth: `${titleTruncateLimit}px`,
                     }}
                   >
-                    {project.name}
+                    {organization?.name}
                   </span>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>{project.name}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <span
-                    className=" truncate text-xs text-muted-foreground"
-                    style={{
-                      maxWidth: `${siteTruncateLimit}px`,
-                    }}
-                  >
-                    {project.siteUrl}
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{project.siteUrl}</p>
+                  <p>{organization?.name}</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>

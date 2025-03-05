@@ -9,7 +9,6 @@ import { queryClient } from '@/query-client';
 
 export default function AuthCheckPoint() {
   const navigate = useNavigate();
-
   useEffect(() => {
     async function initSession() {
       const auth_login = getQuery('auth_login');

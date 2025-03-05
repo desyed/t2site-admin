@@ -13,10 +13,10 @@ import {
 import MemberRoleBadge from '../organization/member-role-badge';
 
 export function CurrentOrganizationSection() {
-  const userOrganizations = useAuthStore((state) => state.userOrganization);
+  const currentOrganization = useAuthStore(
+    (state) => state.userOrganization?.currentOrganization
+  );
   const navigate = useNavigate();
-
-  const currentOrganization = userOrganizations?.currentOrganization;
 
   return (
     <>

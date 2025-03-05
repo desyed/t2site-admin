@@ -17,7 +17,6 @@ export default function App() {
           <Toaster />
         </ThemeProvider>
       </AuthProvider>
-
       {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>
   );

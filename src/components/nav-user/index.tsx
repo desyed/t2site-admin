@@ -1,8 +1,6 @@
 import { ChevronsUpDown } from 'lucide-react';
-import { useState } from 'react';
 
 import { useAuthStore } from '@/app/auth/auth.store';
-import { CreateOrganizationDialog } from '@/components/organization/create-organization-dialog';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -16,19 +14,11 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 
-import { CurrentOrganizationSection } from './current-organization-section';
-import { OtherOrganizationsSection } from './other-organizations-section';
-import { UserPreferencesSection } from './user-preferences-section';
-import { UserProfileSection } from './user-profile-section';
+import NavUserContent from './nav-user-content';
 
 export function NavUser() {
-  const [createOrganizationDialogOpen, setCreateOrganizationDialogOpen] =
-    useState(false);
-
   const authUser = useAuthStore((state) => state.user);
-  const userOrganizations = useAuthStore((state) => state.userOrganization);
   const { isMobile } = useSidebar();
-
   return (
     <>
       <SidebarMenu>
@@ -62,29 +52,11 @@ export function NavUser() {
               align="end"
               sideOffset={4}
             >
-              <div className="site-scrollbar max-h-screen overflow-x-hidden">
-                <UserProfileSection />
-
-                {userOrganizations?.currentOrganization && (
-                  <CurrentOrganizationSection />
-                )}
-
-                <OtherOrganizationsSection
-                  setCreateOrganizationDialogOpen={
-                    setCreateOrganizationDialogOpen
-                  }
-                />
-
-                <UserPreferencesSection />
-              </div>
+              <NavUserContent />
             </DropdownMenuContent>
           </DropdownMenu>
         </SidebarMenuItem>
       </SidebarMenu>
-      <CreateOrganizationDialog
-        openFromParent={createOrganizationDialogOpen}
-        setOpenFromParent={setCreateOrganizationDialogOpen}
-      />
     </>
   );
 }

@@ -11,7 +11,7 @@ export async function loader() {
 
 export function Component() {
   return (
-    <div className="m-2 flex flex-1 flex-col md:m-6">
+    <div className="flex flex-1 flex-col ">
       <CreateNewProject />
     </div>
   );

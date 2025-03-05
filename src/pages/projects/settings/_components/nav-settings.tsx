@@ -1,4 +1,4 @@
-import { ChevronDownIcon, ChevronRightIcon, CreditCard } from 'lucide-react';
+import { ChevronDownIcon, ChevronRightIcon } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router';
 
@@ -10,43 +10,31 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { isActivePath } from '@/lib/utils';
 
-const organizationMenu = [
+const projectMenu = [
   {
     label: 'General',
-    path: '/settings/organization',
+    path: '/settings/project',
   },
   {
-    label: 'Billing',
-    path: '/settings/organization/billing',
+    label: 'Product analytics',
+    path: '/settings/project/analytics',
   },
   {
-    label: 'Members',
-    path: '/settings/organization/members',
+    label: 'Integrations',
+    path: '/settings/project/integrations',
   },
   {
-    label: 'Roles',
-    path: '/settings/organization/roles',
+    label: 'Access control',
+    path: '/settings/project/access-control',
   },
   {
     label: 'Danger zone',
-    path: '/settings/organization/danger-zone',
-  },
-];
-
-const userMenu = [
-  {
-    label: 'Profile',
-    path: '/settings/user',
-  },
-  {
-    label: 'Customization',
-    path: '/settings/user/customization',
+    path: '/settings/project/danger-zone',
   },
 ];
 
 const settingsMenu = {
-  organization: organizationMenu,
-  user: userMenu,
+  project: projectMenu,
 };
 
 export default function NavSettings() {
@@ -79,13 +67,8 @@ export default function NavSettings() {
   }, [pathname, navigate, isMobile]);
 
   return (
-    <div
-      className="m-4 mx-auto flex w-full max-w-screen-xl flex-col
-      items-start justify-between gap-6 px-4
-      md:flex-row
-    "
-    >
-      <div className="top-20  max-md:mb-6 max-md:w-full max-md:border-b max-md:pb-2 md:sticky md:min-w-[12.4rem]">
+    <div className="m-4 flex flex-col items-start gap-4 md:flex-row">
+      <div className="top-16 max-md:mb-6 max-md:w-full max-md:border-b max-md:pb-2 md:sticky md:min-w-[12.4rem]">
         <Collapsible open={open} onOpenChange={setOpen}>
           <div className="hidden max-md:block ">
             <Button
@@ -110,11 +93,11 @@ export default function NavSettings() {
 
           <CollapsibleContent>
             <SidebarGroup>
-              <span className="mb-1 mt-3 select-none text-sm font-semibold text-muted-foreground">
-                Organization
+              <span className="mb-1 mt-4 select-none text-sm font-semibold text-muted-foreground">
+                Project
               </span>
               <SidebarMenu className="mt-2 gap-[2.5px]">
-                {settingsMenu.organization.map((item) => {
+                {settingsMenu.project.map((item) => {
                   return (
                     <SidebarMenuButton
                       onClick={() => {
@@ -136,31 +119,6 @@ export default function NavSettings() {
                     </SidebarMenuButton>
                   );
                 })}
-              </SidebarMenu>
-              <span className="mb-1 mt-3 select-none text-sm font-semibold text-muted-foreground">
-                User
-              </span>
-              <SidebarMenu className="mt-2 gap-[2.5px]">
-                {settingsMenu.user.map((item) => (
-                  <SidebarMenuButton
-                    onClick={() => {
-                      navigate(item.path);
-                    }}
-                    key={item.path}
-                  >
-                    <span
-                      className={cn('font-semibold', {
-                        'text-yellow-600 dark:!text-primary': isActivePath(
-                          pathname,
-                          item.path,
-                          true
-                        ),
-                      })}
-                    >
-                      {item.label}
-                    </span>
-                  </SidebarMenuButton>
-                ))}
               </SidebarMenu>
             </SidebarGroup>
           </CollapsibleContent>

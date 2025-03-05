@@ -1,4 +1,4 @@
-import type { LoaderFunction } from 'react-router';
+import type { ActionFunction, LoaderFunction } from 'react-router';
 
 import { replace } from 'react-router';
 
@@ -49,19 +49,37 @@ export const createPrivateLoader = (
   };
 };
 
+export const createPrivateAction = (
+  action?: ActionFunction
+): ActionFunction => {
+  return async (context) => {
+    const { request } = context;
+    const { user } = await authPreSessionLoader();
+    if (!user) {
+      const pathname = new URL(request.url).pathname;
+      window.localStorage.setItem('redirect_to', pathname);
+      return replace('/login');
+    }
+    if (user && !user.emailVerified) {
+      const pathname = new URL(request.url).pathname;
+      window.localStorage.setItem('redirect_to', pathname);
+      return replace('/verify');
+    }
+    return action ? action(context) : null;
+  };
+};
+
 export const createDashboardLoader = (
   loader?: LoaderFunction
 ): LoaderFunction => {
   return createPrivateLoader(async (context) => {
-    // const authUser = await authPreSessionLoader();
-    // const { currentProject } = await authPreSessionLoader();
-
-    // if (!currentProject) {
-    //   return replace('/projects');
-    // }
-
+    const { currentProject } = await authPreSessionLoader();
+    if (!currentProject) {
+      return replace('/projects');
+    }
     return loader ? loader(context) : null;
   });
 };
 
+export const privateLoader: LoaderFunction = createPrivateLoader();
 export const dashboardLoader: LoaderFunction = createDashboardLoader();

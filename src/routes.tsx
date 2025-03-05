@@ -11,16 +11,20 @@ import VerifyLayout from '@/layouts/verify-layout';
 import {
   authMiddlewareLoader,
   dashboardLoader,
+  privateLoader,
   verifyMiddlewareLoader,
 } from '@/middlewares/auth-middleware';
 import NotFound from '@/pages/404';
 import NotFoundPrivate from '@/pages/404-private';
 import AuthCheckPoint from '@/pages/auth-check-point';
 import LoginPage from '@/pages/login';
+import NavSettingsProject from '@/pages/projects/settings/_components/nav-settings';
 import NavSettings from '@/pages/settings/_components/nav-settings';
 import SignupPage from '@/pages/signup';
-import { servicesRoutes } from '@/routers/services.routes';
-import { settingsRoutes } from '@/routers/settings.routes';
+
+import PrivateLayout from './layouts/private-layout';
+import NotFoundProjectSettings from './pages/projects/settings/404';
+import NotFoundSettings from './pages/settings/404';
 export const routes = createBrowserRouter([
   {
     path: '/',
@@ -45,15 +49,23 @@ export const routes = createBrowserRouter([
             lazy: () => import('@/pages/tickets'),
           },
           {
-            path: '/new-project',
-            lazy: () => import('@/pages/new-project'),
+            path: '/settings/project',
+            element: <NavSettingsProject />,
+            children: [
+              {
+                index: true,
+                lazy: () => import('@/pages/projects/settings/index'),
+              },
+              {
+                path: '*',
+                element: <NotFoundProjectSettings />,
+              },
+            ],
           },
           {
-            path: '/settings',
-            element: <NavSettings />,
-            children: settingsRoutes,
+            path: '/web-analytics',
+            lazy: () => import('@/pages/services/web-analytics'),
           },
-          ...servicesRoutes,
           {
             path: '*',
             element: <NotFoundPrivate />,
@@ -97,7 +109,51 @@ export const routes = createBrowserRouter([
       },
       {
         path: '/projects',
-        lazy: () => import('@/pages/new-project'),
+        element: <PrivateLayout />,
+        loader: privateLoader,
+        children: [
+          {
+            index: true,
+            lazy: () => import('@/pages/projects'),
+          },
+          {
+            path: '/projects/new',
+            lazy: () => import('@/pages/projects/new'),
+          },
+          {
+            path: '/projects/:projectId',
+            lazy: () => import('@/pages/projects/project'),
+          },
+        ],
+      },
+      {
+        path: '/settings',
+        element: <PrivateLayout />,
+        loader: privateLoader,
+        children: [
+          {
+            path: '/settings',
+            element: <NavSettings />,
+            children: [
+              {
+                index: true,
+                element: <Navigate to="/settings/organization" />,
+              },
+              {
+                path: '/settings/organization',
+                lazy: () => import('@/pages/settings/organization/general'),
+              },
+              {
+                path: '/settings/organization/members',
+                lazy: () => import('@/pages/settings/organization/members'),
+              },
+              {
+                path: '*',
+                element: <NotFoundSettings />,
+              },
+            ],
+          },
+        ],
       },
       {
         path: '/auth',

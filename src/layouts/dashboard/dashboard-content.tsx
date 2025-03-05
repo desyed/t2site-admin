@@ -11,7 +11,7 @@ export default function DashBoardContent(props: DashBoardContentProps) {
   return (
     <>
       <DashBoardHeader />
-      <div className="mt-12 flex min-h-0 min-w-0 flex-1 flex-col whitespace-normal">
+      <div className="mt-12 flex min-h-0 min-w-0 flex-1 flex-col whitespace-normal bg-neutral-50 dark:bg-background">
         {props.children}
       </div>
     </>

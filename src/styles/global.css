@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  overflow-y: scroll;
+}
+
 html.dark {
   color-scheme: dark light;
 }
@@ -16,7 +20,7 @@ html.dark {
     --background: 0 0% 100%;
     --background-input: 0 0% 100%;
     --foreground: 20 14.3% 4.1%;
-    --card: 0 0% 100%;
+    --card: 0deg 0% 100% / 70%;
     --card-foreground: 20 14.3% 4.1%;
     --popover: 0 0% 100%;
     --popover-foreground: 20 14.3% 4.1%;
@@ -25,7 +29,7 @@ html.dark {
     --primary-foreground: 0 0% 0%;
     --secondary: 60 4.8% 95.9%;
     --secondary-foreground: 24 9.8% 10%;
-    --muted: 60 4.8% 95.9%;
+    --muted: 0 0% 91.5%;
     --muted-foreground: 0 0% 41.1%;
     --accent: 54.17 68.8% 94.45%;
     --accent-foreground: 24 9.8% 10%;
@@ -40,7 +44,7 @@ html.dark {
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --sidebar-background: 0 0% 98%;
+    --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 51.48 100% 51.42%;
     --sidebar-primary-foreground: 0 0% 0%;

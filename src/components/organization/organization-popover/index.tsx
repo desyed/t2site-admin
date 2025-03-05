@@ -1,10 +1,10 @@
-import { memo, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import CurrentProjectLabel from './current-project-label';
-import ProjectPopupContent from './project-popup-content';
+import { Popover, PopoverContent, PopoverTrigger } from '../../ui/popover';
+import CurrentOrganizationLabel from './current-organization-label';
+import OrganizationPopoverContent from './organization-popover-content';
 
-export default function ProjectPopup() {
+export default function OrganizationPopover() {
   const [open, setOpen] = useState(false);
 
   const closePopover = useCallback(() => {
@@ -18,10 +18,10 @@ export default function ProjectPopup() {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <CurrentProjectLabel handleToggle={handleToggle} />
+        <CurrentOrganizationLabel handleToggle={handleToggle} />
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="end">
-        <ProjectPopupContent closePopover={closePopover} />
+        <OrganizationPopoverContent closePopover={closePopover} />
       </PopoverContent>
     </Popover>
   );

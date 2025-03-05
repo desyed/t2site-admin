@@ -4,7 +4,6 @@ import {
   Activity,
   ChartLine,
   Cookie,
-  CreditCard,
   Home,
   MessageCircle,
   Settings,
@@ -28,13 +27,18 @@ const data = {
   navMain: [
     {
       title: 'Dashboard',
-      url: '/',
+      url: '/dashboard',
       icon: Home,
     },
     {
       title: 'Activity',
       url: '/activity',
       icon: Activity,
+    },
+    {
+      title: 'Settings',
+      url: '/settings/project',
+      icon: Settings,
     },
   ],
   navServices: [
@@ -52,18 +56,6 @@ const data = {
       title: 'Cookie consent',
       url: '/cookie-consent',
       icon: Cookie,
-    },
-  ],
-  navSecondary: [
-    {
-      title: 'Billing',
-      url: '/billing',
-      icon: CreditCard,
-    },
-    {
-      title: 'Settings',
-      url: '/settings',
-      icon: Settings,
     },
   ],
 };
@@ -84,7 +76,6 @@ export default function DashBoardSidebar(props: DashBoardSidebarProps) {
           <Separator />
           <NavMain items={data.navServices} />
         </SidebarContent>
-        <NavMain items={data.navSecondary} />
         <SidebarFooter className="py-0 pb-2">
           <NavUser />
         </SidebarFooter>

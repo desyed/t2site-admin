@@ -33,7 +33,7 @@ export default function NotFoundPage({
 
         {/* Refined Button */}
         <Button
-          variant="primaryDim"
+          variant="outline"
           onClick={() => navigate(buttonLink)}
           size="sm"
           icon={<Icon icon="lucide:arrow-left" className="size-4" />}

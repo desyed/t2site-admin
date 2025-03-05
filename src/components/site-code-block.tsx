@@ -29,9 +29,11 @@ export default function SiteCodeBlock({
 
   return (
     <div className="relative selection:!text-inherit">
-      <SyntaxHighlighter language={language} style={getTheme()}>
-        {code}
-      </SyntaxHighlighter>
+      <div className="[&_pre]:site-scrollbar">
+        <SyntaxHighlighter language={language} style={getTheme()}>
+          {code}
+        </SyntaxHighlighter>
+      </div>
       <div className="absolute right-0 top-2">
         <CopyButton
           showToasterMessage="Copied to clipboard"

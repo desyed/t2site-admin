@@ -20,7 +20,11 @@ import {
 import { useAuth } from '@/contexts/auth-provider';
 import { cn } from '@/lib/utils';
 
-export function UserPreferencesSection() {
+export function UserPreferencesSection({
+  privateHeader = false,
+}: {
+  privateHeader?: boolean;
+}) {
   const { logout } = useAuth();
 
   const { theme, setTheme } = useTheme();
@@ -31,10 +35,12 @@ export function UserPreferencesSection() {
 
   return (
     <>
-      <DropdownMenuItem className="flex items-center gap-3 py-2">
-        <Bell className="size-4" />
-        <span>Notifications</span>
-      </DropdownMenuItem>
+      {!privateHeader && (
+        <DropdownMenuItem className="flex items-center gap-3 py-2">
+          <Bell className="size-4" />
+          <span>Notifications</span>
+        </DropdownMenuItem>
+      )}
       <DropdownMenuSub>
         <DropdownMenuSubTrigger className="flex items-center gap-3 py-2 font-semibold">
           <span className="translate-x-[3px]">
