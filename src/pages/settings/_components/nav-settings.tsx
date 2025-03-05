@@ -1,4 +1,4 @@
-import { ChevronDownIcon, ChevronRightIcon, CreditCard } from 'lucide-react';
+import { ChevronDownIcon, ChevronRightIcon } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router';
 

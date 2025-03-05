@@ -1,4 +1,4 @@
-import { FolderIcon, Plus, Loader2 } from 'lucide-react';
+import { FolderIcon, Plus } from 'lucide-react';
 import { Link } from 'react-router';
 
 import { useProjectsQuery } from '@/app/project/project.hooks';

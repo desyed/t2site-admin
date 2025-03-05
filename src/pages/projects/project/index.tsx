@@ -3,7 +3,7 @@ import { toast } from 'sonner';
 
 import { authStore } from '@/app/auth/auth.store';
 import { changeCurrentProjectApi } from '@/app/project/project.api';
-import { delay, handleApiErrorException } from '@/lib/utils';
+import { handleApiErrorException } from '@/lib/utils';
 import { createPrivateLoader } from '@/middlewares/auth-middleware';
 
 export const loader = createPrivateLoader(async ({ request, params }) => {
