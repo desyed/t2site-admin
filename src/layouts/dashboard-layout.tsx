@@ -7,7 +7,7 @@ import { useAuth } from '@/contexts/auth-provider';
 import DashBoardContent from '@/layouts/dashboard/dashboard-content';
 import DashBoardSidebar from '@/layouts/dashboard/dashboard-sidebard';
 
-export default function PrivateLayout() {
+export default function DashboardLayout() {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 

@@ -5,5 +5,5 @@ export async function authPreSessionLoader() {
   if (actSe) {
     await authStore.fetchSession();
   }
-  return authStore.getAuthUser();
+  return authStore.getSession();
 }

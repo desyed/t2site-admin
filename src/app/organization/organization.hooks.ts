@@ -38,7 +38,7 @@ export function useRedirectIfOrganizationNotExists() {
         'This organization may no longer exist or you may not have access to it',
       duration: 3000,
     });
-    navigate(`/auth?ocr=true&rp=/dashboard`, { replace: true });
+    navigate(`/auth?ocr=true&rp=/projects`, { replace: true });
   }, [navigate]);
   return redirect;
 }

@@ -4,13 +4,13 @@ import { RouterProvider } from 'react-router/dom';
 import ErrorBoundary from '@/components/error-boundary';
 import SplashScreen from '@/components/splash-screen';
 import AuthLayout from '@/layouts/auth-layout';
+import DashboardLayout from '@/layouts/dashboard-layout';
 import InvitationLayout from '@/layouts/invitation-layout';
-import PrivateLayout from '@/layouts/private-layout';
 import RootLayout from '@/layouts/root-layout';
 import VerifyLayout from '@/layouts/verify-layout';
 import {
   authMiddlewareLoader,
-  privateMiddlewareLoader,
+  dashboardLoader,
   verifyMiddlewareLoader,
 } from '@/middlewares/auth-middleware';
 import NotFound from '@/pages/404';
@@ -29,8 +29,8 @@ export const routes = createBrowserRouter([
     hydrateFallbackElement: <SplashScreen />,
     children: [
       {
-        element: <PrivateLayout />,
-        loader: privateMiddlewareLoader,
+        element: <DashboardLayout />,
+        loader: dashboardLoader,
         children: [
           {
             index: true,
@@ -96,7 +96,7 @@ export const routes = createBrowserRouter([
         ],
       },
       {
-        path: '/checkpoint/new-project',
+        path: '/projects',
         lazy: () => import('@/pages/new-project'),
       },
       {

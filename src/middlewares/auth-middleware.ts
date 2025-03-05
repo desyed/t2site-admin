@@ -5,24 +5,24 @@ import { replace } from 'react-router';
 import { authPreSessionLoader } from '@/app/auth/auth.loader';
 
 export const authMiddlewareLoader: LoaderFunction = async () => {
-  const authUser = await authPreSessionLoader();
-  if (authUser && authUser?.emailVerified) {
+  const { user } = await authPreSessionLoader();
+  if (user && user?.emailVerified) {
     return replace('/');
   }
-  if (authUser && !authUser?.emailVerified) {
+  if (user && !user?.emailVerified) {
     return replace('/verify');
   }
   return null;
 };
 
 export const verifyMiddlewareLoader: LoaderFunction = async ({ request }) => {
-  const authUser = await authPreSessionLoader();
+  const { user } = await authPreSessionLoader();
   const pathname = new URL(request.url).pathname;
-  if (!authUser) {
+  if (!user) {
     window.localStorage.setItem('redirect_to', pathname);
     return replace('/login');
   }
-  if (authUser?.emailVerified) {
+  if (user?.emailVerified) {
     window.localStorage.setItem('redirect_to', pathname);
     return replace('/');
   }
@@ -34,13 +34,13 @@ export const createPrivateLoader = (
 ): LoaderFunction => {
   return async (context) => {
     const { request } = context;
-    const authUser = await authPreSessionLoader();
-    if (!authUser) {
+    const { user } = await authPreSessionLoader();
+    if (!user) {
       const pathname = new URL(request.url).pathname;
       window.localStorage.setItem('redirect_to', pathname);
       return replace('/login');
     }
-    if (authUser && !authUser.emailVerified) {
+    if (user && !user.emailVerified) {
       const pathname = new URL(request.url).pathname;
       window.localStorage.setItem('redirect_to', pathname);
       return replace('/verify');
@@ -49,4 +49,19 @@ export const createPrivateLoader = (
   };
 };
 
-export const privateMiddlewareLoader: LoaderFunction = createPrivateLoader();
+export const createDashboardLoader = (
+  loader?: LoaderFunction
+): LoaderFunction => {
+  return createPrivateLoader(async (context) => {
+    // const authUser = await authPreSessionLoader();
+    const { currentProject } = await authPreSessionLoader();
+
+    if (!currentProject) {
+      return replace('/projects');
+    }
+
+    return loader ? loader(context) : null;
+  });
+};
+
+export const dashboardLoader: LoaderFunction = createDashboardLoader();
