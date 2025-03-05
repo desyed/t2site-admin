@@ -18,7 +18,9 @@ export default function OrganizationPopoverItem({
   organization: Organization;
   closePopover: () => void;
 }) {
-  const currentProject = useAuthStore((state) => state.currentProject);
+  const currentOrganization = useAuthStore(
+    (state) => state.userOrganization?.currentOrganization
+  );
   const navigate = useNavigate();
 
   const { executeMutation } = useApi<{
@@ -31,7 +33,7 @@ export default function OrganizationPopoverItem({
       loading: 'Changing organization...',
       success: (result) => {
         if (result.data?.currentOrganizationId) {
-          navigate(`/auth?ocr=true&rp=/dashboard`);
+          navigate(`/auth?ocr=true&rp=/projects`);
           return `Now organization switched to ${organization.name}`;
         } else {
           return `Failed to change organization!`;
@@ -49,7 +51,7 @@ export default function OrganizationPopoverItem({
       onSelect={() => handleChangeOrganization()}
     >
       <OrganizationLabel titleTruncateLimit={150} organization={organization} />
-      {currentProject?.id === organization.id && (
+      {currentOrganization?.id === organization.id && (
         <Check className="ml-auto size-4 text-primary" />
       )}
     </CommandItem>
