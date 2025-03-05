@@ -1,4 +1,4 @@
-import { CreditCard, Settings, Users } from 'lucide-react';
+import { CreditCard, Folder, Settings, Users } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
 import { useAuthStore } from '@/app/auth/auth.store';
@@ -42,6 +42,13 @@ export function CurrentOrganizationSection() {
           </span>
           <MemberRoleBadge role={currentOrganization?.role ?? 'member'} />
           <Settings className="ml-1 size-4 text-muted-foreground" />
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          className="flex items-center gap-3 py-2"
+          onSelect={() => navigate('/projects')}
+        >
+          <Folder className="size-4" />
+          <span>Projects</span>
         </DropdownMenuItem>
         <DropdownMenuItem
           className="flex items-center gap-3 py-2"

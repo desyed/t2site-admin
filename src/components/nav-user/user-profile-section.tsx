@@ -19,7 +19,7 @@ export function UserProfileSection() {
         Signed in as
       </DropdownMenuLabel>
       <DropdownMenuItem
-        onSelect={() => navigate('/settings/user')}
+        onSelect={() => navigate('/settings/user/profile')}
         className="p-0 font-normal"
       >
         <div className="flex flex-1 items-center gap-3 p-2 text-left text-sm">

@@ -7,13 +7,13 @@ import { Button } from '@/components/site-button';
 
 export default function AuthLayout() {
   return (
-    <div className="relative flex min-h-screen flex-col">
-      <div className="absolute right-0 flex h-[60px] w-full items-center justify-between">
+    <div className="relative flex min-h-screen flex-col bg-neutral-50 dark:bg-background">
+      <div className="absolute right-0 flex h-[60px] w-full items-center justify-between sm:fixed">
         <div>
           <Link to="https://t2site.com">
             <Button
               variant="ghost"
-              className="text-muted-foreground hover:bg-transparent hover:text-foreground"
+              className="text-foreground hover:bg-transparent hover:underline "
               icon={<ChevronLeft className="size-4" />}
             >
               Back to the website
@@ -29,7 +29,7 @@ export default function AuthLayout() {
           <Brand />
         </a>
         <div className="flex flex-1 flex-col gap-5  max-sm:justify-between sm:max-w-[420px]">
-          <div className="overflow-x-hidden rounded-xl bg-transparent px-6 pb-10 dark:border-border/60 sm:border sm:bg-accent/40 sm:pt-6 sm:shadow-sm dark:sm:bg-muted/30">
+          <div className="overflow-x-hidden rounded-xl px-6 pb-10 dark:border-border sm:border sm:bg-card sm:pt-6 sm:shadow-sm dark:sm:bg-muted/15">
             <Outlet />
           </div>
 

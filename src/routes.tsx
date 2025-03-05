@@ -148,6 +148,10 @@ export const routes = createBrowserRouter([
                 lazy: () => import('@/pages/settings/organization/members'),
               },
               {
+                path: '/settings/user/profile',
+                lazy: () => import('@/pages/settings/user/profile'),
+              },
+              {
                 path: '*',
                 element: <NotFoundSettings />,
               },

@@ -36,7 +36,7 @@ const organizationMenu = [
 const userMenu = [
   {
     label: 'Profile',
-    path: '/settings/user',
+    path: '/settings/user/profile',
   },
   {
     label: 'Customization',

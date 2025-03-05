@@ -31,7 +31,7 @@ html.dark {
     --secondary-foreground: 24 9.8% 10%;
     --muted: 0 0% 91.5%;
     --muted-foreground: 0 0% 41.1%;
-    --accent: 54.17 68.8% 94.45%;
+    --accent: 0deg 0% 100% / 40%;
     --accent-foreground: 24 9.8% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 60 9.1% 97.8%;
