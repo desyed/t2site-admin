@@ -30,6 +30,11 @@ export type TUserOrganization = {
   currentOrganization: TOrganization | null;
 };
 
+export type TSession = {
+  userAgent: string;
+  expiresAt: string;
+};
+
 export type TAuthState = {
   // State properties
   user: TAuthUser | null;
@@ -44,6 +49,8 @@ export type TAuthState = {
   // Token methods
   getAccessToken: () => string | null;
   setAccessToken: (token: string) => void;
+
+  session: TSession | null;
 
   // Organization methods
   setUserOrganization: (userOrganization: TUserOrganization) => void;
@@ -61,7 +68,7 @@ export const useAuthStore = create<TAuthState>((set, get) => ({
   user: null,
   userOrganization: null,
   accessToken: localStorage.getItem('t2_ac'),
-
+  session: null,
   // User methods
   getAuthUser: () => get().user,
   setAuthUser: (user) => set({ user }),
@@ -98,6 +105,10 @@ export const useAuthStore = create<TAuthState>((set, get) => ({
           set({
             user: data.user as TAuthUser,
             userOrganization: data.userOrganization as TUserOrganization,
+            session: {
+              userAgent: data.userAgent,
+              expiresAt: data.expiresAt,
+            },
           });
         } else {
           get().logout();
@@ -113,6 +124,7 @@ export const useAuthStore = create<TAuthState>((set, get) => ({
     set({
       user: null,
       accessToken: null,
+      session: null,
     });
     localStorage.removeItem('t2_ac');
   },

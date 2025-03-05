@@ -20,7 +20,6 @@ import * as z from 'zod';
 
 import { createProjectScriptTag } from '@/app/project/project.service';
 import Alert from '@/components/Alert';
-import CopyButton from '@/components/copy-button';
 import { ServiceTag } from '@/components/service-tag';
 import ServiceToggle from '@/components/service-toggle';
 import { Button as SiteButton } from '@/components/site-button';
@@ -60,15 +59,23 @@ const steps = [
 
 const projectSchema = z.object({
   name: z
-    .string()
+    .string({
+      required_error: 'Project name is required',
+      invalid_type_error: 'Project name must be a string',
+    })
+    .regex(
+      /^[\d\sA-Za-z]+$/,
+      'Project name can only contain letters, numbers, and spaces'
+    )
+    .min(1, 'Project name is required')
     .min(3, 'Project name must be at least 3 characters')
     .max(50, 'Project name must be less than 50 characters'),
   siteUrl: z
-    .string()
-    .url('Please enter a valid URL')
-    .startsWith('https://', {
-      message: 'Please enter a valid URL',
+    .string({
+      required_error: 'Site URL is required',
+      invalid_type_error: 'Site URL must be a string',
     })
+    .url('Please enter a valid URL')
     .min(1, 'Site URL is required'),
 });
 
@@ -479,35 +486,26 @@ export default function CreateNewProject() {
                     control={form.control}
                     name="siteUrl"
                     render={({ field }) => (
-                      <FormField
-                        control={form.control}
-                        name="siteUrl"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="flex items-center gap-2">
-                              <Link2 className="size-4" />
-                              Site URL
-                            </FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="https://example.com"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormDescription className="flex flex-col gap-1 text-xs sm:text-sm">
-                              <span>
-                                Enter the full URL of your website where
-                                you&apos;ll implement our services
-                              </span>
-                              <span className="text-muted-foreground/80">
-                                • Must start with https:// (e.g.,
-                                https://yourwebsite.com)
-                              </span>
-                            </FormDescription>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                      <FormItem>
+                        <FormLabel className="flex items-center gap-2">
+                          <Link2 className="size-4" />
+                          Site URL
+                        </FormLabel>
+                        <FormControl>
+                          <Input placeholder="https://example.com" {...field} />
+                        </FormControl>
+                        <FormDescription className="flex flex-col gap-1 text-xs sm:text-sm">
+                          <span>
+                            Enter the full URL of your website where you&apos;ll
+                            implement our services
+                          </span>
+                          <span className="text-muted-foreground/80">
+                            • Must start with https:// (e.g.,
+                            https://yourwebsite.com)
+                          </span>
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
                     )}
                   />
                 </div>
