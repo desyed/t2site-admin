@@ -1,4 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query';
 import { AlertCircle, RefreshCcw } from 'lucide-react';
 
 import type { TServiceType } from '@/app/project/project.type';
@@ -10,13 +9,11 @@ import {
 import { useProjectStore } from '@/app/project/project.store';
 import ServiceToggle from '@/components/service-toggle';
 import { ServiceToggleSkeleton } from '@/components/service-toggle-skeleton';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { navServices } from '@/layouts/dashboard/dashboard-sidebard';
 
 export default function ProjectServicesStep() {
-  const queryClient = useQueryClient();
   const currentNewProject = useProjectStore((state) => state.currentNewProject);
 
   const {
