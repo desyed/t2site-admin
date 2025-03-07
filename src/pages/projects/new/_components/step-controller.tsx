@@ -1,6 +1,6 @@
 import { ArrowLeft, ArrowRight, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import { useProjectStore } from '@/app/project/project.store';
 import { Button as SiteButton } from '@/components/site-button';
