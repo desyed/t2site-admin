@@ -16,10 +16,6 @@ const projectMenu = [
     path: '/settings/project',
   },
   {
-    label: 'Product analytics',
-    path: '/settings/project/analytics',
-  },
-  {
     label: 'Services',
     path: '/settings/project/services',
   },

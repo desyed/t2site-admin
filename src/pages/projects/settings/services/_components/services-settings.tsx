@@ -1,4 +1,5 @@
 import { AlertCircle, RefreshCcw } from 'lucide-react';
+import { Navigate } from 'react-router';
 
 import type { TServiceType } from '@/app/project/project.type';
 
@@ -35,18 +36,11 @@ export default function ServicesSettings({
   };
 
   if (!currentProjectId) {
-    return <div>No project ID</div>;
+    return <Navigate to="/projects" />;
   }
 
   return (
     <div className="space-y-6">
-      <div className="space-y-2">
-        <h2 className="text-xl font-semibold">Choose Services</h2>
-        <p className="text-sm text-muted-foreground">
-          Select the services you want to enable for your website
-        </p>
-      </div>
-
       <Card className="w-full max-w-full border ">
         {error ? (
           <div className="flex flex-col items-center justify-center space-y-4 p-8 text-center">

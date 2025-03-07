@@ -80,7 +80,9 @@ export default function StepController() {
               variant="outline"
               onClick={() => {
                 navigate('/projects');
-                resetProjectCreation();
+                setTimeout(() => {
+                  resetProjectCreation();
+                }, 1000);
               }}
             >
               <ArrowLeft className="size-4" />
@@ -93,8 +95,10 @@ export default function StepController() {
                   navigate(
                     `/projects/${currentNewProject?.id}?redirect_to=/dashboard`
                   );
-                  resetProjectCreation();
                 }
+                setTimeout(() => {
+                  resetProjectCreation();
+                }, 1000);
               }}
             >
               <ArrowRight className="size-4" />

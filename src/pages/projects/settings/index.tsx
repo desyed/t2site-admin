@@ -34,7 +34,14 @@ export function Component() {
   return (
     <div className="mx-auto space-y-8">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Project Settings</h1>
+        <div className="space-y-2">
+          <h1 className="text-3xl font-semibold max-md:text-2xl">
+            Project Settings
+          </h1>
+          <p className="text-base text-muted-foreground max-md:text-xs">
+            These settings only apply to the current project.
+          </p>
+        </div>
         <Button variant="outline" size="sm">
           <Settings className="mr-2 size-4" />
           Save Changes

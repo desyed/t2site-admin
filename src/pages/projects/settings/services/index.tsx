@@ -21,7 +21,13 @@ export function Component() {
   }
 
   return (
-    <div className="max-w-5xl">
+    <div className="max-w-5xl space-y-6">
+      <div className="space-y-2">
+        <h2 className="text-3xl font-semibold max-md:text-2xl">Services</h2>
+        <p className="text-base text-muted-foreground max-md:text-sm">
+          Select the services you want to enable for your website
+        </p>
+      </div>
       <ServicesSettings currentProjectId={currentProject.id} />
     </div>
   );

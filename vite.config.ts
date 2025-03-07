@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import react from '@vitejs/plugin-react';
 import path from 'node:path';
 import process from 'process';
