@@ -1,5 +1,7 @@
 'use client';
 
+import type { LucideIcon } from 'lucide-react';
+
 import {
   Activity,
   ChartLine,
@@ -9,6 +11,8 @@ import {
   Settings,
 } from 'lucide-react';
 import * as React from 'react';
+
+import type { TServiceType } from '@/app/project/project.type';
 
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -23,6 +27,34 @@ import {
   SidebarRail,
 } from '@/components/ui/sidebar';
 
+export const navServices: {
+  [key in TServiceType]: {
+    title: string;
+    url: string;
+    icon: LucideIcon;
+    id: TServiceType;
+  };
+} = {
+  web_analytics: {
+    title: 'Web analytics',
+    url: '/web-analytics',
+    icon: ChartLine,
+    id: 'web_analytics',
+  },
+  chat_assistant: {
+    title: 'Chat Assistant',
+    url: '/chat-assistant',
+    icon: MessageCircle,
+    id: 'chat_assistant',
+  },
+  cookie_consent: {
+    title: 'Cookie consent',
+    url: '/cookie-consent',
+    icon: Cookie,
+    id: 'cookie_consent',
+  },
+};
+
 const data = {
   navMain: [
     {
@@ -36,28 +68,12 @@ const data = {
       icon: Activity,
     },
     {
-      title: 'Settings',
+      title: 'Project Settings',
       url: '/settings/project',
       icon: Settings,
     },
   ],
-  navServices: [
-    {
-      title: 'Web analytics',
-      url: '/web-analytics',
-      icon: ChartLine,
-    },
-    {
-      title: 'Chat Assistant',
-      url: '/chat-assistant',
-      icon: MessageCircle,
-    },
-    {
-      title: 'Cookie consent',
-      url: '/cookie-consent',
-      icon: Cookie,
-    },
-  ],
+  navServices: Object.values(navServices),
 };
 
 export type DashBoardSidebarProps = {

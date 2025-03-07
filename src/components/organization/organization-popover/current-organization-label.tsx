@@ -22,13 +22,14 @@ const CurrentOrganizationLabel = forwardRef<
       ref={ref}
       variant="outline"
       className={cn(
-        'w-full max-sm:h-8 h-9 items-center justify-between sm:px-3 px-2'
+        'w-full h-10 items-center justify-between sm:px-3 px-2 rounded-xl'
       )}
       onClick={handleToggle}
     >
       <div className="flex items-center gap-2">
         <OrganizationLabel
           organization={currentOrganization as unknown as Organization}
+          size="sm"
           titleTruncateLimit={80}
         />
       </div>

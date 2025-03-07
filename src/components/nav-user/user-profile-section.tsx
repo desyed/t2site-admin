@@ -31,7 +31,7 @@ export function UserProfileSection() {
           </Avatar>
           <div className="grid flex-1 text-left leading-tight">
             <span className="truncate font-semibold">{authUser?.name}</span>
-            <span className="truncate text-xs text-muted-foreground">
+            <span className="max-w-[170px] truncate text-xs text-muted-foreground">
               {authUser?.email}
             </span>
           </div>

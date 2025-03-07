@@ -50,7 +50,7 @@ export default function AnalyticsDashboard() {
   const [activeTab, setActiveTab] = useState('web-analytics');
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-screen flex-col ">
       <div className="flex flex-col space-y-4 p-4 md:p-8">
         <Tabs
           defaultValue="web-analytics"
@@ -173,23 +173,6 @@ function WebAnalyticsTab() {
 
   return (
     <div className="space-y-4">
-      <Alert
-        variant="destructive"
-        className="border-amber-600 bg-amber-950 text-amber-50"
-      >
-        <AlertTitle className="flex items-center gap-2 text-amber-50">
-          No $pageview or $pageleave events have been received. Web analytics
-          won&apos;t work correctly (it&apos;ll be a little empty!)
-        </AlertTitle>
-        <AlertDescription className="text-amber-100">
-          Please see{' '}
-          <a href="#" className="text-amber-300 underline hover:text-amber-200">
-            documentation for how to set up posthog-js
-          </a>
-          .
-        </AlertDescription>
-      </Alert>
-
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
         <MetricCard title="VISITORS" value="0" />
         <MetricCard title="PAGE VIEWS" value="0" />
@@ -362,23 +345,6 @@ function EmptyTableRow({ message }: { message: string }) {
 function WebVitalsTab() {
   return (
     <div className="space-y-4">
-      <Alert
-        variant="destructive"
-        className="border-amber-600 bg-amber-950 text-amber-50"
-      >
-        <AlertTitle className="flex items-center gap-2 text-amber-50">
-          No $web_vitals events have been received. Web Vitals won&apos;t work
-          correctly (it&apos;ll be a little empty!)
-        </AlertTitle>
-        <AlertDescription className="text-amber-100">
-          Please see{' '}
-          <a href="#" className="text-amber-300 underline hover:text-amber-200">
-            documentation for how to set up web vitals
-          </a>
-          .
-        </AlertDescription>
-      </Alert>
-
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <VitalMetricCard
           title="Interaction to Next Paint (INP)"

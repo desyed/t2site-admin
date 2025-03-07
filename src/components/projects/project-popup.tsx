@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import CurrentProjectLabel from './current-project-label';

@@ -1,4 +1,11 @@
-import { Clock, Ellipsis, Globe2Icon, Home, SettingsIcon } from 'lucide-react';
+import {
+  Clock,
+  Ellipsis,
+  Globe2Icon,
+  Home,
+  SettingsIcon,
+  Wrench,
+} from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
 
 import type { Project } from '@/app/project/project.type';
@@ -96,7 +103,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               className="gap-2"
             >
               <SettingsIcon className="size-4" />
-              Settings
+              Project Settings
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

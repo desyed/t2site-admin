@@ -34,7 +34,7 @@ export default function OrganizationPopoverContent({
         <CommandInput className="h-9" placeholder="Search organizations..." />
         <CommandList>
           <CommandEmpty>No organizations found.</CommandEmpty>
-          <CommandGroup className="site-scrollbar max-h-[250px] overflow-y-auto p-1">
+          <CommandGroup className="site-scrollbar max-h-[255px] min-h-[100px] overflow-y-auto p-1">
             {organizations?.map((organization) => {
               return (
                 <OrganizationPopoverItem

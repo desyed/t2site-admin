@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import type { TServiceType } from '@/constants/project';
+import type { TService, TServiceType } from '@/app/project/project.type';
 import type { RoleName } from '@/constants/roles';
 
 import { handleApi } from '@/lib/utils';
@@ -34,11 +34,6 @@ export type TUserOrganization = {
 export type TSession = {
   userAgent: string;
   expiresAt: string;
-};
-
-export type TService = {
-  id: TServiceType;
-  name: string;
 };
 
 export type TCurrentProject = {

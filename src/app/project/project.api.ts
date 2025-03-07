@@ -1,5 +1,7 @@
 import { api } from '@/lib/api';
 
+import type { CreateProjectInput } from './project.type';
+
 /**
  * Organization Projects
  * organizationId is optional if not provided, it will use the current * active organization
@@ -40,7 +42,7 @@ export async function createProjectApi({
   payload,
   organizationId,
 }: {
-  payload: object;
+  payload: CreateProjectInput;
   organizationId?: string;
 }) {
   return api.post('/projects', payload, {

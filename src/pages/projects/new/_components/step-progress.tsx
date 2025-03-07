@@ -1,25 +1,15 @@
-import { Code2, Server, Settings, CheckCircle } from 'lucide-react';
-
+import { useProjectStore } from '@/app/project/project.store';
 import { cn } from '@/lib/utils';
 
-const STEPS = [
-  { title: 'Create', icon: Code2 },
-  { title: 'Verify', icon: Server },
-  { title: 'Services', icon: Settings },
-  { title: 'Complete', icon: CheckCircle },
-] as const;
-
-interface StepProgressProps {
-  currentStep: number;
-}
-
-export function StepProgress({ currentStep }: StepProgressProps) {
+export function StepProgress() {
+  const steps = useProjectStore((state) => state.createProjectSteps);
+  const currentStep = useProjectStore((state) => state.currentStep);
   return (
     <div className="relative w-full ">
       {/* Steps */}
       <div className="flex items-center justify-between">
-        {STEPS.map((step, index) => (
-          <div key={step.title} className="relative flex flex-col items-center">
+        {steps.map((step, index) => (
+          <div key={step.name} className="relative flex flex-col items-center">
             {/* Icon Circle */}
             <div
               className={cn(
@@ -40,7 +30,7 @@ export function StepProgress({ currentStep }: StepProgressProps) {
                 currentStep >= index ? 'text-primary' : 'text-muted-foreground'
               )}
             >
-              {step.title}
+              {step.name}
             </span>
           </div>
         ))}
@@ -50,7 +40,7 @@ export function StepProgress({ currentStep }: StepProgressProps) {
           <div
             className="h-full bg-primary transition-all duration-300"
             style={{
-              width: `${(currentStep / (STEPS.length - 1)) * 100}%`,
+              width: `${(currentStep / (steps.length - 1)) * 100}%`,
             }}
           />
         </div>

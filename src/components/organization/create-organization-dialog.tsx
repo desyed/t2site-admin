@@ -58,11 +58,11 @@ export function CreateOrganizationDialog({
           >
             Organizations gather people building together.
             <br />
-            <div className="flex">
+            <span className="flex">
               <HyperLink href="" className="flex max-sm:justify-center">
                 Learn more in T2Site Docs.
               </HyperLink>
-            </div>
+            </span>
           </DialogDescription>
           <Separator />
         </DialogHeader>

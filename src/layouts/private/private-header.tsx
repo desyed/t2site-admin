@@ -12,6 +12,7 @@ import { Link, useLocation } from 'react-router';
 
 import { useAuthStore } from '@/app/auth/auth.store';
 import Brand from '@/components/Brand';
+import { CurrentOrganizationSection } from '@/components/nav-user/current-organization-section';
 import { UserPreferencesSection } from '@/components/nav-user/user-preferences-section';
 import { UserProfileSection } from '@/components/nav-user/user-profile-section';
 import OrganizationPopover from '@/components/organization/organization-popover';
@@ -115,10 +116,10 @@ export default function PrivateHeader() {
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"
-                    className="relative size-8 rounded-full"
+                    className="relative size-7 rounded-full"
                     aria-label="User menu"
                   >
-                    <Avatar className="size-8">
+                    <Avatar className="size-7">
                       <AvatarImage
                         src={user?.avatar ?? undefined}
                         alt={user?.name}
@@ -129,6 +130,7 @@ export default function PrivateHeader() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="max-w-sm" align="end">
                   <UserProfileSection />
+                  <CurrentOrganizationSection />
                   <UserPreferencesSection privateHeader={true} />
                 </DropdownMenuContent>
               </DropdownMenu>

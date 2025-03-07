@@ -6,26 +6,32 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { Tooltip } from '@/components/ui/tooltip';
 import { TooltipProvider } from '@/components/ui/tooltip';
-
+import { cn } from '@/lib/utils';
 export default function ProjectLabel({
   project,
   titleTruncateLimit = 120,
   siteTruncateLimit = 130,
   collapsed = false,
+  iconClassName = '',
+  labelClassName = '',
+  siteUrlClassName = '',
 }: {
   project: Project;
   titleTruncateLimit?: number;
   siteTruncateLimit?: number;
   collapsed?: boolean;
+  iconClassName?: string;
+  labelClassName?: string;
+  siteUrlClassName?: string;
 }) {
   const LogoImage = useMemo(
     () => (
-      <Avatar className="size-6 bg-muted">
+      <Avatar className={cn('size-6 bg-muted', iconClassName)}>
         <AvatarImage src={project.icon ?? undefined} />
         <AvatarFallback>{project.name}</AvatarFallback>
       </Avatar>
     ),
-    [project.icon, project.name]
+    [project.icon, project.name, iconClassName]
   );
   return (
     <div className="flex items-center gap-2">
@@ -39,7 +45,10 @@ export default function ProjectLabel({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <span
-                    className=" truncate text-sm font-semibold"
+                    className={cn(
+                      ' truncate text-sm font-semibold',
+                      labelClassName
+                    )}
                     style={{
                       maxWidth: `${titleTruncateLimit}px`,
                     }}
@@ -56,7 +65,10 @@ export default function ProjectLabel({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <span
-                    className=" truncate text-xs text-muted-foreground"
+                    className={cn(
+                      ' truncate text-xs text-muted-foreground',
+                      siteUrlClassName
+                    )}
                     style={{
                       maxWidth: `${siteTruncateLimit}px`,
                     }}

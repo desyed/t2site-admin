@@ -42,12 +42,15 @@ export function NavUser() {
                   <span className="truncate font-semibold">
                     {authUser?.name}
                   </span>
+                  <span className="truncate text-xs text-muted-foreground">
+                    {authUser?.email}
+                  </span>
                 </div>
                 <ChevronsUpDown className="ml-auto size-4 opacity-70" />
               </SidebarMenuButton>
             </DropdownMenuTrigger>
             <DropdownMenuContent
-              className="rounded-md md:min-w-72"
+              className="max-w-[250px] rounded-md md:min-w-72"
               side={isMobile ? 'top' : 'left'}
               align="end"
               sideOffset={4}

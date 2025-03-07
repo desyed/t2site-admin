@@ -26,21 +26,28 @@ export function CurrentOrganizationSection() {
         </DropdownMenuLabel>
         <DropdownMenuItem
           onSelect={() => navigate('/settings/organization')}
-          className="flex items-center gap-3 py-2"
+          className="flex items-center gap-3"
         >
-          <Avatar className="size-6 rounded-full">
+          <Avatar className="size-9 rounded-full">
             <AvatarImage
               src={currentOrganization?.logo ?? ''}
               alt={currentOrganization?.name ?? ''}
             />
-            <AvatarFallback className="rounded-lg">
+            <AvatarFallback className="rounded-lg text-lg">
               {currentOrganization?.name ?? ''}
             </AvatarFallback>
           </Avatar>
-          <span className="line-clamp-1 flex-1">
-            {currentOrganization?.name}
-          </span>
-          <MemberRoleBadge role={currentOrganization?.role ?? 'member'} />
+          <div className="flex flex-1 flex-col">
+            <span className="max-w-[150px] flex-1 truncate">
+              {currentOrganization?.name}
+            </span>
+            <span>
+              <MemberRoleBadge
+                size="sm"
+                role={currentOrganization?.role ?? 'member'}
+              />
+            </span>
+          </div>
           <Settings className="ml-1 size-4 text-muted-foreground" />
         </DropdownMenuItem>
         <DropdownMenuItem
@@ -57,7 +64,10 @@ export function CurrentOrganizationSection() {
           <Users className="size-4" />
           <span>Members</span>
         </DropdownMenuItem>
-        <DropdownMenuItem className="flex items-center gap-3 py-2">
+        <DropdownMenuItem
+          className="flex items-center gap-3 py-2"
+          onSelect={() => navigate('/settings/organization/billing')}
+        >
           <CreditCard className="size-4" />
           <span>Billing</span>
         </DropdownMenuItem>

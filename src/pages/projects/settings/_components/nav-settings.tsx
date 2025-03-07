@@ -20,8 +20,8 @@ const projectMenu = [
     path: '/settings/project/analytics',
   },
   {
-    label: 'Integrations',
-    path: '/settings/project/integrations',
+    label: 'Services',
+    path: '/settings/project/services',
   },
   {
     label: 'Access control',

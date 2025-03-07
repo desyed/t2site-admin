@@ -39,7 +39,7 @@ export default function InvitationActions({
       invitedMember.status === 'accepted' &&
       !invitedMember?.optimisticallyUpdatedAt
     ) {
-      navigate(`/auth?ocr=true&rp=/settings/organization/members`, {
+      navigate(`/auth?ocr=true&rp=/projects`, {
         replace: true,
       });
     }

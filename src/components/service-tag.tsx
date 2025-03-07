@@ -1,4 +1,8 @@
+import type { LucideIcon } from 'lucide-react';
+
 import { ChartLine, MessageCircle, Cookie } from 'lucide-react';
+
+import type { TServiceType } from '@/app/project/project.type';
 
 import { Badge } from '@/components/ui/badge';
 import {
@@ -10,28 +14,32 @@ import {
 import { cn } from '@/lib/utils';
 
 // Define service configurations
-const SERVICE_CONFIG = {
-  analytics: {
+const SERVICE_CONFIG: {
+  [key in TServiceType]: {
+    label: string;
+    description: string;
+    icon: LucideIcon;
+  };
+} = {
+  web_analytics: {
     label: 'Web Analytics',
     description: 'Track website traffic and user behavior',
     icon: ChartLine,
   },
-  chatbot: {
+  chat_assistant: {
     label: 'Chat Assistant',
     description: 'AI-powered chat support',
     icon: MessageCircle,
   },
-  cookieConsent: {
+  cookie_consent: {
     label: 'Cookie Consent',
     description: 'GDPR-compliant cookie management',
     icon: Cookie,
   },
 } as const;
 
-type ServiceType = keyof typeof SERVICE_CONFIG;
-
 interface ServiceTagProps {
-  type: ServiceType;
+  type: TServiceType;
   className?: string;
 }
 

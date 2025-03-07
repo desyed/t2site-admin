@@ -33,7 +33,7 @@ export default function ProjectPopupContent({
       <CommandList>
         {projects.length > 0 && <CommandEmpty>No projects found.</CommandEmpty>}
 
-        <CommandGroup className="site-scrollbar h-[255px] overflow-y-auto">
+        <CommandGroup className="site-scrollbar max-h-[255px] min-h-[100px] overflow-y-auto">
           {loading ? (
             // Show 3 skeleton items while loading
             Array.from({ length: 3 }).map((_, index) => (

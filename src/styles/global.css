@@ -31,7 +31,7 @@ html.dark {
     --secondary-foreground: 24 9.8% 10%;
     --muted: 0 0% 91.5%;
     --muted-foreground: 0 0% 41.1%;
-    --accent: 0deg 0% 100% / 40%;
+    --accent: 0 0% 96.06%;
     --accent-foreground: 24 9.8% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 60 9.1% 97.8%;
@@ -95,7 +95,7 @@ html.dark {
 @layer components {
   .site-scrollbar {
     scrollbar-width: thin;
-    scrollbar-color: hsl(var(--primary) / 0.6) transparent;
+    scrollbar-color: hsl(var(--accent-foreground) / 0.6) transparent;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -104,36 +104,11 @@ html.dark {
     height: 5px;
   }
 
-  .site-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 100vh;
-  }
-
-  .site-scrollbar::-webkit-scrollbar-thumb {
-    background-color: hsl(var(--primary) / 0.6);
-    border-radius: 100vh;
-  }
-
-  .site-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: hsl(var(--primary) / 0.8);
-  }
-
   /* For Internet Explorer */
   .site-scrollbar {
     -ms-overflow-style: auto; /* IE and Edge */
   }
 
-  /* Optional: Hide scrollbar while still allowing scroll */
-  @media (max-width: 640px) {
-    .site-scrollbar {
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none; /* IE and Edge */
-    }
-
-    .site-scrollbar::-webkit-scrollbar {
-      display: none; /* Chrome, Safari, Edge */
-    }
-  }
   .destructive-dropdown {
     @apply w-full justify-start text-sm h-8 hover:bg-destructive/20 hover:text-destructive text-destructive/80 focus:text-destructive/80 focus:bg-destructive/20;
   }
