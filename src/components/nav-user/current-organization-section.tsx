@@ -38,7 +38,7 @@ export function CurrentOrganizationSection() {
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-1 flex-col">
-            <span className="max-w-[150px] flex-1 truncate">
+            <span className="max-w-[175px] flex-1 truncate">
               {currentOrganization?.name}
             </span>
             <span>

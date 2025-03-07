@@ -57,6 +57,11 @@ export const routes = createBrowserRouter([
                 lazy: () => import('@/pages/projects/settings/index'),
               },
               {
+                path: 'services',
+                lazy: () => import('@/pages/projects/settings/services'),
+                loader: dashboardLoader,
+              },
+              {
                 path: '*',
                 element: <NotFoundProjectSettings />,
               },

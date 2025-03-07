@@ -155,7 +155,7 @@ export default function DashBoardSidebar(props: DashBoardSidebarProps) {
                     </div>
                   </div>
                   <div>
-                    <NavLink to="/settings/projects/services">
+                    <NavLink to="/settings/project/services">
                       <SiteButton variant="ghost" size="sm" icon={<Settings />}>
                         Configure Services
                       </SiteButton>
