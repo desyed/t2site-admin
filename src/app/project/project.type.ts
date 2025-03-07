@@ -16,6 +16,10 @@ export type TService = {
   features: string[];
 };
 
+export type ProjectService = {
+  [key in TServiceType]: TService;
+};
+
 export type Project = {
   id: string;
   organizationId: string;
@@ -37,7 +41,8 @@ export type TCreateProjectStep = {
   verify?: boolean;
   noController?: boolean;
   continueLabel?: string;
-  continueHandler?: () => void;
+  continueHandler?: () => Promise<void>;
+  continueIcon?: LucideIcon;
 };
 
 export type ServiceStatus = 'active' | 'inactive';

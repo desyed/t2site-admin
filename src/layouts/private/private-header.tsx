@@ -63,7 +63,7 @@ export default function PrivateHeader() {
               <Menu className="size-5" />
             </Button>
             <Link
-              to="/"
+              to="/projects"
               className="flex items-center gap-2 font-semibold max-md:hidden"
             >
               <Brand className="h-[25px] w-[70px] sm:w-[80px]" />

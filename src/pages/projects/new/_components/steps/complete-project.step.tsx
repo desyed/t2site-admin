@@ -1,12 +1,34 @@
 import { AlertCircle, ChartLine, Code2, Settings } from 'lucide-react';
+import { useMemo } from 'react';
 
+import type { ProjectService } from '@/app/project/project.type';
+
+import { useProjectServicesQuery } from '@/app/project/project.hooks';
+import { useProjectStore } from '@/app/project/project.store';
 import ProjectLabel from '@/components/project-label';
 import { ServiceTag } from '@/components/service-tag';
-import { Button as SiteButton } from '@/components/site-button';
+import { Button, Button as SiteButton } from '@/components/site-button';
 import { Card } from '@/components/ui/card';
-
 export default function SetupCompleteStep() {
-  const a = 'asds' === window.location.pathname;
+  const currentNewProject = useProjectStore((state) => state.currentNewProject);
+  const setCurrentStep = useProjectStore((state) => state.setCurrentStep);
+  const { data: services } = useProjectServicesQuery(currentNewProject?.id);
+
+  const activeProjectSerives = useMemo(() => {
+    const activeSerives = [];
+
+    if (services) {
+      for (const serviceId in services) {
+        const service = services[serviceId as keyof ProjectService];
+        if (service.active) {
+          activeSerives.push(service);
+        }
+      }
+    }
+
+    return activeSerives;
+  }, [services]);
+
   return (
     <div className="space-y-6">
       <div className="space-y-2">
@@ -19,21 +41,29 @@ export default function SetupCompleteStep() {
 
       <div className="grid gap-6">
         <Card className="p-3">
-          <ProjectLabel
-            iconClassName="size-8 mr-1"
-            labelClassName="text-base"
-            siteUrlClassName="text-xs"
-            titleTruncateLimit={400}
-            siteTruncateLimit={400}
-            project={{
-              name: 'asdasd',
-              siteUrl: 'asdasd',
-              id: '123',
-              organizationId: '123',
-              icon: null,
-              createdAt: '',
-            }}
-          />
+          {currentNewProject ? (
+            <ProjectLabel
+              iconClassName="size-8 mr-1"
+              labelClassName="text-base"
+              siteUrlClassName="text-xs"
+              titleTruncateLimit={400}
+              siteTruncateLimit={400}
+              project={currentNewProject}
+            />
+          ) : (
+            <div className="flex items-center justify-center">
+              No project found
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setCurrentStep(0);
+                }}
+              >
+                Create Again
+              </Button>
+            </div>
+          )}
         </Card>
 
         <Card className="divide-y">
@@ -54,14 +84,16 @@ export default function SetupCompleteStep() {
               <SiteButton
                 variant="primaryDim"
                 className="h-7 text-xs"
-                onClick={() => {}}
+                onClick={() => {
+                  setCurrentStep(2);
+                }}
                 icon={<Settings className="size-4" />}
               >
                 Modify Services
               </SiteButton>
             </div>
 
-            {a ? (
+            {activeProjectSerives.length === 0 ? (
               <div className="flex flex-col items-center justify-center rounded-md border border-dashed p-6 text-center">
                 <Settings className="size-8 text-muted-foreground/50" />
                 <p className="mt-2 font-medium">No services enabled</p>
@@ -71,7 +103,9 @@ export default function SetupCompleteStep() {
                 <SiteButton
                   variant="soft"
                   className="mt-4"
-                  onClick={() => {}}
+                  onClick={() => {
+                    setCurrentStep(2);
+                  }}
                   size="sm"
                   icon={<Settings className="size-4" />}
                 >
@@ -81,9 +115,9 @@ export default function SetupCompleteStep() {
             ) : (
               <div className="space-y-4">
                 <div className="flex flex-wrap gap-2">
-                  <ServiceTag type="web_analytics" />
-                  <ServiceTag type="chat_assistant" />
-                  <ServiceTag type="cookie_consent" />
+                  {activeProjectSerives.map((service) => (
+                    <ServiceTag key={service.id} type={service.id} />
+                  ))}
                 </div>
                 <p className="text-xs text-muted-foreground">
                   You can configure individual service settings in your project

@@ -1,12 +1,15 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { ChevronRight, Globe, Link2, Loader2 } from 'lucide-react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import type { CreateProjectInput } from '@/app/project/project.type';
 
 import { useCreateProjectMutaion } from '@/app/project/project.hooks';
+import { preFetchProjectServices } from '@/app/project/project.prefetch';
 import { createProjectSchema } from '@/app/project/project.schema';
 import { useProjectStore } from '@/app/project/project.store';
 import { projectQueryKeys } from '@/app/project/projects.keys';
@@ -25,6 +28,7 @@ import { Input } from '@/components/ui/input';
 import { handleApiErrorException } from '@/lib/utils';
 
 export default function CreateProjectStep() {
+  const [isProjectServiceLoading, setIsProjectServiceLoading] = useState(false);
   const setCurrentStep = useProjectStore((state) => state.setCurrentStep);
   const setCurrentNewProject = useProjectStore(
     (state) => state.setCurrentNewProject
@@ -44,17 +48,29 @@ export default function CreateProjectStep() {
 
   const handleCreateProject = (data: CreateProjectInput) => {
     createProject(data, {
-      onSuccess: (result) => {
+      onSuccess: async (result) => {
         toast.success('Project created successfully');
         form.reset();
-        setCurrentStep(1);
         setCurrentNewProject(result.data.data);
         queryClient.invalidateQueries({
           queryKey: projectQueryKeys.projectList(),
         });
+        setIsProjectServiceLoading(true);
+        await preFetchProjectServices(result.data.data.id);
+        setIsProjectServiceLoading(false);
+        setCurrentStep(1);
       },
       onError: (error) => {
         handleApiErrorException(error, true);
+        if (error instanceof AxiosError) {
+          const errorResponse = error.response?.data;
+          if (errorResponse?.code === 'project-name-already-exists') {
+            form.setError('name', {
+              message:
+                'Project name already exists in this organization, please choose another name',
+            });
+          }
+        }
       },
       onSettled: () => {
         queryClient.invalidateQueries({
@@ -97,11 +113,11 @@ export default function CreateProjectStep() {
                   <FormControl>
                     <Input placeholder="My Awesome Project" {...field} />
                   </FormControl>
+                  <FormMessage />
                   <FormDescription className="text-xs sm:text-sm">
                     This name will be used to identify your project in the
                     dashboard
                   </FormDescription>
-                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -118,6 +134,7 @@ export default function CreateProjectStep() {
                   <FormControl>
                     <Input placeholder="https://example.com" {...field} />
                   </FormControl>
+                  <FormMessage />
                   <FormDescription className="flex flex-col gap-1 text-xs sm:text-sm">
                     <span>
                       Enter the full URL of your website where you&apos;ll
@@ -127,7 +144,6 @@ export default function CreateProjectStep() {
                       • Must start with https:// (e.g., https://yourwebsite.com)
                     </span>
                   </FormDescription>
-                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -135,10 +151,10 @@ export default function CreateProjectStep() {
 
           <SiteButton
             type="submit"
-            disabled={isPending}
+            disabled={isPending || isProjectServiceLoading}
             className="mt-6 w-full"
             loadingText="Creating Project"
-            loading={isPending}
+            loading={isPending || isProjectServiceLoading}
             icon={<ChevronRight className="ml-2 size-4" />}
           >
             Create Project

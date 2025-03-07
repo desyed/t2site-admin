@@ -17,16 +17,18 @@ export default function ServiceToggle({
   Icon: LucideIcon;
 }) {
   return (
-    <div className="flex items-start justify-between p-4">
-      <div className="space-y-2">
+    <div className="flex items-start justify-between p-3">
+      <div className="space-y-3">
         <div>
-          <div className="flex items-center gap-2 text-lg font-medium">
-            <Icon className="size-5" />
+          <div className="flex items-center gap-2 text-base font-medium">
+            <Icon className="size-4" />
             {title}
           </div>
-          <div className="text-muted-foreground">{description}</div>
+          <div className="mt-1 text-sm text-muted-foreground">
+            {description}
+          </div>
         </div>
-        <ul className="space-y-1 text-sm text-muted-foreground">
+        <ul className="mt- space-y-1 text-xs text-muted-foreground">
           {features.map((feature) => (
             <li key={feature} className="flex items-center gap-1">
               <span className="size-1 rounded-full bg-primary/30" />

@@ -1,4 +1,12 @@
-import { CheckCircle, Code2, Server, Settings } from 'lucide-react';
+import {
+  CheckCircle,
+  Code2,
+  SearchCheck,
+  Server,
+  Settings,
+} from 'lucide-react';
+
+import { verifyProjetHandler } from './projen.handler';
 
 export const initialCreateProjectStep = [
   {
@@ -15,10 +23,9 @@ export const initialCreateProjectStep = [
     skip: true,
     continue: true,
     continueLabel: 'Verify Project',
+    continueIcon: SearchCheck,
     check: true,
-    coninueHandler: () => {
-      console.log('continue');
-    },
+    continueHandler: verifyProjetHandler,
   },
   {
     name: 'Services',
@@ -26,8 +33,8 @@ export const initialCreateProjectStep = [
     type: 'services',
     completed: false,
     back: true,
-    skip: true,
-    continue: false,
+    skip: false,
+    continue: true,
   },
   {
     name: 'Complete',

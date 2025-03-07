@@ -72,3 +72,37 @@ export async function changeCurrentProjectApi({
     }
   );
 }
+
+/**
+ * @GET /projects/:id/services
+ */
+export async function getProjectServicesApi({
+  projectId,
+  organizationId,
+}: {
+  projectId: string;
+  organizationId?: string;
+}) {
+  return api.get(`projects/${projectId}/services`, {
+    params: { organizationId },
+  });
+}
+
+/**
+ * @PUT /projects/:projectId/services/:serviceId
+ */
+export async function updateProjectServiceApi({
+  projectId,
+  serviceId,
+  payload,
+  organizationId,
+}: {
+  projectId: string;
+  serviceId: string;
+  organizationId?: string;
+  payload: { active: boolean };
+}) {
+  return api.put(`/projects/${projectId}/services/${serviceId}`, payload, {
+    params: { organizationId },
+  });
+}

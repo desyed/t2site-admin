@@ -57,12 +57,12 @@ export function ProjectCard({ project }: ProjectCardProps) {
               </h2>
             </Link>
             <time
-              className="shrink-0 text-xs text-muted-foreground"
+              className="shrink-0 text-xs font-medium text-muted-foreground"
               dateTime={project.createdAt}
             >
               <div className="flex items-center gap-1.5">
                 <Clock className="size-3" />
-                {dayJs(project.createdAt).fromNow()}
+                {dayJs(project.createdAt).format('DD MMM YYYY')}
               </div>
             </time>
           </div>
