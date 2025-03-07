@@ -1,11 +1,4 @@
-import {
-  Clock,
-  Ellipsis,
-  Globe2Icon,
-  Home,
-  SettingsIcon,
-  Wrench,
-} from 'lucide-react';
+import { Clock, Ellipsis, Globe2Icon, Home, SettingsIcon } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
 
 import type { Project } from '@/app/project/project.type';

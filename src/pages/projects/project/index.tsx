@@ -3,6 +3,7 @@ import { toast } from 'sonner';
 
 import { authStore } from '@/app/auth/auth.store';
 import { changeCurrentProjectApi } from '@/app/project/project.api';
+import { preFetchProjectServices } from '@/app/project/project.prefetch';
 import { handleApiErrorException } from '@/lib/utils';
 import { createPrivateLoader } from '@/middlewares/auth-middleware';
 
@@ -22,6 +23,7 @@ export const loader = createPrivateLoader(async ({ request, params }) => {
       projectId: params.projectId,
     });
     if (result?.data?.data && result?.data?.data?.id) {
+      await preFetchProjectServices(result?.data?.data?.id);
       authStore.setCurrentProject(result?.data?.data);
       return redirect(redirectTo ?? `/dashboard`);
     }
