@@ -68,8 +68,25 @@ export const routes = createBrowserRouter([
             ],
           },
           {
-            path: '/web-analytics',
-            lazy: () => import('@/pages/services/web-analytics'),
+            path: 'services',
+            children: [
+              {
+                path: '/services/web-analytics',
+                lazy: () => import('@/pages/services/web-analytics'),
+              },
+              {
+                path: '/services/chat-assistant',
+                lazy: () => import('@/pages/services/chat-assistant'),
+              },
+              {
+                path: '/services/cookie-consent',
+                lazy: () => import('@/pages/services/cookie-consent'),
+              },
+              {
+                path: '*',
+                element: <NotFoundPrivate />,
+              },
+            ],
           },
           {
             path: '*',

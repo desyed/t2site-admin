@@ -1,13 +1,11 @@
 import { createDashboardLoader } from '@/middlewares/auth-middleware';
 
-import WebAnalytics from './_components/web-analytics';
-
 export const loader = createDashboardLoader(() => {
   return {
-    title: 'Web analytics',
+    title: 'Cookie consent',
   };
 });
 
 export function Component() {
-  return <WebAnalytics />;
+  return <div> Cookie consent </div>;
 }

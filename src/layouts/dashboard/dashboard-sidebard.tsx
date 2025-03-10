@@ -45,19 +45,19 @@ export const navServices: {
 } = {
   web_analytics: {
     title: 'Web analytics',
-    url: '/web-analytics',
+    url: '/services/web-analytics',
     icon: ChartLine,
     id: 'web_analytics',
   },
   chat_assistant: {
     title: 'Chat Assistant',
-    url: '/chat-assistant',
+    url: '/services/chat-assistant',
     icon: MessageCircle,
     id: 'chat_assistant',
   },
   cookie_consent: {
     title: 'Cookie consent',
-    url: '/cookie-consent',
+    url: '/services/cookie-consent',
     icon: Cookie,
     id: 'cookie_consent',
   },
