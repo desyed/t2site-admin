@@ -1,6 +1,5 @@
 import {
   Star,
-  MoreHorizontal,
   Clock,
   MessageSquare,
   ChevronLeft,
@@ -16,14 +15,11 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-import { MessageActions } from './message-actions';
 import { MessageInputArea } from './message-input-area';
 
-// Update the mock data to include both admin and customer messages
 const messages = [
   {
     id: 'msg-1',
@@ -164,7 +160,6 @@ export function ChatArea({
   showBackButton = false,
 }: ChatAreaProps) {
   const [message, setMessage] = useState('');
-  const [showMessageToolbar, setShowMessageToolbar] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const handleSend = () => {
@@ -279,27 +274,20 @@ export function ChatArea({
                 </Avatar>
                 <div className="flex max-w-[65%] flex-col items-end">
                   <div className="rounded-lg bg-yellow-300 p-3 text-primary-foreground shadow-sm dark:bg-yellow-400 selection:dark:bg-yellow-600/40 selection:dark:text-background">
-                    <p className="leading-relaxed">{msg.content}</p>
+                    <p className="whitespace-pre-line break-all leading-relaxed ">
+                      {msg.content}
+                    </p>
                   </div>
                   <div className="mt-1 flex items-center gap-2">
                     <span className="text-xs text-muted-foreground/70">
                       {msg.time}
                     </span>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-6 px-2 text-xs opacity-80 hover:opacity-100"
-                      onClick={() => setShowMessageToolbar(!showMessageToolbar)}
-                    >
-                      <MessageSquare className="mr-1 size-3" />
-                      Edit
-                    </Button>
                   </div>
-                  {showMessageToolbar && msg.sender === 'admin' && (
+                  {/* {showMessageToolbar && msg.sender === 'admin' && (
                     <div className="mt-1">
                       <MessageActions />
                     </div>
-                  )}
+                  )} */}
                 </div>
               </div>
             ) : (
@@ -310,13 +298,14 @@ export function ChatArea({
                 </Avatar>
                 <div className="flex max-w-[65%] flex-col">
                   <div className="rounded-lg border bg-white p-3 shadow-sm dark:bg-card">
-                    <p className="leading-relaxed">{msg.content}</p>
+                    <p className="whitespace-pre-line break-all leading-relaxed ">
+                      {msg.content}
+                    </p>
                   </div>
                   <div className="mt-1 flex items-center gap-2">
                     <span className="text-xs text-muted-foreground/70">
                       {msg.time}
                     </span>
-                    <ReplyDropdown />
                   </div>
                 </div>
               </div>
