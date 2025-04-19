@@ -19,7 +19,7 @@ export default function App() {
       </AuthProvider>
       {import.meta.env.DEV && (
         <ReactQueryDevtools
-          buttonPosition="bottom-left"
+          buttonPosition="bottom-right"
           initialIsOpen={false}
         />
       )}

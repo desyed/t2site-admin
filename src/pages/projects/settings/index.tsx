@@ -1,6 +1,7 @@
 import { Copy, Globe, Settings } from 'lucide-react';
 import { toast } from 'sonner';
 
+import { useAuthStore } from '@/app/auth/auth.store';
 import { createProjectScriptTag } from '@/app/project/project.service';
 import SiteCodeBlock from '@/components/site-code-block';
 import { Button } from '@/components/ui/button';
@@ -30,6 +31,10 @@ export function Component() {
     navigator.clipboard.writeText(text);
     toast.success(message);
   };
+
+  const { getCurrentProject } = useAuthStore();
+
+  const currentProject = getCurrentProject();
 
   return (
     <div className="mx-auto space-y-8">
@@ -145,7 +150,7 @@ export function Component() {
               </CardHeader>
               <CardContent className="grid">
                 <SiteCodeBlock
-                  code={createProjectScriptTag('Default project')}
+                  code={createProjectScriptTag(currentProject?.id ?? '')}
                   language="html"
                 />
               </CardContent>

@@ -325,35 +325,3 @@ export function ChatArea({
     </div>
   );
 }
-// Enhanced Reply Dropdown Component
-function ReplyDropdown() {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="h-6 px-2 text-xs opacity-80 hover:opacity-100"
-        >
-          <MessageSquare className="mr-1 size-3" />
-          Reply
-          <ChevronDown className="ml-1 size-3" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" className="w-48">
-        <DropdownMenuItem>
-          <MessageSquare className="mr-2 size-4" />
-          Quick Reply
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Wand2 className="mr-2 size-4" />
-          AI-Suggested Reply
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>Reply in Thread</DropdownMenuItem>
-        <DropdownMenuItem>Reply to Customer</DropdownMenuItem>
-        <DropdownMenuItem>Forward Message</DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-}

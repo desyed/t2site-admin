@@ -74,23 +74,6 @@ export function MessageInputArea({
             >
               <Smile className="size-4" />
             </Button>
-            <div className="relative">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="size-8 text-muted-foreground hover:text-foreground"
-                onClick={() => setShowMessageFieldMenu(!showMessageFieldMenu)}
-              >
-                <MoreHorizontal className="size-4" />
-              </Button>
-              {showMessageFieldMenu && (
-                <div className="absolute bottom-full left-0 z-50 mb-2">
-                  <MessageFieldMenu
-                    onClose={() => setShowMessageFieldMenu(false)}
-                  />
-                </div>
-              )}
-            </div>
           </div>
           <div className="flex items-center gap-2">
             <Button

@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import {
   BookmarkIcon,
   FileText,
@@ -8,6 +7,8 @@ import {
   Bot,
   Workflow,
 } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
 
 export function MessageToolbar() {
   return (
