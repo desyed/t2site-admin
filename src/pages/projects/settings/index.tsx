@@ -99,14 +99,14 @@ export function Component() {
                   <div className="flex space-x-2">
                     <Input
                       readOnly
-                      value="phc_tcd1QR16c87pDuuORrvvrVpuEn7unHwuLYitmUU5oYy"
+                      value="t2site-akey_tcd1QR16c87pDuuORrvvrVpuEn7unHwuLYitmUU5oYy"
                     />
                     <Button
                       variant="outline"
                       size="icon"
                       onClick={() =>
                         copyToClipboard(
-                          'phc_tcd1QR16c87pDuuORrvvrVpuEn7unHwuLYitmUU5oYy',
+                          't2site-akey_tcd1QR16c87pDuuORrvvrVpuEn7unHwuLYitmUU5oYy',
                           'API key copied to clipboard!'
                         )
                       }
@@ -122,13 +122,13 @@ export function Component() {
                 <div className="space-y-2">
                   <Label>Project ID</Label>
                   <div className="flex space-x-2">
-                    <Input readOnly value="116765" />
+                    <Input readOnly value={currentProject?.id ?? ''} />
                     <Button
                       variant="outline"
                       size="icon"
                       onClick={() =>
                         copyToClipboard(
-                          '116765',
+                          currentProject?.id ?? '',
                           'Project ID copied to clipboard!'
                         )
                       }

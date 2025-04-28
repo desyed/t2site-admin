@@ -68,7 +68,7 @@ export function useInviteMembersQuery() {
 export function useInvitedMemberQuery(invitedMemberId: string) {
   const query = useQuery({
     queryKey: invitedMemberQueryKeys.invitedMemberDetails(invitedMemberId),
-    queryFn: ({ queryKey }) => fetchInvitedMember(queryKey[1]),
+    queryFn: ({ queryKey }) => fetchInvitedMember(queryKey[1] ?? ''),
     retry: 1,
     staleTime: 0,
   });

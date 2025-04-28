@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { createContext, type ReactNode, use } from 'react';
 import { toast } from 'sonner';
 
@@ -28,13 +29,18 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const user = useAuthStore((state) => state.user);
   const logoutHandle = useAuthStore((state) => state.logout);
 
+  const queryClient = useQueryClient();
+
   const isAuthenticated = !!user?.email;
   const isEmailVerified = !!user?.emailVerified;
 
   const logout = () => {
     toast.promise(logoutHandle, {
       loading: 'Signing out...',
-      success: 'You have logged out',
+      success: () => {
+        queryClient.clear();
+        return 'You have logged out';
+      },
       error: 'Sign out failed!',
       position: 'top-center',
       duration: 1000,

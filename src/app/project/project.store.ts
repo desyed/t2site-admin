@@ -20,7 +20,7 @@ export type ProjectStore = {
   createProjectSteps: TCreateProjectStep[];
   currentStep: number;
   setCurrentStep: (currentStep: number) => void;
-  getCurrentStep: () => TCreateProjectStep;
+  getCurrentStep: () => TCreateProjectStep | undefined;
   getCurrentNewProject: () => Project | null;
   resetProjectCreation: () => void;
 };

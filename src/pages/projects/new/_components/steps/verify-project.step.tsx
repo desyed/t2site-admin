@@ -1,11 +1,18 @@
 import { Code2 } from 'lucide-react';
 
 import { createProjectScriptTag } from '@/app/project/project.service';
+import { useProjectStore } from '@/app/project/project.store';
 import Alert from '@/components/Alert';
 import SiteCodeBlock from '@/components/site-code-block';
 import { Card } from '@/components/ui/card';
 
 export default function VerifyProjectStep() {
+  const getCurrentNewProject = useProjectStore(
+    (state) => state.getCurrentNewProject
+  );
+
+  const currentProject = getCurrentNewProject();
+
   return (
     <div className="space-y-6">
       <div className="space-y-2">
@@ -29,7 +36,7 @@ export default function VerifyProjectStep() {
           </div>
           <div className="relative">
             <SiteCodeBlock
-              code={createProjectScriptTag('asdasd')}
+              code={createProjectScriptTag(currentProject?.id as string)}
               language="html"
             />
           </div>
