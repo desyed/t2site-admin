@@ -412,9 +412,9 @@ export default function MembersActions({ member }: MembersActionsProps) {
           loadingText={'Making owner'}
           onConfirm={() => handleChangeRole(changeRoleInfo, true)}
           confirmText={
-            <>
+            <span className="flex items-center gap-2">
               <CrownIcon className="size-4" /> Make owner
-            </>
+            </span>
           }
           confirmInput={true}
           confirmInputValue={member.user.email}

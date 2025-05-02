@@ -1,8 +1,8 @@
 'use client';
 
-import type { ChangeEvent } from 'react';
+import type { ChangeEvent, ForwardedRef } from 'react';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, forwardRef } from 'react';
 
 import type { TextareaProps } from '@/components/ui/textarea';
 
@@ -13,13 +13,10 @@ interface EnhancedTextareaProps extends Omit<TextareaProps, 'onChange'> {
   maxHeight?: number; // Maximum height in pixels before scrolling
 }
 
-export function EnhancedTextarea({
-  value,
-  onChange,
-  maxHeight = 120, // Default max height
-  className,
-  ...props
-}: EnhancedTextareaProps) {
+export const EnhancedTextarea = forwardRef<
+  HTMLTextAreaElement,
+  EnhancedTextareaProps
+>(({ value, onChange, maxHeight = 120, className, ...props }, ref) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Adjust height on input value change
@@ -49,11 +46,20 @@ export function EnhancedTextarea({
 
   return (
     <Textarea
-      ref={textareaRef}
+      ref={(el) => {
+        textareaRef.current = el;
+        if (typeof ref === 'function') {
+          ref(el);
+        } else if (ref) {
+          ref.current = el;
+        }
+      }}
       value={value}
       onChange={handleChange}
       className={`transition-height resize-none ${className}`}
       {...props}
     />
   );
-}
+});
+
+EnhancedTextarea.displayName = 'EnhancedTextarea';

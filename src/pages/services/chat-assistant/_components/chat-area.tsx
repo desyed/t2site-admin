@@ -1,25 +1,12 @@
-import {
-  Star,
-  Clock,
-  MessageSquare,
-  ChevronLeft,
-  ChevronDown,
-  Wand2,
-} from 'lucide-react';
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { Star, Clock, ChevronLeft } from 'lucide-react';
+import { useEffect, useMemo, useRef } from 'react';
+import { Link, useParams } from 'react-router';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import { useMediaQuery } from '@/hooks/use-mobile';
 
-import { MessageInputArea } from './message-input-area';
-
+import { ChatToolbar } from './chat-toolbar';
 const messages = [
   {
     id: 'msg-1',
@@ -147,80 +134,44 @@ const conversationData = {
   },
 };
 
-interface ChatAreaProps {
-  conversationId: string | null;
-  onBackToList?: () => void;
-  showBackButton?: boolean;
-}
-
 // Update ChatArea component header
-export function ChatArea({
-  conversationId,
-  onBackToList,
-  showBackButton = false,
-}: ChatAreaProps) {
-  const [message, setMessage] = useState('');
+export function ChatArea() {
+  const { ticketId } = useParams();
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const handleSend = () => {
-    if (!message.trim()) return;
-    // Here you would typically send the message to your backend
-    setMessage('');
-  };
+  const isDesktop = useMediaQuery('(min-width: 768px)');
 
   // Memoize currentMessages to prevent unnecessary re-renders
-  const currentMessages = useMemo(
-    () =>
-      conversationId
-        ? conversationMessages[
-            conversationId as keyof typeof conversationMessages
-          ] || messages
-        : [],
-    [conversationId]
-  );
+  const currentMessages = useMemo(() => {
+    return ticketId
+      ? conversationMessages[ticketId as keyof typeof conversationMessages]
+      : [];
+  }, [ticketId]);
 
-  const conversation = useMemo(
-    () =>
-      conversationId
-        ? conversationData[conversationId as keyof typeof conversationData]
-        : null,
-    [conversationId]
-  );
+  const conversation = ticketId
+    ? conversationData[ticketId as keyof typeof conversationData]
+    : { title: 'Unknown', subtitle: '' };
 
-  // Scroll to bottom whenever messages change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'instant' });
   }, [currentMessages]);
 
-  if (!conversationId) {
-    return (
-      <div className="flex h-full items-center justify-center">
-        <div className="text-center">
-          <MessageSquare className="mx-auto size-12 text-muted-foreground" />
-          <h3 className="mt-4 text-lg font-medium">No conversation selected</h3>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Select a conversation from the sidebar to start chatting
-          </p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="flex h-full flex-col">
+    <div className="relative flex h-full flex-col">
       {/* Chat Header */}
       <div className="flex items-center justify-between border-b  px-3 py-2 pt-3 sm:px-4">
         {/* Left Side */}
         <div className="flex min-w-0 items-center gap-1.5">
-          {showBackButton && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onBackToList}
-              className="shrink-0"
-            >
-              <ChevronLeft className="size-4" />
-            </Button>
+          {!isDesktop && (
+            <Link to="/services/chat-assistant">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => {}}
+                className="shrink-0"
+              >
+                <ChevronLeft className="size-4" />
+              </Button>
+            </Link>
           )}
 
           <div className="flex items-center gap-2">
@@ -256,7 +207,6 @@ export function ChatArea({
         {currentMessages.map((msg) => (
           <div key={msg.id} className="mb-6">
             {msg.sender === 'system' ? (
-              // System message (centered)
               <div className="flex flex-col items-center">
                 <div className="max-w-[70%] p-3 text-center text-sm text-muted-foreground ">
                   <p>{msg.content}</p>
@@ -266,15 +216,14 @@ export function ChatArea({
                 </span>
               </div>
             ) : msg.sender === 'admin' ? (
-              // Admin message (right aligned)
               <div className="flex flex-row-reverse items-start gap-3">
                 <Avatar className="size-8 border shadow-sm">
                   <AvatarFallback>{msg.avatar}</AvatarFallback>
                   <AvatarImage src={undefined} />
                 </Avatar>
-                <div className="flex max-w-[65%] flex-col items-end">
+                <div className="flex max-w-[60%] flex-col items-end">
                   <div className="rounded-lg bg-yellow-300 p-3 text-primary-foreground shadow-sm dark:bg-yellow-400 selection:dark:bg-yellow-600/40 selection:dark:text-background">
-                    <p className="whitespace-pre-line break-all leading-relaxed ">
+                    <p className="whitespace-pre-line break-all text-sm leading-relaxed">
                       {msg.content}
                     </p>
                   </div>
@@ -283,11 +232,6 @@ export function ChatArea({
                       {msg.time}
                     </span>
                   </div>
-                  {/* {showMessageToolbar && msg.sender === 'admin' && (
-                    <div className="mt-1">
-                      <MessageActions />
-                    </div>
-                  )} */}
                 </div>
               </div>
             ) : (
@@ -296,9 +240,9 @@ export function ChatArea({
                 <Avatar className="size-8 border shadow-sm">
                   <AvatarFallback>{msg.avatar}</AvatarFallback>
                 </Avatar>
-                <div className="flex max-w-[65%] flex-col">
-                  <div className="rounded-lg border bg-white p-3 shadow-sm dark:bg-card">
-                    <p className="whitespace-pre-line break-all leading-relaxed ">
+                <div className="flex max-w-[60%] flex-col">
+                  <div className="rounded-lg border bg-muted p-3 shadow-sm">
+                    <p className="whitespace-pre-line break-all text-sm leading-relaxed">
                       {msg.content}
                     </p>
                   </div>
@@ -312,16 +256,9 @@ export function ChatArea({
             )}
           </div>
         ))}
-        {/* This empty div serves as a scroll target */}
         <div ref={messagesEndRef} />
       </div>
-
-      {/* Message Input Area - Now using the separate component */}
-      <MessageInputArea
-        message={message}
-        setMessage={setMessage}
-        onSend={handleSend}
-      />
+      <ChatToolbar />
     </div>
   );
 }

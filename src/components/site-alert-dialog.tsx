@@ -122,7 +122,10 @@ export default function SiteAlertDialog({
         <AlertDialogFooter>
           <AlertDialogCancel asChild>
             <Button variant="outline" onClick={onCancel}>
-              <BanIcon className="size-3 sm:size-4" /> {cancelText || 'Cancel'}
+              <span className="flex items-center gap-2">
+                <BanIcon className="size-3 sm:size-4" />{' '}
+                {cancelText || 'Cancel'}
+              </span>
             </Button>
           </AlertDialogCancel>
           <Button

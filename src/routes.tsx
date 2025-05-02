@@ -24,6 +24,7 @@ import SignupPage from '@/pages/signup';
 
 import PrivateLayout from './layouts/private-layout';
 import NotFoundProjectSettings from './pages/projects/settings/404';
+import SelectNoConversation from './pages/services/chat-assistant/_components/select-no-conversation';
 import NotFoundSettings from './pages/settings/404';
 export const routes = createBrowserRouter([
   {
@@ -77,6 +78,13 @@ export const routes = createBrowserRouter([
               {
                 path: '/services/chat-assistant',
                 lazy: () => import('@/pages/services/chat-assistant'),
+                children: [
+                  {
+                    path: ':ticketId',
+                    lazy: () =>
+                      import('@/pages/services/chat-assistant/conversation'),
+                  },
+                ],
               },
               {
                 path: '/services/cookie-consent',
