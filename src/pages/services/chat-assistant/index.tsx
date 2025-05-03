@@ -1,6 +1,8 @@
 import { useLayoutEffect } from 'react';
-import { Outlet, useParams } from 'react-router';
+import { Outlet, redirect, useParams } from 'react-router';
 
+import { authStore } from '@/app/auth/auth.store';
+import { preFetchProjectServices } from '@/app/project/project.prefetch';
 import {
   ResizableHandle,
   ResizablePanel,
@@ -11,7 +13,12 @@ import { createDashboardLoader } from '@/middlewares/auth-middleware';
 
 import { ConversationList } from './_components/conversation-list';
 
-export const loader = createDashboardLoader(() => {
+export const loader = createDashboardLoader(async () => {
+  const currentProject = authStore.getCurrentProject();
+  if (!currentProject) {
+    return redirect('/projects');
+  }
+  await preFetchProjectServices(currentProject.id);
   return {};
 });
 
@@ -33,17 +40,13 @@ export function Component() {
   return (
     <div className="h-[calc(100vh-52px)] w-full overflow-hidden bg-background">
       <ResizablePanelGroup direction="horizontal" className="h-full">
-        <ResizablePanel defaultSize={30} minSize={25} maxSize={60}>
+        <ResizablePanel defaultSize={30} minSize={10} maxSize={50}>
           <ConversationList />
         </ResizablePanel>
-        {ticketId && (
-          <>
-            <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={70} minSize={30} maxSize={80}>
-              <Outlet />
-            </ResizablePanel>
-          </>
-        )}
+        <ResizableHandle withHandle />
+        <ResizablePanel defaultSize={70} minSize={30} maxSize={80}>
+          <Outlet />
+        </ResizablePanel>
       </ResizablePanelGroup>
     </div>
   );

@@ -25,6 +25,7 @@ import SignupPage from '@/pages/signup';
 import PrivateLayout from './layouts/private-layout';
 import NotFoundProjectSettings from './pages/projects/settings/404';
 import SelectNoConversation from './pages/services/chat-assistant/_components/select-no-conversation';
+import SelectNotFoundConversation from './pages/services/chat-assistant/_components/select-not-found-conversation';
 import NotFoundSettings from './pages/settings/404';
 export const routes = createBrowserRouter([
   {
@@ -80,9 +81,17 @@ export const routes = createBrowserRouter([
                 lazy: () => import('@/pages/services/chat-assistant'),
                 children: [
                   {
-                    path: ':ticketId',
+                    index: true,
+                    element: <SelectNoConversation />,
+                  },
+                  {
+                    path: ':ticketId/*',
                     lazy: () =>
                       import('@/pages/services/chat-assistant/conversation'),
+                  },
+                  {
+                    path: 'not-found',
+                    element: <SelectNotFoundConversation />,
                   },
                 ],
               },

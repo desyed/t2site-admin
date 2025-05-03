@@ -1,8 +1,12 @@
-import { ChevronDown, Search } from 'lucide-react';
+import { ChevronDown, Inbox, Search } from 'lucide-react';
 import { useState } from 'react';
-import { Link, useParams } from 'react-router';
 
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import type { ConversationListItem } from '@/app/services/chat-assistant/chat-assistant.type';
+
+import { useAuthStore } from '@/app/auth/auth.store';
+import { useProjectServicesQuery } from '@/app/project/project.hooks';
+import { useConversationListQuery } from '@/app/services/chat-assistant/chat-assistant.hooks';
+import FetchErrorView from '@/components/fetch-error-view';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -10,42 +14,36 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { cn } from '@/lib/utils';
 
-// Mock data
-const conversations = [
-  {
-    id: 'demo-1',
-    ticketId: 'demo-1',
-    name: 'Messenger - [Demo]',
-    lastMessage: 'Install Messenger',
-    time: '18m',
-    unread: false,
-    avatar: 'M',
-  },
-  {
-    id: 'john-doe',
-    ticketId: 'john-doe',
-    name: 'John Doe',
-    lastMessage: 'I need help with my order',
-    time: '1h',
-    unread: true,
-    avatar: 'JD',
-  },
-  {
-    id: 'jane-smith',
-    ticketId: 'jane-smith',
-    name: 'Jane Smith',
-    lastMessage: 'When will my order arrive?',
-    time: '3h',
-    unread: false,
-    avatar: 'JS',
-  },
-];
+import ConversationItem from './conversation-item';
+import ConversationItemSkeleton from './conversation-item-skeleton';
+import NoConversationMessage from './no-conversation-message';
 
 export function ConversationList() {
-  const [filter, setFilter] = useState('1 Open');
-  const { ticketId = '' } = useParams();
+  const [filter, setFilter] = useState('All');
+  const { getCurrentProject } = useAuthStore();
+  const { id: projectId } = getCurrentProject() ?? {};
+
+  const {
+    data: projectServices,
+    isLoading: isProjectServicesLoading,
+    // isFetching: isProjectServicesFetching,
+    error: projectServicesError,
+    refetch: refetchProjectServices,
+  } = useProjectServicesQuery(projectId);
+
+  const {
+    data: conversations,
+    isLoading: isConversationsLoading,
+    // isFetching: isConversationsFetching,
+    error: conversationsError,
+    refetch: refetchConversations,
+  } = useConversationListQuery(
+    projectServices?.chat_assistant?.chatAssistantId ?? '',
+    !!projectServices?.chat_assistant?.chatAssistantId
+  );
+
+  const isLoading = isConversationsLoading || isProjectServicesLoading;
 
   return (
     <div className="flex h-full flex-col">
@@ -67,9 +65,6 @@ export function ConversationList() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
-            <DropdownMenuItem onClick={() => setFilter('1 Open')}>
-              1 Open
-            </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setFilter('All')}>
               All
             </DropdownMenuItem>
@@ -94,55 +89,46 @@ export function ConversationList() {
       </div>
 
       <div className="site-scrollbar flex-1 overflow-auto">
-        {conversations.map((conversation) => (
-          <Link
-            to={`/services/chat-assistant/${conversation.ticketId}`}
-            key={conversation.ticketId}
-          >
-            <button
-              className={cn(
-                'flex w-full items-center gap-3 border-b px-3 py-2 text-left transition-colors',
-                ticketId === conversation.ticketId
-                  ? 'bg-muted/50'
-                  : 'hover:bg-muted/20'
-              )}
-            >
-              <div className="relative shrink-0">
-                <Avatar className="size-7">
-                  <AvatarFallback className="text-sm">
-                    {conversation.avatar}
-                  </AvatarFallback>
-                </Avatar>
-                {conversation.unread && (
-                  <span className="absolute -right-0.5 -top-0.5 size-2.5 rounded-full bg-blue-500 ring-1 ring-background"></span>
-                )}
+        {isLoading ? (
+          <ConversationItemSkeleton count={8} />
+        ) : (
+          <>
+            {projectServicesError ? (
+              <div className="py-20">
+                <FetchErrorView
+                  title="conversations"
+                  errorActions={{
+                    primary: {
+                      label: 'Refresh',
+                      onClick: refetchProjectServices,
+                    },
+                  }}
+                />
               </div>
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center justify-between">
-                  <span
-                    className={cn(
-                      'text-sm font-medium truncate',
-                      conversation.unread && 'font-semibold'
-                    )}
-                  >
-                    {conversation.name}
-                  </span>
-                  <span className="ml-1 shrink-0 text-xs text-muted-foreground">
-                    {conversation.time}
-                  </span>
-                </div>
-                <p
-                  className={cn(
-                    'text-xs truncate text-muted-foreground',
-                    conversation.unread && 'text-foreground'
-                  )}
-                >
-                  {conversation.lastMessage}
-                </p>
+            ) : conversationsError || !conversations ? (
+              <div className="py-20">
+                <FetchErrorView
+                  title="conversations"
+                  errorActions={{
+                    primary: {
+                      label: 'Refresh',
+                      onClick: refetchConversations,
+                    },
+                  }}
+                />
               </div>
-            </button>
-          </Link>
-        ))}
+            ) : conversations.length > 0 ? (
+              conversations.map((conversation) => (
+                <ConversationItem
+                  key={conversation.id}
+                  conversation={conversation as ConversationListItem}
+                />
+              ))
+            ) : (
+              <NoConversationMessage />
+            )}
+          </>
+        )}
       </div>
     </div>
   );

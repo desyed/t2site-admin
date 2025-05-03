@@ -1,11 +1,11 @@
-import { Star, Clock, ChevronLeft } from 'lucide-react';
 import { useEffect, useMemo, useRef } from 'react';
-import { Link, useParams } from 'react-router';
+import { useParams } from 'react-router';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { useMediaQuery } from '@/hooks/use-mobile';
+import type { ConversationDetail } from '@/app/services/chat-assistant/chat-assistant.type';
 
+import { useConversationDetailQuery } from '@/app/services/chat-assistant/chat-assistant.hooks';
+
+import ChatHeader from './chat-header';
 import { ChatToolbar } from './chat-toolbar';
 const messages = [
   {
@@ -118,27 +118,11 @@ const conversationMessages = {
   ],
 };
 
-// Add conversation data
-const conversationData = {
-  'demo-1': {
-    title: 'Messenger',
-    subtitle: '[Demo]',
-  },
-  'john-doe': {
-    title: 'John Doe',
-    subtitle: 'Customer Support',
-  },
-  'jane-smith': {
-    title: 'Jane Smith',
-    subtitle: 'Order #67890',
-  },
-};
-
 // Update ChatArea component header
 export function ChatArea() {
   const { ticketId } = useParams();
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const isDesktop = useMediaQuery('(min-width: 768px)');
+  const { data: conversation } = useConversationDetailQuery(ticketId as string);
 
   // Memoize currentMessages to prevent unnecessary re-renders
   const currentMessages = useMemo(() => {
@@ -147,9 +131,9 @@ export function ChatArea() {
       : [];
   }, [ticketId]);
 
-  const conversation = ticketId
-    ? conversationData[ticketId as keyof typeof conversationData]
-    : { title: 'Unknown', subtitle: '' };
+  // const conversation = ticketId
+  //   ? conversationData[ticketId as keyof typeof conversationData]
+  //   : { title: 'Unknown', subtitle: '' };
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'instant' });
@@ -158,53 +142,11 @@ export function ChatArea() {
   return (
     <div className="relative flex h-full flex-col">
       {/* Chat Header */}
-      <div className="flex items-center justify-between border-b  px-3 py-2 pt-3 sm:px-4">
-        {/* Left Side */}
-        <div className="flex min-w-0 items-center gap-1.5">
-          {!isDesktop && (
-            <Link to="/services/chat-assistant">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => {}}
-                className="shrink-0"
-              >
-                <ChevronLeft className="size-4" />
-              </Button>
-            </Link>
-          )}
-
-          <div className="flex items-center gap-2">
-            <Avatar className="size-8 shadow-sm">
-              <AvatarFallback>{conversation?.title}</AvatarFallback>
-              <AvatarImage src={undefined} />
-            </Avatar>
-            <div className="flex flex-col">
-              <h2 className="truncate text-base font-medium ">
-                {conversation?.title || 'Messenger'}
-              </h2>
-              {conversation?.subtitle && (
-                <p className="truncate text-xs ">{conversation.subtitle}</p>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Right Side */}
-        <div className="flex items-center gap-1 sm:gap-2">
-          <Button variant="ghost" size="icon" className="hidden sm:flex">
-            <Star className="size-4" />
-          </Button>
-
-          <Button variant="ghost" size="icon" className="hidden sm:flex">
-            <Clock className="size-4" />
-          </Button>
-        </div>
-      </div>
+      <ChatHeader conversation={conversation as ConversationDetail} />
 
       {/* Messages Area */}
       <div className="site-scrollbar flex-1 overflow-y-auto bg-neutral-100 p-4 dark:bg-background">
-        {currentMessages.map((msg) => (
+        {/* {currentMessages.map((msg) => (
           <div key={msg.id} className="mb-6">
             {msg.sender === 'system' ? (
               <div className="flex flex-col items-center">
@@ -255,7 +197,7 @@ export function ChatArea() {
               </div>
             )}
           </div>
-        ))}
+        ))} */}
         <div ref={messagesEndRef} />
       </div>
       <ChatToolbar />

@@ -12,6 +12,7 @@ export type TService = {
   id: TServiceType;
   name: string;
   description: string;
+  chatAssistantId: string | null | undefined;
   active: boolean;
   features: string[];
 };

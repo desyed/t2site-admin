@@ -1,8 +1,10 @@
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
 import utc from 'dayjs/plugin/utc.js';
+import weekday from 'dayjs/plugin/weekday';
 
 dayjs.extend(utc);
+dayjs.extend(weekday);
 dayjs.extend(relativeTime);
 
 /**
@@ -56,3 +58,47 @@ export const tableTimeRelativeFormat = (
 };
 
 export const dayJs = dayjs;
+
+export function formatSmartTimestamp(dateStr: string): string {
+  const now = dayjs();
+  const then = dayjs(dateStr);
+  const diffDays = now.diff(then, 'day', true);
+
+  if (diffDays < 1) {
+    return then.format('h:mm A');
+  }
+
+  if (diffDays < 7) {
+    return then.format('dddd h:mm A');
+  }
+
+  if (diffDays < 30) {
+    return then.format('dddd h:mm A');
+  }
+
+  return then.format('MMM D, YYYY h:mm A');
+}
+
+export function formatMessageeRelativeTime(dateStr: string): string {
+  const now = dayjs();
+  const then = dayjs(dateStr);
+  const diffSeconds = now.diff(then, 'second');
+
+  if (diffSeconds < 60) {
+    return '';
+  }
+
+  if (diffSeconds < 86400) {
+    return then.fromNow();
+  }
+
+  if (now.diff(then, 'day') === 1) {
+    return 'yesterday';
+  }
+
+  if (now.diff(then, 'day') < 7) {
+    return then.fromNow();
+  }
+
+  return then.format('LLL');
+}

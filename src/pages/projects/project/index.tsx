@@ -4,7 +4,6 @@ import { toast } from 'sonner';
 import { authStore } from '@/app/auth/auth.store';
 import { changeCurrentProjectApi } from '@/app/project/project.api';
 import { preFetchProjectServices } from '@/app/project/project.prefetch';
-import { projectStore } from '@/app/project/project.store';
 import { handleApiErrorException } from '@/lib/utils';
 import { createPrivateLoader } from '@/middlewares/auth-middleware';
 
