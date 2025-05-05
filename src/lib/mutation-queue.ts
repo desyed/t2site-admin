@@ -23,8 +23,7 @@ export function queueMutation<T>(fn: () => Promise<T>): Promise<T> {
   return new Promise<T>((resolve, reject) => {
     const task: Task = async () => {
       try {
-        const result = await fn();
-        resolve(result);
+        resolve(await fn());
       } catch (e) {
         reject(e);
       }

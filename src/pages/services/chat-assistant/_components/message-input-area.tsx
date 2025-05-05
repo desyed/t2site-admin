@@ -61,7 +61,7 @@ export const MessageInputArea = memo(
         const inputEvent = new Event('input', { bubbles: true });
         field.dispatchEvent(inputEvent);
 
-        setTextMessage(field.value);
+        setTextMessage(field.value.trim());
       } else {
         handleSendEmojiMessage(emoji);
       }

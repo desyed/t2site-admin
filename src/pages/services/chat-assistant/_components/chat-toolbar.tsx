@@ -8,7 +8,6 @@ import {
   playSendMessageSound,
   playSendStickerSound,
 } from '@/audio-contenxt/system';
-import { queueMutation } from '@/lib/mutation-queue';
 
 import { MessageInputArea } from './message-input-area';
 
@@ -23,28 +22,26 @@ export const ChatToolbar = memo<ChatToolbarProps>(({ conversation }) => {
 
   const handleSendTextMessage = (text: string) => {
     if (!ticketId) return;
+    if (text === '') return;
     playSendMessageSound();
-
-    queueMutation(() =>
-      sendAsync({
-        ticketId,
-        conversation,
-        content: { type: 'text', text },
-      })
-    );
+    sendAsync({
+      ticketId,
+      conversation,
+      content: { type: 'text', text },
+    });
   };
 
   const handleSendEmojiMessage = (emoji: string) => {
     if (!ticketId) return;
+    if (emoji === '') return;
+
     playSendStickerSound();
 
-    queueMutation(() =>
-      sendAsync({
-        ticketId,
-        conversation,
-        content: { type: 'emojiOrSticker', emoji },
-      })
-    );
+    sendAsync({
+      ticketId,
+      conversation,
+      content: { type: 'emojiOrSticker', emoji },
+    });
   };
 
   return (
