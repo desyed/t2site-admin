@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import type { TService, TServiceType } from '@/app/project/project.type';
+import type { TService } from '@/app/project/project.type';
 import type { RoleName } from '@/constants/roles';
 
 import { handleApi } from '@/lib/utils';
@@ -14,11 +14,12 @@ export type TOrganization = {
   name: string;
   slug: string;
   logo: string | null;
+  memberId: string;
 };
 
 export type TAuthUser = {
   authType: string;
-  id: number;
+  id: string;
   avatar: null | string;
   email: string;
   currentOrganizationId: string | null;

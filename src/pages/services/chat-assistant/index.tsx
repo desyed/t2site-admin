@@ -40,11 +40,11 @@ export function Component() {
   return (
     <div className="h-[calc(100vh-52px)] w-full overflow-hidden bg-background">
       <ResizablePanelGroup direction="horizontal" className="h-full">
-        <ResizablePanel defaultSize={30} minSize={10} maxSize={50}>
+        <ResizablePanel defaultSize={25} minSize={10} maxSize={50}>
           <ConversationList />
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={70} minSize={30} maxSize={80}>
+        <ResizablePanel defaultSize={75} minSize={30} maxSize={80}>
           <Outlet />
         </ResizablePanel>
       </ResizablePanelGroup>

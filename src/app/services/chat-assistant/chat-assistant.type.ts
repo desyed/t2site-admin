@@ -5,7 +5,14 @@ export interface AssistantMember {
     id: string;
     name: string;
     avatar: string;
+    email: string;
   };
+}
+
+export interface ApiMessagesParams {
+  nextCursor?: string;
+  prevCursor?: string;
+  limit?: number;
 }
 
 export interface Traffic {
@@ -33,20 +40,25 @@ export type Content =
     }
   | {
       type: 'emojiOrSticker';
-      sticker: string;
-      emoji: string;
+      sticker?: string;
+      emoji?: string;
     };
 
 export interface Message {
   id: string;
   conversationId: string;
   content: Content;
-  sender: string;
+  sender: 'assistant' | 'traffic';
   assistantMemberId: string;
   trafficId: string;
   createdAt: string;
   traffic: Traffic;
   assistantMember: AssistantMember;
+  optimistic?: {
+    pending?: boolean;
+    failed?: boolean;
+    error?: string | null;
+  };
 }
 
 export interface LatestMessage {
@@ -77,4 +89,27 @@ export interface ConversationDetail {
   createdAt: string;
   updatedAt: string;
   latestMessage: Message;
+}
+
+export interface Pagination {
+  nextCursor: string;
+  prevCursor: string;
+  limit: number;
+  maxLimit: number;
+  hasMore: boolean;
+}
+
+export interface ApiMessagesResponse {
+  data: Message[];
+  pagination: Pagination;
+}
+
+export interface SendMessagePayload {
+  ticketId: string;
+  content: Content;
+}
+
+export interface SendMessageResponse {
+  conversation: Omit<ConversationDetail, 'latestMessage'>;
+  newMessage: Message;
 }

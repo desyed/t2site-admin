@@ -1,6 +1,9 @@
 import { redirect } from 'react-router';
 
-import { preFetchConversationDetail } from '@/app/services/chat-assistant/chat-assistant.prefetch';
+import {
+  preFetchConversationDetail,
+  preFetchConversationMessagesInfiniteQuery,
+} from '@/app/services/chat-assistant/chat-assistant.prefetch';
 import { createDashboardLoader } from '@/middlewares/auth-middleware';
 
 import { ChatArea } from '../_components/chat-area';
@@ -13,6 +16,7 @@ export const loader = createDashboardLoader(async ({ params }) => {
   }
 
   await preFetchConversationDetail(ticketId as string);
+  await preFetchConversationMessagesInfiniteQuery(ticketId as string);
 
   return {};
 });

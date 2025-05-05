@@ -10,7 +10,12 @@ export const conversationKeys = {
 
 export const messageKeys = {
   all: ['messages'] as const,
-  list: (ticketId: string) => [...messageKeys.all, ticketId, 'list'] as const,
   cursor: (ticketId: string, cursor: string) =>
     [...messageKeys.all, ticketId, 'cursor', cursor] as const,
 };
+
+export const chatAreaQueryKey = (ticketId: string) => [
+  'messages',
+  'page',
+  ticketId,
+];

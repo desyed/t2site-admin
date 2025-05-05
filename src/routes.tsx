@@ -73,6 +73,10 @@ export const routes = createBrowserRouter([
             path: 'services',
             children: [
               {
+                index: true,
+                element: <Navigate to="/settings/project/services" />,
+              },
+              {
                 path: '/services/web-analytics',
                 lazy: () => import('@/pages/services/web-analytics'),
               },

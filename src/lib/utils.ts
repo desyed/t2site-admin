@@ -216,3 +216,45 @@ export function logDev(...message: any[]) {
     console.log(...message);
   }
 }
+
+export function scrollToBottom(
+  container: HTMLDivElement,
+  getScrollToBottomPosition: () => number,
+  behavior: ScrollBehavior = 'smooth'
+) {
+  function doScroll() {
+    if (!container) return;
+    const target = getScrollToBottomPosition();
+    if (Math.abs(container.scrollTop - target) > 2) {
+      container.scrollTo({ top: target, behavior });
+      requestAnimationFrame(doScroll);
+    }
+  }
+  doScroll();
+}
+
+export function generateUUID() {
+  const crypto = window.crypto;
+  const array = new Uint8Array(16);
+  crypto.getRandomValues(array);
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  array[6] = (array[6] & 0x0f) | 0x40;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  array[8] = (array[8] & 0x3f) | 0x80;
+
+  // Convert to UUID string format
+  return [...array]
+    .map(
+      (b, i) =>
+        (i === 4 || i === 6 || i === 8 || i === 10 ? '-' : '') +
+        b.toString(16).padStart(2, '0')
+    )
+    .join('');
+}
+
+export function generateMessageId() {
+  return `t2s-msg_${generateUUID()}`;
+}

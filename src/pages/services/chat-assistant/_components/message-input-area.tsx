@@ -63,7 +63,6 @@ export const MessageInputArea = memo(
 
         setTextMessage(field.value);
       } else {
-        setShowEmojiPicker(false);
         handleSendEmojiMessage(emoji);
       }
     };
@@ -97,11 +96,11 @@ export const MessageInputArea = memo(
           />
         </div>
 
-        <div className="bg-background px-2 py-1 sm:px-3 sm:py-2">
+        <div className="bg-accent px-2 pb-1 dark:bg-background sm:px-3 sm:pb-2">
           <div className="relative overflow-hidden rounded-lg border shadow-sm focus-within:border-yellow-500/60 focus-within:dark:border-primary/20">
             {/* Reply Dropdown */}
 
-            <div className="bg-muted">
+            <div className="bg-background dark:bg-muted/50">
               <EnhancedTextarea
                 value={textMessage}
                 ref={messageField}
@@ -113,7 +112,7 @@ export const MessageInputArea = memo(
               />
             </div>
 
-            <div className="flex items-center justify-between  bg-muted p-2">
+            <div className="flex items-center justify-between bg-background p-2 dark:bg-muted/50">
               <div className="flex items-center gap-2">
                 <Button
                   variant="ghost"

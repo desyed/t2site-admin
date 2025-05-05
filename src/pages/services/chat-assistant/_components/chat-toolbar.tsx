@@ -1,19 +1,50 @@
 import { memo } from 'react';
+import { useParams } from 'react-router';
 
+import type { ConversationDetail } from '@/app/services/chat-assistant/chat-assistant.type';
+
+import { useOptimisticSendMessageMutation } from '@/app/services/chat-assistant/chat-assistant.hooks';
 import {
   playSendMessageSound,
   playSendStickerSound,
 } from '@/audio-contenxt/system';
+import { queueMutation } from '@/lib/mutation-queue';
 
 import { MessageInputArea } from './message-input-area';
 
-export const ChatToolbar = memo(() => {
-  const handleSendTextMessage = (_textMessage: string) => {
+type ChatToolbarProps = {
+  conversation: ConversationDetail;
+};
+
+export const ChatToolbar = memo<ChatToolbarProps>(({ conversation }) => {
+  const { ticketId } = useParams();
+
+  const { sendAsync } = useOptimisticSendMessageMutation();
+
+  const handleSendTextMessage = (text: string) => {
+    if (!ticketId) return;
     playSendMessageSound();
+
+    queueMutation(() =>
+      sendAsync({
+        ticketId,
+        conversation,
+        content: { type: 'text', text },
+      })
+    );
   };
 
-  const handleSendEmojiMessage = (_emoji: string) => {
+  const handleSendEmojiMessage = (emoji: string) => {
+    if (!ticketId) return;
     playSendStickerSound();
+
+    queueMutation(() =>
+      sendAsync({
+        ticketId,
+        conversation,
+        content: { type: 'emojiOrSticker', emoji },
+      })
+    );
   };
 
   return (

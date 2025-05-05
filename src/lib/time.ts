@@ -102,3 +102,13 @@ export function formatMessageeRelativeTime(dateStr: string): string {
 
   return then.format('LLL');
 }
+
+export const timeGap = (
+  currentMessageTime: string,
+  previousMessageTime: string
+) => {
+  const currentDate = new Date(currentMessageTime);
+  const previousDate = new Date(previousMessageTime);
+  const timeGap = currentDate.getTime() - previousDate.getTime();
+  return timeGap;
+};

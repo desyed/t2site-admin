@@ -1,5 +1,6 @@
-import { ChevronDown, Inbox, Search } from 'lucide-react';
-import { useState } from 'react';
+import { ChevronDown } from 'lucide-react';
+import { useState, useEffect, memo } from 'react';
+import { useNavigate, useParams } from 'react-router';
 
 import type { ConversationListItem } from '@/app/services/chat-assistant/chat-assistant.type';
 
@@ -14,15 +15,20 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useMediaQuery } from '@/hooks/use-mobile';
 
-import ConversationItem from './conversation-item';
+import { ConversationItem } from './conversation-item';
 import ConversationItemSkeleton from './conversation-item-skeleton';
 import NoConversationMessage from './no-conversation-message';
 
-export function ConversationList() {
+export const ConversationList = memo(() => {
+  const { ticketId } = useParams();
   const [filter, setFilter] = useState('All');
   const { getCurrentProject } = useAuthStore();
   const { id: projectId } = getCurrentProject() ?? {};
+  const isDesktop = useMediaQuery('(min-width: 768px)');
+
+  const navigate = useNavigate();
 
   const {
     data: projectServices,
@@ -44,6 +50,29 @@ export function ConversationList() {
   );
 
   const isLoading = isConversationsLoading || isProjectServicesLoading;
+
+  useEffect(() => {
+    if (
+      !conversationsError &&
+      conversations &&
+      !isLoading &&
+      !ticketId &&
+      isDesktop
+    ) {
+      const firstConversation = conversations[0];
+      if (firstConversation) {
+        navigate(`/services/chat-assistant/${firstConversation.ticketId}`);
+      }
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    conversations,
+    isLoading,
+    conversationsError,
+    refetchConversations,
+    isDesktop,
+  ]);
 
   return (
     <div className="flex h-full flex-col">
@@ -132,4 +161,6 @@ export function ConversationList() {
       </div>
     </div>
   );
-}
+});
+
+ConversationList.displayName = 'ConversationList';
