@@ -33,6 +33,13 @@ export const UserAvatar = memo(
         <AvatarFallback>{name}</AvatarFallback>
       </Avatar>
     );
+  },
+  (prevProps, nextProps) => {
+    return (
+      prevProps.userId === nextProps.userId ||
+      prevProps.name === nextProps.name ||
+      prevProps.avatar === nextProps.avatar
+    );
   }
 );
 
