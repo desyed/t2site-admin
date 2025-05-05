@@ -56,6 +56,11 @@ export function useProjectServicesQuery(projectId: string | undefined | null) {
     queryKey: projectServiceQueryKeys.projectServiceList(projectId ?? ''),
     queryFn: () => fetchProjectServices(projectId ?? ''),
     enabled: !!projectId,
+    refetchInterval: false,
+    refetchIntervalInBackground: false,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
   });
   return query;
 }

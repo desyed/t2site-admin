@@ -26,7 +26,7 @@ export const UserAvatar = memo(
     const currentUser = useAuthStore((state) => state.user);
     return (
       <Avatar
-        className="size-8 border shadow-sm transition-opacity duration-200"
+        className="size-7 border shadow-sm transition-opacity duration-200"
         title={currentUser?.id === userId ? 'You' : name}
       >
         <AvatarImage src={avatar} alt={name} />
@@ -194,7 +194,7 @@ export const AssistantMemberBubble = memo(
             title={formatSmartTimestamp(message.createdAt)}
           >
             <div
-              className={cn({
+              className={cn('-translate-y-1', {
                 '-translate-y-1.5': message.content.type === 'emojiOrSticker',
               })}
             >
