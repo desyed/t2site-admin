@@ -44,9 +44,11 @@ export function Component() {
           <ConversationList />
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={75} minSize={30} maxSize={80}>
-          <Outlet />
-        </ResizablePanel>
+        {isDesktop && (
+          <ResizablePanel defaultSize={75} minSize={30} maxSize={80}>
+            <Outlet />
+          </ResizablePanel>
+        )}
       </ResizablePanelGroup>
     </div>
   );

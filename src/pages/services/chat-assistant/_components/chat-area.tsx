@@ -1,7 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { ArrowDown } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
 import { useParams } from 'react-router';
 
 import type {
@@ -30,7 +29,7 @@ export function ChatArea() {
   const [hasMoreMessages, setHasMoreMessages] = useState(true);
 
   const [isUserFacingBottom, setIsUserFacingBottom] = useState(false);
-
+  const [isUserFacingTop, setIsUserFacingTop] = useState(false);
   const {
     data: conversation,
     error: conversationError,
@@ -82,13 +81,14 @@ export function ChatArea() {
     }
   }, [data?.pages]);
 
-  const { ref: topRef, inView: topInView } = useInView({
-    root: scrollContainerRef.current,
-    threshold: 0,
-    rootMargin: '0px',
-  });
-
   const latestPage = data?.pages[data?.pages.length - 1];
+
+  const isNearTop = useCallback(() => {
+    if (!scrollContainerRef.current) return false;
+    const { scrollTop } = scrollContainerRef.current;
+    const threshold = 20;
+    return scrollTop < threshold;
+  }, []);
 
   const isFarBottom = useCallback(() => {
     if (!scrollContainerRef.current) return false;
@@ -115,16 +115,6 @@ export function ChatArea() {
     }
   }, [latestPage, isLoading, isNearBottom]);
 
-  useEffect(() => {
-    if (topInView && hasMoreMessages && !isFetchingPreviousPage) {
-      fetchPreviousPage();
-      if (scrollContainerRef.current) {
-        scrollContainerRef.current.scrollTop = 10;
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [topInView, hasMoreMessages, isFetchingPreviousPage]);
-
   const handleScrollToBottom = useCallback(() => {
     if (bottomRef.current) {
       bottomRef.current.scrollIntoView({
@@ -139,12 +129,23 @@ export function ChatArea() {
     if (!scrollContainer) return;
     const scrollHandler = () => {
       setIsUserFacingBottom(isFarBottom());
+      setIsUserFacingTop(isNearTop());
     };
     scrollContainer.addEventListener('scroll', scrollHandler);
     return () => {
       scrollContainer.removeEventListener('scroll', scrollHandler);
     };
-  }, [isFarBottom]);
+  }, [isFarBottom, isNearTop]);
+
+  useEffect(() => {
+    if (isUserFacingTop && hasMoreMessages && !isFetchingPreviousPage) {
+      fetchPreviousPage();
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollTop = 24;
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isUserFacingTop, hasMoreMessages, isFetchingPreviousPage]);
 
   if (!conversation) {
     return <div>No conversation</div>;
@@ -157,6 +158,7 @@ export function ChatArea() {
       ) : (
         <ChatHeader conversation={conversation as ConversationDetail} />
       )}
+
       {isLoading ? (
         <div className="site-scrollbar flex-1 overflow-y-auto bg-neutral-100 p-4 dark:bg-background">
           <MessageSkeletonList />
@@ -175,13 +177,14 @@ export function ChatArea() {
           className="site-scrollbar flex flex-1 flex-col gap-1 overflow-y-auto bg-neutral-100 py-5 pl-4 pr-1 dark:bg-background"
           ref={scrollContainerRef}
         >
-          <div ref={topRef} />
           {isFetchingPreviousPage && <MessageSkeletonList />}
-          <MessagesList
-            messages={messages}
-            handleScrollToBottom={handleScrollToBottom}
-          />
-          <div ref={bottomRef} />
+          <div className="flex flex-1 flex-col gap-1 ">
+            <MessagesList
+              messages={messages}
+              handleScrollToBottom={handleScrollToBottom}
+            />
+            <div ref={bottomRef} />
+          </div>
         </div>
       ) : (
         <NoMessages ticketId={ticketId as string} />

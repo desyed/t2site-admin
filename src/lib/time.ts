@@ -1,4 +1,6 @@
 import dayjs from 'dayjs';
+import isToday from 'dayjs/plugin/isToday';
+import isYesterday from 'dayjs/plugin/isYesterday';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
 import utc from 'dayjs/plugin/utc.js';
 import weekday from 'dayjs/plugin/weekday';
@@ -6,6 +8,8 @@ import weekday from 'dayjs/plugin/weekday';
 dayjs.extend(utc);
 dayjs.extend(weekday);
 dayjs.extend(relativeTime);
+dayjs.extend(isToday);
+dayjs.extend(isYesterday);
 
 /**
  * Formats a date string using dayjs with a specified format.
@@ -62,21 +66,26 @@ export const dayJs = dayjs;
 export function formatSmartTimestamp(dateStr: string): string {
   const now = dayjs();
   const then = dayjs(dateStr);
-  const diffDays = now.diff(then, 'day', true);
 
-  if (diffDays < 1) {
-    return then.format('h:mm A');
+  if (then.isToday()) {
+    return then.format('h:mm A'); // e.g. "10:30 AM"
   }
+
+  if (then.isYesterday()) {
+    return `Yesterday at ${then.format('h:mm A')}`; // e.g. "Yesterday at 10:30 AM"
+  }
+
+  const diffDays = now.diff(then, 'day');
 
   if (diffDays < 7) {
-    return then.format('dddd h:mm A');
+    return then.format('ddd [at] h:mm A'); // e.g. "Mon at 10:30 AM"
   }
 
-  if (diffDays < 30) {
-    return then.format('dddd h:mm A');
+  if (now.year() === then.year()) {
+    return then.format('MMM D [at] h:mm A'); // e.g. "May 14 at 10:30 AM"
   }
 
-  return then.format('MMM D, YYYY h:mm A');
+  return then.format('MMM D, YYYY [at] h:mm A'); // e.g. "May 14, 2023 at 10:30 AM"
 }
 
 export function formatMessageeRelativeTime(dateStr: string): string {
@@ -100,7 +109,7 @@ export function formatMessageeRelativeTime(dateStr: string): string {
     return then.fromNow();
   }
 
-  return then.format('LLL');
+  return then.format('MMM D, YYYY h:mm A');
 }
 
 export const timeGap = (

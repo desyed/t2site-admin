@@ -1,6 +1,14 @@
 import { MessageSquare } from 'lucide-react';
 
+import { useMediaQuery } from '@/hooks/use-mobile';
+
 export default function SelectNoConversation() {
+  const isDesktop = useMediaQuery('(min-width: 768px)');
+
+  if (!isDesktop) {
+    return null;
+  }
+
   return (
     <div className="flex h-full items-center justify-center">
       <div className="text-center">

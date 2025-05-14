@@ -212,7 +212,7 @@ export const AssistantMemberBubble = memo(
                   userId={message.assistantMember.user.id ?? ''}
                 />
               ) : (
-                <div className="size-8 rounded-full " />
+                <div className="size-7 rounded-full " />
               )}
             </div>
             <div className="flex w-[100rem] max-w-[42%] flex-col items-end">
@@ -250,7 +250,7 @@ export const AssistantMemberBubble = memo(
             </span>
           ) : (
             isLastMessage && (
-              <span className="mr-12 text-xs text-muted-foreground">
+              <span className="mr-10 mt-px text-xs text-muted-foreground">
                 {message.optimistic?.pending
                   ? 'Sending'
                   : `Sent ${formatMessageeRelativeTime(message.createdAt)}`}

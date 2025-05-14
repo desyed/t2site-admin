@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from 'react';
-import { Link, useNavigate, useNavigation, useParams } from 'react-router';
+import { Link, useNavigation, useParams } from 'react-router';
 
 import type { ConversationListItem } from '@/app/services/chat-assistant/chat-assistant.type';
 
