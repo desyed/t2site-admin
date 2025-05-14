@@ -36,8 +36,8 @@ export const UserAvatar = memo(
   },
   (prevProps, nextProps) => {
     return (
-      prevProps.userId === nextProps.userId ||
-      prevProps.name === nextProps.name ||
+      prevProps.userId === nextProps.userId &&
+      prevProps.name === nextProps.name &&
       prevProps.avatar === nextProps.avatar
     );
   }

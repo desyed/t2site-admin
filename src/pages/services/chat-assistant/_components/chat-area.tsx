@@ -27,6 +27,7 @@ export function ChatArea() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [hasMoreMessages, setHasMoreMessages] = useState(true);
+  const [toogleFirstScroll, setToogleFirstScroll] = useState(false);
 
   const [isUserFacingBottom, setIsUserFacingBottom] = useState(false);
   const [isUserFacingTop, setIsUserFacingTop] = useState(false);
@@ -124,6 +125,10 @@ export function ChatArea() {
     }
   }, [bottomRef]);
 
+  const handleFirstScrollToBottom = useCallback(() => {
+    handleScrollToBottom();
+  }, [handleScrollToBottom]);
+
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current;
     if (!scrollContainer) return;
@@ -137,15 +142,15 @@ export function ChatArea() {
     };
   }, [isFarBottom, isNearTop]);
 
-  useEffect(() => {
-    if (isUserFacingTop && hasMoreMessages && !isFetchingPreviousPage) {
-      fetchPreviousPage();
-      if (scrollContainerRef.current) {
-        scrollContainerRef.current.scrollTop = 24;
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isUserFacingTop, hasMoreMessages, isFetchingPreviousPage]);
+  // useEffect(() => {
+  //   if (isUserFacingTop && hasMoreMessages && !isFetchingPreviousPage) {
+  //     fetchPreviousPage();
+  //     if (scrollContainerRef.current) {
+  //       scrollContainerRef.current.scrollTop = 24;
+  //     }
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [isUserFacingTop, hasMoreMessages, isFetchingPreviousPage]);
 
   if (!conversation) {
     return <div>No conversation</div>;
@@ -181,7 +186,7 @@ export function ChatArea() {
           <div className="flex flex-1 flex-col gap-1 ">
             <MessagesList
               messages={messages}
-              handleScrollToBottom={handleScrollToBottom}
+              handleScrollToBottom={handleFirstScrollToBottom}
             />
             <div ref={bottomRef} />
           </div>

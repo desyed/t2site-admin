@@ -130,8 +130,6 @@ export function useOptimisticSendMessageMutation() {
 
       queryClient.setQueryData(messagesPageKey, newLatestMessages);
       queryClient.setQueryData(conversationDetailKey, newConversationDetail);
-      // queryClient.setQueryData(conversationListKey, [...newConversationList]);
-
       return {
         newMessage,
         oldMessagesResponse,
@@ -202,14 +200,6 @@ export function useOptimisticSendMessageMutation() {
           }
         }
       );
-
-      // if (error) {
-      //   queryClient.setQueryData(
-      //     context.keys.conversationDetailKey,
-      //     context.oldConversationDetail
-      //   );
-      // }
-
       queryClient.setQueryData(
         context.keys.messagesPageKey,
         finalMessagesResponse
