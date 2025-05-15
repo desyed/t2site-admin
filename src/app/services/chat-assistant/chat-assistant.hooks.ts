@@ -72,6 +72,10 @@ export function useOptimisticSendMessageMutation() {
         queryKey: conversationDetailKey,
       });
 
+      await queryClient.cancelQueries({
+        queryKey: conversationListKey,
+      });
+
       const oldMessagesResponse = queryClient.getQueryData<{
         pageParams: string[];
         pages: ApiMessagesResponse[];
@@ -81,7 +85,7 @@ export function useOptimisticSendMessageMutation() {
         queryClient.getQueryData<ConversationDetail>(conversationDetailKey);
 
       const oldConversationList =
-        queryClient.getQueryData<ConversationDetail[]>(conversationListKey);
+        queryClient.getQueryData<ConversationListItem[]>(conversationListKey);
 
       const timeStamp = new Date().toISOString();
 
@@ -125,16 +129,59 @@ export function useOptimisticSendMessageMutation() {
           draft.latestMessage = newMessage;
           draft.unread = false;
           draft.updatedAt = timeStamp;
+          draft.optimistic = {
+            pending: true,
+            failed: false,
+            error: null,
+          };
+        }
+      });
+
+      let foundConversationIndex = 0;
+      const newConversationList = produce(oldConversationList, (draft) => {
+        if (!draft) return;
+        foundConversationIndex = draft.findIndex(
+          (c) => c.ticketId === payload.ticketId
+        );
+        if (foundConversationIndex === -1) return;
+
+        if (foundConversationIndex > 0) {
+          const [conversation] = draft.splice(foundConversationIndex, 1);
+          if (conversation) {
+            conversation.latestMessage = { ...newMessage };
+            conversation.updatedAt = timeStamp;
+            conversation.unread = false;
+            conversation.optimistic = {
+              pending: true,
+              failed: false,
+              error: null,
+            };
+            draft.unshift(conversation);
+          }
+        } else {
+          draft[0] = {
+            ...payload.conversation,
+            latestMessage: newMessage,
+            updatedAt: timeStamp,
+            unread: false,
+            optimistic: {
+              pending: true,
+              failed: false,
+              error: null,
+            },
+          };
         }
       });
 
       queryClient.setQueryData(messagesPageKey, newLatestMessages);
       queryClient.setQueryData(conversationDetailKey, newConversationDetail);
+      queryClient.setQueryData(conversationListKey, newConversationList);
+
       return {
         newMessage,
         oldMessagesResponse,
         oldConversationDetail,
-        oldConversationList,
+        newConversationList,
         keys: {
           messagesPageKey,
           conversationDetailKey,
@@ -160,7 +207,7 @@ export function useOptimisticSendMessageMutation() {
           conversationListKey: [string, ...string[]];
         };
         oldConversationDetail: ConversationDetail;
-        oldConversationList: ConversationListItem[];
+        newConversationList: ConversationListItem[];
       }
     ) => {
       const finalMessagesResponse = produce(
@@ -172,6 +219,7 @@ export function useOptimisticSendMessageMutation() {
             }
           } else {
             const { message } = handleApiErrorException(error);
+
             draft.pages[draft.pages?.length - 1]?.data.push({
               ...context.newMessage,
               optimistic: {
@@ -188,9 +236,16 @@ export function useOptimisticSendMessageMutation() {
         context.oldConversationDetail,
         (draft) => {
           if (error) {
+            const { message } = handleApiErrorException(error);
+
             draft.latestMessage = context.oldConversationDetail.latestMessage;
             draft.unread = context.oldConversationDetail.unread;
             draft.updatedAt = context.oldConversationDetail.updatedAt;
+            draft.optimistic = {
+              pending: false,
+              failed: true,
+              error: message,
+            };
           } else {
             if (data) {
               draft.latestMessage = data.newMessage;
@@ -200,6 +255,33 @@ export function useOptimisticSendMessageMutation() {
           }
         }
       );
+
+      const finalConversationList = produce(
+        context.newConversationList,
+        (draft) => {
+          if (error) {
+            const { message } = handleApiErrorException(error);
+            const finalConversation = draft[0];
+            if (finalConversation) {
+              finalConversation.optimistic = {
+                pending: false,
+                failed: true,
+                error: message,
+              };
+            }
+          } else {
+            const finalConversation = draft[0];
+            if (finalConversation) {
+              finalConversation.optimistic = {
+                pending: false,
+                failed: false,
+                error: null,
+              };
+            }
+          }
+        }
+      );
+
       queryClient.setQueryData(
         context.keys.messagesPageKey,
         finalMessagesResponse
@@ -207,6 +289,10 @@ export function useOptimisticSendMessageMutation() {
       queryClient.setQueryData(
         context.keys.conversationDetailKey,
         finalConversationDetail
+      );
+      queryClient.setQueryData(
+        context.keys.conversationListKey,
+        finalConversationList
       );
     },
   });

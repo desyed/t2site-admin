@@ -26,7 +26,7 @@ export const UserAvatar = memo(
     const currentUser = useAuthStore((state) => state.user);
     return (
       <Avatar
-        className="size-7 border shadow-sm transition-opacity duration-200"
+        className="size-6 border shadow-sm transition-opacity duration-200"
         title={currentUser?.id === userId ? 'You' : name}
       >
         <AvatarImage src={avatar} alt={name} />
@@ -207,30 +207,31 @@ export const AssistantMemberBubble = memo(
             >
               {message.assistantMemberId !== nextMessage?.assistantMemberId ? (
                 <UserAvatar
+                  key={message.assistantMember.user.id}
                   name={message.assistantMember?.user?.name}
                   avatar={message.assistantMember?.user?.avatar}
                   userId={message.assistantMember.user.id ?? ''}
                 />
               ) : (
-                <div className="size-7 rounded-full " />
+                <div className="size-6 rounded-full " />
               )}
             </div>
-            <div className="flex w-[100rem] max-w-[42%] flex-col items-end">
+            <div className="flex w-full max-w-2xl flex-col items-end pl-14">
               {message.content.type === 'text' && (
                 <div
                   className={cn(
-                    'bg-yellow-300 px-3 py-1 text-primary-foreground shadow-sm dark:bg-yellow-300 selection:dark:bg-yellow-600/40 selection:dark:text-background rounded-xl',
+                    'bg-yellow-300 px-3 py-1 text-primary-foreground shadow-sm dark:bg-yellow-300 selection:dark:bg-yellow-600/40 selection:dark:text-background rounded-xl ',
                     {
-                      'rounded-l-3xl rounded-tr-lg rounded-br-3xl':
+                      'rounded-l-2xl rounded-tr-lg rounded-br-2xl':
                         isLastTextMessage(),
-                      'rounded-l-3xl rounded-br-lg rounded-tr-3xl':
+                      'rounded-l-2xl rounded-br-lg rounded-tr-2xl':
                         isStartTextMessage(),
-                      'rounded-l-3xl rounded-r-lg': isMidTextMessage(),
+                      'rounded-l-2xl rounded-r-lg': isMidTextMessage(),
                       'rounded-2xl': isTextMessonAlone(),
                     }
                   )}
                 >
-                  <p className="whitespace-pre-line break-all text-sm leading-relaxed">
+                  <p className="whitespace-pre-line break-all text-sm leading-relaxed sm:text-[1rem]">
                     {message.content.text}
                   </p>
                 </div>

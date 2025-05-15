@@ -13,9 +13,21 @@ import {
   getConversationDetailApi,
   getConversationMessagesApi,
 } from './chat-assistant.api';
+
 export async function fetchConversations(chatAssistantId: string) {
   const result = (await getConversationApi(chatAssistantId)) as any;
   return result?.data?.data as ConversationListItem[];
+}
+
+export async function fetchConversationsMap(
+  chatAssistantId: string
+): Promise<Map<string, ConversationListItem>> {
+  const result = (await getConversationApi(chatAssistantId)) as any;
+  const items = result?.data?.data as ConversationListItem[];
+
+  return new Map<string, ConversationListItem>(
+    items.map((item) => [item.id, item])
+  );
 }
 
 export async function fetchConversationDetail(ticketId: string) {

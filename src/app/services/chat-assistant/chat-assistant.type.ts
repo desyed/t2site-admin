@@ -44,6 +44,12 @@ export type Content =
       emoji?: string;
     };
 
+export type Optimistic = {
+  pending?: boolean;
+  failed?: boolean;
+  error?: string | null;
+};
+
 export interface Message {
   id: string;
   conversationId: string;
@@ -54,11 +60,7 @@ export interface Message {
   createdAt: string;
   traffic: Traffic;
   assistantMember: AssistantMember;
-  optimistic?: {
-    pending?: boolean;
-    failed?: boolean;
-    error?: string | null;
-  };
+  optimistic?: Optimistic;
 }
 
 export interface LatestMessage {
@@ -78,6 +80,7 @@ export interface ConversationListItem {
   createdAt: string;
   updatedAt: string;
   latestMessage: LatestMessage;
+  optimistic?: Optimistic;
 }
 
 export interface ConversationDetail {
@@ -89,6 +92,7 @@ export interface ConversationDetail {
   createdAt: string;
   updatedAt: string;
   latestMessage: Message;
+  optimistic?: Optimistic;
 }
 
 export interface Pagination {

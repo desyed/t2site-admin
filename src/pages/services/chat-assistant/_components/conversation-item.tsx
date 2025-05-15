@@ -7,10 +7,11 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { formatSmartTimestamp } from '@/lib/time';
 import { cn, delay } from '@/lib/utils';
 
-export const ConversationItem = memo(
+export const ConversationItemView = memo(
   ({ conversation }: { conversation: ConversationListItem }) => {
     const { ticketId: currentTicketId } = useParams();
     const navigation = useNavigation();
+    const [sending, setSending] = useState(false);
 
     const [conversationItem, setConversationItem] =
       useState<ConversationListItem>(conversation);
@@ -32,6 +33,32 @@ export const ConversationItem = memo(
         }
       })();
     }, [clicked, conversationItem, currentTicketId, navigation.state]);
+
+    useEffect(() => {
+      let timeoutId: NodeJS.Timeout | undefined;
+      if (conversationItem.optimistic?.pending) {
+        timeoutId = setTimeout(() => {
+          setSending(true);
+        }, 300);
+      } else {
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+          timeoutId = undefined;
+        }
+        setSending(false);
+      }
+
+      return () => {
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+          timeoutId = undefined;
+        }
+      };
+    }, [conversationItem.optimistic?.pending]);
+
+    useEffect(() => {
+      setConversationItem(conversation);
+    }, [conversation]);
 
     return (
       <Link
@@ -77,7 +104,9 @@ export const ConversationItem = memo(
               </span>
             </div>
 
-            {conversation.latestMessage ? (
+            {conversationItem.optimistic?.error ? (
+              <p className="truncate text-xs text-red-500">Sending failed</p>
+            ) : conversation.latestMessage ? (
               <>
                 {' '}
                 {conversationItem.latestMessage?.content.type === 'text' && (
@@ -88,7 +117,9 @@ export const ConversationItem = memo(
                     )}
                   >
                     {conversationItem.latestMessage.sender === 'assistant'
-                      ? 'Sent: '
+                      ? sending
+                        ? 'Sending: '
+                        : 'Sent: '
                       : ''}
                     {conversationItem.latestMessage.content.text}
                   </p>
@@ -120,4 +151,4 @@ export const ConversationItem = memo(
   }
 );
 
-ConversationItem.displayName = 'ConversationItem';
+ConversationItemView.displayName = 'ConversationItemView';

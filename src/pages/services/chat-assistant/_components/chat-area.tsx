@@ -27,10 +27,11 @@ export function ChatArea() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [hasMoreMessages, setHasMoreMessages] = useState(true);
-  const [toogleFirstScroll, setToogleFirstScroll] = useState(false);
+  const [doneFirstScrollToBottom, setDoneFirstScrollToBottom] = useState(false);
 
   const [isUserFacingBottom, setIsUserFacingBottom] = useState(false);
   const [isUserFacingTop, setIsUserFacingTop] = useState(false);
+
   const {
     data: conversation,
     error: conversationError,
@@ -42,8 +43,8 @@ export function ChatArea() {
     isLoading: isMessagesLoading,
     error: messagesError,
     refetch: refetchMessages,
-    fetchPreviousPage,
     isFetchingPreviousPage,
+    fetchPreviousPage,
   } = useInfiniteQuery<ApiMessagesResponse>({
     queryKey: chatAreaQueryKey(ticketId ?? ''),
     queryFn: ({ pageParam = undefined }) => {
@@ -103,7 +104,7 @@ export function ChatArea() {
     if (!scrollContainerRef.current) return false;
     const { scrollTop, scrollHeight, clientHeight } =
       scrollContainerRef.current;
-    const threshold = 500;
+    const threshold = 200;
     return scrollHeight - scrollTop - clientHeight < threshold;
   }, []);
 
@@ -127,6 +128,12 @@ export function ChatArea() {
 
   const handleFirstScrollToBottom = useCallback(() => {
     handleScrollToBottom();
+    if (!doneFirstScrollToBottom) {
+      setTimeout(() => {
+        setDoneFirstScrollToBottom(true);
+      }, 300);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleScrollToBottom]);
 
   useEffect(() => {
@@ -142,15 +149,20 @@ export function ChatArea() {
     };
   }, [isFarBottom, isNearTop]);
 
-  // useEffect(() => {
-  //   if (isUserFacingTop && hasMoreMessages && !isFetchingPreviousPage) {
-  //     fetchPreviousPage();
-  //     if (scrollContainerRef.current) {
-  //       scrollContainerRef.current.scrollTop = 24;
-  //     }
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [isUserFacingTop, hasMoreMessages, isFetchingPreviousPage]);
+  useEffect(() => {
+    if (
+      isUserFacingTop &&
+      hasMoreMessages &&
+      !isFetchingPreviousPage &&
+      doneFirstScrollToBottom
+    ) {
+      fetchPreviousPage();
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollTop = 24;
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isUserFacingTop, hasMoreMessages, isFetchingPreviousPage]);
 
   if (!conversation) {
     return <div>No conversation</div>;
@@ -187,6 +199,7 @@ export function ChatArea() {
             <MessagesList
               messages={messages}
               handleScrollToBottom={handleFirstScrollToBottom}
+              setDoneFirstScrollToBottom={setDoneFirstScrollToBottom}
             />
             <div ref={bottomRef} />
           </div>

@@ -9,6 +9,8 @@ import { memo, useState, useRef, useEffect } from 'react';
 
 import { useTheme } from '@/components/theme-provider';
 import { Button } from '@/components/ui/button';
+import { useMediaQuery } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 
 import { EnhancedTextarea } from './enhanced-textarea';
 import { SendOptions } from './send-options';
@@ -27,6 +29,8 @@ export const MessageInputArea = memo(
       useState(false);
     const messageField = useRef<HTMLTextAreaElement | null>(null);
 
+    const isDesktop = useMediaQuery('(min-width: 768px)');
+
     const { theme } = useTheme();
 
     useEffect(() => {
@@ -36,6 +40,9 @@ export const MessageInputArea = memo(
     const handleSendTextMessage = () => {
       onSendTextMessage(textMessage);
       setTextMessage('');
+      if (!isDesktop) {
+        setShowEmojiPicker(false);
+      }
     };
 
     const handleEmojiInsert = (emoji: string) => {
@@ -63,6 +70,9 @@ export const MessageInputArea = memo(
 
         setTextMessage(field.value.trim());
       } else {
+        if (!isDesktop) {
+          setShowEmojiPicker(false);
+        }
         handleSendEmojiMessage(emoji);
       }
     };
@@ -80,27 +90,26 @@ export const MessageInputArea = memo(
 
     return (
       <div className="relative">
-        <div
-          style={{
-            display: showEmojiPicker ? 'block' : 'none',
-          }}
-          className="absolute bottom-[140px] left-3"
-        >
-          <Picker
-            onEmojiSelect={(emoji: any) => {
-              handleEmojiInsert(emoji.native);
-            }}
-            data={data}
-            theme={theme}
-            previewPosition="none"
-          />
-        </div>
-
         <div className="bg-accent px-2 pb-1 dark:bg-background sm:px-3 sm:pb-2">
-          <div className="relative overflow-hidden rounded-lg border shadow-sm focus-within:border-yellow-500/60 focus-within:dark:border-primary/20">
+          <div className="relative rounded-lg border shadow-sm focus-within:border-yellow-500/60 focus-within:dark:border-primary/20">
             {/* Reply Dropdown */}
 
-            <div className="bg-background dark:bg-muted/50">
+            <div className="relative bg-background dark:bg-muted/50">
+              <div
+                style={{
+                  display: showEmojiPicker ? 'block' : 'none',
+                }}
+                className="absolute -top-2 left-0 -translate-y-full"
+              >
+                <Picker
+                  onEmojiSelect={(emoji: any) => {
+                    handleEmojiInsert(emoji.native);
+                  }}
+                  data={data}
+                  theme={theme}
+                  previewPosition="none"
+                />
+              </div>
               <EnhancedTextarea
                 value={textMessage}
                 ref={messageField}
@@ -117,7 +126,10 @@ export const MessageInputArea = memo(
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="size-8 text-muted-foreground hover:text-foreground"
+                  className={cn(
+                    'size-8 text-muted-foreground hover:text-foreground',
+                    showEmojiPicker && '!text-primary !bg-accent'
+                  )}
                   onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                 >
                   <Smile className="size-4" />

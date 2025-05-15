@@ -9,6 +9,7 @@ import { TrafficBubble } from './traffic-bubble';
 export type MessagesListProps = {
   messages: Message[];
   handleScrollToBottom: () => void;
+  setDoneFirstScrollToBottom: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const MessageView = memo(
@@ -52,12 +53,17 @@ export const MessageView = memo(
 MessageView.displayName = 'MessageView';
 
 export const MessagesList = memo(
-  ({ messages, handleScrollToBottom }: MessagesListProps) => {
+  ({
+    messages,
+    handleScrollToBottom,
+    setDoneFirstScrollToBottom,
+  }: MessagesListProps) => {
     const { ticketId } = useParams();
 
     useEffect(() => {
       if (ticketId) {
         handleScrollToBottom();
+        setDoneFirstScrollToBottom(false);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ticketId]);

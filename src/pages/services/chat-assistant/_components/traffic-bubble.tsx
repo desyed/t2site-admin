@@ -159,22 +159,22 @@ export const TrafficBubble = memo(
           className="flex items-start gap-3"
           title={formatSmartTimestamp(message.createdAt)}
         >
-          <div className="flex w-[100rem] max-w-[40%] flex-col items-start">
+          <div className="flex w-full max-w-2xl flex-col items-start pr-14">
             {message.content.type === 'text' && (
               <div
                 className={cn(
                   'rounded-xl border bg-card px-3 py-1 shadow-sm dark:bg-muted',
                   {
-                    'rounded-r-3xl rounded-bl-lg rounded-tl-3xl':
+                    'rounded-r-2xl rounded-bl-lg rounded-tl-2xl':
                       isStartTextMessage(),
-                    'rounded-r-3xl rounded-tl-lg rounded-bl-3xl':
+                    'rounded-r-2xl rounded-tl-lg rounded-bl-2xl':
                       isEndTextMessage(),
-                    'rounded-l-lg rounded-r-3xl': isMidTextMessage(),
-                    'rounded-3xl': isAloneTextMessage(),
+                    'rounded-l-lg rounded-r-2xl': isMidTextMessage(),
+                    'rounded-2xl': isAloneTextMessage(),
                   }
                 )}
               >
-                <p className="whitespace-pre-line break-all text-sm leading-relaxed">
+                <p className="whitespace-pre-line break-all text-sm leading-relaxed sm:text-[1rem]">
                   {message.content.text}
                 </p>
               </div>
