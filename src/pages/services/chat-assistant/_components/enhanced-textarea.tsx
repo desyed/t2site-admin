@@ -1,6 +1,6 @@
 'use client';
 
-import type { ChangeEvent, ForwardedRef } from 'react';
+import type { ChangeEvent } from 'react';
 
 import { useRef, useEffect, forwardRef } from 'react';
 
