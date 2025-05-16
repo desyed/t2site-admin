@@ -48,6 +48,7 @@
     "emoji-mart": "^5.6.0",
     "immer": "^10.1.1",
     "lucide-react": "^0.453.0",
+    "pusher-js": "^8.4.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",

@@ -57,6 +57,7 @@ export interface Message {
   sender: 'assistant' | 'traffic';
   assistantMemberId: string;
   trafficId: string;
+  cursor: string;
   createdAt: string;
   traffic: Traffic;
   assistantMember: AssistantMember;
@@ -68,6 +69,7 @@ export interface LatestMessage {
   content: Content;
   sender: 'assistant' | 'traffic';
   assistantMemberId: string;
+  cursor: string;
   createdAt: string;
 }
 
@@ -78,6 +80,7 @@ export interface ConversationListItem {
   ticketId: string;
   unread: boolean;
   createdAt: string;
+  cursor: string;
   updatedAt: string;
   latestMessage: LatestMessage;
   optimistic?: Optimistic;
@@ -90,6 +93,7 @@ export interface ConversationDetail {
   ticketId: string;
   unread: boolean;
   createdAt: string;
+  cursor: string;
   updatedAt: string;
   latestMessage: Message;
   optimistic?: Optimistic;

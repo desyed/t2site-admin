@@ -105,14 +105,14 @@ export const ConversationItemView = memo(
             </div>
 
             {conversationItem.optimistic?.error ? (
-              <p className="truncate text-xs text-red-500">Sending failed</p>
+              <p className=" truncate text-xs text-red-500">Sending failed</p>
             ) : conversation.latestMessage ? (
               <>
                 {' '}
                 {conversationItem.latestMessage?.content.type === 'text' && (
                   <p
                     className={cn(
-                      'text-xs truncate text-muted-foreground',
+                      'text-xs truncate text-muted-foreground max-w-md',
                       conversationItem.unread && 'text-foreground font-semibold'
                     )}
                   >

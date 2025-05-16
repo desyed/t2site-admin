@@ -24,13 +24,7 @@ export const ConversationList = memo(() => {
   const { getCurrentProject } = useAuthStore();
   const { id: projectId } = getCurrentProject() ?? {};
 
-  const {
-    data: projectServices,
-    isLoading: isProjectServicesLoading,
-    // isFetching: isProjectServicesFetching,
-    error: projectServicesError,
-    refetch: refetchProjectServices,
-  } = useProjectServicesQuery(projectId);
+  const { data: projectServices } = useProjectServicesQuery(projectId);
 
   const {
     data: conversations,
@@ -43,7 +37,7 @@ export const ConversationList = memo(() => {
     !!projectServices?.chat_assistant?.chatAssistantId
   );
 
-  const isLoading = isConversationsLoading || isProjectServicesLoading;
+  const isLoading = isConversationsLoading;
 
   return (
     <div className="flex h-full flex-col">
@@ -93,19 +87,7 @@ export const ConversationList = memo(() => {
             <ConversationItemSkeleton count={8} />
           ) : (
             <>
-              {projectServicesError ? (
-                <div className="py-20">
-                  <FetchErrorView
-                    title="conversations"
-                    errorActions={{
-                      primary: {
-                        label: 'Refresh',
-                        onClick: refetchProjectServices,
-                      },
-                    }}
-                  />
-                </div>
-              ) : conversationsError || !conversations ? (
+              {conversationsError || !conversations ? (
                 <div className="py-20">
                   <FetchErrorView
                     title="conversations"
