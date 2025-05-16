@@ -5,12 +5,11 @@ import { authStore } from '@/app/auth/auth.store';
 import { useProjectServicesQuery } from '@/app/project/project.hooks';
 import { preFetchProjectServices } from '@/app/project/project.prefetch';
 import FetchErrorView from '@/components/fetch-error-view';
-import { useMediaQuery } from '@/hooks/use-mobile';
 import { createDashboardLoader } from '@/middlewares/auth-middleware';
 
 import ChatConnectionView from './_components/chat-connection-view.tsx';
-import ChatAssistant from './chat-assistant.tsx';
 import ChatRealtimeProvider from './chat-realtime.tsx';
+import ChatAssistantPage from './ChatAssistantPage.tsx';
 
 export const loader = createDashboardLoader(async () => {
   const currentProject = authStore.getCurrentProject();
@@ -24,9 +23,6 @@ export const loader = createDashboardLoader(async () => {
 });
 
 export function Component() {
-  const { ticketId } = useParams();
-  const isDesktop = useMediaQuery('(min-width: 768px)');
-
   const { projectId } = useLoaderData() as { projectId: string };
 
   const {
@@ -40,14 +36,6 @@ export function Component() {
   useLayoutEffect(() => {
     document.documentElement.style.overflowY = 'auto';
   }, []);
-
-  if (ticketId && !isDesktop) {
-    return (
-      <div className="h-[calc(100vh-52px)] w-full overflow-hidden bg-background">
-        <Outlet />
-      </div>
-    );
-  }
 
   if (
     projectServicesError ||
@@ -76,7 +64,7 @@ export function Component() {
     <ChatRealtimeProvider
       chatAssistantId={projectServices?.chat_assistant?.chatAssistantId}
     >
-      <ChatAssistant />
+      <ChatAssistantPage />
     </ChatRealtimeProvider>
   );
 }

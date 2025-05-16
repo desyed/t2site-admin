@@ -14,6 +14,7 @@ import { chatAreaQueryKey } from '@/app/services/chat-assistant/chat-assistant.k
 import FetchErrorView from '@/components/fetch-error-view';
 import { Button } from '@/components/ui/button';
 
+import { useChatRealtime } from '../chat-realtime';
 import { ChatHeader } from './chat-header';
 import { ChatHeaderSkeleton } from './chat-header-skeleton';
 import { ChatToolbar } from './chat-toolbar';
@@ -31,6 +32,8 @@ export function ChatArea() {
 
   const [isUserFacingBottom, setIsUserFacingBottom] = useState(false);
   const [isUserFacingTop, setIsUserFacingTop] = useState(false);
+
+  const { channelInfo } = useChatRealtime();
 
   const {
     data: conversation,
@@ -109,9 +112,9 @@ export function ChatArea() {
   }, []);
 
   useEffect(() => {
-    if (latestPage && !isLoading && bottomRef.current) {
+    if (latestPage && !isLoading && bottomRef.current && isNearBottom()) {
       bottomRef.current.scrollIntoView({
-        behavior: isNearBottom() ? 'smooth' : 'instant',
+        behavior: 'smooth',
         block: 'start',
       });
     }
@@ -163,6 +166,13 @@ export function ChatArea() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isUserFacingTop, hasMoreMessages, isFetchingPreviousPage]);
+
+  useEffect(() => {
+    const chatAssistantChannel = channelInfo?.chatAssistantChannel;
+    if (!chatAssistantChannel) return;
+
+    //
+  }, [channelInfo?.chatAssistantChannel]);
 
   if (!conversation) {
     return <div>No conversation</div>;
@@ -223,7 +233,17 @@ export function ChatArea() {
         <MessageInputAreaSkeleton />
       ) : (
         !conversationError &&
-        !messagesError && <ChatToolbar conversation={conversation} />
+        !messagesError && (
+          <ChatToolbar
+            conversation={conversation}
+            onSendEmojiMessage={() => {
+              handleScrollToBottom();
+            }}
+            onSendTextMessage={() => {
+              handleScrollToBottom();
+            }}
+          />
+        )
       )}
     </div>
   );

@@ -48,7 +48,7 @@ export async function fetchConversationMessagesPage(
   params?: ApiMessagesParams
 ) {
   if (import.meta.env.DEV) {
-    await delay(1500);
+    await delay(400);
   }
   const result = await getConversationMessagesApi(ticketId, params);
   return result?.data as ApiMessagesResponse;

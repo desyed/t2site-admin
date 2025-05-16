@@ -29,7 +29,7 @@ export const MessageInputArea = memo(
       useState(false);
     const messageField = useRef<HTMLTextAreaElement | null>(null);
 
-    const isDesktop = useMediaQuery('(min-width: 768px)');
+    const isDesktop = useMediaQuery('(min-width: 1024px)');
 
     const { theme } = useTheme();
 

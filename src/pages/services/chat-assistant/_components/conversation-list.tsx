@@ -15,6 +15,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
+import { useChatRealtime } from '../chat-realtime';
+import { ConversationFiltersSkeleton } from './conversation-filters-skeleton';
 import { ConversationItemView } from './conversation-item';
 import ConversationItemSkeleton from './conversation-item-skeleton';
 import NoConversationMessage from './no-conversation-message';
@@ -23,6 +25,7 @@ export const ConversationList = memo(() => {
   const [filter, setFilter] = useState('All');
   const { getCurrentProject } = useAuthStore();
   const { id: projectId } = getCurrentProject() ?? {};
+  const { isPusherConnected } = useChatRealtime();
 
   const { data: projectServices } = useProjectServicesQuery(projectId);
 
@@ -48,42 +51,48 @@ export const ConversationList = memo(() => {
 
       {/* Filters - Simplified */}
       <div className="flex items-center justify-between gap-2 border-b px-3 py-2">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-6 justify-start px-3 text-sm"
-            >
-              {filter} <ChevronDown className="ml-1 size-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start">
-            <DropdownMenuItem onClick={() => setFilter('All')}>
-              All
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setFilter('Unread')}>
-              Unread
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {isLoading || !isPusherConnected ? (
+          <ConversationFiltersSkeleton />
+        ) : (
+          <>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-6 justify-start px-3 text-sm"
+                >
+                  {filter} <ChevronDown className="ml-1 size-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                <DropdownMenuItem onClick={() => setFilter('All')}>
+                  All
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setFilter('Unread')}>
+                  Unread
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm" className="h-6 px-3 text-sm">
-              Oldest activity <ChevronDown className="ml-1 size-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem>Newest activity</DropdownMenuItem>
-            <DropdownMenuItem>Oldest activity</DropdownMenuItem>
-            <DropdownMenuItem>Recently updated</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="h-6 px-3 text-sm">
+                  Oldest activity <ChevronDown className="ml-1 size-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem>Newest activity</DropdownMenuItem>
+                <DropdownMenuItem>Oldest activity</DropdownMenuItem>
+                <DropdownMenuItem>Recently updated</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </>
+        )}
       </div>
       <div className="site-scrollbar flex-1 overflow-auto">
         <div>
-          {isLoading ? (
+          {isLoading || !isPusherConnected ? (
             <ConversationItemSkeleton count={8} />
           ) : (
             <>

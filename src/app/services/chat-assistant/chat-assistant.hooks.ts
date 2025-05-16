@@ -1,5 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { produce } from 'immer';
+import { useCallback } from 'react';
+import { useParams } from 'react-router';
 
 import { useAuthStore } from '@/app/auth/auth.store';
 import { generateMessageId, handleApiErrorException } from '@/lib/utils';
@@ -8,6 +10,7 @@ import type {
   ApiMessagesResponse,
   ConversationDetail,
   ConversationListItem,
+  IncommingRealTimeMessage,
   Message,
   SendMessagePayload,
   SendMessageResponse,
@@ -300,5 +303,95 @@ export function useOptimisticSendMessageMutation() {
   return {
     sendAsync: mutation.mutateAsync,
     isPending: mutation.isPending,
+  };
+}
+
+export function useMessageMutationState() {
+  const queryClient = useQueryClient();
+
+  const { ticketId: currentTicketId } = useParams();
+
+  const sendMessage = useCallback(
+    async (messageResponse: IncommingRealTimeMessage) => {
+      const messagesPageKey = chatAreaQueryKey(
+        messageResponse.conversation.ticketId
+      );
+      const conversationDetailKey = conversationKeys.detail(
+        messageResponse.conversation.ticketId
+      );
+      const conversationListKey = conversationKeys.list(
+        messageResponse.conversation.chatAssistantId
+      );
+
+      const oldMessagesResponse = queryClient.getQueryData<{
+        pageParams: string[];
+        pages: ApiMessagesResponse[];
+      }>(messagesPageKey);
+
+      const oldConversationDetail =
+        queryClient.getQueryData<ConversationDetail>(conversationDetailKey);
+
+      const oldConversationList =
+        queryClient.getQueryData<ConversationListItem[]>(conversationListKey);
+
+      const newLatestMessages = produce(oldMessagesResponse, (draft) => {
+        draft?.pages[draft.pages?.length - 1]?.data.push(
+          messageResponse.message
+        );
+      });
+
+      const unread =
+        currentTicketId === messageResponse.conversation.ticketId
+          ? false
+          : true;
+
+      const newConversationDetail = produce(oldConversationDetail, (draft) => {
+        if (draft) {
+          draft.latestMessage = messageResponse.message;
+          draft.unread = unread;
+          draft.updatedAt = messageResponse.message.createdAt;
+          draft.optimistic = undefined;
+        }
+      });
+
+      let foundConversationIndex = 0;
+      const newConversationList = produce(oldConversationList, (draft) => {
+        if (!draft) return;
+        foundConversationIndex = draft.findIndex(
+          (c) => c.ticketId === currentTicketId
+        );
+        if (foundConversationIndex === -1) return;
+
+        if (foundConversationIndex > 0) {
+          const [conversation] = draft.splice(foundConversationIndex, 1);
+          if (conversation) {
+            conversation.latestMessage = messageResponse.message;
+            conversation.updatedAt = messageResponse.message.createdAt;
+            conversation.unread = unread;
+            conversation.optimistic = undefined;
+            draft.unshift(conversation);
+          }
+        } else {
+          draft[0] = {
+            ...messageResponse.conversation,
+            latestMessage: messageResponse.message,
+            updatedAt: messageResponse.message.createdAt,
+            unread: unread,
+            optimistic: undefined,
+          };
+        }
+      });
+
+      queryClient.setQueryData(messagesPageKey, newLatestMessages);
+      queryClient.setQueryData(conversationDetailKey, newConversationDetail);
+      queryClient.setQueryData(conversationListKey, newConversationList);
+
+      // console.log('👥 Send message:', message);
+    },
+    [currentTicketId, queryClient]
+  );
+
+  return {
+    sendMessage,
   };
 }

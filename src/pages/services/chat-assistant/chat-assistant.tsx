@@ -21,9 +21,9 @@ export default function ChatAssistant() {
         >
           <ConversationList />
         </ResizablePanel>
-        <ResizableHandle withHandle />
         {isDesktop && (
           <>
+            <ResizableHandle withHandle />
             <ResizablePanel
               id="chat-area"
               order={2}

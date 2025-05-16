@@ -2,14 +2,19 @@
 
 import type * as PusherTypes from 'pusher-js';
 
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
-import { useConversationListQuery } from '@/app/services/chat-assistant/chat-assistant.hooks';
+import type { IncommingRealTimeMessage } from '@/app/services/chat-assistant/chat-assistant.type';
+
+import {
+  useConversationListQuery,
+  useMessageMutationState,
+} from '@/app/services/chat-assistant/chat-assistant.hooks';
 import pusher from '@/lib/pusher-client';
 
 export type ChannelInfo = {
   channelName: string;
-  channel: PusherTypes.Channel | null;
+  chatAssistantChannel: PusherTypes.PresenceChannel | null;
   connected: boolean;
   error: string | null;
 };
@@ -31,6 +36,8 @@ export default function ChatRealtimeProvider({
   chatAssistantId: string;
   children: React.ReactNode;
 }) {
+  const { sendMessage } = useMessageMutationState();
+
   const {
     isLoading: isConversationsLoading,
     isSuccess: isConversationsSuccess,
@@ -41,7 +48,7 @@ export default function ChatRealtimeProvider({
     channelName: '',
     connected: false,
     error: null,
-    channel: null,
+    chatAssistantChannel: null,
   });
 
   useEffect(() => {
@@ -62,38 +69,51 @@ export default function ChatRealtimeProvider({
         setIsPusherConnected(states.current === 'connected');
       });
 
-      const channel = pusher.subscribe(channelName);
+      const chatAssistantChannel = pusher.subscribe(
+        channelName
+      ) as PusherTypes.PresenceChannel;
 
-      channel.bind('pusher:subscription_succeeded', () => {
-        console.log('✅ Subscription succeeded:', channelName);
+      chatAssistantChannel.bind('pusher:subscription_succeeded', () => {
         setChannelInfo({
           channelName,
           connected: true,
           error: null,
-          channel,
+          chatAssistantChannel,
         });
       });
 
-      channel.bind('pusher:subscription_error', (error: any) => {
+      chatAssistantChannel.bind('pusher:subscription_error', (error: any) => {
         console.log('❌ Subscription error:', error);
         setChannelInfo({
           channelName,
           connected: false,
           error: error.error ?? 'Failed to connect chat-assistant',
-          channel,
+          chatAssistantChannel,
         });
       });
 
-      channel.bind('test', (data: any) => {
-        console.log('👥 Presence data:', data);
-      });
+      // channel.bind('pusher:member_added', (member) => {
+      //   console.log('User joined:', member.info);
+      // });
+
+      // channel.bind('pusher:member_removed', (member) => {
+      //   console.log('User left:', member.info);
+      // });
+
+      const handleTrafficMessage = (data: IncommingRealTimeMessage) => {
+        console.log('👥 Traffic message:', data);
+        sendMessage(data);
+      };
+
+      chatAssistantChannel.bind('trafficMessage', handleTrafficMessage);
 
       return () => {
-        channel.unbind_all();
+        chatAssistantChannel.unbind_all();
         pusher.connection.unbind_all();
         pusher.unsubscribe(channelName);
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatAssistantId, isConversationsSuccess, isConversationsLoading]);
 
   const isConnected =
@@ -106,4 +126,14 @@ export default function ChatRealtimeProvider({
       {children}
     </ChatRealtimeContext.Provider>
   );
+}
+
+export function useChatRealtime() {
+  const context = useContext(ChatRealtimeContext);
+
+  if (!context) {
+    throw new Error('ChatRealtimeContext is not found');
+  }
+
+  return context;
 }

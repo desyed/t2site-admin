@@ -11,7 +11,7 @@ import { formatSmartTimestamp } from '@/lib/time';
 
 export const ChatHeader = memo(
   ({ conversation }: { conversation: ConversationDetail }) => {
-    const isDesktop = useMediaQuery('(min-width: 768px)');
+    const isDesktop = useMediaQuery('(min-width: 1024px)');
     return (
       <div className="flex items-center justify-between border-b  px-3 py-2 pt-3 sm:px-4">
         {/* Left Side */}

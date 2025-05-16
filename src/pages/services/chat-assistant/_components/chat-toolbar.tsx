@@ -13,43 +13,51 @@ import { MessageInputArea } from './message-input-area';
 
 type ChatToolbarProps = {
   conversation: ConversationDetail;
+  onSendTextMessage: (text: string) => void;
+  onSendEmojiMessage: (emoji: string) => void;
 };
 
-export const ChatToolbar = memo<ChatToolbarProps>(({ conversation }) => {
-  const { ticketId } = useParams();
+export const ChatToolbar = memo<ChatToolbarProps>(
+  ({ conversation, onSendTextMessage, onSendEmojiMessage }) => {
+    const { ticketId } = useParams();
 
-  const { sendAsync } = useOptimisticSendMessageMutation();
+    const { sendAsync } = useOptimisticSendMessageMutation();
 
-  const handleSendTextMessage = (text: string) => {
-    if (!ticketId) return;
-    if (text === '') return;
-    playSendMessageSound();
-    sendAsync({
-      ticketId,
-      conversation,
-      content: { type: 'text', text },
-    });
-  };
+    const handleSendTextMessage = (text: string) => {
+      if (!ticketId) return;
+      if (text === '') return;
+      playSendMessageSound();
+      sendAsync({
+        ticketId,
+        conversation,
+        content: { type: 'text', text },
+      });
 
-  const handleSendEmojiMessage = (emoji: string) => {
-    if (!ticketId) return;
-    if (emoji === '') return;
+      onSendTextMessage(text);
+    };
 
-    playSendStickerSound();
+    const handleSendEmojiMessage = (emoji: string) => {
+      if (!ticketId) return;
+      if (emoji === '') return;
 
-    sendAsync({
-      ticketId,
-      conversation,
-      content: { type: 'emojiOrSticker', emoji },
-    });
-  };
+      playSendStickerSound();
 
-  return (
-    <MessageInputArea
-      onSendTextMessage={handleSendTextMessage}
-      onSendEmojiMessage={handleSendEmojiMessage}
-    />
-  );
-});
+      sendAsync({
+        ticketId,
+        conversation,
+        content: { type: 'emojiOrSticker', emoji },
+      });
+
+      onSendEmojiMessage(emoji);
+    };
+
+    return (
+      <MessageInputArea
+        onSendTextMessage={handleSendTextMessage}
+        onSendEmojiMessage={handleSendEmojiMessage}
+      />
+    );
+  }
+);
 
 ChatToolbar.displayName = 'ChatToolbar';
