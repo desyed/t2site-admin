@@ -1,5 +1,5 @@
 import { useLayoutEffect } from 'react';
-import { Outlet, redirect, useLoaderData, useParams } from 'react-router';
+import { redirect, useLoaderData } from 'react-router';
 
 import { authStore } from '@/app/auth/auth.store';
 import { useProjectServicesQuery } from '@/app/project/project.hooks';
