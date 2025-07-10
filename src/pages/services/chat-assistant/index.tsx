@@ -8,7 +8,6 @@ import FetchErrorView from '@/components/fetch-error-view';
 import { createDashboardLoader } from '@/middlewares/auth-middleware';
 
 import ChatConnectionView from './_components/chat-connection-view.tsx';
-import ChatRealtimeProvider from './chat-realtime.tsx';
 import ChatAssistantPage from './ChatAssistantPage.tsx';
 
 export const loader = createDashboardLoader(async () => {
@@ -60,11 +59,5 @@ export function Component() {
     return <ChatConnectionView />;
   }
 
-  return (
-    <ChatRealtimeProvider
-      chatAssistantId={projectServices?.chat_assistant?.chatAssistantId}
-    >
-      <ChatAssistantPage />
-    </ChatRealtimeProvider>
-  );
+  return <ChatAssistantPage />;
 }

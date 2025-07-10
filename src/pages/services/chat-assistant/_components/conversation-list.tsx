@@ -15,7 +15,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-import { useChatRealtime } from '../chat-realtime';
 import { ConversationFiltersSkeleton } from './conversation-filters-skeleton';
 import { ConversationItemView } from './conversation-item';
 import ConversationItemSkeleton from './conversation-item-skeleton';
@@ -25,7 +24,6 @@ export const ConversationList = memo(() => {
   const [filter, setFilter] = useState('All');
   const { getCurrentProject } = useAuthStore();
   const { id: projectId } = getCurrentProject() ?? {};
-  const { isPusherConnected } = useChatRealtime();
 
   const { data: projectServices } = useProjectServicesQuery(projectId);
 
@@ -51,7 +49,7 @@ export const ConversationList = memo(() => {
 
       {/* Filters - Simplified */}
       <div className="flex items-center justify-between gap-2 border-b px-3 py-2">
-        {isLoading || !isPusherConnected ? (
+        {isLoading ? (
           <ConversationFiltersSkeleton />
         ) : (
           <>
@@ -92,7 +90,7 @@ export const ConversationList = memo(() => {
       </div>
       <div className="site-scrollbar flex-1 overflow-auto">
         <div>
-          {isLoading || !isPusherConnected ? (
+          {isLoading ? (
             <ConversationItemSkeleton count={8} />
           ) : (
             <>
