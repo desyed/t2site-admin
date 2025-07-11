@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { produce } from 'immer';
 import { useCallback } from 'react';
-import { useParams } from 'react-router';
 
 import { useAuthStore } from '@/app/auth/auth.store';
 import { generateMessageId, handleApiErrorException } from '@/lib/utils';
@@ -309,8 +308,6 @@ export function useOptimisticSendMessageMutation() {
 export function useMessageMutationState() {
   const queryClient = useQueryClient();
 
-  const { ticketId: currentTicketId } = useParams();
-
   const sendMessage = useCallback(
     async (messageResponse: IncommingRealTimeMessage) => {
       const messagesPageKey = chatAreaQueryKey(
@@ -340,15 +337,10 @@ export function useMessageMutationState() {
         );
       });
 
-      const unread =
-        currentTicketId === messageResponse.conversation.ticketId
-          ? false
-          : true;
-
       const newConversationDetail = produce(oldConversationDetail, (draft) => {
         if (draft) {
           draft.latestMessage = messageResponse.message;
-          draft.unread = unread;
+          draft.unread = true;
           draft.updatedAt = messageResponse.message.createdAt;
           draft.optimistic = undefined;
         }
@@ -358,7 +350,7 @@ export function useMessageMutationState() {
       const newConversationList = produce(oldConversationList, (draft) => {
         if (!draft) return;
         foundConversationIndex = draft.findIndex(
-          (c) => c.ticketId === currentTicketId
+          (c) => c.ticketId === messageResponse.conversation.ticketId
         );
         if (foundConversationIndex === -1) return;
 
@@ -367,7 +359,7 @@ export function useMessageMutationState() {
           if (conversation) {
             conversation.latestMessage = messageResponse.message;
             conversation.updatedAt = messageResponse.message.createdAt;
-            conversation.unread = unread;
+            conversation.unread = true;
             conversation.optimistic = undefined;
             draft.unshift(conversation);
           }
@@ -376,7 +368,7 @@ export function useMessageMutationState() {
             ...messageResponse.conversation,
             latestMessage: messageResponse.message,
             updatedAt: messageResponse.message.createdAt,
-            unread: unread,
+            unread: true,
             optimistic: undefined,
           };
         }
@@ -388,7 +380,7 @@ export function useMessageMutationState() {
 
       // console.log('👥 Send message:', message);
     },
-    [currentTicketId, queryClient]
+    [queryClient]
   );
 
   return {

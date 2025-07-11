@@ -8,6 +8,9 @@ sendMessageSound.volume = 0.2;
 export const sendStickerSound = new Audio('/sounds/send-sticker-sound.mp3');
 sendStickerSound.volume = 0.2;
 
+export const notificationSound = new Audio('/sounds/notification.mp3');
+notificationSound.volume = 0.4;
+
 export const playSendMessageSound = () => {
   sendMessageSound.currentTime = 0;
   sendMessageSound.play();
@@ -21,4 +24,9 @@ export const playSendStickerSound = () => {
 export const playUnmutedSound = () => {
   unmutedSound.currentTime = 0;
   unmutedSound.play();
+};
+
+export const playNotificationSound = () => {
+  notificationSound.currentTime = 0;
+  notificationSound.play();
 };

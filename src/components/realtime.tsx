@@ -3,6 +3,8 @@
 import type * as PusherTypes from 'pusher-js';
 
 import { createContext, useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
+import { toast } from 'sonner';
 
 import type { IncommingRealTimeMessage } from '@/app/services/chat-assistant/chat-assistant.type';
 
@@ -10,6 +12,7 @@ import {
   useConversationListQuery,
   useMessageMutationState,
 } from '@/app/services/chat-assistant/chat-assistant.hooks';
+import { playNotificationSound } from '@/audio-contenxt/system';
 import pusher from '@/lib/pusher-client';
 
 export type ChannelInfo = {
@@ -19,17 +22,17 @@ export type ChannelInfo = {
   error: string | null;
 };
 
-export type ChatRealtimeContextType = {
+export type RealtimeContextType = {
   chatAssistantId: string;
   isPusherConnected: boolean;
   channelInfo: ChannelInfo;
 };
 
-export const ChatRealtimeContext = createContext<ChatRealtimeContextType>(
-  {} as ChatRealtimeContextType
+export const RealtimeContext = createContext<RealtimeContextType>(
+  {} as RealtimeContextType
 );
 
-export default function ChatRealtimeProvider({
+export default function RealtimeProvider({
   chatAssistantId,
   children,
 }: {
@@ -37,6 +40,7 @@ export default function ChatRealtimeProvider({
   children: React.ReactNode;
 }) {
   const { sendMessage } = useMessageMutationState();
+  const navigate = useNavigate();
 
   const {
     isLoading: isConversationsLoading,
@@ -98,18 +102,60 @@ export default function ChatRealtimeProvider({
 
       // channel.bind('pusher:member_removed', (member) => {
       //   console.log('User left:', member.info);
+
       // });
 
+      const handleNotification = (data: IncommingRealTimeMessage) => {
+        const ticketId = data.conversation.ticketId;
+        const message = data.message;
+
+        if (window.location.pathname.includes('/services/chat-assistant')) {
+          return;
+        }
+
+        // Extract message preview based on content type
+        let messagePreview = '';
+        if (message.content.type === 'text') {
+          messagePreview =
+            message.content.text.length > 50
+              ? message.content.text.substring(0, 50) + '...'
+              : message.content.text;
+        } else if (message.content.type === 'image') {
+          messagePreview = '📷 Image';
+        } else if (message.content.type === 'audio') {
+          messagePreview = '🎵 Audio';
+        } else if (message.content.type === 'video') {
+          messagePreview = '🎥 Video';
+        } else if (message.content.type === 'emojiOrSticker') {
+          messagePreview =
+            message.content.emoji || message.content.sticker || '😊 Emoji';
+        }
+
+        toast.message(`New message from ${ticketId}`, {
+          description: messagePreview,
+          action: {
+            label: 'View',
+            onClick: () => {
+              navigate(`/services/chat-assistant/${ticketId}`);
+              toast.dismiss();
+            },
+          },
+          position: 'top-right',
+        });
+
+        playNotificationSound();
+      };
+
       const handleTrafficMessage = (data: IncommingRealTimeMessage) => {
-        console.log('👥 Traffic message:', data);
+        handleNotification(data);
         sendMessage(data);
       };
 
       chatAssistantChannel.bind('trafficMessage', handleTrafficMessage);
 
       return () => {
-        chatAssistantChannel.unbind_all();
-        pusher.connection.unbind_all();
+        // chatAssistantChannel.unbind_all();
+        // pusher.connection.unbind_all();
         pusher.unsubscribe(channelName);
       };
     }
@@ -120,19 +166,19 @@ export default function ChatRealtimeProvider({
     pusher.connection.state === 'connected' || isPusherConnected;
 
   return (
-    <ChatRealtimeContext.Provider
+    <RealtimeContext.Provider
       value={{ chatAssistantId, isPusherConnected: isConnected, channelInfo }}
     >
       {children}
-    </ChatRealtimeContext.Provider>
+    </RealtimeContext.Provider>
   );
 }
 
-export function useChatRealtime() {
-  const context = useContext(ChatRealtimeContext);
+export function useRealtime() {
+  const context = useContext(RealtimeContext);
 
   if (!context) {
-    throw new Error('ChatRealtimeContext is not found');
+    throw new Error('RealtimeContext is not found');
   }
 
   return context;

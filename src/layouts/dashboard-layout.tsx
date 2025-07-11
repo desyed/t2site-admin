@@ -2,6 +2,9 @@ import { useEffect } from 'react';
 import { Outlet } from 'react-router';
 import { useNavigate } from 'react-router';
 
+import { useAuthStore } from '@/app/auth/auth.store';
+import { useProjectServicesQuery } from '@/app/project/project.hooks';
+import RealtimeProvider from '@/components/realtime';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { useAuth } from '@/contexts/auth-provider';
 import DashBoardContent from '@/layouts/dashboard/dashboard-content';
@@ -17,13 +20,32 @@ export default function DashboardLayout() {
     }
   }, [isAuthenticated, navigate]);
 
+  const { currentProject } = useAuthStore();
+  const {
+    data: projectServices,
+    isLoading,
+    isFetching,
+  } = useProjectServicesQuery(currentProject?.id as string);
+
+  if (isLoading || isFetching) {
+    return null;
+  }
+
+  if (!projectServices?.chat_assistant.chatAssistantId) {
+    return null;
+  }
+
   return (
-    <SidebarProvider>
-      <DashBoardSidebar>
-        <DashBoardContent>
-          <Outlet />
-        </DashBoardContent>
-      </DashBoardSidebar>
-    </SidebarProvider>
+    <RealtimeProvider
+      chatAssistantId={projectServices?.chat_assistant.chatAssistantId}
+    >
+      <SidebarProvider>
+        <DashBoardSidebar>
+          <DashBoardContent>
+            <Outlet />
+          </DashBoardContent>
+        </DashBoardSidebar>
+      </SidebarProvider>
+    </RealtimeProvider>
   );
 }
