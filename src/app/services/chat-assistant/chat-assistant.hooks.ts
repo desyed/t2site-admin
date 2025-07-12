@@ -347,12 +347,14 @@ export function useMessageMutationState() {
       });
 
       let foundConversationIndex = 0;
-      const newConversationList = produce(oldConversationList, (draft) => {
+      let newConversationList = produce(oldConversationList, (draft) => {
         if (!draft) return;
         foundConversationIndex = draft.findIndex(
           (c) => c.ticketId === messageResponse.conversation.ticketId
         );
-        if (foundConversationIndex === -1) return;
+        if (foundConversationIndex === -1) {
+          return;
+        }
 
         if (foundConversationIndex > 0) {
           const [conversation] = draft.splice(foundConversationIndex, 1);
@@ -373,6 +375,20 @@ export function useMessageMutationState() {
           };
         }
       });
+
+      if (foundConversationIndex === -1) {
+        newConversationList = [
+          {
+            ...messageResponse.conversation,
+            latestMessage: messageResponse.message,
+            updatedAt: messageResponse.message.createdAt,
+            unread: true,
+            optimistic: undefined,
+            chatAssistantId: messageResponse.conversation.chatAssistantId,
+          },
+          ...(oldConversationList ?? []),
+        ];
+      }
 
       queryClient.setQueryData(messagesPageKey, newLatestMessages);
       queryClient.setQueryData(conversationDetailKey, newConversationDetail);

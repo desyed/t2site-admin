@@ -21,6 +21,7 @@ import { MessageInputAreaSkeleton } from './message-input-area-skeleton';
 import { MessageSkeletonList } from './message-skeleton-list';
 import { MessagesList } from './messages-list';
 import NoMessages from './no-messages';
+import SelectNoConversation from './select-no-conversation';
 
 export function ChatArea() {
   const { ticketId } = useParams();
@@ -165,7 +166,7 @@ export function ChatArea() {
   }, [isUserFacingTop, hasMoreMessages, isFetchingPreviousPage]);
 
   if (!conversation) {
-    return <div>No conversation</div>;
+    return <SelectNoConversation />;
   }
 
   return (
