@@ -3,7 +3,7 @@ import type { RefObject } from 'react';
 import { useCallback, useRef } from 'react';
 
 export function useSmoothScroll<T extends HTMLElement>(): [
-  RefObject<T>,
+  RefObject<T | null>,
   () => void,
 ] {
   const ref = useRef<T>(null);

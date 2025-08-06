@@ -66,7 +66,10 @@ const AvatarFallback = React.forwardRef<
 
   // Get the first letter and convert to uppercase
   const firstLetter = (props.children?.toString()?.[0] || 'A').toUpperCase();
-  const [bg, text] = letterColorMap[firstLetter] || letterColorMap['A'];
+  const [bg, text] = (letterColorMap[firstLetter] || letterColorMap['A']) as [
+    string,
+    string,
+  ];
   const children = getNameInitials(props.children?.toString() ?? '', 1) ?? '';
 
   return (

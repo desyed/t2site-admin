@@ -16,7 +16,7 @@ interface MessageFieldMenuProps {
   onClose: () => void;
 }
 
-export function MessageFieldMenu({ onClose }: MessageFieldMenuProps) {
+export function MessageFieldMenu({ onClose: _ }: MessageFieldMenuProps) {
   const menuItems = [
     { icon: Bookmark, label: 'Macros' },
     { icon: Smile, label: 'Emojis' },

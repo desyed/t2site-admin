@@ -9,7 +9,9 @@ export function displayFieldsError<T extends FieldValues>(
       if (Object.prototype.hasOwnProperty.call(errors, key)) {
         const error = errors[key as Path<T>];
         if (error) {
-          const message: string = Array.isArray(error) ? error[0] : error;
+          const message: string = Array.isArray(error)
+            ? (error[0] ?? 'Something went wrong, please try again.')
+            : error;
           form.setError(key as Path<T>, { message });
         }
       }

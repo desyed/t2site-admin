@@ -19,7 +19,7 @@ export default function StepController() {
     (state) => state.resetProjectCreation
   );
 
-  if (getCurrentStep.noController) {
+  if (getCurrentStep?.noController) {
     return null;
   }
 
@@ -27,10 +27,10 @@ export default function StepController() {
     <div
       className={cn(
         'mt-9 flex justify-between gap-3',
-        !getCurrentStep.back && 'justify-end'
+        !getCurrentStep?.back && 'justify-end'
       )}
     >
-      {getCurrentStep.back && (
+      {getCurrentStep?.back && (
         <Button
           variant="outline"
           onClick={() => setCurrentStep(currentStep - 1)}
@@ -40,7 +40,7 @@ export default function StepController() {
         </Button>
       )}
       <div className="flex gap-3">
-        {getCurrentStep.skip && (
+        {getCurrentStep?.skip && (
           <Button
             variant="outline"
             onClick={() => {
@@ -51,7 +51,7 @@ export default function StepController() {
             Skip
           </Button>
         )}
-        {getCurrentStep.continue && (
+        {getCurrentStep?.continue && (
           <SiteButton
             loading={continueLoading}
             onClick={async () => {
@@ -74,7 +74,7 @@ export default function StepController() {
             {getCurrentStep.continueLabel ?? 'Continue'}
           </SiteButton>
         )}
-        {getCurrentStep.completed && (
+        {getCurrentStep?.completed && (
           <>
             <Button
               variant="outline"

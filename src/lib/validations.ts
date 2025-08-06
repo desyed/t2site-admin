@@ -6,5 +6,6 @@ export function validInvitedMemberId(invitedMemberId: string) {
   if (prefix !== ORGANIZATION_INVITED_MEMBER_ID_PREFIX) {
     return false;
   }
+  if (!id) return false;
   return validUUID(id);
 }

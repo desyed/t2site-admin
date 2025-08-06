@@ -8,17 +8,13 @@ import {
   ChevronDown,
   ExternalLink,
   Info,
-  LineChart,
   BarChart3,
-  PieChart,
-  AlertCircle,
   MousePointer2,
   Eye,
   Timer,
 } from 'lucide-react';
 import { useState } from 'react';
 
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {

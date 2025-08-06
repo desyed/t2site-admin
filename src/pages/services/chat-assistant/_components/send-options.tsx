@@ -5,7 +5,7 @@ interface SendOptionsProps {
   onClose: () => void;
 }
 
-export function SendOptions({ onClose }: SendOptionsProps) {
+export function SendOptions({ onClose: _ }: SendOptionsProps) {
   return (
     <Card className="w-64 shadow-lg">
       <CardContent className="p-0">

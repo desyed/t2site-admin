@@ -18,7 +18,7 @@ const steps = [
 export default function CreateNewProject() {
   const currentStep = useProjectStore((state) => state.currentStep);
 
-  const CurrentStep = steps[currentStep];
+  const CurrentStep = steps[currentStep] as any;
 
   return (
     <div className="mx-auto mt-10 w-full max-w-xl px-4 pb-10 max-md:mt-4 md:px-0">

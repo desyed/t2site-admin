@@ -15,7 +15,7 @@ export default defineConfig(({ command: _c, mode }) => {
     build: {
       rollupOptions: {
         output: {
-          manualChunks(id) {
+          manualChunks(id: any) {
             if (id.includes('node_modules')) {
               return id
                 .toString()
