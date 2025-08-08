@@ -18,7 +18,7 @@ export default function ProjectPopupItem({
   const currentProject = useAuthStore((state) => state.currentProject);
   const navigate = useNavigate();
   const handleSelectProject = async (project: Project) => {
-    navigate(`/projects/${project.id}?redirect_to=${window.location.pathname}`);
+    navigate(`/projects/${project.id}?redirect_to=${'/'}`);
     closePopover();
   };
   return (

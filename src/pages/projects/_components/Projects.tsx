@@ -1,5 +1,6 @@
 import { FolderIcon, Plus } from 'lucide-react';
-import { Link } from 'react-router';
+import { useEffect, useMemo } from 'react';
+import { Link, useNavigate } from 'react-router';
 
 import { useProjectsQuery } from '@/app/project/project.hooks';
 import { Button } from '@/components/site-button';
@@ -11,8 +12,15 @@ import { ProjectListSkeleton } from './project-card-skeleton';
 
 export default function Projects() {
   const { data: projectsResult, isLoading, isRefetching } = useProjectsQuery();
+  const navigate = useNavigate();
 
-  const projects = projectsResult ?? [];
+  const projects = useMemo(() => projectsResult ?? [], [projectsResult]);
+
+  useEffect(() => {
+    if (projects.length === 0 && !isLoading && !isRefetching) {
+      navigate('/projects/new');
+    }
+  }, [projects, isLoading, isRefetching, navigate]);
 
   return (
     <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-6 md:px-6">
