@@ -25,15 +25,9 @@ export default function LoginPage() {
 
   return (
     <>
-      <h3 className="text-center text-2xl font-semibold ">Welcome back</h3>
-      <p className="mb-2 mt-4 text-center text-sm text-muted-foreground">
-        Login with your Google or Github account
-      </p>
+      <h3 className="text-center text-2xl font-semibold ">Welcome to T2</h3>
 
-      <div className="mt-2 grid grid-cols-2 gap-6">
-        <OAuthButton type="google" label={false} />
-        <OAuthButton type="github" label={false} />
-      </div>
+      <LoginForm />
 
       <div className="mb-2 mt-4 flex items-center justify-between gap-2.5">
         <div className="h-px w-1/2 bg-border" />
@@ -43,7 +37,12 @@ export default function LoginPage() {
         <div className="h-px w-1/2 bg-border" />
       </div>
 
-      <LoginForm />
+      <div>
+        <div className="mt-2 grid grid-cols-2 gap-6">
+          <OAuthButton type="google" label={false} />
+          <OAuthButton type="github" label={false} />
+        </div>
+      </div>
 
       <div className="mt-4 text-center text-muted-foreground">
         {`Don't`} have an account?{' '}
