@@ -82,7 +82,7 @@ const buttonVariants = cva(
         magnetic:
           'transition-transform duration-300 [transform-style:preserve-3d] hover:scale-105 hover:[transform:perspective(1000px)_rotateX(10deg)] active:scale-95',
         glitch:
-          'hover:before:animate-glitch-1 hover:after:animate-glitch-2 relative before:absolute before:inset-0 before:translate-x-[2px] before:bg-inherit before:content-[""] after:absolute after:inset-0 after:translate-x-[2px] after:content-[""]',
+          'relative before:absolute before:inset-0 before:translate-x-[2px] before:bg-inherit before:content-[""] after:absolute after:inset-0 after:translate-x-[2px] after:content-[""] hover:before:animate-glitch-1 hover:after:animate-glitch-2',
         none: '',
       },
       size: {

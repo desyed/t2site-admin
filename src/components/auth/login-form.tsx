@@ -1,6 +1,5 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
@@ -25,6 +24,15 @@ import { handleApiErrorException } from '@/lib/utils';
 
 import { InputPassword } from '../ui/input-password';
 
+const emailSchema = z.object({
+  email: z
+    .string()
+    .min(1, {
+      message: 'Email is required',
+    })
+    .email({ message: 'Enter a valid email address' }),
+});
+
 const loginSchema = z.object({
   email: z
     .string()
@@ -41,19 +49,88 @@ export default function LoginForm() {
   const [invalidCred, setInvalidCred] = useState<string | null>(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [showPasswordField, setShowPasswordField] = useState(false);
+  const [emailValidated, setEmailValidated] = useState(false);
 
   const setAuth = useAuthStore((state) => state.setAuth);
 
   const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
       password: '',
     },
     shouldFocusError: true,
+    mode: 'onSubmit',
   });
 
-  async function onSubmit(values: z.infer<typeof loginSchema>) {
+  const handleEmailValidation = async () => {
+    const emailValue = form.getValues('email');
+
+    try {
+      emailSchema.parse({ email: emailValue });
+
+      setEmailValidated(true);
+      setShowPasswordField(true);
+
+      form.clearErrors('email');
+
+      setTimeout(() => {
+        const passwordField = document.querySelector(
+          'input[name="password"]'
+        ) as HTMLInputElement;
+        passwordField?.focus();
+      }, 300);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const emailError = error.errors.find((err) =>
+          err.path.includes('email')
+        );
+        if (emailError) {
+          form.setError('email', {
+            type: 'manual',
+            message: emailError.message,
+          });
+        }
+      }
+    }
+  };
+
+  // Reset form state if email is changed after validation
+  const handleEmailChange = () => {
+    if (emailValidated) {
+      setEmailValidated(false);
+      setShowPasswordField(false);
+      form.setValue('password', '');
+      form.clearErrors();
+      setInvalidCred(null);
+    }
+  };
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const values = form.getValues();
+
+    if (!emailValidated) {
+      handleEmailValidation();
+      return;
+    }
+
+    try {
+      loginSchema.parse(values);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        error.errors.forEach((err) => {
+          const fieldName = err.path[0] as keyof typeof values;
+          form.setError(fieldName, {
+            type: 'manual',
+            message: err.message,
+          });
+        });
+      }
+      return;
+    }
+
     setLoading(true);
 
     toast.promise(loginApi(values), {
@@ -101,14 +178,11 @@ export default function LoginForm() {
         return 'Failed to login';
       },
     });
-  }
+  };
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-2"
-      >
+      <form onSubmit={handleFormSubmit} className="flex flex-col gap-2">
         <div>
           <FormField
             control={form.control}
@@ -121,6 +195,10 @@ export default function LoginForm() {
                     icon="mdi:email"
                     placeholder="example@example.com"
                     {...field}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      handleEmailChange();
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -129,7 +207,14 @@ export default function LoginForm() {
           />
         </div>
 
-        <div>
+        {/* Password field - only show when email is validated */}
+        <div
+          className={`transition-all duration-300 ease-in-out ${
+            showPasswordField
+              ? 'max-h-32 translate-y-0 opacity-100'
+              : 'max-h-0 -translate-y-2 overflow-hidden opacity-0'
+          }`}
+        >
           <FormField
             control={form.control}
             name="password"
@@ -161,8 +246,8 @@ export default function LoginForm() {
         )}
 
         <div className="mt-3 flex flex-col sm:mt-4">
-          <Button type="submit" size="sm" disabled={loading}>
-            Login
+          <Button type="submit" size="sm" disabled={loading} effect="none">
+            {emailValidated ? 'Login' : 'Continue'}
           </Button>
         </div>
       </form>
