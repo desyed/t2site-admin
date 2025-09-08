@@ -14,7 +14,7 @@ export default plugin(() => {}, {
       fontFamily: {
         serif: [...defaultTheme.fontFamily.serif, 'Arial'],
         mono: [...defaultTheme.fontFamily.mono],
-        sans: [...defaultTheme.fontFamily.sans],
+        sans: ['Inter', ...defaultTheme.fontFamily.sans], // Add Inter as the primary sans font
       },
       screens: {
         xs: '439px',

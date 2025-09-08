@@ -18,10 +18,10 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { InputIcon } from '@/components/ui/input-icon';
 import { handleServerErrors } from '@/lib/error';
 import { handleApiErrorException } from '@/lib/utils';
 
+import { Input } from '../ui/input';
 import { InputPassword } from '../ui/input-password';
 
 const emailSchema = z.object({
@@ -131,6 +131,8 @@ export default function LoginForm() {
       return;
     }
 
+    form.clearErrors();
+
     setLoading(true);
 
     toast.promise(loginApi(values), {
@@ -182,17 +184,18 @@ export default function LoginForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={handleFormSubmit} className="flex flex-col gap-2">
-        <div>
+      <form onSubmit={handleFormSubmit} className="flex flex-col">
+        <div className="mb-2">
           <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel className="text-xs uppercase text-gray-500">
+                  Email
+                </FormLabel>
                 <FormControl>
-                  <InputIcon
-                    icon="mdi:email"
+                  <Input
                     placeholder="example@example.com"
                     {...field}
                     onChange={(e) => {
@@ -211,7 +214,7 @@ export default function LoginForm() {
         <div
           className={`transition-all duration-300 ease-in-out ${
             showPasswordField
-              ? 'max-h-32 translate-y-0 opacity-100'
+              ? 'mb-2 max-h-32 translate-y-0 opacity-100'
               : 'max-h-0 -translate-y-2 overflow-hidden opacity-0'
           }`}
         >
@@ -220,13 +223,11 @@ export default function LoginForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel className="text-xs uppercase text-gray-500">
+                  Password
+                </FormLabel>
                 <FormControl>
-                  <InputPassword
-                    icon="mdi:lock"
-                    placeholder="•••••••••••••••••••"
-                    {...field}
-                  />
+                  <InputPassword placeholder="•••••••••••••••••••" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -245,7 +246,7 @@ export default function LoginForm() {
           />
         )}
 
-        <div className="mt-3 flex flex-col sm:mt-4">
+        <div className="mt-2 flex flex-col">
           <Button type="submit" size="sm" disabled={loading} effect="none">
             {emailValidated ? 'Login' : 'Continue'}
           </Button>
