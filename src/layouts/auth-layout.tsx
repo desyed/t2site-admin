@@ -8,7 +8,7 @@ export default function AuthLayout() {
       {/* Dotted Background Pattern */}
       <div className="absolute inset-0 size-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
 
-      <div className="relative z-10 -mt-14 flex flex-1 flex-col justify-center gap-6 sm:items-center sm:p-8">
+      <div className="relative z-10 flex flex-1 flex-col justify-center gap-6 sm:items-center sm:p-8">
         <a href="https://t2site.vercel.app" className="flex justify-center">
           <Brand />
         </a>
@@ -29,22 +29,19 @@ export default function AuthLayout() {
               <Outlet />
             </div>
           </div>
-
-          <div className="absolute bottom-0 left-1/2 w-full -translate-x-1/2 px-5 pb-5 text-center text-xs text-muted-foreground">
-            By clicking continue, you agree to our{' '}
-            <a className="underline hover:text-foreground" href="/terms">
-              Terms of Service
-            </a>{' '}
-            and{' '}
-            <a
-              className="underline hover:text-foreground"
-              href="/privacy-policy"
-            >
-              Privacy Policy
-            </a>
-            .
-          </div>
         </div>
+      </div>
+
+      <div className="z-10 w-full px-5 pb-5 text-center text-xs text-muted-foreground">
+        By clicking continue, you agree to our{' '}
+        <a className="underline hover:text-foreground" href="/terms">
+          Terms of Service
+        </a>{' '}
+        and{' '}
+        <a className="underline hover:text-foreground" href="/privacy-policy">
+          Privacy Policy
+        </a>
+        .
       </div>
     </div>
   );
