@@ -25,6 +25,8 @@ import { useApi } from '@/hooks/use-api';
 import { handleServerErrors } from '@/lib/error';
 import { passwordRegex } from '@/lib/utils';
 
+import { Input } from '../ui/input';
+
 const SignupSchema = z.object({
   name: z
     .string()
@@ -115,13 +117,11 @@ export default function SingupForm() {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel className="text-xs uppercase text-gray-500">
+                  Name
+                </FormLabel>
                 <FormControl>
-                  <InputIcon
-                    icon="mdi:rename"
-                    placeholder="John Doe"
-                    {...field}
-                  />
+                  <Input placeholder="John Doe" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -134,13 +134,11 @@ export default function SingupForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel className="text-xs uppercase text-gray-500">
+                  Email
+                </FormLabel>
                 <FormControl>
-                  <InputIcon
-                    icon="mdi:email"
-                    placeholder="example@example.com"
-                    {...field}
-                  />
+                  <Input placeholder="example@example.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -153,7 +151,9 @@ export default function SingupForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel className="text-xs uppercase text-gray-500">
+                  Password
+                </FormLabel>
                 <FormControl>
                   <SitePassword
                     value={field.value}
@@ -167,7 +167,13 @@ export default function SingupForm() {
           />
         </div>
         <div className="mt-5 flex flex-col sm:mt-4">
-          <Button type="submit" size="sm" disabled={loading} loading={loading}>
+          <Button
+            type="submit"
+            size="sm"
+            disabled={loading}
+            loading={loading}
+            effect="none"
+          >
             Signup
           </Button>
         </div>

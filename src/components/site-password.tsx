@@ -4,7 +4,6 @@ import { CheckIcon, EyeIcon, EyeOffIcon, XIcon } from 'lucide-react';
 import { useId, useMemo, useState } from 'react';
 
 import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
 
 interface SitePasswordProps {
   value: string;
@@ -17,7 +16,6 @@ export default function SitePassword({
   value,
   onChange,
   id,
-  error,
 }: SitePasswordProps) {
   const defaultId = useId();
   const actualId = id || defaultId;
@@ -27,11 +25,11 @@ export default function SitePassword({
 
   const checkStrength = (pass: string) => {
     const requirements = [
-      { regex: /.{8,}/, text: 'At least 8 characters' },
-      { regex: /\d/, text: 'At least 1 number' },
-      { regex: /[a-z]/, text: 'At least 1 lowercase letter' },
-      { regex: /[A-Z]/, text: 'At least 1 uppercase letter' },
-      { regex: /[!"#$%&()*,.:<>?@^{|}]/, text: 'At least 1 special character' },
+      { regex: /.{8,}/, text: '8+ characters' },
+      { regex: /\d/, text: 'Number' },
+      { regex: /[a-z]/, text: 'Lowercase' },
+      { regex: /[A-Z]/, text: 'Uppercase' },
+      { regex: /[!"#$%&()*,.:<>?@^{|}]/, text: 'Symbol' },
     ];
 
     return requirements.map((req) => ({
@@ -52,13 +50,6 @@ export default function SitePassword({
     if (score <= 3) return 'bg-orange-500';
     if (score === 4) return 'bg-amber-500';
     return 'bg-emerald-500';
-  };
-
-  const getStrengthText = (score: number) => {
-    if (score === 0) return 'Enter a password';
-    if (score <= 2) return 'Weak password';
-    if (score === 3) return 'Medium password';
-    return 'Strong password';
   };
 
   return (
@@ -107,32 +98,22 @@ export default function SitePassword({
         ></div>
       </div>
 
-      {/* Password strength description */}
-      <p
-        id={`${actualId}-description`}
-        className={cn('mb-2 text-sm font-medium text-foreground', {
-          'text-red-500': error,
-        })}
-      >
-        {getStrengthText(strengthScore)}. Must contain:
-      </p>
-
       {/* Password requirements list */}
-      <ul
-        className="grid gap-2 sm:grid-cols-2"
-        aria-label="Password requirements"
-      >
+      <ul className="flex flex-wrap gap-2" aria-label="Password requirements">
         {checkStrength(value).map((req, index) => (
-          <li key={index} className="flex items-center gap-2">
+          <li
+            key={index}
+            className={`flex items-center gap-1 rounded-md border px-2 py-1 text-xs ${req.met ? 'border-emerald-500 bg-emerald-50/50' : 'border-border'}`}
+          >
             {req.met ? (
               <CheckIcon
-                size={16}
+                size={14}
                 className="text-emerald-500"
                 aria-hidden="true"
               />
             ) : (
               <XIcon
-                size={16}
+                size={14}
                 className="text-muted-foreground/80"
                 aria-hidden="true"
               />

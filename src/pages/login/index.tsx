@@ -40,11 +40,9 @@ export default function LoginPage() {
         <div className="h-px w-1/2 bg-border" />
       </div>
 
-      <div>
-        <div className="mt-2 grid grid-cols-2 gap-6">
-          <OAuthButton type="google" label={false} />
-          <OAuthButton type="github" label={false} />
-        </div>
+      <div className="mt-2 grid grid-cols-2 gap-6">
+        <OAuthButton type="google" label={false} />
+        <OAuthButton type="github" label={false} />
       </div>
 
       <div className="mt-8 text-center text-sm text-muted-foreground">
