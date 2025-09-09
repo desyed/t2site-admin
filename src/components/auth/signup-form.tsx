@@ -1,6 +1,6 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
@@ -20,13 +20,35 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { InputIcon } from '@/components/ui/input-icon';
 import { useApi } from '@/hooks/use-api';
 import { handleServerErrors } from '@/lib/error';
 import { passwordRegex } from '@/lib/utils';
 
 import { Input } from '../ui/input';
 
+// Schema for initial validation (name + email)
+const initialFieldsSchema = z.object({
+  name: z
+    .string()
+    .min(1, { message: 'Name is required' })
+    .min(2, { message: 'Name must be at least 2 characters long' })
+    .max(70, { message: 'Name cannot exceed 70 characters' })
+    .regex(/^[A-Za-z]+([ '-][A-Za-z]+)*$/, {
+      message:
+        'Name can only contain letters, spaces, hyphens, or apostrophes and must not start or end with special characters.',
+    })
+    .trim(),
+  email: z
+    .string()
+    .min(1, {
+      message: 'Email is required',
+    })
+    .max(250, { message: 'Email cannot exceed 250 characters' })
+    .email({ message: 'Enter a valid email address' })
+    .trim(),
+});
+
+// Full schema for final signup
 const SignupSchema = z.object({
   name: z
     .string()
@@ -61,7 +83,10 @@ const SignupSchema = z.object({
 });
 
 export default function SingupForm() {
+  const [showPasswordField, setShowPasswordField] = useState(false);
+  const [initialFieldsValidated, setInitialFieldsValidated] = useState(false);
   const setAuth = useAuthStore((state) => state.setAuth);
+  const navigate = useNavigate();
 
   const { executeMutation, loading } = useApi<{
     user: TAuthUser;
@@ -71,17 +96,73 @@ export default function SingupForm() {
   });
 
   const form = useForm<z.infer<typeof SignupSchema>>({
-    resolver: zodResolver(SignupSchema),
     defaultValues: {
       name: '',
       email: '',
       password: '',
     },
     shouldFocusError: true,
+    mode: 'onSubmit',
   });
-  const navigate = useNavigate();
 
-  async function onSubmit(values: z.infer<typeof SignupSchema>) {
+  const handleInitialFieldsValidation = async () => {
+    const values = form.getValues();
+    const initialValues = { name: values.name, email: values.email };
+
+    try {
+      initialFieldsSchema.parse(initialValues);
+
+      setInitialFieldsValidated(true);
+      setShowPasswordField(true);
+
+      form.clearErrors(['name', 'email']);
+
+      setTimeout(() => {
+        const passwordField = document.querySelector(
+          'input[name="password"]'
+        ) as HTMLInputElement;
+        passwordField?.focus();
+      }, 300);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        error.errors.forEach((err) => {
+          const fieldName = err.path[0] as 'name' | 'email';
+          form.setError(fieldName, {
+            type: 'manual',
+            message: err.message,
+          });
+        });
+      }
+    }
+  };
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const values = form.getValues();
+
+    if (!initialFieldsValidated) {
+      handleInitialFieldsValidation();
+      return;
+    }
+
+    try {
+      SignupSchema.parse(values);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        error.errors.forEach((err) => {
+          const fieldName = err.path[0] as keyof typeof values;
+          form.setError(fieldName, {
+            type: 'manual',
+            message: err.message,
+          });
+        });
+      }
+      return;
+    }
+
+    form.clearErrors();
+
     const result = await executeMutation(values);
 
     if (result.errors) {
@@ -102,16 +183,15 @@ export default function SingupForm() {
       }
       navigate('/verify', { replace: true });
       form.reset();
+      setInitialFieldsValidated(false);
+      setShowPasswordField(false);
     }
-  }
+  };
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-2"
-      >
-        <div>
+      <form onSubmit={handleFormSubmit} className="flex flex-col">
+        <div className="mb-2">
           <FormField
             control={form.control}
             name="name"
@@ -121,14 +201,21 @@ export default function SingupForm() {
                   Name
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="John Doe" {...field} />
+                  <Input
+                    placeholder="John Doe"
+                    {...field}
+                    onChange={(e) => {
+                      field.onChange(e);
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <div>
+
+        <div className="mb-2">
           <FormField
             control={form.control}
             name="email"
@@ -138,14 +225,28 @@ export default function SingupForm() {
                   Email
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="example@example.com" {...field} />
+                  <Input
+                    placeholder="example@example.com"
+                    {...field}
+                    onChange={(e) => {
+                      field.onChange(e);
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <div>
+
+        {/* Password field - only show when initial fields are validated */}
+        <div
+          className={`transition-all duration-300 ease-in-out ${
+            showPasswordField
+              ? 'mb-2 max-h-40 translate-y-0 opacity-100'
+              : 'max-h-0 -translate-y-2 overflow-hidden opacity-0'
+          }`}
+        >
           <FormField
             control={form.control}
             name="password"
@@ -166,7 +267,8 @@ export default function SingupForm() {
             )}
           />
         </div>
-        <div className="mt-5 flex flex-col sm:mt-4">
+
+        <div className="mt-2 flex flex-col">
           <Button
             type="submit"
             size="sm"
@@ -174,7 +276,7 @@ export default function SingupForm() {
             loading={loading}
             effect="none"
           >
-            Signup
+            {initialFieldsValidated ? 'Sign Up' : 'Continue'}
           </Button>
         </div>
       </form>
