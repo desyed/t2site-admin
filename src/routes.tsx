@@ -40,7 +40,10 @@ export const routes = createBrowserRouter([
           },
           {
             path: 'analytics',
-            lazy: () => import('@/pages/home'),
+            lazy: async () => {
+              const module = await import('@/pages/dashboard/analytics');
+              return { element: <module.default /> };
+            },
           },
         ],
       },
