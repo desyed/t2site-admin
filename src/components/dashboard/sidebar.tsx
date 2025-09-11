@@ -268,7 +268,7 @@ export function Sidebar({ projectId }: SidebarProps) {
       >
         {isProjectSettingsMode ? (
           /* Project Settings Mode */
-          <div className="p-4">
+          <div className="p-3">
             {/* Back Button */}
             <button
               onClick={handleBackToMain} // Updated to use handleBackToMain function
@@ -283,7 +283,7 @@ export function Sidebar({ projectId }: SidebarProps) {
               <h3 className="mb-3 text-xs font-medium uppercase tracking-wider text-gray-500">
                 Project Settings
               </h3>
-              <ul className="space-y-1">
+              <ul className="space-y-0.5">
                 {projectSettingsCategories.map((category) => {
                   const Icon = category.icon;
                   return (
@@ -308,7 +308,7 @@ export function Sidebar({ projectId }: SidebarProps) {
           </div>
         ) : isLiveDeskMode ? (
           /* Live Desk Chrome-like navigation mode */
-          <div className="p-4">
+          <div className="p-3">
             {/* Back Button */}
             <button
               onClick={handleBackToMain} // Updated to use handleBackToMain function
@@ -323,7 +323,7 @@ export function Sidebar({ projectId }: SidebarProps) {
               <h3 className="mb-3 text-xs font-medium uppercase tracking-wider text-gray-500">
                 Live Desk
               </h3>
-              <ul className="space-y-1">
+              <ul className="space-y-0.5">
                 {liveDeskCategories.map((category) => {
                   const Icon = category.icon;
                   return (
@@ -348,7 +348,7 @@ export function Sidebar({ projectId }: SidebarProps) {
           </div>
         ) : isCookieConsentMode ? (
           /* Cookie Consent Chrome-like navigation mode */
-          <div className="p-4">
+          <div className="p-3">
             {/* Back Button */}
             <button
               onClick={handleBackToMain} // Updated to use handleBackToMain function
@@ -363,7 +363,7 @@ export function Sidebar({ projectId }: SidebarProps) {
               <h3 className="mb-3 text-xs font-medium uppercase tracking-wider text-gray-500">
                 Cookie Consent
               </h3>
-              <ul className="space-y-1">
+              <ul className="space-y-0.5">
                 {cookieConsentCategories.map((category) => {
                   const Icon = category.icon;
                   return (
@@ -388,13 +388,13 @@ export function Sidebar({ projectId }: SidebarProps) {
           </div>
         ) : (
           /* Normal Navigation Mode */
-          <nav className="flex-1 space-y-6 p-5">
+          <nav className="flex-1 space-y-6 p-3">
             {navigationGroups.map((group) => (
               <div key={group.name}>
-                <h3 className="mb-3 text-xs tracking-wider text-neutral-500">
+                <h3 className="mb-3 px-3 text-xs tracking-wider text-neutral-500">
                   {group.name}
                 </h3>
-                <ul className="space-y-1">
+                <ul className="space-y-0.5">
                   {group.items.map((item) => {
                     const Icon = item.icon;
                     return (
@@ -403,7 +403,7 @@ export function Sidebar({ projectId }: SidebarProps) {
                           <button
                             onClick={item.onClick}
                             className={cn(
-                              'flex w-full items-center gap-3 rounded-md py-2 text-left text-sm transition-colors',
+                              'flex w-full items-center gap-3 rounded-md px-2 py-2 text-left text-sm transition-colors',
                               item.current
                                 ? 'bg-blue-50 font-medium text-blue-700'
                                 : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
@@ -416,7 +416,7 @@ export function Sidebar({ projectId }: SidebarProps) {
                           <Link
                             to={item.href}
                             className={cn(
-                              'flex items-center gap-3 rounded-md py-2 text-sm transition-colors',
+                              'flex items-center gap-3 rounded-md px-2 py-2 text-sm transition-colors',
                               item.current
                                 ? 'bg-blue-50 font-medium text-blue-700'
                                 : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
