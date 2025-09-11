@@ -4,7 +4,6 @@ import { RouterProvider } from 'react-router/dom';
 import ErrorBoundary from '@/components/error-boundary';
 import SplashScreen from '@/components/splash-screen';
 import AuthLayout from '@/layouts/auth-layout';
-import DashboardLayout from '@/layouts/dashboard-layout';
 import InvitationLayout from '@/layouts/invitation-layout';
 import RootLayout from '@/layouts/root-layout';
 import VerifyLayout from '@/layouts/verify-layout';
@@ -15,17 +14,13 @@ import {
   verifyMiddlewareLoader,
 } from '@/middlewares/auth-middleware';
 import NotFound from '@/pages/404';
-import NotFoundPrivate from '@/pages/404-private';
 import AuthCheckPoint from '@/pages/auth-check-point';
 import LoginPage from '@/pages/login';
-import NavSettingsProject from '@/pages/projects/settings/_components/nav-settings';
 import NavSettings from '@/pages/settings/_components/nav-settings';
 import SignupPage from '@/pages/signup';
 
 import PrivateLayout from './layouts/private-layout';
-import NotFoundProjectSettings from './pages/projects/settings/404';
-import SelectNoConversation from './pages/services/chat-assistant/_components/select-no-conversation';
-import SelectNotFoundConversation from './pages/services/chat-assistant/_components/select-not-found-conversation';
+import ProjectLayout from './layouts/project-layout';
 import NotFoundSettings from './pages/settings/404';
 export const routes = createBrowserRouter([
   {
@@ -35,86 +30,101 @@ export const routes = createBrowserRouter([
     hydrateFallbackElement: <SplashScreen />,
     children: [
       {
-        element: <DashboardLayout />,
+        path: '/:projectId',
+        element: <ProjectLayout />,
         loader: dashboardLoader,
         children: [
           {
             index: true,
-            element: <Navigate to="/dashboard" />,
+            element: <Navigate to="analytics" />,
           },
           {
-            path: '/dashboard',
+            path: 'analytics',
             lazy: () => import('@/pages/home'),
-          },
-          {
-            path: '/tickets',
-            lazy: () => import('@/pages/tickets'),
-          },
-          {
-            path: '/settings/project',
-            element: <NavSettingsProject />,
-            children: [
-              {
-                index: true,
-                lazy: () => import('@/pages/projects/settings/index'),
-              },
-              {
-                path: 'services',
-                lazy: () => import('@/pages/projects/settings/services'),
-                loader: dashboardLoader,
-              },
-              {
-                path: '*',
-                element: <NotFoundProjectSettings />,
-              },
-            ],
-          },
-          {
-            path: 'services',
-            children: [
-              {
-                index: true,
-                element: <Navigate to="/settings/project/services" />,
-              },
-              {
-                path: '/services/web-analytics',
-                lazy: () => import('@/pages/services/web-analytics'),
-              },
-              {
-                path: '/services/chat-assistant',
-                lazy: () => import('@/pages/services/chat-assistant'),
-                children: [
-                  {
-                    index: true,
-                    element: <SelectNoConversation />,
-                  },
-                  {
-                    path: ':ticketId/*',
-                    lazy: () =>
-                      import('@/pages/services/chat-assistant/conversation'),
-                  },
-                  {
-                    path: 'not-found',
-                    element: <SelectNotFoundConversation />,
-                  },
-                ],
-              },
-              {
-                path: '/services/cookie-consent',
-                lazy: () => import('@/pages/services/cookie-consent'),
-              },
-              {
-                path: '*',
-                element: <NotFoundPrivate />,
-              },
-            ],
-          },
-          {
-            path: '*',
-            element: <NotFoundPrivate />,
           },
         ],
       },
+      // {
+      //   element: <DashboardLayout />,
+      //   loader: dashboardLoader,
+      //   children: [
+      //     {
+      //       index: true,
+      //       element: <Navigate to="/dashboard" />,
+      //     },
+      //     {
+      //       path: '/dashboard',
+      //       lazy: () => import('@/pages/home'),
+      //     },
+      //     {
+      //       path: '/tickets',
+      //       lazy: () => import('@/pages/tickets'),
+      //     },
+      //     {
+      //       path: '/settings/project',
+      //       element: <NavSettingsProject />,
+      //       children: [
+      //         {
+      //           index: true,
+      //           lazy: () => import('@/pages/projects/settings/index'),
+      //         },
+      //         {
+      //           path: 'services',
+      //           lazy: () => import('@/pages/projects/settings/services'),
+      //           loader: dashboardLoader,
+      //         },
+      //         {
+      //           path: '*',
+      //           element: <NotFoundProjectSettings />,
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       path: 'services',
+      //       children: [
+      //         {
+      //           index: true,
+      //           element: <Navigate to="/settings/project/services" />,
+      //         },
+      //         {
+      //           path: '/services/web-analytics',
+      //           lazy: () => import('@/pages/services/web-analytics'),
+      //         },
+      //         {
+      //           path: '/services/chat-assistant',
+      //           lazy: () => import('@/pages/services/chat-assistant'),
+      //           children: [
+      //             {
+      //               index: true,
+      //               element: <SelectNoConversation />,
+      //             },
+      //             {
+      //               path: ':ticketId/*',
+      //               lazy: () =>
+      //                 import('@/pages/services/chat-assistant/conversation'),
+      //             },
+      //             {
+      //               path: 'not-found',
+      //               element: <SelectNotFoundConversation />,
+      //             },
+      //           ],
+      //         },
+      //         {
+      //           path: '/services/cookie-consent',
+      //           lazy: () => import('@/pages/services/cookie-consent'),
+      //         },
+      //         {
+      //           path: '*',
+      //           element: <NotFoundPrivate />,
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       path: '*',
+      //       element: <NotFoundPrivate />,
+      //     },
+      //   ],
+      // },
       {
         loader: authMiddlewareLoader,
         element: <AuthLayout />,

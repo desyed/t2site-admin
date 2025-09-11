@@ -4,7 +4,7 @@ export function MessageInputAreaSkeleton() {
   return (
     <div className="relative">
       <div className="bg-accent px-2 pb-1 dark:bg-background sm:px-3 sm:pb-2">
-        <div className="relative overflow-hidden rounded-lg ">
+        <div className="relative overflow-hidden rounded-lg">
           {/* Textarea area skeleton */}
           <div className="bg-background p-3 dark:bg-muted/50">
             <Skeleton className="h-[40px] w-full animate-pulse" />

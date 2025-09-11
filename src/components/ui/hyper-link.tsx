@@ -13,7 +13,7 @@ export default function HyperLink({
 }: HyperLinkProps) {
   return (
     <a
-      className={cn('text-sm text-yellow-600 flex gap-0.5', className)}
+      className={cn('flex gap-0.5 text-sm text-yellow-600', className)}
       {...props}
     >
       {children}{' '}

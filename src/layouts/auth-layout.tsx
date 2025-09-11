@@ -12,7 +12,7 @@ export default function AuthLayout() {
         <a href="https://t2site.vercel.app" className="flex justify-center">
           <Brand />
         </a>
-        <div className="flex w-full  gap-5 max-sm:justify-between max-sm:p-4 sm:max-w-sm">
+        <div className="flex w-full gap-5 max-sm:justify-between max-sm:p-4 sm:max-w-sm">
           <div className="relative w-full overflow-x-hidden rounded-xl px-6 py-10 dark:border-border sm:border sm:bg-card sm:px-8 sm:shadow-sm dark:sm:bg-muted/15">
             {/* Background Gradient */}
             <div className="absolute inset-0 isolate overflow-hidden bg-white">

@@ -71,6 +71,9 @@ export default plugin(() => {}, {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))',
         },
+        icon: {
+          DEFAULT: 'hsl(var(--icon))',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',

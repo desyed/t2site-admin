@@ -73,7 +73,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="size-8 ">
+            <Button variant="ghost" size="icon" className="size-8">
               <Ellipsis className="size-4" />
             </Button>
           </DropdownMenuTrigger>

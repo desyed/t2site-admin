@@ -46,7 +46,7 @@ export default function AnalyticsDashboard() {
   const [activeTab, setActiveTab] = useState('web-analytics');
 
   return (
-    <div className="flex min-h-screen flex-col ">
+    <div className="flex min-h-screen flex-col">
       <div className="flex flex-col space-y-4 p-4 md:p-8">
         <Tabs
           defaultValue="web-analytics"

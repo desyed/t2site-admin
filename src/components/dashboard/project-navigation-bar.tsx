@@ -1,0 +1,223 @@
+'use client';
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@radix-ui/react-dropdown-menu';
+import {
+  AxeIcon,
+  BedIcon,
+  ExternalLink,
+  Gift,
+  HelpCircle,
+  LogOut,
+  MessageCircle,
+  PiIcon,
+  Plus,
+  TvIcon,
+  User,
+} from 'lucide-react';
+import { Link, useParams } from 'react-router';
+
+import { Button } from '../site-button';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { Input } from '../ui/input';
+
+const projects = [
+  { id: 'project-1', name: 'T2 live', logo: PiIcon },
+  { id: 'project-2', name: 'E-comm', logo: TvIcon },
+  { id: 'project-3', name: 'SaaS', logo: AxeIcon },
+  { id: 'project-4', name: 'Blog', logo: BedIcon },
+];
+
+const faqItems = [
+  {
+    title: 'What is Dub?',
+    description:
+      'How Dub works, what it can do for your business and what makes it different...',
+  },
+  {
+    title: 'How to create a short link on Dub?',
+    description:
+      'Learn how to create your first short link on Dub and start tracking your links.',
+  },
+  {
+    title: 'How to add a custom domain to Dub',
+    description:
+      'Learn how to add a custom domain your Dub workspace for free - no credit...',
+  },
+  {
+    title: 'How to invite teammates on Dub',
+    description:
+      'Learn how to invite teammates to your Dub workspace and start collaboratin...',
+  },
+  {
+    title: 'Dub Analytics Overview',
+    description:
+      'Learn about how you can use Dub Analytics to better understand your...',
+  },
+  {
+    title: 'Dub Conversions Overview',
+    description:
+      "Learn how you can use Dub's Conversion Analytics feature to understand h...",
+  },
+];
+
+export function ProjectNavigationBar() {
+  const params = useParams();
+  const currentProjectId = params?.projectId as string;
+
+  return (
+    <div className="flex h-full w-16 flex-col items-center border-r border-gray-200 p-2">
+      {/* Logo */}
+      <div className="flex items-center justify-center border-b border-gray-200 py-1">
+        <Link to="/" className="px-1 py-4 text-xl font-bold text-black">
+          T2
+        </Link>
+      </div>
+
+      <div className="flex max-h-64 flex-col gap-3 overflow-y-auto">
+        {projects.map((project) => (
+          <Link
+            key={project.id}
+            to={`/${project.id}/analytics`}
+            className={`flex size-11 flex-col items-center justify-center rounded-lg p-1.5 text-xs font-medium text-icon transition-colors ${
+              currentProjectId === project.id
+                ? `border-current bg-white`
+                : 'hover:bg-gray-300'
+            }`}
+            title={project.name}
+          >
+            <div
+              className={`flex size-7 flex-col items-center justify-center rounded-full bg-white`}
+            >
+              <project.logo className="size-3" />
+            </div>
+          </Link>
+        ))}
+      </div>
+
+      {/* Add Project Button */}
+      <div className="flex items-center justify-center p-2">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="size-8 p-0 text-icon hover:bg-gray-200"
+        >
+          <Plus className="size-4" />
+        </Button>
+      </div>
+
+      {/* Spacer */}
+      <div className="flex-1" />
+
+      {/* Bottom Actions */}
+      <div className="flex flex-col items-center gap-3 border-t border-gray-200 py-3">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="size-11 p-0 text-icon hover:bg-gray-200"
+        >
+          <Gift className="!size-5" />
+        </Button>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="size-11 p-0 text-icon hover:bg-gray-200"
+            >
+              <HelpCircle className="!size-5" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" side="right" className="w-96 p-4">
+            <div className="mb-4">
+              <h3 className="mb-2 flex items-center gap-2 text-lg font-semibold">
+                👋 How can we help?
+              </h3>
+              <Input
+                placeholder="Search articles, guides, and more..."
+                className="w-full"
+              />
+            </div>
+
+            <div className="max-h-80 space-y-3 overflow-y-auto">
+              {faqItems.map((item, index) => (
+                <div
+                  key={index}
+                  className="cursor-pointer rounded-md p-2 hover:bg-gray-50"
+                >
+                  <h4 className="mb-1 text-sm font-medium text-gray-900">
+                    {item.title}
+                  </h4>
+                  <p className="text-xs text-gray-600">{item.description}</p>
+                </div>
+              ))}
+            </div>
+
+            <DropdownMenuSeparator className="my-3" />
+
+            <div className="flex justify-between">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                <MessageCircle className="size-4" />
+                Contact us
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                Help center
+                <ExternalLink className="size-4" />
+              </Button>
+            </div>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <div className="flex size-11 flex-col items-center justify-center">
+              <Avatar className="size-7 cursor-pointer">
+                <AvatarImage src="/avatar.png" />
+                <AvatarFallback>SS</AvatarFallback>
+              </Avatar>
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" side="right" className="w-64 p-3">
+            <div className="mb-3">
+              <h4 className="font-semibold text-gray-900">syed shihab</h4>
+              <p className="text-sm text-gray-600">syedshihabdu@gmail.com</p>
+            </div>
+
+            <DropdownMenuSeparator className="my-2" />
+
+            <DropdownMenuItem className="flex items-center gap-3 py-2">
+              <User className="size-4 text-gray-500" />
+              Account settings
+            </DropdownMenuItem>
+
+            <DropdownMenuItem className="flex items-center gap-3 py-2">
+              <Gift className="size-4 text-gray-500" />
+              Refer and earn
+            </DropdownMenuItem>
+
+            <DropdownMenuSeparator className="my-2" />
+
+            <DropdownMenuItem className="flex items-center gap-3 py-2 text-red-600">
+              <LogOut className="size-4" />
+              Log out
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    </div>
+  );
+}

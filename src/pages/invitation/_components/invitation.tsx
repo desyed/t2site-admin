@@ -25,7 +25,7 @@ export default function Invitation({
   if (isLoading || isFetching) {
     return (
       <div className="flex min-h-56 items-center justify-center">
-        <div className="size-8 animate-spin rounded-full border-b-2 border-primary " />
+        <div className="size-8 animate-spin rounded-full border-b-2 border-primary" />
       </div>
     );
   }

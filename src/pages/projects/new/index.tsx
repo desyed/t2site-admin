@@ -8,7 +8,7 @@ export const loader = createPrivateLoader(() => {
 
 export function Component() {
   return (
-    <div className="flex flex-1 flex-col ">
+    <div className="flex flex-1 flex-col">
       <CreateNewProject />
     </div>
   );

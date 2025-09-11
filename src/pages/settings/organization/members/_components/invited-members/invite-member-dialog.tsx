@@ -32,7 +32,7 @@ function RolePermissions() {
   return (
     <div className="mt-2 sm:items-start">
       <p className="mb-1 font-semibold">Role permissions:</p>
-      <ul className=" space-y-1 sm:items-start">
+      <ul className="space-y-1 sm:items-start">
         <li className="text-ce flex items-start gap-2">
           <UserIcon className="mt-1 size-4 text-primary" />
           <span>

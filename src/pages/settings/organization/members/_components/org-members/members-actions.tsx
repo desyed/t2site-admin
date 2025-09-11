@@ -157,8 +157,7 @@ export function RemoveMemberDropdownMenuItem({
   return (
     <>
       <DropdownMenuItem
-        className="text-destructive 
-      focus:bg-destructive/10 focus:text-destructive"
+        className="text-destructive focus:bg-destructive/10 focus:text-destructive"
         onSelect={() => handleRemoveMember && handleRemoveMember()}
       >
         <XIcon className="mr-2 size-4" /> Remove member
@@ -402,9 +401,9 @@ export default function MembersActions({ member }: MembersActionsProps) {
           }
           description={
             <>
-              <span className="text-foreground ">{member.user.email}</span> will
-              be added as an <span className="text-foreground ">owner</span> to{' '}
-              <span className="text-foreground ">
+              <span className="text-foreground">{member.user.email}</span> will
+              be added as an <span className="text-foreground">owner</span> to{' '}
+              <span className="text-foreground">
                 {currentOrganization?.name}
               </span>
             </>
@@ -443,7 +442,7 @@ export default function MembersActions({ member }: MembersActionsProps) {
         isDanger={true}
         loadingText="Removing member..."
         confirmText={
-          <span className="flex items-center gap-2 ">
+          <span className="flex items-center gap-2">
             <XIcon className="size-5" /> Remove member
           </span>
         }

@@ -110,7 +110,7 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
           ref={scrollContainerRef}
           className="site-scrollbar max-h-[60vh] overflow-y-auto overflow-x-hidden px-5 pb-2"
         >
-          <div className="flex  max-sm:hidden">
+          <div className="flex max-sm:hidden">
             <div className="grid flex-1 grid-cols-1 gap-3 px-1 sm:grid-cols-2">
               <span className="px-1">Email address</span>
               <div className="grid flex-1 grid-cols-2 gap-3 font-semibold">
@@ -155,7 +155,7 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
                         <FormItem>
                           <span className="px-1 sm:hidden">
                             Name{' '}
-                            <span className="text-sm text-muted-foreground ">
+                            <span className="text-sm text-muted-foreground">
                               (optional)
                             </span>
                           </span>

@@ -11,17 +11,17 @@ export function MessageSkeletonList() {
       {/* Other Message (left) */}
       <div className="flex items-end gap-2">
         <div className="flex max-w-[60%] flex-col">
-          <Skeleton className="h-5 w-[100px] animate-pulse rounded-2xl  bg-neutral-800/80" />
+          <Skeleton className="h-5 w-[100px] animate-pulse rounded-2xl bg-neutral-800/80" />
         </div>
       </div>
       <div className="flex items-end gap-2">
         <div className="flex max-w-[60%] flex-col">
-          <Skeleton className="h-7 w-[180px] animate-pulse rounded-2xl  bg-neutral-800/80" />
+          <Skeleton className="h-7 w-[180px] animate-pulse rounded-2xl bg-neutral-800/80" />
         </div>
       </div>
       <div className="flex items-end gap-2">
         <div className="flex max-w-[60%] flex-col">
-          <Skeleton className="h-7 w-[140px] animate-pulse rounded-2xl  bg-neutral-800/80" />
+          <Skeleton className="h-7 w-[140px] animate-pulse rounded-2xl bg-neutral-800/80" />
         </div>
       </div>
 

@@ -213,16 +213,16 @@ export const AssistantMemberBubble = memo(
                   userId={message.assistantMember.user.id ?? ''}
                 />
               ) : (
-                <div className="size-6 rounded-full " />
+                <div className="size-6 rounded-full" />
               )}
             </div>
             <div className="flex w-full max-w-2xl flex-col items-end pl-14">
               {message.content.type === 'text' && (
                 <div
                   className={cn(
-                    'bg-yellow-300 px-3 py-1 text-primary-foreground shadow-sm dark:bg-yellow-300 selection:dark:bg-yellow-600/40 selection:dark:text-background rounded-xl ',
+                    'rounded-xl bg-yellow-300 px-3 py-1 text-primary-foreground shadow-sm dark:bg-yellow-300 selection:dark:bg-yellow-600/40 selection:dark:text-background',
                     {
-                      'rounded-l-2xl rounded-tr-lg rounded-br-2xl':
+                      'rounded-l-2xl rounded-br-2xl rounded-tr-lg':
                         isLastTextMessage(),
                       'rounded-l-2xl rounded-br-lg rounded-tr-2xl':
                         isStartTextMessage(),

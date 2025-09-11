@@ -30,7 +30,7 @@ export function HoverCardMessage({
             <InfoIcon className="size-4" />
           </div>
           <div>
-            {title && <h4 className="mb-1 font-semibold ">{title}</h4>}
+            {title && <h4 className="mb-1 font-semibold">{title}</h4>}
             {description && <p className="text-sm">{description}</p>}
           </div>
         </div>

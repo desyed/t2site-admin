@@ -27,7 +27,7 @@ export default function VerifyLayout() {
         <div className="flex justify-center">
           <Brand />
         </div>
-        <div className="flex flex-1 flex-col gap-5  max-sm:justify-between sm:max-w-[420px]">
+        <div className="flex flex-1 flex-col gap-5 max-sm:justify-between sm:max-w-[420px]">
           <div className="overflow-x-hidden rounded-xl px-6 pb-10 dark:border-border sm:border sm:bg-card sm:pt-6 sm:shadow-sm dark:sm:bg-muted/15">
             <Outlet />
           </div>

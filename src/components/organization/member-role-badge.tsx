@@ -55,7 +55,7 @@ export default function MemberRoleBadge({
   return (
     <Badge
       className={cn(
-        'inline-flex items-center uppercase font-medium gap-1',
+        'inline-flex items-center gap-1 font-medium uppercase',
         badgeSizeStyles[size],
         className
       )}

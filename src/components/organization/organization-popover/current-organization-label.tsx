@@ -22,7 +22,7 @@ const CurrentOrganizationLabel = forwardRef<
       ref={ref}
       variant="outline"
       className={cn(
-        'w-full h-10 items-center justify-between sm:px-3 px-2 rounded-xl'
+        'h-10 w-full items-center justify-between rounded-xl px-2 sm:px-3'
       )}
       onClick={handleToggle}
     >

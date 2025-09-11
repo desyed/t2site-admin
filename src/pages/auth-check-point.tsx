@@ -37,7 +37,7 @@ export default function AuthCheckPoint() {
           <ModeToggle />
         </div>
       </div>
-      <div className="mt-20 flex flex-1 flex-col items-center gap-5 px-5 ">
+      <div className="mt-20 flex flex-1 flex-col items-center gap-5 px-5">
         <h1 className="text-xl font-bold"> Authentication Checkpoint</h1>
         <p className="text-center text-muted-foreground">
           Please wait while we verify your credentials...

@@ -196,7 +196,7 @@ export function ChatArea() {
           ref={scrollContainerRef}
         >
           {isFetchingPreviousPage && <MessageSkeletonList />}
-          <div className="flex flex-1 flex-col gap-2 ">
+          <div className="flex flex-1 flex-col gap-2">
             <MessagesList
               messages={messages}
               handleScrollToBottom={handleFirstScrollToBottom}

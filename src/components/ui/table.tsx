@@ -19,8 +19,8 @@ const Table = React.forwardRef<
     return (
       <div className="grid">
         <div
-          className={cn('w-full overflow-x-auto site-scrollbar', {
-            'border rounded-lg bg-accent/5': bgBorder,
+          className={cn('site-scrollbar w-full overflow-x-auto', {
+            'rounded-lg border bg-accent/5': bgBorder,
           })}
         >
           <table
@@ -35,7 +35,7 @@ const Table = React.forwardRef<
   return (
     <div
       className={cn('relative w-full overflow-auto', {
-        'border rounded-lg bg-accent/5': bgBorder,
+        'rounded-lg border bg-accent/5': bgBorder,
       })}
     >
       <table
@@ -54,7 +54,7 @@ const TableHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <thead
     ref={ref}
-    className={cn('[&_tr]:border-b text-xs', className)}
+    className={cn('text-xs [&_tr]:border-b', className)}
     {...props}
   />
 ));
@@ -94,7 +94,7 @@ const TableRow = React.forwardRef<
   <tr
     ref={ref}
     className={cn(
-      'border-b  hover:bg-muted/30 data-[state=selected]:bg-muted',
+      'border-b hover:bg-muted/30 data-[state=selected]:bg-muted',
       className
     )}
     {...props}
@@ -109,7 +109,7 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      'h-9 px-2 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&:first-child]:pl-3 [&:last-child]:pr-3 text-xs',
+      'h-9 px-2 text-left align-middle text-xs font-medium text-muted-foreground [&:first-child]:pl-3 [&:has([role=checkbox])]:pr-0 [&:last-child]:pr-3',
       className
     )}
     {...props}
@@ -124,7 +124,7 @@ const TableCell = React.forwardRef<
   <td
     ref={ref}
     className={cn(
-      'px-1 py-1.5 align-middle [&:has([role=checkbox])]:pr-0 [&:first-child]:pl-3 [&:last-child]:pr-3',
+      'px-1 py-1.5 align-middle [&:first-child]:pl-3 [&:has([role=checkbox])]:pr-0 [&:last-child]:pr-3',
       className
     )}
     {...props}

@@ -66,7 +66,7 @@ export default function NavSettings() {
     <div className="m-4 flex flex-col items-start gap-4 md:flex-row">
       <div className="top-16 max-md:mb-6 max-md:w-full max-md:border-b max-md:pb-2 md:sticky md:min-w-[12.4rem]">
         <Collapsible open={open} onOpenChange={setOpen}>
-          <div className="hidden max-md:block ">
+          <div className="hidden max-md:block">
             <Button
               variant="ghost"
               size="default"

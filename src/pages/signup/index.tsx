@@ -6,7 +6,7 @@ import SingupForm from '@/components/auth/signup-form';
 export default function SignupPage() {
   return (
     <>
-      <h3 className="text-center text-2xl font-semibold ">Signup</h3>
+      <h3 className="text-center text-2xl font-semibold">Signup</h3>
       <p className="mb-4 mt-2 text-center text-sm text-muted-foreground">
         Create your account to get started
       </p>

@@ -52,7 +52,7 @@ export default function InvitationActions({
           onClick={handleAcceptInvitation}
           className="flex-1"
           size="sm"
-          icon={<Check className="size-3 sm:size-4 " />}
+          icon={<Check className="size-3 sm:size-4" />}
         >
           Accept
         </Button>
@@ -82,7 +82,7 @@ export default function InvitationActions({
               variant="outline"
               onClick={handleAcceptInvitation}
               size="sm"
-              icon={<Check className="size-3 sm:size-4 " />}
+              icon={<Check className="size-3 sm:size-4" />}
             >
               Accept
             </Button>

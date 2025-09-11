@@ -23,7 +23,7 @@ export default function VerifyProjectStep() {
       </div>
 
       <div className="space-y-6">
-        <Card className="space-y-4 border-none ">
+        <Card className="space-y-4 border-none">
           <div className="flex items-start gap-3">
             <Code2 className="mt-1 size-5 text-primary" />
             <div className="space-y-1">

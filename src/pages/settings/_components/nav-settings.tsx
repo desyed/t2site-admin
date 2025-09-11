@@ -79,15 +79,10 @@ export default function NavSettings() {
   }, [pathname, navigate, isMobile]);
 
   return (
-    <div
-      className="m-4 mx-auto flex w-full max-w-screen-xl flex-col
-      items-start justify-between gap-6 px-4
-      md:flex-row
-    "
-    >
-      <div className="top-20  max-md:mb-6 max-md:w-full max-md:border-b max-md:pb-2 md:sticky md:min-w-[12.4rem]">
+    <div className="m-4 mx-auto flex w-full max-w-screen-xl flex-col items-start justify-between gap-6 px-4 md:flex-row">
+      <div className="top-20 max-md:mb-6 max-md:w-full max-md:border-b max-md:pb-2 md:sticky md:min-w-[12.4rem]">
         <Collapsible open={open} onOpenChange={setOpen}>
-          <div className="hidden max-md:block ">
+          <div className="hidden max-md:block">
             <Button
               variant="ghost"
               size="default"

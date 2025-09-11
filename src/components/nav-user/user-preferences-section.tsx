@@ -56,7 +56,7 @@ export function UserPreferencesSection({
         <DropdownMenuSubContent>
           <DropdownMenuItem
             onSelect={() => handleThemeSelect('light')}
-            className={cn('flex items-center gap-3 ', {
+            className={cn('flex items-center gap-3', {
               'bg-muted': theme === 'light',
             })}
           >
@@ -64,7 +64,7 @@ export function UserPreferencesSection({
           </DropdownMenuItem>
           <DropdownMenuItem
             onSelect={() => handleThemeSelect('dark')}
-            className={cn('flex items-center gap-3 ', {
+            className={cn('flex items-center gap-3', {
               'bg-muted': theme === 'dark',
             })}
           >
@@ -72,7 +72,7 @@ export function UserPreferencesSection({
           </DropdownMenuItem>
           <DropdownMenuItem
             onSelect={() => handleThemeSelect('system')}
-            className={cn('flex items-center gap-3 ', {
+            className={cn('flex items-center gap-3', {
               'bg-muted': theme === 'system',
             })}
           >

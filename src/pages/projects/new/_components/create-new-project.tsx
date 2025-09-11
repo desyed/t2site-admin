@@ -25,7 +25,7 @@ export default function CreateNewProject() {
       <div className="mb-12">
         <StepProgress />
       </div>
-      <Card className=" w-full max-md:border-none md:p-8">
+      <Card className="w-full max-md:border-none md:p-8">
         <div className="min-h-[350px]">
           <CurrentStep />
         </div>

@@ -39,7 +39,7 @@ export function ProjectsMenu() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <div className="flex  justify-between">
+            <div className="flex justify-between">
               <Button className="h-2 px-0" variant="ghost">
                 Default Projects
               </Button>

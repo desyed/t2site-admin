@@ -41,7 +41,7 @@ export default function ServicesSettings({
 
   return (
     <div className="space-y-6">
-      <Card className="w-full max-w-full border ">
+      <Card className="w-full max-w-full border">
         {error ? (
           <div className="flex flex-col items-center justify-center space-y-4 p-8 text-center">
             <div className="rounded-full bg-destructive/10 p-3">

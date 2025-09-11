@@ -5,7 +5,7 @@ export function StepProgress() {
   const steps = useProjectStore((state) => state.createProjectSteps);
   const currentStep = useProjectStore((state) => state.currentStep);
   return (
-    <div className="relative w-full ">
+    <div className="relative w-full">
       {/* Steps */}
       <div className="flex items-center justify-between">
         {steps.map((step, index) => (
@@ -26,7 +26,7 @@ export function StepProgress() {
             {/* Title */}
             <span
               className={cn(
-                'absolute -bottom-6 whitespace-nowrap text-xs md:text-sm font-medium ',
+                'absolute -bottom-6 whitespace-nowrap text-xs font-medium md:text-sm',
                 currentStep >= index ? 'text-primary' : 'text-muted-foreground'
               )}
             >

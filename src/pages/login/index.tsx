@@ -25,7 +25,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <h3 className="text-center text-2xl font-semibold ">Login</h3>
+      <h3 className="text-center text-2xl font-semibold">Login</h3>
       <p className="mb-4 mt-2 text-center text-sm text-muted-foreground">
         Welcome to T2site Admin
       </p>

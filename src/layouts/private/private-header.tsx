@@ -53,7 +53,7 @@ export default function PrivateHeader() {
     <>
       <header className="fixed inset-x-0 top-0 z-40 border-b bg-white/95 backdrop-blur-2xl dark:bg-black/70">
         <div className="flex h-14 items-center px-4 pr-5">
-          <div className="flex items-center gap-4 ">
+          <div className="flex items-center gap-4">
             <Button
               variant="ghost"
               size="icon"
@@ -77,9 +77,9 @@ export default function PrivateHeader() {
                   className={cn(
                     'flex h-8 items-center rounded-md px-4',
                     'text-sm font-medium text-muted-foreground',
-                    'transition-colors hover:bg-accent hover:text-accent-foreground gap-2',
+                    'gap-2 transition-colors hover:bg-accent hover:text-accent-foreground',
                     {
-                      'dark:!text-primary !text-yellow-600': isActivePath(
+                      '!text-yellow-600 dark:!text-primary': isActivePath(
                         pathname,
                         item.path
                       ),

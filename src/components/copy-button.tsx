@@ -51,7 +51,7 @@ export default function CopyButton({
         <Copy className="size-4" />
       )}
       {title && (
-        <span className="block truncate ">
+        <span className="block truncate">
           {copied && afterCopyTitle ? 'Copied!' : title}
         </span>
       )}

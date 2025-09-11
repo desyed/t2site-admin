@@ -167,7 +167,7 @@ export const TrafficBubble = memo(
                   {
                     'rounded-r-2xl rounded-bl-lg rounded-tl-2xl':
                       isStartTextMessage(),
-                    'rounded-r-2xl rounded-tl-lg rounded-bl-2xl':
+                    'rounded-r-2xl rounded-bl-2xl rounded-tl-lg':
                       isEndTextMessage(),
                     'rounded-l-lg rounded-r-2xl': isMidTextMessage(),
                     'rounded-2xl': isAloneTextMessage(),

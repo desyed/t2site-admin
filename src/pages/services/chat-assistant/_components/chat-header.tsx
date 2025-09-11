@@ -13,7 +13,7 @@ export const ChatHeader = memo(
   ({ conversation }: { conversation: ConversationDetail }) => {
     const isDesktop = useMediaQuery('(min-width: 1024px)');
     return (
-      <div className="flex items-center justify-between border-b  px-3 py-2 pt-3 sm:px-4">
+      <div className="flex items-center justify-between border-b px-3 py-2 pt-3 sm:px-4">
         {/* Left Side */}
         <div className="flex min-w-0 items-center gap-1.5">
           {!isDesktop && (
@@ -37,11 +37,11 @@ export const ChatHeader = memo(
               <AvatarImage src={undefined} />
             </Avatar>
             <div className="flex flex-col">
-              <h2 className="truncate text-base font-medium ">
+              <h2 className="truncate text-base font-medium">
                 {conversation?.ticketId || 'Messenger'}
               </h2>
               {conversation?.updatedAt && (
-                <p className="truncate text-xs ">
+                <p className="truncate text-xs">
                   {formatSmartTimestamp(conversation?.updatedAt)}
                 </p>
               )}

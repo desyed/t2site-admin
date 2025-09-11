@@ -70,7 +70,7 @@ export const ConversationItemView = memo(
           className={cn(
             'flex w-full items-center gap-3 border-b px-3 py-2 text-left',
             currentTicketId === conversationItem.ticketId
-              ? 'dark:bg-accent/50 bg-accent'
+              ? 'bg-accent dark:bg-accent/50'
               : 'hover:bg-accent/20'
           )}
         >
@@ -88,7 +88,7 @@ export const ConversationItemView = memo(
             <div className="flex items-center justify-between">
               <span
                 className={cn(
-                  'text-sm font-medium truncate uppercase max-w-48 '
+                  'max-w-48 truncate text-sm font-medium uppercase'
                 )}
               >
                 {conversationItem.ticketId}
@@ -105,15 +105,15 @@ export const ConversationItemView = memo(
             </div>
 
             {conversationItem.optimistic?.error ? (
-              <p className=" truncate text-xs text-red-500">Sending failed</p>
+              <p className="truncate text-xs text-red-500">Sending failed</p>
             ) : conversation.latestMessage ? (
               <>
                 {' '}
                 {conversationItem.latestMessage?.content.type === 'text' && (
                   <p
                     className={cn(
-                      'text-xs truncate text-muted-foreground max-w-md',
-                      conversationItem.unread && 'text-foreground font-semibold'
+                      'max-w-md truncate text-xs text-muted-foreground',
+                      conversationItem.unread && 'font-semibold text-foreground'
                     )}
                   >
                     {conversationItem.latestMessage.sender === 'assistant'
@@ -128,8 +128,8 @@ export const ConversationItemView = memo(
                   'emojiOrSticker' && (
                   <p
                     className={cn(
-                      'text-xs truncate text-muted-foreground',
-                      conversationItem.unread && 'text-foreground font-semibold'
+                      'truncate text-xs text-muted-foreground',
+                      conversationItem.unread && 'font-semibold text-foreground'
                     )}
                   >
                     {conversationItem.latestMessage.sender === 'assistant'

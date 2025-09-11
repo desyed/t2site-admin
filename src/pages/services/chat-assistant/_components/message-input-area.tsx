@@ -128,7 +128,7 @@ export const MessageInputArea = memo(
                   size="icon"
                   className={cn(
                     'size-8 text-muted-foreground hover:text-foreground',
-                    showEmojiPicker && '!text-primary !bg-accent'
+                    showEmojiPicker && '!bg-accent !text-primary'
                   )}
                   onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                 >

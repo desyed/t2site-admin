@@ -53,7 +53,7 @@ export function ServiceTag({ type, className }: ServiceTagProps) {
           <Badge
             variant="secondary"
             className={cn(
-              'flex items-center gap-1.5 text-xs p-1 px-2',
+              'flex items-center gap-1.5 p-1 px-2 text-xs',
               className
             )}
           >
