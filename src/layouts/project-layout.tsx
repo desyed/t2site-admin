@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router';
 
 import { ProfileCompletionFloat } from '@/components/dashboard/profile-completion-float';
-import { ProfileIncompleteAlert } from '@/components/dashboard/profile-incomplete-alert';
 import { ProjectNavigationBar } from '@/components/dashboard/project-navigation-bar';
 import { Sidebar } from '@/components/dashboard/sidebar';
 import { useAuth } from '@/contexts/auth-provider';
@@ -27,10 +26,10 @@ export default function ProjectLayout() {
       </div>
       <main className="relative flex min-h-full flex-1 flex-col overflow-hidden pt-2">
         <div className="h-full rounded-tl-xl bg-white">
-          <div className="container flex-1 overflow-auto">
-            <div className="px-6 pt-6">
+          <div className="flex-1 overflow-auto">
+            {/* <div className="px-6 pt-6">
               <ProfileIncompleteAlert />
-            </div>
+            </div> */}
             <Outlet />
           </div>
         </div>
