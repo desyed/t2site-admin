@@ -26,9 +26,11 @@ export default function ProjectLayout() {
         <Sidebar projectId={params.projectId ?? ''} />
       </div>
       <main className="relative flex min-h-full flex-1 flex-col overflow-hidden pt-2">
-        <div className="h-full rounded-tl-xl bg-white p-4">
-          <ProfileIncompleteAlert />
-          <div className="flex-1 overflow-auto">
+        <div className="h-full rounded-tl-xl bg-white">
+          <div className="container flex-1 overflow-auto">
+            <div className="px-6 pt-6">
+              <ProfileIncompleteAlert />
+            </div>
             <Outlet />
           </div>
         </div>

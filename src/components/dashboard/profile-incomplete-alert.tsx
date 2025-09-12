@@ -13,9 +13,11 @@ export function ProfileIncompleteAlert() {
   if (!isVisible || !isProfileIncomplete) return null;
 
   return (
-    <Alert className="border-orange-200 bg-orange-50">
-      <AlertCircle className="size-4 text-orange-600" />
-      <AlertDescription className="flex items-center justify-between">
+    <Alert className="flex items-center gap-2 border-orange-200 bg-orange-50">
+      <div className="flex flex-col justify-center">
+        <AlertCircle className="size-4 text-orange-600" />
+      </div>
+      <AlertDescription className="flex w-full items-center justify-between">
         <span className="text-orange-800">
           Your profile is incomplete. Complete your profile to unlock all
           features.
