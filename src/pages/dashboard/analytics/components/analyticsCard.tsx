@@ -11,8 +11,8 @@ type AnalyticsCardProps = {
 
 export function AnalyticsCard({ titleTabs, extraTabs }: AnalyticsCardProps) {
   return (
-    <Card className="rounded-2xl shadow-sm">
-      <CardHeader className="flex flex-row items-center justify-between border-b px-5 py-0">
+    <Card className="rounded-none shadow-sm md:rounded-2xl">
+      <CardHeader className="flex w-full flex-row items-center justify-between overflow-x-auto border-b px-5 py-0">
         {/* Tabs */}
         <Tabs defaultValue={titleTabs[0]}>
           <TabsList className="h-auto space-x-2 bg-transparent p-0">

@@ -1,12 +1,5 @@
 'use client';
 
-import type { ChartConfig } from '@/components/ui/chart';
-
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from '@/components/ui/chart';
 import {
   Calendar,
   ChartLine,
@@ -18,9 +11,17 @@ import {
   ListFilter,
 } from 'lucide-react';
 import { useState } from 'react';
+import { useOutletContext } from 'react-router';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 
+import type { ChartConfig } from '@/components/ui/chart';
+
 import { Button } from '@/components/ui/button';
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from '@/components/ui/chart';
 import {
   Command,
   CommandEmpty,
@@ -96,15 +97,18 @@ export function AnalyticsDashboard({ projectId }: AnalyticsDashboardProps) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
 
+  const [toggleMobileNav] = useOutletContext();
+
   return (
     <div>
       {/* Header */}
-      <div className="border-b">
+      <div className="border-b max-md:bg-neutral-100">
         <div className="mx-auto w-full max-w-screen-xl px-3 lg:px-6">
           <div className="flex h-12 items-center justify-between gap-4 sm:h-16">
             <div className="flex min-w-0 items-center gap-4">
-              <button
-                type="button"
+              <Button
+                variant="ghost"
+                onClick={toggleMobileNav}
                 className="hover:bg-bg-subtle group flex h-auto w-fit items-center justify-center gap-2 whitespace-nowrap rounded-md border border-transparent p-1 text-sm transition-all md:hidden"
               >
                 <svg
@@ -138,7 +142,7 @@ export function AnalyticsDashboard({ projectId }: AnalyticsDashboardProps) {
                     ></rect>
                   </g>
                 </svg>
-              </button>
+              </Button>
               <div className="flex items-center gap-2">
                 <h1 className="text-lg font-semibold leading-7">Analytics</h1>
               </div>
@@ -148,8 +152,8 @@ export function AnalyticsDashboard({ projectId }: AnalyticsDashboardProps) {
       </div>
 
       <div className='className="mx-auto lg:px-6" mx-auto w-full max-w-screen-xl gap-6 px-3 pt-6'>
-        <div className="flex items-center justify-between pb-3">
-          <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between gap-3 pb-3 max-md:flex-col">
+          <div className="flex w-full items-center gap-3">
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger asChild>
                 <Button
@@ -207,7 +211,7 @@ export function AnalyticsDashboard({ projectId }: AnalyticsDashboardProps) {
             </Popover>
 
             <Select defaultValue="24h">
-              <SelectTrigger className="w-48">
+              <SelectTrigger className="w-48 max-md:w-full">
                 <div className="flex items-center">
                   <Calendar className="mr-2 size-4" />
                   <SelectValue />
@@ -222,12 +226,12 @@ export function AnalyticsDashboard({ projectId }: AnalyticsDashboardProps) {
             </Select>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 max-md:w-full">
             <Button
               variant="outline"
               role="combobox"
               aria-expanded={open}
-              className="min-w-[110px] justify-between"
+              className="min-w-[110px] justify-between max-md:w-full"
             >
               <span className="flex items-center gap-2">
                 <Grid3x3 />
@@ -265,7 +269,7 @@ export function AnalyticsDashboard({ projectId }: AnalyticsDashboardProps) {
                     <div className="size-2 bg-current text-blue-500/50 shadow-[inset_0_0_0_1px_#00000019]"></div>
                     <span>Clicks</span>
                   </div>
-                  <div className="mt-1 flex h-12 items-center text-3xl font-medium">
+                  <div className="mt-1 flex h-12 items-center text-xl font-medium md:text-3xl">
                     0
                   </div>
                 </div>
@@ -293,7 +297,7 @@ export function AnalyticsDashboard({ projectId }: AnalyticsDashboardProps) {
                     <div className="size-2 bg-current text-blue-500/50 shadow-[inset_0_0_0_1px_#00000019]"></div>
                     <span>Leads</span>
                   </div>
-                  <div className="mt-1 flex h-12 items-center text-3xl font-medium">
+                  <div className="mt-1 flex h-12 items-center text-xl font-medium md:text-3xl">
                     0
                   </div>
                 </div>
@@ -321,7 +325,7 @@ export function AnalyticsDashboard({ projectId }: AnalyticsDashboardProps) {
                     <div className="size-2 bg-current text-neutral-500/50 shadow-[inset_0_0_0_1px_#00000019]"></div>
                     <span>Sales</span>
                   </div>
-                  <div className="mt-1 flex h-12 items-center text-3xl font-medium">
+                  <div className="mt-1 flex h-12 items-center text-xl font-medium md:text-3xl">
                     US$0
                   </div>
                 </div>

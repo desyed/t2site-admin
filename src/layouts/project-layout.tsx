@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router';
 
 import { ProfileCompletionFloat } from '@/components/dashboard/profile-completion-float';
@@ -8,6 +8,8 @@ import { useAuth } from '@/contexts/auth-provider';
 
 export default function ProjectLayout() {
   const { isAuthenticated } = useAuth();
+  const [isMobileNavOpened, setIsMobileNavOpened] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,21 +20,39 @@ export default function ProjectLayout() {
 
   const params = useParams();
 
+  const toggleMobileNav = () => setIsMobileNavOpened((prev) => !prev);
+
+  const handleOutsideClick = () => {
+    if (isMobileNavOpened) {
+      setIsMobileNavOpened(false);
+    }
+  };
+
   return (
-    <div className="relative flex size-full bg-sidebar">
-      <div className="sticky top-0 flex h-screen">
+    <div className="relative flex size-full h-screen">
+      <div
+        className={`top-0 z-50 flex h-full bg-sidebar transition-all duration-1000 max-md:fixed ${isMobileNavOpened ? 'left-0' : '-left-full'}`}
+      >
         <ProjectNavigationBar />
         <div className="py-2 pr-2">
           <Sidebar projectId={params.projectId ?? ''} />
         </div>
       </div>
 
-      <main className="relative w-full py-2">
-        <div className="h-fit w-full rounded-l-xl bg-white pb-10">
-          <Outlet />
+      <main
+        className={`-100 relative w-full bg-sidebar md:py-2 ${isMobileNavOpened && 'blur-sm'} h-full overflow-y-auto transition-all duration-1000`}
+      >
+        {/* Transparent Overlay for preventing background click */}
+        <div
+          className={`absolute left-0 top-0 z-10 size-full ${isMobileNavOpened ? 'block' : 'hidden'}`}
+          onClick={handleOutsideClick}
+        />
+        <div className="h-fit w-full bg-white pb-10 md:rounded-l-xl">
+          <Outlet context={[toggleMobileNav]} />
         </div>
+
+        <ProfileCompletionFloat />
       </main>
-      <ProfileCompletionFloat />
     </div>
   );
 }
