@@ -52,6 +52,13 @@ export const routes = createBrowserRouter([
               return { element: <module.default /> };
             },
           },
+          {
+            path: 'customers',
+            lazy: async () => {
+              const module = await import('@/pages/dashboard/customers');
+              return { element: <module.default /> };
+            },
+          },
         ],
       },
       // {

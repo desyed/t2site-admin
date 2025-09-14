@@ -27,6 +27,7 @@ import { cn } from '@/lib/utils';
 
 interface SidebarProps {
   projectId: string;
+  onNavItemSelect?: () => void;
 }
 
 const projectData = {

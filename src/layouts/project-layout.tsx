@@ -22,7 +22,7 @@ export default function ProjectLayout() {
 
   const toggleMobileNav = () => setIsMobileNavOpened((prev) => !prev);
 
-  const handleOutsideClick = () => {
+  const closeMobileNav = () => {
     if (isMobileNavOpened) {
       setIsMobileNavOpened(false);
     }
@@ -35,7 +35,10 @@ export default function ProjectLayout() {
       >
         <ProjectNavigationBar />
         <div className="py-2 pr-2">
-          <Sidebar projectId={params.projectId ?? ''} />
+          <Sidebar
+            projectId={params.projectId ?? ''}
+            onNavItemSelect={closeMobileNav}
+          />
         </div>
       </div>
 
@@ -45,7 +48,7 @@ export default function ProjectLayout() {
         {/* Transparent Overlay for preventing background click */}
         <div
           className={`absolute left-0 top-0 z-10 size-full ${isMobileNavOpened ? 'block' : 'hidden'}`}
-          onClick={handleOutsideClick}
+          onClick={closeMobileNav}
         />
         <div className="size-full min-h-fit bg-white pb-10 md:rounded-l-xl">
           <Outlet context={[toggleMobileNav]} />
