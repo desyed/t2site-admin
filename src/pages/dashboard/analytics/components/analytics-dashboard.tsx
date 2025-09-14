@@ -101,7 +101,7 @@ export function AnalyticsDashboard({ projectId }: AnalyticsDashboardProps) {
     <div>
       <PageHeader title="Analytics" />
 
-      <div className="mx-auto w-full max-w-screen-xl gap-6 px-3 pt-6 lg:px-6">
+      <div className="dashboard-container">
         <div className="flex items-center justify-between gap-3 pb-3 max-md:flex-col">
           <div className="flex w-full items-center gap-3">
             <Popover open={open} onOpenChange={setOpen}>

@@ -12,7 +12,7 @@ export function CustomersDashboard({ projectId }: CustomersDashboardProps) {
     <div>
       <PageHeader title="Customers" />
 
-      <div className="mx-auto w-full max-w-screen-xl gap-6 px-3 pt-6 lg:px-6">
+      <div className="dashboard-container">
         <Card>
           <CardHeader>
             <CardTitle>Customer Management</CardTitle>
