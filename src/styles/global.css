@@ -119,6 +119,10 @@ html.dark {
   .dashboard-container {
     @apply mx-auto w-full max-w-screen-xl gap-6 px-3 pt-6 lg:px-6;
   }
+
+  .nested-dashboard-container {
+    @apply dashboard-container space-y-6 py-10;
+  }
 }
 
 [data-scroll-locked][data-scroll-locked] {

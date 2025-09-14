@@ -60,6 +60,13 @@ export const routes = createBrowserRouter([
             },
           },
           {
+            path: 'cookie-consent',
+            lazy: async () => {
+              const module = await import('@/pages/dashboard/cookie-consent');
+              return { element: <module.default /> };
+            },
+          },
+          {
             path: 'billing',
             lazy: async () => {
               const module = await import('@/pages/dashboard/billing');
