@@ -19,19 +19,17 @@ export default function ProjectLayout() {
   const params = useParams();
 
   return (
-    <div className="flex h-screen bg-sidebar">
-      <ProjectNavigationBar />
-      <div className="py-2 pr-2">
-        <Sidebar projectId={params.projectId ?? ''} />
+    <div className="relative flex size-full bg-sidebar">
+      <div className="sticky top-0 flex h-screen">
+        <ProjectNavigationBar />
+        <div className="py-2 pr-2">
+          <Sidebar projectId={params.projectId ?? ''} />
+        </div>
       </div>
-      <main className="relative flex min-h-full flex-1 flex-col overflow-hidden pt-2">
-        <div className="h-full rounded-tl-xl bg-white">
-          <div className="flex-1 overflow-auto">
-            {/* <div className="px-6 pt-6">
-              <ProfileIncompleteAlert />
-            </div> */}
-            <Outlet />
-          </div>
+
+      <main className="relative w-full py-2">
+        <div className="h-fit w-full rounded-l-xl bg-white pb-10">
+          <Outlet />
         </div>
       </main>
       <ProfileCompletionFloat />

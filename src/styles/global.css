@@ -41,11 +41,11 @@ html.dark {
     --input: 0 0% 81.25%;
     --ring: 47.9 95.8% 53.1%;
     --radius: 0.5rem;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --chart-1: oklch(0.646 0.222 41.116);
+    --chart-2: oklch(63.219% 0.13917 237.537);
+    --chart-3: oklch(0.398 0.07 227.392);
+    --chart-4: oklch(46.268% 0.30604 269.01);
+    --chart-5: oklch(0.769 0.188 70.08);
     --sidebar-background: 0 0% 90%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 0 0% 96%;

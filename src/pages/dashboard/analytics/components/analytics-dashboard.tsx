@@ -1,24 +1,44 @@
 'use client';
 
+import type { ChartConfig } from '@/components/ui/chart';
+
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from '@/components/ui/chart';
 import {
   Calendar,
-  ChevronRight,
-  Clock,
-  MessageSquare,
-  Users,
+  ChartLine,
+  Check,
+  ChevronDown,
+  Download,
+  EllipsisVertical,
+  Grid3x3,
+  ListFilter,
 } from 'lucide-react';
-import {
-  Bar,
-  BarChart,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-} from 'recharts';
+import { useState } from 'react';
+import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import {
   Select,
   SelectContent,
@@ -26,43 +46,56 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { cn } from '@/lib/utils';
+
+import { AnalyticsCard } from './analyticsCard';
+
+const frameworks = [
+  {
+    value: 'next.js',
+    label: 'Next.js',
+  },
+  {
+    value: 'sveltekit',
+    label: 'SvelteKit',
+  },
+  {
+    value: 'nuxt.js',
+    label: 'Nuxt.js',
+  },
+  {
+    value: 'remix',
+    label: 'Remix',
+  },
+  {
+    value: 'astro',
+    label: 'Astro',
+  },
+];
+
+const chartData = [
+  { month: 'January', mobile: 80 },
+  { month: 'February', mobile: 200 },
+  { month: 'March', mobile: 120 },
+  { month: 'April', mobile: 190 },
+  { month: 'May', mobile: 130 },
+  { month: 'June', mobile: 140 },
+];
+const chartConfig = {
+  mobile: {
+    label: 'Mobile',
+    color: 'var(--chart-2)',
+  },
+} satisfies ChartConfig;
 
 interface AnalyticsDashboardProps {
   projectId: string;
 }
 
-const messageVolumeData = [
-  { time: '3:00 PM', messages: 12 },
-  { time: '4:00 PM', messages: 19 },
-  { time: '5:00 PM', messages: 25 },
-  { time: '6:00 PM', messages: 31 },
-  { time: '7:00 PM', messages: 28 },
-  { time: '8:00 PM', messages: 22 },
-  { time: '9:00 PM', messages: 18 },
-  { time: '10:00 PM', messages: 15 },
-  { time: '11:00 PM', messages: 8 },
-  { time: '12:00 AM', messages: 5 },
-  { time: '1:00 AM', messages: 3 },
-  { time: '2:00 AM', messages: 2 },
-  { time: '3:00 AM', messages: 1 },
-  { time: '4:00 AM', messages: 2 },
-  { time: '5:00 AM', messages: 4 },
-  { time: '6:00 AM', messages: 8 },
-  { time: '7:00 AM', messages: 15 },
-  { time: '8:00 AM', messages: 22 },
-  { time: '9:00 AM', messages: 35 },
-  { time: '10:00 AM', messages: 42 },
-  { time: '11:00 AM', messages: 38 },
-];
-
-const channelData = [
-  { channel: 'WhatsApp', messages: 156, color: '#25D366' },
-  { channel: 'Facebook', messages: 89, color: '#1877F2' },
-  { channel: 'Instagram', messages: 67, color: '#E4405F' },
-  { channel: 'Email', messages: 43, color: '#EA4335' },
-];
-
 export function AnalyticsDashboard({ projectId }: AnalyticsDashboardProps) {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('');
+
   return (
     <div>
       {/* Header */}
@@ -114,163 +147,288 @@ export function AnalyticsDashboard({ projectId }: AnalyticsDashboardProps) {
         </div>
       </div>
 
-      <div className='className="mx-auto lg:px-6" mx-auto w-full max-w-screen-xl px-3 pt-6'>
-        <div className="pb-3">
-          <Select defaultValue="24h">
-            <SelectTrigger className="w-48">
-              <Calendar className="mr-2 size-4" />
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="24h">Last 24 hours</SelectItem>
-              <SelectItem value="7d">Last 7 days</SelectItem>
-              <SelectItem value="30d">Last 30 days</SelectItem>
-              <SelectItem value="90d">Last 90 days</SelectItem>
-            </SelectContent>
-          </Select>
+      <div className='className="mx-auto lg:px-6" mx-auto w-full max-w-screen-xl gap-6 px-3 pt-6'>
+        <div className="flex items-center justify-between pb-3">
+          <div className="flex items-center gap-3">
+            <Popover open={open} onOpenChange={setOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={open}
+                  className="min-w-[110px] justify-between"
+                >
+                  <span className="flex items-center gap-2">
+                    <ListFilter />
+                    {value
+                      ? frameworks.find(
+                          (framework) => framework.value === value
+                        )?.label
+                      : 'Filter'}
+                  </span>
+                  <ChevronDown className="opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-[200px] p-0">
+                <Command>
+                  <CommandInput
+                    placeholder="Search framework..."
+                    className="h-9"
+                  />
+                  <CommandList>
+                    <CommandEmpty>No framework found.</CommandEmpty>
+                    <CommandGroup>
+                      {frameworks.map((framework) => (
+                        <CommandItem
+                          key={framework.value}
+                          value={framework.value}
+                          onSelect={(currentValue) => {
+                            setValue(
+                              currentValue === value ? '' : currentValue
+                            );
+                            setOpen(false);
+                          }}
+                        >
+                          {framework.label}
+                          <Check
+                            className={cn(
+                              'ml-auto',
+                              value === framework.value
+                                ? 'opacity-100'
+                                : 'opacity-0'
+                            )}
+                          />
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
+
+            <Select defaultValue="24h">
+              <SelectTrigger className="w-48">
+                <div className="flex items-center">
+                  <Calendar className="mr-2 size-4" />
+                  <SelectValue />
+                </div>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="24h">Last 24 hours</SelectItem>
+                <SelectItem value="7d">Last 7 days</SelectItem>
+                <SelectItem value="30d">Last 30 days</SelectItem>
+                <SelectItem value="90d">Last 90 days</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <Button
+              variant="outline"
+              role="combobox"
+              aria-expanded={open}
+              className="min-w-[110px] justify-between"
+            >
+              <span className="flex items-center gap-2">
+                <Grid3x3 />
+                Switch to Events
+              </span>
+            </Button>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="px-2">
+                  <EllipsisVertical />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                className="flex w-48 items-center"
+                align="start"
+              >
+                <Button variant="ghost">
+                  <Download className="size-4" />
+                  Download as CSV
+                </Button>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 pb-6 md:grid-cols-4">
-          <Card className="relative">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                Total Messages
-              </CardTitle>
-              <MessageSquare className="size-4 text-blue-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-gray-900">1,247</div>
-              <p className="mt-1 text-xs text-green-600">+12% from yesterday</p>
-              <div className="mt-4 h-1 w-8 rounded-full bg-blue-500"></div>
-            </CardContent>
-          </Card>
-
-          <Card className="relative">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                Response Rate
-              </CardTitle>
-              <Clock className="size-4 text-green-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-gray-900">94.2%</div>
-              <p className="mt-1 text-xs text-green-600">
-                +2.1% from yesterday
-              </p>
-              <div className="mt-4 h-1 w-8 rounded-full bg-green-500"></div>
-            </CardContent>
-          </Card>
-
-          <Card className="relative">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                Avg Response Time
-              </CardTitle>
-              <Users className="size-4 text-orange-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-gray-900">2.3m</div>
-              <p className="mt-1 text-xs text-red-600">+0.5m from yesterday</p>
-              <div className="mt-4 h-1 w-8 rounded-full bg-orange-500"></div>
-            </CardContent>
-          </Card>
-
-          <Card className="relative">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                Active Conversations
-              </CardTitle>
-              <Button variant="ghost" size="sm" className="size-6 p-0">
-                <ChevronRight className="size-4 text-gray-400" />
-              </Button>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-gray-900">23</div>
-              <p className="mt-1 text-xs text-blue-600">5 waiting response</p>
-              <div className="mt-4 h-1 w-8 rounded-full bg-purple-500"></div>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <Card>
-            <CardHeader>
-              <CardTitle>Message Volume</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="h-80">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={messageVolumeData}>
-                    <XAxis
-                      dataKey="time"
-                      axisLine={false}
-                      tickLine={false}
-                      tick={{ fontSize: 12, fill: '#6B7280' }}
-                      interval="preserveStartEnd"
-                    />
-                    <YAxis hide />
-                    <Line
-                      type="monotone"
-                      dataKey="messages"
-                      stroke="#3B82F6"
-                      strokeWidth={2}
-                      dot={false}
-                      activeDot={{ r: 4, fill: '#3B82F6' }}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Messages by Channel</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="h-80">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={channelData} layout="horizontal">
-                    <XAxis type="number" hide />
-                    <YAxis
-                      type="category"
-                      dataKey="channel"
-                      axisLine={false}
-                      tickLine={false}
-                      tick={{ fontSize: 12, fill: '#6B7280' }}
-                      width={80}
-                    />
-                    <Bar
-                      dataKey="messages"
-                      fill="#8884d8"
-                      radius={[0, 4, 4, 0]}
-                    />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-              <div className="mt-4 space-y-2">
-                {channelData.map((channel) => (
-                  <div
-                    key={channel.channel}
-                    className="flex items-center justify-between"
-                  >
-                    <div className="flex items-center gap-2">
-                      <div
-                        className="size-3 rounded-full"
-                        style={{ backgroundColor: channel.color }}
-                      />
-                      <span className="text-sm text-gray-600">
-                        {channel.channel}
-                      </span>
-                    </div>
-                    <span className="text-sm font-medium">
-                      {channel.messages}
-                    </span>
+        {/* Analytics Stats & Charts */}
+        <div className="w-full overflow-hidden bg-white">
+          <div className="border border-neutral-200 sm:rounded-t-xl">
+            <div className="grid w-full grid-cols-3 divide-x divide-neutral-200 overflow-y-hidden">
+              <div className="relative z-0">
+                <div className="border-box relative block h-full min-w-[110px] flex-none px-4 py-3 ring-inset ring-neutral-500 transition-colors hover:bg-neutral-50 focus:outline-none focus-visible:ring-1 active:bg-neutral-100 sm:min-w-[240px] sm:px-8 sm:py-6 sm:first:rounded-tl-xl">
+                  <div className="absolute bottom-0 left-0 h-0.5 w-full bg-black transition-transform duration-100"></div>
+                  <div className="flex items-center gap-2.5 text-sm text-neutral-600">
+                    <div className="size-2 bg-current text-blue-500/50 shadow-[inset_0_0_0_1px_#00000019]"></div>
+                    <span>Clicks</span>
                   </div>
-                ))}
+                  <div className="mt-1 flex h-12 items-center text-3xl font-medium">
+                    0
+                  </div>
+                </div>
               </div>
-            </CardContent>
-          </Card>
+
+              <div className="relative z-0">
+                <div className="absolute left-0 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-neutral-200 bg-white p-1.5">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-chevron-right size-3 text-neutral-400"
+                  >
+                    <path d="m9 18 6-6-6-6"></path>
+                  </svg>
+                </div>
+                <div className="border-box relative block h-full min-w-[110px] flex-none px-4 py-3 ring-inset ring-neutral-500 transition-colors hover:bg-neutral-50 focus:outline-none focus-visible:ring-1 active:bg-neutral-100 sm:min-w-[240px] sm:px-8 sm:py-6 sm:first:rounded-tl-xl">
+                  <div className="flex items-center gap-2.5 text-sm text-neutral-600">
+                    <div className="size-2 bg-current text-blue-500/50 shadow-[inset_0_0_0_1px_#00000019]"></div>
+                    <span>Leads</span>
+                  </div>
+                  <div className="mt-1 flex h-12 items-center text-3xl font-medium">
+                    0
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative z-0">
+                <div className="absolute left-0 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-neutral-200 bg-white p-1.5">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-chevron-right size-3 text-neutral-400"
+                  >
+                    <path d="m9 18 6-6-6-6"></path>
+                  </svg>
+                </div>
+                <div className="border-box relative block h-full min-w-[110px] flex-none px-4 py-3 ring-inset ring-neutral-500 transition-colors hover:bg-neutral-50 focus:outline-none focus-visible:ring-1 active:bg-neutral-100 sm:min-w-[240px] sm:px-8 sm:py-6 sm:first:rounded-tl-xl">
+                  <div className="flex items-center gap-2.5 text-sm text-neutral-600">
+                    <div className="size-2 bg-current text-neutral-500/50 shadow-[inset_0_0_0_1px_#00000019]"></div>
+                    <span>Sales</span>
+                  </div>
+                  <div className="mt-1 flex h-12 items-center text-3xl font-medium">
+                    US$0
+                  </div>
+                </div>
+
+                <div className="absolute right-3 top-3 z-0 hidden w-fit shrink-0 items-center gap-1 rounded-xl border border-neutral-100 bg-neutral-100 p-1 sm:flex">
+                  <button
+                    type="button"
+                    data-selected="true"
+                    className="text-content-emphasis relative z-10 flex size-8 items-center justify-center gap-2 p-0 text-sm font-medium capitalize"
+                  >
+                    <div className="text-base">$</div>
+                    <div className="absolute left-0 top-0 -z-10 size-full rounded-lg border border-neutral-200 bg-white"></div>
+                  </button>
+                  <button
+                    type="button"
+                    data-selected="false"
+                    className="text-content-emphasis hover:text-content-subtle relative z-[11] flex size-8 items-center justify-center gap-2 p-0 text-sm font-medium capitalize transition-colors"
+                  >
+                    <div className="text-[11px]">123</div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="relative w-full overflow-hidden border-x border-b px-4 py-6 sm:rounded-b-xl sm:p-10">
+            <div className="absolute right-3 top-3 z-0 flex w-fit shrink-0 items-center gap-1 rounded-xl border border-neutral-100 bg-neutral-100 p-1">
+              <Button
+                variant="ghost"
+                className="relative -z-10 flex size-8 items-center justify-center gap-2 p-0 text-sm font-medium capitalize"
+              >
+                <ChartLine />
+                <div className="absolute left-0 top-0 -z-10 size-full rounded-lg border border-neutral-200 bg-white"></div>
+              </Button>
+              <Button
+                variant="ghost"
+                className="relative z-10 flex size-8 items-center justify-center gap-2 p-0 text-sm font-medium capitalize transition-colors"
+              >
+                <ListFilter />
+              </Button>
+            </div>
+
+            <div className="h-96">
+              <ChartContainer config={chartConfig}>
+                <AreaChart
+                  accessibilityLayer
+                  data={chartData}
+                  margin={{
+                    left: 12,
+                    right: 12,
+                    top: 100,
+                    bottom: 300,
+                  }}
+                >
+                  <CartesianGrid vertical={false} />
+                  <XAxis
+                    dataKey="month"
+                    tickLine={false}
+                    axisLine={false}
+                    tickMargin={8}
+                    tickFormatter={(value) => value.slice(0, 3)}
+                  />
+                  <ChartTooltip
+                    cursor={false}
+                    content={<ChartTooltipContent />}
+                  />
+                  <defs>
+                    <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
+                      <stop
+                        offset="5%"
+                        stopColor="var(--color-mobile)"
+                        stopOpacity={0.8}
+                      />
+                      <stop
+                        offset="95%"
+                        stopColor="var(--color-mobile)"
+                        stopOpacity={0.1}
+                      />
+                    </linearGradient>
+                  </defs>
+                  <Area
+                    dataKey="mobile"
+                    type="natural"
+                    fill="url(#fillMobile)"
+                    fillOpacity={0.4}
+                    stroke="var(--color-mobile)"
+                    stackId="a"
+                  />
+                </AreaChart>
+              </ChartContainer>
+            </div>
+          </div>
+        </div>
+
+        {/* Analytics Cards */}
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+          <AnalyticsCard titleTabs={['Short Links', 'Destination URLs']} />
+          <AnalyticsCard
+            titleTabs={['Referrers', 'UTM Parameters']}
+            extraTabs={['Domain', 'URL']}
+          />
+          <AnalyticsCard
+            titleTabs={['Countries', 'Cities', 'Regions', 'Continents']}
+          />
+          <AnalyticsCard
+            titleTabs={['Devices', 'Browsers', 'OS', 'Triggers']}
+          />
         </div>
       </div>
     </div>
