@@ -11,11 +11,11 @@ import {
   ListFilter,
 } from 'lucide-react';
 import { useState } from 'react';
-import { useOutletContext } from 'react-router';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 
 import type { ChartConfig } from '@/components/ui/chart';
 
+import { PageHeader } from '@/components/dashboard/page-header';
 import { Button } from '@/components/ui/button';
 import {
   ChartContainer,
@@ -97,61 +97,11 @@ export function AnalyticsDashboard({ projectId }: AnalyticsDashboardProps) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
 
-  const [toggleMobileNav] = useOutletContext();
-
   return (
     <div>
-      {/* Header */}
-      <div className="border-b max-md:bg-neutral-100">
-        <div className="mx-auto w-full max-w-screen-xl px-3 lg:px-6">
-          <div className="flex h-12 items-center justify-between gap-4 sm:h-16">
-            <div className="flex min-w-0 items-center gap-4">
-              <Button
-                variant="ghost"
-                onClick={toggleMobileNav}
-                className="hover:bg-bg-subtle group flex h-auto w-fit items-center justify-center gap-2 whitespace-nowrap rounded-md border border-transparent p-1 text-sm transition-all md:hidden"
-              >
-                <svg
-                  height="18"
-                  width="18"
-                  viewBox="0 0 18 18"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="size-4"
-                >
-                  <g fill="currentColor">
-                    <path
-                      d="M4,2.75H14.25c1.105,0,2,.895,2,2V13.25c0,1.105-.895,2-2,2H4"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1.5"
-                    ></path>
-                    <rect
-                      height="12.5"
-                      width="4.5"
-                      fill="none"
-                      rx="2"
-                      ry="2"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1.5"
-                      x="1.75"
-                      y="2.75"
-                    ></rect>
-                  </g>
-                </svg>
-              </Button>
-              <div className="flex items-center gap-2">
-                <h1 className="text-lg font-semibold leading-7">Analytics</h1>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PageHeader title="Analytics" />
 
-      <div className='className="mx-auto lg:px-6" mx-auto w-full max-w-screen-xl gap-6 px-3 pt-6'>
+      <div className="mx-auto w-full max-w-screen-xl gap-6 px-3 pt-6 lg:px-6">
         <div className="flex items-center justify-between gap-3 pb-3 max-md:flex-col">
           <div className="flex w-full items-center gap-3">
             <Popover open={open} onOpenChange={setOpen}>

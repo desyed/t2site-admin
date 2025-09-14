@@ -45,6 +45,13 @@ export const routes = createBrowserRouter([
               return { element: <module.default /> };
             },
           },
+          {
+            path: 'events',
+            lazy: async () => {
+              const module = await import('@/pages/dashboard/events');
+              return { element: <module.default /> };
+            },
+          },
         ],
       },
       // {

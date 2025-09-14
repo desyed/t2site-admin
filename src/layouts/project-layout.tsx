@@ -47,7 +47,7 @@ export default function ProjectLayout() {
           className={`absolute left-0 top-0 z-10 size-full ${isMobileNavOpened ? 'block' : 'hidden'}`}
           onClick={handleOutsideClick}
         />
-        <div className="h-fit w-full bg-white pb-10 md:rounded-l-xl">
+        <div className="size-full min-h-fit bg-white pb-10 md:rounded-l-xl">
           <Outlet context={[toggleMobileNav]} />
         </div>
 
