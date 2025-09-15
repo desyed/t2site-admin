@@ -29,7 +29,7 @@ export function PageHeader({
             <Button
               variant="ghost"
               onClick={onToggleMobileNav ?? toggleMobileNav}
-              className="hover:bg-bg-subtle group flex h-auto w-fit items-center justify-center gap-2 whitespace-nowrap rounded-md border border-transparent p-1 text-sm transition-all md:hidden"
+              className={`hover:bg-bg-subtle group flex h-auto w-fit items-center justify-center gap-2 whitespace-nowrap rounded-md border border-transparent p-1 text-sm transition-all ${onToggleMobileNav ? 'md:block' : 'md:hidden'}`}
             >
               {/* Default icon if no custom one passed */}
               {icon ?? (

@@ -239,27 +239,19 @@ export function CookieConsentDashboard({
 
   if (navigation.level === 'detail') {
     return (
-      <div className="nested-dashboard-container">
-        <div className="flex items-center gap-4">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() =>
-              setNavigation({ level: 'category', category: '', item: '' })
-            }
-            className="flex items-center gap-2"
-          >
-            <ArrowLeft className="size-4" />
-            {currentCategory?.name}
-          </Button>
-          <h1 className="text-2xl font-semibold text-gray-900">
-            {
-              currentCategory?.items.find((item) => item.id === navigation.item)
-                ?.name
-            }
-          </h1>
-        </div>
-        {renderDetailedContent()}
+      <div>
+        <PageHeader
+          title={
+            currentCategory?.items.find((item) => item.id === navigation.item)
+              ?.name ?? 'Detail'
+          }
+          icon={<ArrowLeft />}
+          onToggleMobileNav={() =>
+            setNavigation({ level: 'category', category: '', item: '' })
+          }
+        />
+
+        <div className="dashboard-container">{renderDetailedContent()}</div>
       </div>
     );
   }
