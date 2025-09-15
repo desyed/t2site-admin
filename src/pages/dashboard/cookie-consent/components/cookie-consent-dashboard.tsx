@@ -4,6 +4,7 @@ import { ArrowLeft, Eye, Lock, Palette, Settings } from 'lucide-react';
 import { useState } from 'react';
 import { useSearchParams } from 'react-router';
 
+import { PageHeader } from '@/components/dashboard/page-header';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -264,44 +265,37 @@ export function CookieConsentDashboard({
   }
 
   return (
-    <div className="nested-dashboard-container">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold text-gray-900">
-            {currentCategory?.name}
-          </h1>
-          <p className="mt-1 text-gray-600">
-            Configure cookie consent settings and compliance
-          </p>
-        </div>
-      </div>
+    <div>
+      <PageHeader title={currentCategory?.name} />
 
-      <div className="space-y-3">
-        {currentCategory?.items.map((item) => (
-          <Card
-            key={item.id}
-            className="cursor-pointer transition-shadow hover:shadow-md"
-          >
-            <CardContent className="p-4">
-              <button
-                onClick={() =>
-                  setNavigation({ level: 'detail', category, item: item.id })
-                }
-                className="w-full text-left"
-              >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="font-medium text-gray-900">{item.name}</h3>
-                    <p className="mt-1 text-sm text-gray-600">
-                      {item.description}
-                    </p>
+      <div className="dashboard-container">
+        <div className="space-y-3">
+          {currentCategory?.items.map((item) => (
+            <Card
+              key={item.id}
+              className="cursor-pointer transition-shadow hover:shadow-md"
+            >
+              <CardContent className="p-4">
+                <button
+                  onClick={() =>
+                    setNavigation({ level: 'detail', category, item: item.id })
+                  }
+                  className="w-full text-left"
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="font-medium text-gray-900">{item.name}</h3>
+                      <p className="mt-1 text-sm text-gray-600">
+                        {item.description}
+                      </p>
+                    </div>
+                    <ArrowLeft className="size-4 rotate-180 text-gray-400" />
                   </div>
-                  <ArrowLeft className="size-4 rotate-180 text-gray-400" />
-                </div>
-              </button>
-            </CardContent>
-          </Card>
-        ))}
+                </button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -67,6 +67,13 @@ export const routes = createBrowserRouter([
             },
           },
           {
+            path: 'live-chat',
+            lazy: async () => {
+              const module = await import('@/pages/dashboard/live-chat');
+              return { element: <module.default /> };
+            },
+          },
+          {
             path: 'billing',
             lazy: async () => {
               const module = await import('@/pages/dashboard/billing');
