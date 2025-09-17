@@ -74,6 +74,13 @@ export const routes = createBrowserRouter([
             },
           },
           {
+            path: 'facebook',
+            lazy: async () => {
+              const module = await import('@/pages/dashboard/facebook');
+              return { element: <module.default /> };
+            },
+          },
+          {
             path: 'billing',
             lazy: async () => {
               const module = await import('@/pages/dashboard/billing');
