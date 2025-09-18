@@ -22,6 +22,8 @@ import {
 } from 'lucide-react';
 import { Link, useParams } from 'react-router';
 
+import { useAuth } from '@/contexts/auth-provider';
+
 import { Button } from '../site-button';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Input } from '../ui/input';
@@ -69,6 +71,8 @@ const faqItems = [
 export function ProjectNavigationBar() {
   const params = useParams();
   const currentProjectId = params?.projectId as string;
+
+  const { logout } = useAuth();
 
   return (
     <div className="flex h-full w-16 flex-col items-center border-r border-gray-200 p-2">
@@ -219,7 +223,10 @@ export function ProjectNavigationBar() {
 
             <DropdownMenuSeparator className="my-2" />
 
-            <DropdownMenuItem className="flex items-center gap-3 py-2 text-red-600">
+            <DropdownMenuItem
+              onSelect={() => logout()}
+              className="flex items-center gap-3 py-2 text-red-600"
+            >
               <LogOut className="size-4" />
               Log out
             </DropdownMenuItem>
