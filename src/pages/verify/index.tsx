@@ -43,7 +43,7 @@ export function Component() {
           .
         </p>
         <p className="mt-3 text-muted-foreground">
-          {`Didn't`} receive the email? Check your spam or junk folder, or{'  '}
+          {`Didn't`} receive the email? Check your spam or junk folder, or
           <button
             disabled={loading}
             onClick={handleSendVerificationCode}
@@ -61,12 +61,7 @@ export function Component() {
         <div className="h-px w-1/2 bg-border" />
       </div>
       <div className="flex flex-col gap-2">
-        <Button
-          onClick={logout}
-          size="sm"
-          variant="destructive"
-          icon={<Icon icon="material-symbols:logout" />}
-        >
+        <Button onClick={logout} size="sm" variant="destructive">
           Logout
         </Button>
       </div>

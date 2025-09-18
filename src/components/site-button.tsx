@@ -164,9 +164,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const Comp = asChild ? Slot : 'button';
-    if ((!variant || variant === 'default') && !effect) {
-      effect = 'gooeyLeft';
-    }
+    // if ((!variant || variant === 'default') && !effect) {
+    //   effect = 'gooeyLeft';
+    // }
 
     const Spinner = {
       circle: () => <Loader2 className="size-4 animate-spin" />,

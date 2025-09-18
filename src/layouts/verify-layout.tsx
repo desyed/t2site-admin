@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router';
 
 import Brand from '@/components/Brand';
-import { ModeToggle } from '@/components/mode-toggle';
 import { useAuth } from '@/contexts/auth-provider';
 
 export default function VerifyLayout() {
@@ -17,35 +16,43 @@ export default function VerifyLayout() {
 
   return (
     <div className="relative flex min-h-screen flex-col bg-neutral-50 dark:bg-background">
-      <div className="absolute right-0 flex h-[90px] items-center justify-between px-6 sm:px-10">
-        <div></div>
-        <div>
-          <ModeToggle />
+      {/* Dotted Background Pattern */}
+      <div className="absolute inset-0 size-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
+
+      <div className="relative z-10 flex flex-1 flex-col justify-center gap-6 sm:items-center sm:p-8">
+        <a href="https://t2site.vercel.app" className="flex justify-center">
+          <Brand />
+        </a>
+        <div className="flex w-full gap-5 max-sm:justify-between max-sm:p-4 sm:max-w-md">
+          <div className="relative w-full overflow-x-hidden rounded-xl px-6 py-10 dark:border-border sm:border sm:bg-card sm:px-8 sm:shadow-sm dark:sm:bg-muted/15">
+            {/* Background Gradient */}
+            <div className="absolute inset-0 isolate overflow-hidden bg-white">
+              <div className="absolute left-1/2 top-6 size-[80px] -translate-x-1/2 -translate-y-1/2 scale-x-[1.6] mix-blend-overlay">
+                <div className="absolute -inset-16 bg-[conic-gradient(from_90deg,#F00_5deg,#EAB308_63deg,#5CFF80_115deg,#1E00FF_170deg,#855AFC_220deg,#3A8BFD_286deg,#F00_360deg)] mix-blend-overlay blur-[50px] saturate-200"></div>
+                <div className="absolute -inset-16 bg-[conic-gradient(from_90deg,#F00_5deg,#EAB308_63deg,#5CFF80_115deg,#1E00FF_170deg,#855AFC_220deg,#3A8BFD_286deg,#F00_360deg)] mix-blend-overlay blur-[50px] saturate-200"></div>
+              </div>
+              <div className="absolute left-1/2 top-6 size-[80px] -translate-x-1/2 -translate-y-1/2 scale-x-[1.6] opacity-10">
+                <div className="absolute -inset-16 bg-[conic-gradient(from_90deg,#F00_5deg,#EAB308_63deg,#5CFF80_115deg,#1E00FF_170deg,#855AFC_220deg,#3A8BFD_286deg,#F00_360deg)] mix-blend-overlay blur-[50px] saturate-200"></div>
+              </div>
+            </div>
+
+            <div className="relative">
+              <Outlet />
+            </div>
+          </div>
         </div>
       </div>
-      <div className="mt-16 flex flex-1 flex-col justify-center gap-10 sm:items-center sm:p-8">
-        <div className="flex justify-center">
-          <Brand />
-        </div>
-        <div className="flex flex-1 flex-col gap-5 max-sm:justify-between sm:max-w-[420px]">
-          <div className="overflow-x-hidden rounded-xl px-6 pb-10 dark:border-border sm:border sm:bg-card sm:pt-6 sm:shadow-sm dark:sm:bg-muted/15">
-            <Outlet />
-          </div>
-          <div className="px-5 pb-10 text-center text-sm text-muted-foreground">
-            By clicking continue, you agree to our{' '}
-            <a className="underline hover:text-foreground" href="/terms">
-              Terms of Service
-            </a>{' '}
-            and{' '}
-            <a
-              className="underline hover:text-foreground"
-              href="/privacy-policy"
-            >
-              Privacy Policy
-            </a>
-            .
-          </div>
-        </div>
+
+      <div className="z-10 w-full px-5 pb-5 text-center text-xs text-muted-foreground">
+        By clicking continue, you agree to our{' '}
+        <a className="underline hover:text-foreground" href="/terms">
+          Terms of Service
+        </a>{' '}
+        and{' '}
+        <a className="underline hover:text-foreground" href="/privacy-policy">
+          Privacy Policy
+        </a>
+        .
       </div>
     </div>
   );
