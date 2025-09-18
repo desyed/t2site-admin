@@ -134,7 +134,11 @@ export function ProjectNavigationBar() {
               <HelpCircle className="!size-5" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" side="right" className="w-96 p-4">
+          <DropdownMenuContent
+            align="start"
+            side="right"
+            className="w-96 rounded-xl border bg-white p-4 shadow-lg"
+          >
             <div className="mb-4">
               <h3 className="mb-2 flex items-center gap-2 text-lg font-semibold">
                 👋 How can we help?
@@ -191,7 +195,11 @@ export function ProjectNavigationBar() {
               </Avatar>
             </div>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" side="right" className="w-64 p-3">
+          <DropdownMenuContent
+            align="start"
+            side="right"
+            className="w-64 rounded-xl border bg-white p-4 shadow-lg"
+          >
             <div className="mb-3">
               <h4 className="font-semibold text-gray-900">syed shihab</h4>
               <p className="text-sm text-gray-600">syedshihabdu@gmail.com</p>

@@ -106,7 +106,7 @@ export function LiveChatDashboard({ projectId }: LiveChatDashboardProps) {
     <div>
       <PageHeader title="Live Chat" />
 
-      <div className="dashboard-container">
+      <div className="dashboard-container space-y-6">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
           <Card>
             <CardContent className="p-4">
