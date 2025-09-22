@@ -88,6 +88,13 @@ export const routes = createBrowserRouter([
             },
           },
           {
+            path: 'email',
+            lazy: async () => {
+              const module = await import('@/pages/dashboard/email');
+              return { element: <module.default /> };
+            },
+          },
+          {
             path: 'billing',
             lazy: async () => {
               const module = await import('@/pages/dashboard/billing');
