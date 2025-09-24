@@ -8,7 +8,7 @@ import { z } from 'zod';
 
 import type { TAuthUser } from '@/app/auth/auth.store';
 
-import { singupApi } from '@/app/auth/auth.api';
+import { singUpApi } from '@/app/auth/auth.api';
 import { useAuthStore } from '@/app/auth/auth.store';
 import { Button } from '@/components/site-button';
 import SitePassword from '@/components/site-password';
@@ -91,7 +91,7 @@ export default function SingupForm() {
   const { executeMutation, loading } = useApi<{
     user: TAuthUser;
     access_token: string;
-  }>(singupApi, {
+  }>(singUpApi, {
     toast: true,
   });
 

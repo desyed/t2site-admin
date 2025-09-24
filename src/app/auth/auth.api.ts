@@ -10,7 +10,7 @@ export function loginApi(payload: object) {
 /**
  * @POST /auth/signup
  */
-export function singupApi(payload: object) {
+export function singUpApi(payload: object) {
   return api.post('/auth/signup', payload);
 }
 
