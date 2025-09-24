@@ -45,7 +45,7 @@ export function getProfileApi() {
 /**
  * @POST /send-email-verification
  */
-export async function sendEmailVericationApi() {
+export async function sendEmailVerificationApi() {
   return api.post('/verification/email/send');
 }
 
