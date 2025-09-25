@@ -6,7 +6,7 @@ import {
   Settings,
 } from 'lucide-react';
 
-import { verifyProjetHandler } from './projen.handler';
+import { verifyProjectHandler } from './project.handler';
 
 export const initialCreateProjectStep = [
   {
@@ -25,7 +25,7 @@ export const initialCreateProjectStep = [
     continueLabel: 'Verify Project',
     continueIcon: SearchCheck,
     check: true,
-    continueHandler: verifyProjetHandler,
+    continueHandler: verifyProjectHandler,
   },
   {
     name: 'Services',

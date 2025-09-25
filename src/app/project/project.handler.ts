@@ -4,7 +4,7 @@ import { delay } from '@/lib/utils';
 
 import { projectStore } from './project.store';
 
-export const verifyProjetHandler = async () => {
+export const verifyProjectHandler = async () => {
   const currentNewProject = projectStore.getCurrentNewProject();
   // console.log(currentNewProject);
   await delay(1000);
