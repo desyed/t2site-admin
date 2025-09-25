@@ -122,7 +122,7 @@ export interface SendMessageResponse {
   newMessage: Message;
 }
 
-export interface IncommingRealTimeMessage {
+export interface IncomingRealTimeMessage {
   conversation: Omit<ConversationDetail, 'latestMessage'>;
   message: Message;
 }
