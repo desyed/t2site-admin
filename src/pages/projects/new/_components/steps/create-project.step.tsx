@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 
 import type { CreateProjectInput } from '@/app/project/project.type';
 
-import { useCreateProjectMutaion } from '@/app/project/project.hooks';
+import { useCreateProjectMutation } from '@/app/project/project.hooks';
 import { preFetchProjectServices } from '@/app/project/project.prefetch';
 import { createProjectSchema } from '@/app/project/project.schema';
 import { useProjectStore } from '@/app/project/project.store';
@@ -44,7 +44,7 @@ export default function CreateProjectStep() {
 
   const queryClient = useQueryClient();
 
-  const { mutate: createProject, isPending } = useCreateProjectMutaion();
+  const { mutate: createProject, isPending } = useCreateProjectMutation();
 
   const handleCreateProject = (data: CreateProjectInput) => {
     createProject(data, {

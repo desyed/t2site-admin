@@ -23,7 +23,7 @@ export function useProjectsQuery() {
   return query;
 }
 
-export function useCreateProjectMutaion<
+export function useCreateProjectMutation<
   T = {
     data: {
       success: boolean;
@@ -86,23 +86,21 @@ export function useOptimisticProjectServiceUpdateMutation() {
       });
     },
     onMutate: async (payload) => {
-      // Cancel any outgoing refetches
+      // Cancel any outgoing refetch
       await client.cancelQueries({
         queryKey: getKey(payload.projectId),
       });
 
       // Snapshot the previous value
-      const previouseProjectServices = client.getQueryData(
+      const previousProjectServices = client.getQueryData(
         getKey(payload.projectId)
       ) as ProjectService;
 
       // Optimistically update the cache
       const updatedProjectServices = {
-        ...previouseProjectServices,
+        ...previousProjectServices,
         [payload.serviceId]: {
-          ...previouseProjectServices[
-            payload.serviceId as keyof ProjectService
-          ],
+          ...previousProjectServices[payload.serviceId as keyof ProjectService],
           active: payload.active,
         },
       };
@@ -110,14 +108,17 @@ export function useOptimisticProjectServiceUpdateMutation() {
       // Update the cache
       client.setQueryData(getKey(payload.projectId), updatedProjectServices);
 
-      return { updatedProjectServices, previouseProjectServices };
+      return {
+        updatedProjectServices,
+        previousProjectServices: previousProjectServices,
+      };
     },
     onError: (_err, variables, context) => {
       handleApiErrorException(_err, true);
-      if (context?.previouseProjectServices) {
+      if (context?.previousProjectServices) {
         client.setQueryData(
           getKey(variables.projectId),
-          context.previouseProjectServices
+          context.previousProjectServices
         );
         client.invalidateQueries({
           queryKey: getKey(variables.projectId),
