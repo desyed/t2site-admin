@@ -18,6 +18,6 @@ export const createProjectSchema = z.object({
       required_error: 'Site URL is required',
       invalid_type_error: 'Site URL must be a string',
     })
-    .url('Please enter a valid URL')
+    .url('Enter a valid URL (must start with https://)')
     .min(1, 'Site URL is required'),
 });

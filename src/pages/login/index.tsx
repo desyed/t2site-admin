@@ -12,7 +12,7 @@ export default function LoginPage() {
     if (error && error.length > 3) {
       const message = error;
       setTimeout(() => {
-        toast.error('Loging Failed', {
+        toast.error('Logging Failed', {
           description: message,
           position: 'top-center',
           duration: 1600,

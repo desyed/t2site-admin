@@ -1,14 +1,18 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2 } from 'lucide-react';
-// import { createProjectMutation } from '@/app/project/projectApi';
-// import { useApi } from '@/hooks/use-api';
-// import { handleServerErrors } from '@/lib/error';
-// import { toast } from "sonner";
-// import { useNavigate } from "react-router";
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
+import type * as z from 'zod';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
+import { toast } from 'sonner';
+
+import type { CreateProjectInput } from '@/app/project/project.type';
+
+import { useCreateProjectMutation } from '@/app/project/project.hooks';
+import { preFetchProjectServices } from '@/app/project/project.prefetch';
+import { createProjectSchema } from '@/app/project/project.schema';
+import { projectQueryKeys } from '@/app/project/projects.keys';
 import { Button } from '@/components/site-button';
 import {
   Form,
@@ -19,86 +23,105 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { logDev } from '@/lib/utils';
-
-export const createProjectSchema = z.object({
-  name: z.string().min(2, 'Project name must be at least 2 characters'),
-  description: z.string().optional(),
-});
+import { handleApiErrorException } from '@/lib/utils';
 
 export type CreateProjectFormData = z.infer<typeof createProjectSchema>;
 
 export function CreateProjectForm() {
-  const form = useForm<CreateProjectFormData>({
+  const navigate = useNavigate();
+
+  const form = useForm<CreateProjectInput>({
     resolver: zodResolver(createProjectSchema),
     defaultValues: {
       name: '',
+      siteUrl: '',
     },
   });
-  // const navigate = useNavigate();
-  const [loading] = useState(false);
 
-  // const { loading, executeMutation } = useApi<{
-  //   projectId: string;
-  // }>(createProjectMutation, {
-  //   toast: true,
-  // });
+  const queryClient = useQueryClient();
 
-  const handleSubmit = async () => {
-    try {
-      // const result = await executeMutation(values);
-      // if (result.errors) {
-      //   return handleServerErrors(form, result.errors);
-      // }
-      // if (result.data?.projectId) {
-      //   toast.success("Project created successfully!", {
-      //     description: "You can now start working on your project.",
-      //     position: "top-center",
-      //     duration: 3000,
-      //   });
-      //   navigate(`/project/${result.data.projectId}`);
-      //   onClose();
-      // } else {
-      //   toast.error("Failed to create project!", {
-      //     description: "Please try again.",
-      //     position: "top-center",
-      //     duration: 3000,
-      //   });
-      // }
-    } catch (error) {
-      logDev(error);
-    }
+  const { mutate: createProject, isPending } = useCreateProjectMutation();
+
+  const handleCreateProject = (data: CreateProjectInput) => {
+    createProject(data, {
+      onSuccess: async (result) => {
+        toast.success('Project created successfully');
+        form.reset();
+        queryClient.invalidateQueries({
+          queryKey: projectQueryKeys.projectList(),
+        });
+        await preFetchProjectServices(result.data.data.id);
+        navigate(`/${result.data.data.id}`);
+      },
+      onError: (error) => {
+        handleApiErrorException(error, true);
+        if (error instanceof AxiosError) {
+          const errorResponse = error.response?.data;
+          if (errorResponse?.code === 'project-name-already-exists') {
+            form.setError('name', {
+              message:
+                'Project name already exists in this organization, please choose another name',
+            });
+          }
+        }
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries({
+          queryKey: projectQueryKeys.projectList(),
+        });
+      },
+    });
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Project Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter project name" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <div className="pt-2">
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? (
-              <>
-                <Loader2 className="mr-2 size-4 animate-spin" />
-                Creating...
-              </>
-            ) : (
-              'Create Project'
+      <form
+        onSubmit={form.handleSubmit(handleCreateProject)}
+        className="space-y-4"
+      >
+        <div className="grid gap-2">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-xs uppercase text-gray-500">
+                  Project Name
+                </FormLabel>
+                <FormControl>
+                  <Input placeholder="My Awesome Project" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
             )}
-          </Button>
+          />
+
+          <FormField
+            control={form.control}
+            name="siteUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-xs uppercase text-gray-500">
+                  Site URL
+                </FormLabel>
+                <FormControl>
+                  <Input placeholder="https://example.com" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
+
+        <Button
+          type="submit"
+          disabled={isPending}
+          className="mt-6 w-full"
+          loadingText="Creating Project"
+          loading={isPending}
+        >
+          Create Project
+        </Button>
       </form>
     </Form>
   );

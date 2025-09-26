@@ -102,6 +102,17 @@ export const routes = createBrowserRouter([
         ],
       },
       {
+        path: '/create-project',
+        element: <VerifyLayout />,
+        loader: privateLoader,
+        children: [
+          {
+            index: true,
+            lazy: () => import('@/pages/projects/create-project'),
+          },
+        ],
+      },
+      {
         path: '/:projectId',
         element: <ProjectLayout />,
         loader: dashboardLoader,
