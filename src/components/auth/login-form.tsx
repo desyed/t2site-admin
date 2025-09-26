@@ -138,8 +138,7 @@ export default function LoginForm() {
     toast.promise(loginApi(values), {
       loading: 'Logging in...',
       success: async (result) => {
-        const redirectTo =
-          window.localStorage.getItem('redirect_to') + '' || '/';
+        const redirectTo = window.localStorage.getItem('redirect_to') || '/';
 
         if (result.data?.access_token && result.data.user.email) {
           if (!result.data.user.emailVerified) {

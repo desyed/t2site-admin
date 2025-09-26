@@ -1,40 +1,47 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router';
 
 import { authStore } from '@/app/auth/auth.store';
+import { useProjectsQuery } from '@/app/project/project.hooks';
 import Brand from '@/components/Brand';
-import { ModeToggle } from '@/components/mode-toggle';
 import { getQuery } from '@/lib/utils';
-import { queryClient } from '@/query-client';
 
 export default function AuthCheckPoint() {
+  const { data: projectsResult, isLoading } = useProjectsQuery();
+
   const navigate = useNavigate();
+
+  const projects = useMemo(() => projectsResult ?? [], [projectsResult]);
+
   useEffect(() => {
     async function initSession() {
       const auth_login = getQuery('auth_login');
       if (auth_login === 'success') {
-        const from = getQuery('rp') ?? '/';
         await authStore.fetchSession(true);
-        navigate(from, { replace: true });
-      }
-      if (getQuery('ocr') === 'true') {
-        const from = getQuery('rp') ?? '/';
-        await authStore.fetchSession(true);
-        queryClient.resetQueries();
-        navigate(from, { replace: true });
+
+        // Wait until projects are fetched
+        if (!isLoading) {
+          if (projects.length === 0) {
+            navigate('/create-project', { replace: true });
+          } else {
+            // Navigate to first project dashboard
+            const first = projects[0];
+            if (first) {
+              navigate(`/${first.id}`, { replace: true });
+            }
+          }
+        }
       }
     }
+
     initSession();
-  }, [navigate]);
+  }, [navigate, projects, isLoading]);
 
   return !getQuery('ocr') ? (
     <div className="relative flex min-h-screen flex-col">
       <div className="flex h-[90px] items-center justify-between px-6 sm:px-10">
         <div>
           <Brand />
-        </div>
-        <div>
-          <ModeToggle />
         </div>
       </div>
       <div className="mt-20 flex flex-1 flex-col items-center gap-5 px-5">
