@@ -30,6 +30,78 @@ export const routes = createBrowserRouter([
     hydrateFallbackElement: <SplashScreen />,
     children: [
       {
+        loader: authMiddlewareLoader,
+        element: <AuthLayout />,
+        children: [
+          {
+            path: '/login',
+            element: <LoginPage />,
+          },
+          {
+            path: '/signup',
+            element: <SignupPage />,
+          },
+        ],
+      },
+      {
+        path: '/auth',
+        element: <AuthCheckPoint />,
+      },
+      {
+        loader: verifyMiddlewareLoader,
+        path: '/verify',
+        element: <VerifyLayout />,
+        children: [
+          {
+            index: true,
+            lazy: () => import('@/pages/verify'),
+          },
+        ],
+      },
+      {
+        path: '/invitation/:invitedMemberId',
+        element: <InvitationLayout />,
+        children: [
+          {
+            index: true,
+            lazy: () => import('@/pages/invitation'),
+          },
+        ],
+      },
+      {
+        path: '/settings',
+        element: <PrivateLayout />,
+        loader: privateLoader,
+        children: [
+          {
+            path: '/settings',
+            element: <NavSettings />,
+            children: [
+              {
+                index: true,
+                element: <Navigate to="/settings/organization" />,
+              },
+              {
+                path: '/settings/organization',
+                lazy: () => import('@/pages/settings/organization/general'),
+              },
+              {
+                path: '/settings/organization/members',
+                lazy: () => import('@/pages/settings/organization/members'),
+              },
+              {
+                path: '/settings/user/profile',
+                lazy: () => import('@/pages/settings/user/profile'),
+              },
+              {
+                path: '*',
+                element: <NotFoundSettings />,
+              },
+            ],
+          },
+        ],
+      },
+      {
         path: '/:projectId',
         element: <ProjectLayout />,
         loader: dashboardLoader,
@@ -109,178 +181,6 @@ export const routes = createBrowserRouter([
             },
           },
         ],
-      },
-      // {
-      //   element: <DashboardLayout />,
-      //   loader: dashboardLoader,
-      //   children: [
-      //     {
-      //       index: true,
-      //       element: <Navigate to="/dashboard" />,
-      //     },
-      //     {
-      //       path: '/dashboard',
-      //       lazy: () => import('@/pages/home'),
-      //     },
-      //     {
-      //       path: '/tickets',
-      //       lazy: () => import('@/pages/tickets'),
-      //     },
-      //     {
-      //       path: '/settings/project',
-      //       element: <NavSettingsProject />,
-      //       children: [
-      //         {
-      //           index: true,
-      //           lazy: () => import('@/pages/projects/settings/index'),
-      //         },
-      //         {
-      //           path: 'services',
-      //           lazy: () => import('@/pages/projects/settings/services'),
-      //           loader: dashboardLoader,
-      //         },
-      //         {
-      //           path: '*',
-      //           element: <NotFoundProjectSettings />,
-      //         },
-      //       ],
-      //     },
-      //     {
-      //       path: 'services',
-      //       children: [
-      //         {
-      //           index: true,
-      //           element: <Navigate to="/settings/project/services" />,
-      //         },
-      //         {
-      //           path: '/services/web-analytics',
-      //           lazy: () => import('@/pages/services/web-analytics'),
-      //         },
-      //         {
-      //           path: '/services/chat-assistant',
-      //           lazy: () => import('@/pages/services/chat-assistant'),
-      //           children: [
-      //             {
-      //               index: true,
-      //               element: <SelectNoConversation />,
-      //             },
-      //             {
-      //               path: ':ticketId/*',
-      //               lazy: () =>
-      //                 import('@/pages/services/chat-assistant/conversation'),
-      //             },
-      //             {
-      //               path: 'not-found',
-      //               element: <SelectNotFoundConversation />,
-      //             },
-      //           ],
-      //         },
-      //         {
-      //           path: '/services/cookie-consent',
-      //           lazy: () => import('@/pages/services/cookie-consent'),
-      //         },
-      //         {
-      //           path: '*',
-      //           element: <NotFoundPrivate />,
-      //         },
-      //       ],
-      //     },
-      //     {
-      //       path: '*',
-      //       element: <NotFoundPrivate />,
-      //     },
-      //   ],
-      // },
-      {
-        loader: authMiddlewareLoader,
-        element: <AuthLayout />,
-        children: [
-          {
-            path: '/login',
-            element: <LoginPage />,
-          },
-          {
-            path: '/signup',
-            element: <SignupPage />,
-          },
-        ],
-      },
-      {
-        loader: verifyMiddlewareLoader,
-        path: '/verify',
-        element: <VerifyLayout />,
-        children: [
-          {
-            index: true,
-            lazy: () => import('@/pages/verify'),
-          },
-        ],
-      },
-      {
-        path: '/invitation/:invitedMemberId',
-        element: <InvitationLayout />,
-        children: [
-          {
-            index: true,
-            lazy: () => import('@/pages/invitation'),
-          },
-        ],
-      },
-      {
-        path: '/projects',
-        element: <PrivateLayout />,
-        loader: privateLoader,
-        children: [
-          {
-            index: true,
-            lazy: () => import('@/pages/projects'),
-          },
-          {
-            path: '/projects/new',
-            lazy: () => import('@/pages/projects/new'),
-          },
-          {
-            path: '/projects/:projectId',
-            lazy: () => import('@/pages/projects/project'),
-          },
-        ],
-      },
-      {
-        path: '/settings',
-        element: <PrivateLayout />,
-        loader: privateLoader,
-        children: [
-          {
-            path: '/settings',
-            element: <NavSettings />,
-            children: [
-              {
-                index: true,
-                element: <Navigate to="/settings/organization" />,
-              },
-              {
-                path: '/settings/organization',
-                lazy: () => import('@/pages/settings/organization/general'),
-              },
-              {
-                path: '/settings/organization/members',
-                lazy: () => import('@/pages/settings/organization/members'),
-              },
-              {
-                path: '/settings/user/profile',
-                lazy: () => import('@/pages/settings/user/profile'),
-              },
-              {
-                path: '*',
-                element: <NotFoundSettings />,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        path: '/auth',
-        element: <AuthCheckPoint />,
       },
       {
         path: '*',
