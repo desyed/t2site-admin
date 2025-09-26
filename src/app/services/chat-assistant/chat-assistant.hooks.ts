@@ -9,7 +9,7 @@ import type {
   ApiMessagesResponse,
   ConversationDetail,
   ConversationListItem,
-  IncommingRealTimeMessage,
+  IncomingRealTimeMessage,
   Message,
   SendMessagePayload,
   SendMessageResponse,
@@ -309,7 +309,7 @@ export function useMessageMutationState() {
   const queryClient = useQueryClient();
 
   const sendMessage = useCallback(
-    async (messageResponse: IncommingRealTimeMessage) => {
+    async (messageResponse: IncomingRealTimeMessage) => {
       const messagesPageKey = chatAreaQueryKey(
         messageResponse.conversation.ticketId
       );

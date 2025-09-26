@@ -88,7 +88,7 @@ export function formatSmartTimestamp(dateStr: string): string {
   return then.format('MMM D, YYYY [at] h:mm A'); // e.g. "May 14, 2023 at 10:30 AM"
 }
 
-export function formatMessageeRelativeTime(dateStr: string): string {
+export function formatMessageRelativeTime(dateStr: string): string {
   const now = dayjs();
   const then = dayjs(dateStr);
   const diffSeconds = now.diff(then, 'second');

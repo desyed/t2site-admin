@@ -5,7 +5,7 @@ import type { Message } from '@/app/services/chat-assistant/chat-assistant.type'
 import { useAuthStore } from '@/app/auth/auth.store';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
-  formatMessageeRelativeTime,
+  formatMessageRelativeTime,
   formatSmartTimestamp,
   timeGap,
 } from '@/lib/time';
@@ -254,7 +254,7 @@ export const AssistantMemberBubble = memo(
               <span className="mr-10 mt-px text-xs text-muted-foreground">
                 {message.optimistic?.pending
                   ? 'Sending'
-                  : `Sent ${formatMessageeRelativeTime(message.createdAt)}`}
+                  : `Sent ${formatMessageRelativeTime(message.createdAt)}`}
               </span>
             )
           )}
