@@ -21,6 +21,7 @@ import SignupPage from '@/pages/signup';
 
 import PrivateLayout from './layouts/private-layout';
 import ProjectLayout from './layouts/project-layout';
+import ProjectSettingsDashboard from './pages/dashboard/project-settings/components/project-settings-dashboard';
 import NotFoundSettings from './pages/settings/404';
 export const routes = createBrowserRouter([
   {
@@ -179,10 +180,13 @@ export const routes = createBrowserRouter([
           },
           {
             path: 'project-settings',
-            lazy: async () => {
-              const module = await import('@/pages/dashboard/project-settings');
-              return { element: <module.default /> };
-            },
+            element: <ProjectSettingsDashboard />,
+            children: [
+              {
+                index: true,
+                element: <Navigate to="general" />,
+              },
+            ],
           },
           {
             path: 'billing',
