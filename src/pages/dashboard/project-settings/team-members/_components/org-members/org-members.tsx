@@ -1,7 +1,9 @@
+import { AxiosError } from 'axios';
 import { useEffect } from 'react';
 
 import {
   useOrganizationMembersQuery,
+  useRedirectIfOrganizationNotExists,
 } from '@/app/organization/organization.hooks';
 import { InputSearch } from '@/components/ui/search-input';
 
@@ -22,6 +24,7 @@ export default function OrgMembers({
     refetch,
   } = useOrganizationMembersQuery();
 
+  // const redirect = useRedirectIfOrganizationNotExists();
 
   useEffect(() => {
     if (refresh && !isFetching) {
@@ -29,6 +32,16 @@ export default function OrgMembers({
       setRefresh(false);
     }
   }, [refresh, refetch, setRefresh, isFetching]);
+
+  // useEffect(() => {
+  //   if (
+  //     error &&
+  //     error instanceof AxiosError &&
+  //     error.response?.status === 404
+  //   ) {
+  //     redirect();
+  //   }
+  // }, [error, redirect]);
 
   return (
     <section>
