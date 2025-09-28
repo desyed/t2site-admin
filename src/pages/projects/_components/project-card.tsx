@@ -29,7 +29,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
     >
       <div className="flex items-center gap-4 p-4">
         <Link
-          to={`/projects/${project.id}?redirect_to=/dashboard`}
+          to={`/${project.id}`}
           className="shrink-0"
         >
           <Avatar className="size-8 rounded-md bg-muted shadow-sm">
@@ -42,7 +42,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <div className="min-w-0 flex-1 space-y-1">
           <div className="flex items-start justify-between gap-4">
             <Link
-              to={`/projects/${project.id}?redirect_to=/dashboard`}
+              to={`/${project.id}`}
               className="hover:underline"
             >
               <h2 className="max-w-[200px] truncate font-semibold tracking-tight">
@@ -80,7 +80,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuItem
               onSelect={() =>
-                navigate(`/projects/${project.id}?redirect_to=/dashboard`)
+                navigate(`/${project.id}`)
               }
               className="gap-2"
             >
@@ -90,7 +90,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             <DropdownMenuItem
               onSelect={() =>
                 navigate(
-                  `/projects/${project.id}?redirect_to=/settings/project`
+                  `/${project.id}/project-settings`
                 )
               }
               className="gap-2"

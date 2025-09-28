@@ -1,16 +1,20 @@
 
+import { PageHeader } from "@/components/dashboard/page-header";
 import { createDashboardLoader } from "@/middlewares/auth-middleware";
 
 export const loader = createDashboardLoader(() => {
   return {
-    title: 'Project Team Members Settings',
+    title: 'Project Security Settings',
   };
 });
 
 export const Component = () => {
   return (
-    <div>
-      <h1>Project Team Members Settings</h1>
-    </div>
+    <>
+      <PageHeader title="Security" />
+      <div className='dashboard-container'>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa quam sapiente vero reprehenderit molestias nihil, fugiat consequuntur illum dolor eius, numquam optio architecto porro voluptates in pariatur animi! Accusamus, et!
+      </div>
+    </>
   );
 }

@@ -18,7 +18,7 @@ export default function Projects() {
 
   useEffect(() => {
     if (projects.length === 0 && !isLoading && !isRefetching) {
-      navigate('/projects/new');
+      navigate('/create-project');
     }
   }, [projects, isLoading, isRefetching, navigate]);
 
@@ -42,7 +42,7 @@ export default function Projects() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Link to="/projects/new">
+            <Link to="/create-project">
               <Button
                 className="w-full gap-2 max-sm:h-9 sm:w-auto"
                 icon={<Plus className="size-4" />}
@@ -74,7 +74,7 @@ export default function Projects() {
                   organize and track your work effectively.
                 </p>
               </div>
-              <Link to="/projects/new">
+              <Link to="/create-project">
                 <Button
                   variant="outline"
                   className="mt-4"

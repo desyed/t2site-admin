@@ -22,6 +22,7 @@ import SignupPage from '@/pages/signup';
 import PrivateLayout from './layouts/private-layout';
 import ProjectLayout from './layouts/project-layout';
 import NotFoundSettings from './pages/settings/404';
+import Projects from "./pages/projects/_components/Projects";
 export const routes = createBrowserRouter([
   {
     path: '/',
@@ -42,6 +43,10 @@ export const routes = createBrowserRouter([
             element: <SignupPage />,
           },
         ],
+      },
+      {
+        path: '/',
+        element: <Projects />,
       },
       {
         path: '/auth',

@@ -14,22 +14,11 @@ export default function AuthCheckPoint() {
 
   useEffect(() => {
     async function initSession() {
-      const auth_login = getQuery('auth_login');
+       const auth_login = getQuery('auth_login');
       if (auth_login === 'success') {
+        const from = getQuery('rp') ?? '/';
         await authStore.fetchSession(true);
-
-        // Wait until projects are fetched
-        if (!isLoading) {
-          if (projects.length === 0) {
-            navigate('/create-project', { replace: true });
-          } else {
-            // Navigate to first project dashboard
-            const firstProject = projects[0];
-            if (firstProject) {
-              navigate(`/${firstProject.id}`, { replace: true });
-            }
-          }
-        }
+        navigate(from, { replace: true });
       }
     }
 

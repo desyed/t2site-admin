@@ -18,9 +18,10 @@ export const loader: LoaderFunction = createPrivateLoader(async () => {
 export function Component() {
   return (
     <>
-    <PageHeader title="Team Members" />
-    <div className='dashboard-container'>
-      <Members />
-    </div></>
+      <PageHeader title="Team Members" />
+      <div className='dashboard-container'>
+        <Members />
+      </div>
+    </>
   );
 }
