@@ -13,7 +13,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useRouteError, isRouteErrorResponse } from 'react-router';
 
 import Brand from '@/components/Brand';
-import { ModeToggle } from '@/components/mode-toggle';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import {
@@ -138,7 +137,6 @@ export default function ErrorBoundary() {
       {/* Header */}
       <header className="flex h-16 items-center justify-between border-b px-4 md:px-6">
         <Brand />
-        <ModeToggle />
       </header>
 
       {/* Main Content */}

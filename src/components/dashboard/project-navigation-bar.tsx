@@ -17,7 +17,7 @@ import {
   User,
 } from 'lucide-react';
 import { useMemo } from 'react';
-import { Link, useParams } from 'react-router';
+import { Link } from 'react-router';
 
 import { useProjectsQuery } from '@/app/project/project.hooks';
 import { useAuth } from '@/contexts/auth-provider';
@@ -59,22 +59,17 @@ const faqItems = [
   },
 ];
 
-export function ProjectNavigationBar() {
+export function ProjectNavigationBar({ projectId }: { projectId: string }) {
   const { data: projectsResult } = useProjectsQuery();
   const projects = useMemo(() => projectsResult ?? [], [projectsResult]);
-
-  const params = useParams();
-  const currentProjectId = params?.projectId as string;
 
   const { logout } = useAuth();
 
   return (
     <div className="flex h-full w-16 flex-col items-center border-r border-gray-200 p-2">
       {/* Logo */}
-      <div className="flex items-center justify-center border-b border-gray-200 py-1">
-        <Link to="/" className="px-1 py-4 text-xl font-bold text-black">
-          T2
-        </Link>
+      <div className="flex select-none items-center justify-center border-b border-gray-200 py-1">
+        <div className="px-1 py-4 text-xl font-bold text-black">T2</div>
       </div>
 
       <div className="flex flex-col gap-3 overflow-y-auto">
@@ -83,7 +78,7 @@ export function ProjectNavigationBar() {
             key={project.id}
             to={`/${project.id}`}
             className={`flex size-11 flex-col items-center justify-center rounded-lg p-1.5 text-xs font-medium text-icon transition-colors ${
-              currentProjectId === project.id
+              projectId === project.id
                 ? `border-current bg-white`
                 : 'hover:bg-gray-300'
             }`}
@@ -93,7 +88,7 @@ export function ProjectNavigationBar() {
               className={`flex size-7 flex-col items-center justify-center rounded-full bg-white p-2`}
             >
               <img
-                src={project?.icon ?? ''}
+                src={project?.icon ?? '/project-icon-placeholder.png'}
                 alt={project.name}
                 className="size-full"
               />

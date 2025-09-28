@@ -33,7 +33,7 @@ export default function ProjectLayout() {
       <div
         className={`top-0 z-50 flex h-full bg-sidebar transition-all duration-1000 max-md:fixed ${isMobileNavOpened ? 'left-0' : '-left-full'}`}
       >
-        <ProjectNavigationBar />
+        <ProjectNavigationBar projectId={params.projectId ?? ''} />
         <div className="py-2 pr-2">
           <Sidebar
             projectId={params.projectId ?? ''}
