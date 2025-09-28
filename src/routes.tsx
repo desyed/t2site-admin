@@ -179,10 +179,19 @@ export const routes = createBrowserRouter([
           },
           {
             path: 'project-settings',
-            lazy: async () => {
-              const module = await import('@/pages/dashboard/project-settings');
-              return { element: <module.default /> };
-            },
+            lazy: () => import('@/pages/dashboard/project-settings'),
+          },
+          {
+            path: 'project-settings/team-members',
+            lazy: () => import('@/pages/dashboard/project-settings/team-members'),
+          },
+          {
+            path: 'project-settings/integrations',
+            lazy: () => import('@/pages/dashboard/project-settings/integrations'),
+          },
+          {
+            path: 'project-settings/security',
+            lazy: () => import('@/pages/dashboard/project-settings/security'),
           },
           {
             path: 'billing',

@@ -3,14 +3,14 @@ import { createDashboardLoader } from "@/middlewares/auth-middleware";
 
 export const loader = createDashboardLoader(() => {
   return {
-    title: 'Project General Settings',
+    title: 'Project Team Members Settings',
   };
 });
 
 export const Component = () => {
   return (
     <div>
-      <h1>Project General Settings</h1>
+      <h1>Project Team Members Settings</h1>
     </div>
   );
 }

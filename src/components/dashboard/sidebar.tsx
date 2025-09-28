@@ -35,23 +35,24 @@ export function Sidebar({ projectId }: SidebarProps) {
   const location = useLocation();
   const pathname = location.pathname;
   const router = useNavigate();
-  const [isProjectSettingsMode, setIsProjectSettingsMode] = useState(false);
+  
   const [isLiveDeskMode, setIsLiveDeskMode] = useState(false);
-  const [isCookieConsentMode, setIsCookieConsentMode] = useState(false);
 
   const { data: projectsResult } = useProjectsQuery();
   const projects = useMemo(() => projectsResult ?? [], [projectsResult]);
 
+
+
+  const isProjectSettingsMode = pathname.includes('/project-settings');
+  const isCookieConsentMode = pathname.includes('/cookie-consent');
+
   const handleBackToMain = () => {
-    setIsProjectSettingsMode(false);
     setIsLiveDeskMode(false);
-    setIsCookieConsentMode(false);
     router(`/${projectId}/analytics`);
   };
 
   const handleProjectSettingsMode = (e: React.MouseEvent) => {
     e.preventDefault();
-    setIsProjectSettingsMode(true);
     // Navigate to General (first option) by default
     router(`/${projectId}/project-settings?category=general`);
   };
@@ -65,7 +66,6 @@ export function Sidebar({ projectId }: SidebarProps) {
 
   const handleCookieConsentMode = (e: React.MouseEvent) => {
     e.preventDefault();
-    setIsCookieConsentMode(true);
     // Navigate to Banner Settings (first option) by default
     router(`/${projectId}/cookie-consent?category=banner`);
   };
@@ -79,39 +79,31 @@ export function Sidebar({ projectId }: SidebarProps) {
   const projectSettingsCategories = [
     {
       name: 'General',
-      href: `/${projectId}/project-settings?category=general`,
+      href: `/${projectId}/project-settings`,
       icon: Shield,
       current:
-        pathname === `/${projectId}/project-settings` &&
-        new URLSearchParams(window?.location?.search || '').get('category') ===
-          'general',
+        pathname === `/${projectId}/project-settings`,
     },
     {
       name: 'Team Members',
-      href: `/${projectId}/project-settings?category=team`,
+      href: `/${projectId}/project-settings/team-members`,
       icon: UserPlus,
       current:
-        pathname === `/${projectId}/project-settings` &&
-        new URLSearchParams(window?.location?.search || '').get('category') ===
-          'team',
+        pathname === `/${projectId}/project-settings/team-members`,
     },
     {
       name: 'Integrations',
-      href: `/${projectId}/project-settings?category=integrations`,
+      href: `/${projectId}/project-settings/integrations`,
       icon: Puzzle,
       current:
-        pathname === `/${projectId}/project-settings` &&
-        new URLSearchParams(window?.location?.search || '').get('category') ===
-          'integrations',
+        pathname === `/${projectId}/project-settings/integrations`,
     },
     {
       name: 'Security',
-      href: `/${projectId}/project-settings?category=security`,
+      href: `/${projectId}/project-settings/security`,
       icon: Lock,
       current:
-        pathname === `/${projectId}/project-settings` &&
-        new URLSearchParams(window?.location?.search || '').get('category') ===
-          'security',
+        pathname === `/${projectId}/project-settings/security`,
     },
   ];
 

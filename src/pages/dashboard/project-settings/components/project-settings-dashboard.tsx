@@ -195,16 +195,6 @@ export function ProjectSettingsDashboard({
     }
   };
 
-  const navigateToCategory = (categoryId: MainCategory) => {
-    const categoryData = mainCategories.find((c) => c.id === categoryId);
-    setNavigation({
-      level: 'category',
-      category: categoryId,
-      title: categoryData?.title || '',
-    });
-    navigate(`/${projectId}/project-settings?category=${categoryId}`);
-  };
-
   const copyCodeSnippet = () => {
     const code = `<script>
   (function(d,s,id){

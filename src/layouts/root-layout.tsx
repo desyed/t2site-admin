@@ -5,11 +5,11 @@ import RevalidateLoader from '@/components/revalidate-loader';
 
 TopBarProgress.config({
   barColors: {
-    0: '#facc15',
-    0.5: '#facc15',
-    '1.0': '#facc15',
+    0: '#000000',
+    0.5: '#000000',
+    '1.0': '#000000',
   },
-  barThickness: 2,
+  barThickness: 5,
   shadowBlur: 6,
 });
 
