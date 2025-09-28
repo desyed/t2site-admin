@@ -17,11 +17,12 @@ import {
   UserPlus,
   Users,
 } from 'lucide-react'; // Import Settings icon
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 
 import type { NavigationGroup } from '@/types/dashboard';
 
+import { useProjectsQuery } from '@/app/project/project.hooks';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -30,21 +31,6 @@ interface SidebarProps {
   onNavItemSelect?: () => void;
 }
 
-const projectData = {
-  'project-1': { name: 'T2 live', sessions: '0 of 1K', members: '0 of 25' },
-  'project-2': {
-    name: 'E-commerce Store',
-    sessions: '245 of 5K',
-    members: '12 of 50',
-  },
-  'project-3': {
-    name: 'SaaS Platform',
-    sessions: '1.2K of 10K',
-    members: '45 of 100',
-  },
-  'project-4': { name: 'Tech Blog', sessions: '89 of 2K', members: '3 of 15' },
-};
-
 export function Sidebar({ projectId }: SidebarProps) {
   const location = useLocation();
   const pathname = location.pathname;
@@ -52,6 +38,9 @@ export function Sidebar({ projectId }: SidebarProps) {
   const [isProjectSettingsMode, setIsProjectSettingsMode] = useState(false);
   const [isLiveDeskMode, setIsLiveDeskMode] = useState(false);
   const [isCookieConsentMode, setIsCookieConsentMode] = useState(false);
+
+  const { data: projectsResult } = useProjectsQuery();
+  const projects = useMemo(() => projectsResult ?? [], [projectsResult]);
 
   const handleBackToMain = () => {
     setIsProjectSettingsMode(false);
@@ -81,7 +70,7 @@ export function Sidebar({ projectId }: SidebarProps) {
     router(`/${projectId}/cookie-consent?category=banner`);
   };
 
-  const currentProject = projectData[projectId as keyof typeof projectData] || {
+  const currentProject = projects.find((p) => p.id === projectId) || {
     name: 'Unknown Project',
     sessions: '0 of 1K',
     members: '0 of 25',
@@ -452,14 +441,14 @@ export function Sidebar({ projectId }: SidebarProps) {
                   <Sparkles className="size-4 text-gray-400" />
                   <span className="text-gray-700">Sessions</span>
                 </div>
-                <span className="text-gray-500">{currentProject.sessions}</span>
+                <span className="text-gray-500">{123}</span>
               </div>
               <div className="flex items-center justify-between border-b-2 py-2 text-xs font-medium">
                 <div className="flex items-center gap-2">
                   <Users className="size-4 text-gray-400" />
                   <span className="text-gray-700">Members</span>
                 </div>
-                <span className="text-gray-500">{currentProject.members}</span>
+                <span className="text-gray-500">{12345}</span>
               </div>
             </div>
             <p className="mt-2 pt-1 text-xs text-gray-400">

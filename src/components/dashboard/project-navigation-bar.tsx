@@ -8,32 +8,23 @@ import {
   DropdownMenuTrigger,
 } from '@radix-ui/react-dropdown-menu';
 import {
-  AxeIcon,
-  BedIcon,
   ExternalLink,
   Gift,
   HelpCircle,
   LogOut,
   MessageCircle,
-  PiIcon,
   Plus,
-  TvIcon,
   User,
 } from 'lucide-react';
+import { useMemo } from 'react';
 import { Link, useParams } from 'react-router';
 
+import { useProjectsQuery } from '@/app/project/project.hooks';
 import { useAuth } from '@/contexts/auth-provider';
 
 import { Button } from '../site-button';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Input } from '../ui/input';
-
-const projects = [
-  { id: 'project-1', name: 'T2 live', logo: PiIcon },
-  { id: 'project-2', name: 'E-comm', logo: TvIcon },
-  { id: 'project-3', name: 'SaaS', logo: AxeIcon },
-  { id: 'project-4', name: 'Blog', logo: BedIcon },
-];
 
 const faqItems = [
   {
@@ -54,7 +45,7 @@ const faqItems = [
   {
     title: 'How to invite teammates on Dub',
     description:
-      'Learn how to invite teammates to your Dub workspace and start collaboratin...',
+      'Learn how to invite teammates to your Dub workspace and start collaborating...',
   },
   {
     title: 'Dub Analytics Overview',
@@ -69,6 +60,9 @@ const faqItems = [
 ];
 
 export function ProjectNavigationBar() {
+  const { data: projectsResult } = useProjectsQuery();
+  const projects = useMemo(() => projectsResult ?? [], [projectsResult]);
+
   const params = useParams();
   const currentProjectId = params?.projectId as string;
 
@@ -83,11 +77,11 @@ export function ProjectNavigationBar() {
         </Link>
       </div>
 
-      <div className="flex max-h-64 flex-col gap-3 overflow-y-auto">
-        {projects.map((project) => (
+      <div className="flex flex-col gap-3 overflow-y-auto">
+        {projects?.map((project) => (
           <Link
             key={project.id}
-            to={`/${project.id}/analytics`}
+            to={`/${project.id}`}
             className={`flex size-11 flex-col items-center justify-center rounded-lg p-1.5 text-xs font-medium text-icon transition-colors ${
               currentProjectId === project.id
                 ? `border-current bg-white`
@@ -96,9 +90,13 @@ export function ProjectNavigationBar() {
             title={project.name}
           >
             <div
-              className={`flex size-7 flex-col items-center justify-center rounded-full bg-white`}
+              className={`flex size-7 flex-col items-center justify-center rounded-full bg-white p-2`}
             >
-              <project.logo className="size-3" />
+              <img
+                src={project?.icon ?? ''}
+                alt={project.name}
+                className="size-full"
+              />
             </div>
           </Link>
         ))}

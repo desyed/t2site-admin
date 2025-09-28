@@ -7,10 +7,9 @@ import Brand from '@/components/Brand';
 import { getQuery } from '@/lib/utils';
 
 export default function AuthCheckPoint() {
-  const { data: projectsResult, isLoading } = useProjectsQuery();
-
   const navigate = useNavigate();
 
+  const { data: projectsResult, isLoading } = useProjectsQuery();
   const projects = useMemo(() => projectsResult ?? [], [projectsResult]);
 
   useEffect(() => {
@@ -25,9 +24,9 @@ export default function AuthCheckPoint() {
             navigate('/create-project', { replace: true });
           } else {
             // Navigate to first project dashboard
-            const first = projects[0];
-            if (first) {
-              navigate(`/${first.id}`, { replace: true });
+            const firstProject = projects[0];
+            if (firstProject) {
+              navigate(`/${firstProject.id}`, { replace: true });
             }
           }
         }
