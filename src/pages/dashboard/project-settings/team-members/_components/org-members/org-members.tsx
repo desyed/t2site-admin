@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 
 import {
   useOrganizationMembersQuery,
-  useRedirectIfOrganizationNotExists,
-} from '@/app/organization/organization.hooks';
+  useRedirectIfProjectNotExists,
+} from '@/app/team-members/organization.hooks';
 import { InputSearch } from '@/components/ui/search-input';
 
 import { OrgMembersTable } from './org-members-table';
@@ -24,7 +24,7 @@ export default function OrgMembers({
     refetch,
   } = useOrganizationMembersQuery();
 
-  // const redirect = useRedirectIfOrganizationNotExists();
+  // const redirect = useRedirectIfProjectNotExists();
 
   useEffect(() => {
     if (refresh && !isFetching) {

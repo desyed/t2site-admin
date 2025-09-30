@@ -1,6 +1,7 @@
 import type { UseMutationOptions } from '@tanstack/react-query';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useParams } from 'react-router';
 
 import { handleApiErrorException } from '@/lib/utils';
 
@@ -10,15 +11,41 @@ import type {
   ProjectService,
 } from './project.type';
 
-import { memberQueryKeys } from '../organization/organization.keys';
+import { memberQueryKeys } from '../team-members/organization.keys';
 import { createProjectApi, updateProjectServiceApi } from './project.api';
-import { fetchProjects, fetchProjectServices } from './project.fetch';
+import {
+  fetchProject,
+  fetchProjects,
+  fetchProjectServices,
+} from './project.fetch';
 import { projectQueryKeys, projectServiceQueryKeys } from './projects.keys';
 
 export function useProjectsQuery() {
   const query = useQuery({
     queryKey: projectQueryKeys.projectList(),
     queryFn: () => fetchProjects(),
+  });
+  return query;
+}
+
+export function useProjectQuery(projectId: string) {
+  const query = useQuery({
+    queryKey: projectQueryKeys.projectById(projectId),
+    queryFn: () => fetchProject(projectId),
+  });
+  return query;
+}
+
+export function useCurrentProjectQuery() {
+  const projectId = useParams().projectId;
+  const query = useQuery({
+    queryKey: projectQueryKeys.projectById(projectId ?? ''),
+    queryFn: () => fetchProject(projectId ?? ''),
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    networkMode: 'offlineFirst',
+    staleTime: Infinity,
   });
   return query;
 }

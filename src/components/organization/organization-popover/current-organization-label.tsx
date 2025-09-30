@@ -1,7 +1,7 @@
 import { ChevronsUpDown } from 'lucide-react';
 import { forwardRef } from 'react';
 
-import type { Organization } from '@/app/organization/organizaion.type';
+import type { Organization } from '@/app/team-members/organizaion.type';
 
 import { useAuthStore } from '@/app/auth/auth.store';
 import { Button } from '@/components/ui/button';

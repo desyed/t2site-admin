@@ -2,9 +2,9 @@ import { Check, X } from 'lucide-react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
-import type { InvitedMember } from '@/app/organization/organizaion.type';
+import type { InvitedMember } from '@/app/team-members/organizaion.type';
 
-import { useOptimisticInvitationPromptMutation } from '@/app/organization/organization.hooks';
+import { useOptimisticInvitationPromptMutation } from '@/app/team-members/organization.hooks';
 import { Button } from '@/components/site-button';
 type InvitationActionsProps = {
   invitedMember: InvitedMember;

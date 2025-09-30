@@ -1,6 +1,6 @@
 import { SendIcon } from 'lucide-react';
 
-import type { InvitedMember } from '@/app/organization/organizaion.type';
+import type { InvitedMember } from '@/app/team-members/organizaion.type';
 import type { SiteTableColumn } from '@/components/site-table';
 import type { StatusType } from '@/components/status-badge';
 

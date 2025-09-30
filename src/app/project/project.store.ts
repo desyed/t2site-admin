@@ -22,6 +22,8 @@ export type ProjectStore = {
   setCurrentStep: (currentStep: number) => void;
   getCurrentStep: () => TCreateProjectStep | undefined;
   getCurrentNewProject: () => Project | null;
+  activeProject: Project | null;
+  setActiveProject: (activeProject: Project | null) => void;
   resetProjectCreation: () => void;
 };
 
@@ -31,6 +33,8 @@ export const useProjectStore = create<ProjectStore>((set, get) => ({
   currentNewProject: null,
   createProjectSteps: [...initialCreateProjectStep],
   currentStep: 0,
+  activeProject: null,
+  setActiveProject: (activeProject) => set({ activeProject }),
   setProjects: (projects) => set({ projects }),
   setCurrentNewProject: (currentNewProject) => set({ currentNewProject }),
   setCurrentStep: (currentStep) => set({ currentStep }),
@@ -44,6 +48,7 @@ export const useProjectStore = create<ProjectStore>((set, get) => ({
     set({
       currentNewProject: null,
       currentStep: 0,
+      activeProject: null,
     });
   },
 }));

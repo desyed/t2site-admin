@@ -2,10 +2,10 @@ import { Check } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
-import type { Organization } from '@/app/organization/organizaion.type';
+import type { Organization } from '@/app/team-members/organizaion.type';
 
 import { useAuthStore } from '@/app/auth/auth.store';
-import { changeCurrentOrganizationApi } from '@/app/organization/organization.api';
+import { changeCurrentOrganizationApi } from '@/app/team-members/organization.api';
 import { CommandItem } from '@/components/ui/command';
 import { useApi } from '@/hooks/use-api';
 

@@ -4,7 +4,7 @@ import type { Params } from 'react-router';
 import { useLoaderData } from 'react-router';
 import { z } from 'zod';
 
-import { preFetchInvitedMember } from '@/app/organization/organization.prefetch';
+import { preFetchInvitedMember } from '@/app/team-members/organization.prefetch';
 import { validInvitedMemberId } from '@/lib/validations';
 import { createPrivateLoader } from '@/middlewares/auth-middleware';
 

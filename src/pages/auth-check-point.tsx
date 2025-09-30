@@ -1,29 +1,24 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
 import { authStore } from '@/app/auth/auth.store';
-import { useProjectsQuery } from '@/app/project/project.hooks';
 import Brand from '@/components/Brand';
 import { getQuery } from '@/lib/utils';
 
 export default function AuthCheckPoint() {
   const navigate = useNavigate();
 
-  const { data: projectsResult, isLoading } = useProjectsQuery();
-  const projects = useMemo(() => projectsResult ?? [], [projectsResult]);
-
   useEffect(() => {
     async function initSession() {
-       const auth_login = getQuery('auth_login');
+      const auth_login = getQuery('auth_login');
       if (auth_login === 'success') {
         const from = getQuery('rp') ?? '/';
         await authStore.fetchSession(true);
         navigate(from, { replace: true });
       }
     }
-
     initSession();
-  }, [navigate, projects, isLoading]);
+  }, [navigate]);
 
   return !getQuery('ocr') ? (
     <div className="relative flex min-h-screen flex-col">

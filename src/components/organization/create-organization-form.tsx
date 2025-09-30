@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import * as z from 'zod';
 
-import { createOrganizationApi } from '@/app/organization/organization.api';
+import { createOrganizationApi } from '@/app/team-members/organization.api';
 import { Button } from '@/components/site-button';
 import {
   Form,

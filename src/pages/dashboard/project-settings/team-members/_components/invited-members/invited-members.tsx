@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 
 import {
   useInviteMembersQuery,
-  useRedirectIfOrganizationNotExists,
-} from '@/app/organization/organization.hooks';
+  useRedirectIfProjectNotExists,
+} from '@/app/team-members/organization.hooks';
 import { InputSearch } from '@/components/ui/search-input';
 
 import InvitedMembersTable from './invited-members-table';
@@ -23,7 +23,7 @@ export default function InvitedMembers({
     isLoading,
   } = useInviteMembersQuery();
 
-  // const redirect = useRedirectIfOrganizationNotExists();
+  // const redirect = useRedirectIfProjectNotExists();
 
   useEffect(() => {
     if (refresh && !isFetching) {

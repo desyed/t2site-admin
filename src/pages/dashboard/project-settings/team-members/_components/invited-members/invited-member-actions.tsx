@@ -2,17 +2,17 @@ import { MoreHorizontal, XIcon, SendIcon } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-import type { InvitedMember } from '@/app/organization/organizaion.type';
+import type { InvitedMember } from '@/app/team-members/organizaion.type';
 
 import { useAuthStore } from '@/app/auth/auth.store';
 import {
   useResendInvitationMutation,
   useCancelInvitationMutation,
-} from '@/app/organization/organization.hooks';
+} from '@/app/team-members/organization.hooks';
 import {
   checkSendInvitationPermission,
   checkCancelInvitationPermission,
-} from '@/app/organization/organization.service';
+} from '@/app/team-members/organization.service';
 import SiteAlertDialog from '@/components/site-alert-dialog';
 import { Button } from '@/components/site-button';
 import {

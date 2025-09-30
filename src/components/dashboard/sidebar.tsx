@@ -17,12 +17,12 @@ import {
   UserPlus,
   Users,
 } from 'lucide-react'; // Import Settings icon
-import { useMemo, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router';
+import { useState } from 'react';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router';
 
 import type { NavigationGroup } from '@/types/dashboard';
 
-import { useProjectsQuery } from '@/app/project/project.hooks';
+import { useCurrentProjectQuery } from '@/app/project/project.hooks';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -35,13 +35,10 @@ export function Sidebar({ projectId }: SidebarProps) {
   const location = useLocation();
   const pathname = location.pathname;
   const router = useNavigate();
-  
+
   const [isLiveDeskMode, setIsLiveDeskMode] = useState(false);
 
-  const { data: projectsResult } = useProjectsQuery();
-  const projects = useMemo(() => projectsResult ?? [], [projectsResult]);
-
-
+  const { data: currentProject } = useCurrentProjectQuery();
 
   const isProjectSettingsMode = pathname.includes('/project-settings');
   const isCookieConsentMode = pathname.includes('/cookie-consent');
@@ -70,40 +67,30 @@ export function Sidebar({ projectId }: SidebarProps) {
     router(`/${projectId}/cookie-consent?category=banner`);
   };
 
-  const currentProject = projects.find((p) => p.id === projectId) || {
-    name: 'Unknown Project',
-    sessions: '0 of 1K',
-    members: '0 of 25',
-  };
-
   const projectSettingsCategories = [
     {
       name: 'General',
       href: `/${projectId}/project-settings`,
       icon: Shield,
-      current:
-        pathname === `/${projectId}/project-settings`,
+      current: pathname === `/${projectId}/project-settings`,
     },
     {
       name: 'Team Members',
       href: `/${projectId}/project-settings/team-members`,
       icon: UserPlus,
-      current:
-        pathname === `/${projectId}/project-settings/team-members`,
+      current: pathname === `/${projectId}/project-settings/team-members`,
     },
     {
       name: 'Integrations',
       href: `/${projectId}/project-settings/integrations`,
       icon: Puzzle,
-      current:
-        pathname === `/${projectId}/project-settings/integrations`,
+      current: pathname === `/${projectId}/project-settings/integrations`,
     },
     {
       name: 'Security',
       href: `/${projectId}/project-settings/security`,
       icon: Lock,
-      current:
-        pathname === `/${projectId}/project-settings/security`,
+      current: pathname === `/${projectId}/project-settings/security`,
     },
   ];
 
@@ -172,7 +159,9 @@ export function Sidebar({ projectId }: SidebarProps) {
           name: 'Analytics',
           href: `/${projectId}/analytics`,
           icon: BarChart3,
-          current: pathname === `/${projectId}/analytics`,
+          current:
+            pathname === `/${projectId}/analytics` ||
+            pathname === `/${projectId}`,
         },
         {
           name: 'Events',
@@ -230,6 +219,10 @@ export function Sidebar({ projectId }: SidebarProps) {
       ],
     },
   ];
+
+  if (!currentProject) {
+    return null;
+  }
 
   return (
     <div className="flex h-full w-[232px] flex-col rounded-xl border-r border-gray-200 bg-sidebar-primary pt-1">

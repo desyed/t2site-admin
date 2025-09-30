@@ -1,6 +1,6 @@
 import { UserPlusIcon } from 'lucide-react';
 
-import type { OrganizationMember } from '@/app/organization/organizaion.type';
+import type { OrganizationMember } from '@/app/team-members/organizaion.type';
 import type { SiteTableColumn } from '@/components/site-table';
 
 import MemberRoleBadge from '@/components/organization/member-role-badge';

@@ -3,6 +3,10 @@ import type { ActionFunction, LoaderFunction } from 'react-router';
 import { replace } from 'react-router';
 
 import { authPreSessionLoader } from '@/app/auth/auth.loader';
+import {
+  preFetchProject,
+  preFetchProjects,
+} from '@/app/project/project.prefetch';
 
 export const authMiddlewareLoader: LoaderFunction = async () => {
   const { user } = await authPreSessionLoader();
@@ -73,6 +77,8 @@ export const createDashboardLoader = (
   loader?: LoaderFunction
 ): LoaderFunction => {
   return createPrivateLoader(async (context) => {
+    await preFetchProject(context.params.projectId ?? '');
+    await preFetchProjects();
     return loader ? loader(context) : null;
   });
 };

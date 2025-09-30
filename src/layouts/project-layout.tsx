@@ -1,14 +1,19 @@
 import { useEffect, useState } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router';
 
+import { useCurrentProjectQuery } from '@/app/project/project.hooks';
+import { DashboardContentAreaSkeleton } from '@/components/dashboard/dashboard-content-area-skeleton';
 import { ProfileCompletionFloat } from '@/components/dashboard/profile-completion-float';
 import { ProjectNavigationBar } from '@/components/dashboard/project-navigation-bar';
 import { Sidebar } from '@/components/dashboard/sidebar';
+import { SidebarSkeleton } from '@/components/dashboard/sidebar-skeleton';
+import ErrorScreen from '@/components/ErrorScreen';
 import { useAuth } from '@/contexts/auth-provider';
 
 export default function ProjectLayout() {
   const { isAuthenticated } = useAuth();
   const [isMobileNavOpened, setIsMobileNavOpened] = useState(false);
+  const { error, refetch, isLoading, isFetching } = useCurrentProjectQuery();
 
   const navigate = useNavigate();
 
@@ -22,11 +27,17 @@ export default function ProjectLayout() {
 
   const toggleMobileNav = () => setIsMobileNavOpened((prev) => !prev);
 
+  const isProjectLoading = isLoading || isFetching;
+
   const closeMobileNav = () => {
     if (isMobileNavOpened) {
       setIsMobileNavOpened(false);
     }
   };
+
+  if (error) {
+    return <ErrorScreen onRetry={refetch} error={error} />;
+  }
 
   return (
     <div className="relative flex size-full h-screen">
@@ -35,13 +46,16 @@ export default function ProjectLayout() {
       >
         <ProjectNavigationBar projectId={params.projectId ?? ''} />
         <div className="py-2 pr-2">
-          <Sidebar
-            projectId={params.projectId ?? ''}
-            onNavItemSelect={closeMobileNav}
-          />
+          {isProjectLoading ? (
+            <SidebarSkeleton />
+          ) : (
+            <Sidebar
+              projectId={params.projectId ?? ''}
+              onNavItemSelect={closeMobileNav}
+            />
+          )}
         </div>
       </div>
-
       <main
         className={`-100 relative w-full bg-sidebar md:py-2 ${isMobileNavOpened && 'blur-sm'} h-full overflow-y-auto transition-all duration-1000`}
       >
@@ -51,7 +65,11 @@ export default function ProjectLayout() {
           onClick={closeMobileNav}
         />
         <div className="size-full min-h-fit bg-white pb-10 md:rounded-l-xl">
-          <Outlet context={[toggleMobileNav]} />
+          {isProjectLoading ? (
+            <DashboardContentAreaSkeleton />
+          ) : (
+            <Outlet context={[toggleMobileNav]} />
+          )}
         </div>
 
         <ProfileCompletionFloat />

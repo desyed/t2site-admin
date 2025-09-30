@@ -5,15 +5,15 @@ import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-import type { InviteMemberInput } from '@/app/organization/organizaion.type';
+import type { InviteMemberInput } from '@/app/team-members/organizaion.type';
 
 import { useAuthStore } from '@/app/auth/auth.store';
-import { useInviteMembersMutaion } from '@/app/organization/organization.hooks';
+import { useInviteMembersMutaion } from '@/app/team-members/organization.hooks';
 import {
   inviteMemberSchema,
   MAX_MEMBERS,
   rolesOptions,
-} from '@/app/organization/organization.schema';
+} from '@/app/team-members/organization.schema';
 import { Button } from '@/components/site-button';
 import {
   Form,

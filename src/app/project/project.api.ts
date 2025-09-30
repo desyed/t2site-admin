@@ -23,16 +23,8 @@ export async function getProjectsApi({
 /**
  * @GET /projects/:id?organizationId={organizationId}(optional)
  */
-export async function getProjectApi({
-  projectId,
-  organizationId,
-}: {
-  projectId: string;
-  organizationId?: string;
-}) {
-  return api.get(`/projects/${projectId}`, {
-    params: { organizationId },
-  });
+export async function getProjectApi({ projectId }: { projectId: string }) {
+  return api.get(`/projects/${projectId}`, {});
 }
 
 /**

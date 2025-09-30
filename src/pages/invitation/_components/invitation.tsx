@@ -2,7 +2,7 @@ import { AxiosError } from 'axios';
 
 import type { StatusType } from '@/components/status-badge';
 
-import { useInvitedMemberQuery } from '@/app/organization/organization.hooks';
+import { useInvitedMemberQuery } from '@/app/team-members/organization.hooks';
 import { StatusBadge } from '@/components/status-badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { dayJs } from '@/lib/time';

@@ -3,11 +3,11 @@ import type { LoaderFunction } from 'react-router';
 import {
   preFetchInvitedMembers,
   preFetchOrganizationMembers,
-} from '@/app/organization/organization.prefetch';
+} from '@/app/team-members/organization.prefetch';
+import { PageHeader } from '@/components/dashboard/page-header';
 import { createPrivateLoader } from '@/middlewares/auth-middleware';
 
 import Members from './_components/members';
-import { PageHeader } from "@/components/dashboard/page-header";
 
 export const loader: LoaderFunction = createPrivateLoader(async () => {
   await preFetchInvitedMembers();
@@ -19,7 +19,7 @@ export function Component() {
   return (
     <>
       <PageHeader title="Team Members" />
-      <div className='dashboard-container'>
+      <div className="dashboard-container">
         <Members />
       </div>
     </>
