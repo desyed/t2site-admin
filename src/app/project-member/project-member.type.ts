@@ -28,7 +28,7 @@ export interface InvitedMember {
   email: string;
   role: Role;
   name: string;
-  organizationId: string;
+  projectId: string;
   invitedBy: MemberUser;
   status: string;
   expiresAt: string;

@@ -26,7 +26,6 @@ const paramsSchema = z.object({
 export const loader: LoaderFunction<Params> = createPrivateLoader(
   async ({ params }) => {
     const paramsResult = paramsSchema.safeParse(params);
-    console.log('🚀 ~ createPrivateLoader ~ paramsResult:', paramsResult.error);
     if (paramsResult.error) {
       return {
         error: {
