@@ -1,6 +1,10 @@
 import { UserPlusIcon } from 'lucide-react';
 
-import type { OrganizationMember } from '@/app/team-members/organizaion.type';
+import type {
+  OrganizationMember,
+  ProjectMember,
+} from '@/app/project-member/project-member.type';
+import type { Project } from '@/app/project/project.type';
 import type { SiteTableColumn } from '@/components/site-table';
 
 import MemberRoleBadge from '@/components/organization/member-role-badge';
@@ -10,22 +14,24 @@ import { tableTimeRelativeFormat } from '@/lib/time';
 
 import MemberActions from './members-actions';
 
-type OrgMembersTableProps = {
-  members: OrganizationMember[];
+type ProjectMembersTableProps = {
+  members: ProjectMember[];
   isLoading: boolean;
   isFetching: boolean;
   error: Error | null;
   refetch: () => void;
+  currentProject: Project;
 };
 
-export function OrgMembersTable({
+export function ProjectMembersTable({
   members,
   isLoading,
   isFetching,
   error,
   refetch,
-}: OrgMembersTableProps) {
-  const columns: SiteTableColumn<OrganizationMember>[] = [
+  currentProject,
+}: ProjectMembersTableProps) {
+  const columns: SiteTableColumn<ProjectMember>[] = [
     {
       title: 'USER',
       key: 'user',
@@ -62,7 +68,9 @@ export function OrgMembersTable({
     {
       title: '',
       width: 'w-[100px]',
-      render: (member) => <MemberActions member={member} />,
+      render: (member) => (
+        <MemberActions member={member} currentProject={currentProject} />
+      ),
     },
   ];
 

@@ -14,11 +14,7 @@ export const invitedMemberQueryKeys = {
     id,
     projectId,
   ],
-  invitedMemberDetails: (id: string, projectId: string) => [
-    'INVITED_MEMBER',
-    id,
-    projectId,
-  ],
+  invitedMemberDetails: (id: string) => ['INVITED_MEMBER', id],
 };
 
 export const memberQueryKeys = {

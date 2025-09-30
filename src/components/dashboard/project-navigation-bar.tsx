@@ -195,21 +195,19 @@ export function ProjectNavigationBar({ projectId }: { projectId: string }) {
           <DropdownMenuContent
             align="start"
             side="right"
-            className="w-64 rounded-xl border bg-white p-4 shadow-lg"
+            className="m-2 w-64 rounded-xl border bg-white shadow-lg"
           >
-            <div className="mb-3">
+            <div className="mb-3 px-4 pt-2">
               <h4 className="font-semibold text-gray-900">syed shihab</h4>
               <p className="text-sm text-gray-600">syedshihabdu@gmail.com</p>
             </div>
 
-            <DropdownMenuSeparator className="my-2" />
-
-            <DropdownMenuItem className="flex items-center gap-3 py-2">
+            <DropdownMenuItem className="flex cursor-pointer items-center gap-3 px-4 py-2 hover:bg-gray-100">
               <User className="size-4 text-gray-500" />
               Account settings
             </DropdownMenuItem>
 
-            <DropdownMenuItem className="flex items-center gap-3 py-2">
+            <DropdownMenuItem className="flex cursor-pointer items-center gap-3 px-4 py-2 hover:bg-gray-100">
               <Gift className="size-4 text-gray-500" />
               Refer and earn
             </DropdownMenuItem>
@@ -218,7 +216,7 @@ export function ProjectNavigationBar({ projectId }: { projectId: string }) {
 
             <DropdownMenuItem
               onSelect={() => logout()}
-              className="flex items-center gap-3 py-2 text-red-600"
+              className="flex cursor-pointer items-center gap-3 px-4 py-2 text-red-600 hover:bg-red-100"
             >
               <LogOut className="size-4" />
               Log out

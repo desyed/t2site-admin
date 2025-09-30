@@ -2,21 +2,36 @@ import { Link, ShieldCheck, SparklesIcon } from 'lucide-react';
 import { RefreshCw } from 'lucide-react';
 import { useState } from 'react';
 
+import { useCurrentProjectQuery } from '@/app/project/project.hooks';
+import ErrorScreen from '@/components/ErrorScreen';
 import { Button } from '@/components/site-button';
 import { Switch } from '@/components/ui/switch';
 
 import InviteMemberDialog from './invited-members/invite-member-dialog';
 import InvitedMembers from './invited-members/invited-members';
-import OrgMembers from './org-members/org-members';
+import ProjectMembers from './org-members/project-members';
+
 export default function Members() {
   const [refresh, setRefresh] = useState(false);
+
+  const { data: currentProject, error, refetch } = useCurrentProjectQuery();
+
+  if (error) return <ErrorScreen onRetry={refetch} error={error} />;
 
   return (
     <div className="space-y-10">
       {/* Invited Members Section */}
-      <InvitedMembers refresh={refresh} setRefresh={setRefresh} />
+      {currentProject && (
+        <InvitedMembers
+          refresh={refresh}
+          setRefresh={setRefresh}
+          currentProject={currentProject}
+        />
+      )}
       <div className="mt-5 flex items-center justify-between gap-4">
-        <InviteMemberDialog />
+        {currentProject && (
+          <InviteMemberDialog currentProject={currentProject} />
+        )}
         <Button
           variant="outline"
           size="sm"
@@ -32,7 +47,13 @@ export default function Members() {
         </Button>
       </div>
       {/* Organization Members Section */}
-      <OrgMembers refresh={refresh} setRefresh={setRefresh} />
+      {currentProject && (
+        <ProjectMembers
+          refresh={refresh}
+          setRefresh={setRefresh}
+          currentProject={currentProject}
+        />
+      )}
 
       <section className="rounded-lg border bg-card p-6">
         <div className="mb-2 flex items-center gap-2">

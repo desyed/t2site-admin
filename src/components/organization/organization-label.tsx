@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import type { Organization } from '@/app/team-members/organizaion.type';
+import type { Organization } from '@/app/project-member/project-member.type';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {

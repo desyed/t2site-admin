@@ -1,6 +1,7 @@
 import { SendIcon } from 'lucide-react';
 
-import type { InvitedMember } from '@/app/team-members/organizaion.type';
+import type { InvitedMember } from '@/app/project-member/project-member.type';
+import type { Project } from '@/app/project/project.type';
 import type { SiteTableColumn } from '@/components/site-table';
 import type { StatusType } from '@/components/status-badge';
 
@@ -19,6 +20,7 @@ type InvitedMembersTableProps = {
   isFetching: boolean;
   error: Error | null;
   refetch: () => void;
+  currentProject: Project;
 };
 
 export default function InvitedMembersTable({
@@ -27,6 +29,7 @@ export default function InvitedMembersTable({
   isFetching,
   error,
   refetch,
+  currentProject,
 }: InvitedMembersTableProps) {
   const columns: SiteTableColumn<InvitedMember>[] = [
     {
@@ -109,7 +112,9 @@ export default function InvitedMembersTable({
     {
       title: '',
       width: 'w-[100px]',
-      render: (member) => <InvitedMemberActions member={member} />,
+      render: (member) => (
+        <InvitedMemberActions member={member} currentProject={currentProject} />
+      ),
     },
   ];
 

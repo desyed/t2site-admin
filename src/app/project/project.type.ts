@@ -1,6 +1,7 @@
 import type { LucideIcon } from 'lucide-react';
 import type { z } from 'zod';
 
+import type { Role } from '../project-member/project-member.type';
 import type { createProjectSchema } from './project.schema';
 
 export type TServiceType =
@@ -26,6 +27,10 @@ export type Project = {
   name: string;
   siteUrl: string;
   icon: string | null;
+  currentUser: {
+    memberId: string;
+    role: Role;
+  };
   createdAt: string;
 };
 

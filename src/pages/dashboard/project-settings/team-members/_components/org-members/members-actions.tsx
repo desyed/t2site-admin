@@ -10,22 +10,21 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
-import type { OrganizationMember } from '@/app/team-members/organizaion.type';
+import type { ProjectMember } from '@/app/project-member/project-member.type';
+import type { Project } from '@/app/project/project.type';
 import type { RoleName } from '@/constants/roles';
 
-import { useAuthStore } from '@/app/auth/auth.store';
 import {
   useChangeMemberRoleMutation,
-  useLeaveOrganizationMutation,
-  useRefreshOrganization,
+  useLeaveProjectMutation,
   useRemoveMemberMutation,
-} from '@/app/team-members/organization.hooks';
+} from '@/app/project-member/project-member.hooks';
 import {
   checkMemberHasPermission,
   checkRemoveMemberPermission,
   isMemberRole,
   isOwnerRole,
-} from '@/app/team-members/organization.service';
+} from '@/app/project-member/project-member.service';
 import { HoverCardMessage } from '@/components/hover-card-message';
 import SiteAlertDialog from '@/components/site-alert-dialog';
 import { Button } from '@/components/site-button';
@@ -44,32 +43,35 @@ type ChangeRoleInfo = {
 };
 
 type MembersActionsProps = {
-  member: OrganizationMember;
+  member: ProjectMember;
   handleChangeRole?: (info: ChangeRoleInfo, hasConfirmed?: boolean) => void;
   handleRemoveMember?: (confirmed?: boolean) => void;
+  currentProject: Project;
 };
 
-export function CurrentUserDropdownMenu({ member }: MembersActionsProps) {
-  const refreshOrganization = useRefreshOrganization();
-
-  const currentOrganization = useAuthStore(
-    (state) => state.userOrganization?.currentOrganization
-  );
-
+export function CurrentUserDropdownMenu({
+  member,
+  currentProject,
+}: MembersActionsProps) {
   const navigate = useNavigate();
 
   const [isLeaveDialogOpen, setIsLeaveDialogOpen] = useState(false);
 
   const isOwner = isOwnerRole(member.role);
 
-  const { mutate: leaveOrganization, isPending: isLeavingOrganization } =
-    useLeaveOrganizationMutation<{ success: boolean }>();
+  const { mutate: leaveProject, isPending: isLeavingOrganization } =
+    useLeaveProjectMutation<{ success: boolean }>();
 
   useEffect(() => {
-    if (member.currentUser && member.role !== currentOrganization?.role) {
-      refreshOrganization();
+    if (
+      member.currentUser &&
+      member.role !== currentProject?.currentUser?.role
+    ) {
+      console.log(member.role);
+      console.log(currentProject?.currentUser?.role);
+      // location.reload();
     }
-  }, [currentOrganization?.role, member, refreshOrganization]);
+  }, [currentProject?.currentUser?.role, member]);
 
   if (isOwner)
     return (
@@ -80,16 +82,13 @@ export function CurrentUserDropdownMenu({ member }: MembersActionsProps) {
     );
 
   const handleLeaveOrganization = () => {
-    leaveOrganization(currentOrganization?.id ?? '', {
+    leaveProject(currentProject?.id ?? '', {
       onSuccess: () => {
-        navigate(`/auth?ocr=true&rp=/dashboard`, { replace: true });
+        navigate(`/`, { replace: true });
         setIsLeaveDialogOpen(false);
       },
       onError: (error) => {
-        const { status } = handleApiErrorException(error, true);
-        if (status && status < 501) {
-          refreshOrganization();
-        }
+        handleApiErrorException(error, true);
       },
       onSettled: () => {
         setIsLeaveDialogOpen(false);
@@ -111,7 +110,7 @@ export function CurrentUserDropdownMenu({ member }: MembersActionsProps) {
             onSelect={() => setIsLeaveDialogOpen(true)}
             className="text-destructive focus:bg-destructive/10 focus:text-destructive"
           >
-            <LogOutIcon className="mr-2 size-4" /> Leave organization
+            <LogOutIcon className="mr-2 size-4" /> Leave project
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -120,23 +119,20 @@ export function CurrentUserDropdownMenu({ member }: MembersActionsProps) {
         open={isLeaveDialogOpen}
         setOpen={setIsLeaveDialogOpen}
         isDanger={true}
-        loadingText="Leaving organization..."
-        title="Leave organization"
+        loadingText="Leaving project..."
+        title="Leave project"
         loading={isLeavingOrganization}
+        confirmIcon={<LogOutIcon className="size-4" />}
         description={
           <>
             Are you sure you want to leave{' '}
             <span className="font-semibold text-foreground">
-              {currentOrganization?.name} ?
+              {currentProject?.name} ?
             </span>
           </>
         }
         onConfirm={handleLeaveOrganization}
-        confirmText={
-          <>
-            <LogOutIcon className="mr-2 size-4" /> Leave organization
-          </>
-        }
+        confirmText={<>Leave project</>}
       />
     </>
   );
@@ -145,12 +141,11 @@ export function CurrentUserDropdownMenu({ member }: MembersActionsProps) {
 export function RemoveMemberDropdownMenuItem({
   member,
   handleRemoveMember,
+  currentProject,
 }: MembersActionsProps) {
-  const currentOrganization = useAuthStore(
-    (state) => state.userOrganization?.currentOrganization
-  );
-
-  if (!checkRemoveMemberPermission(currentOrganization?.role, member.role)) {
+  if (
+    !checkRemoveMemberPermission(currentProject?.currentUser?.role, member.role)
+  ) {
     return null;
   }
 
@@ -160,7 +155,7 @@ export function RemoveMemberDropdownMenuItem({
         className="text-destructive focus:bg-destructive/10 focus:text-destructive"
         onSelect={() => handleRemoveMember && handleRemoveMember()}
       >
-        <XIcon className="mr-2 size-4" /> Remove member
+        <XIcon className="mr-2 size-4" /> Remove member from project
       </DropdownMenuItem>
     </>
   );
@@ -169,13 +164,10 @@ export function RemoveMemberDropdownMenuItem({
 export function ChangeRoleDropdownMenuItem({
   member,
   handleChangeRole,
+  currentProject,
 }: MembersActionsProps) {
-  const currentOrganization = useAuthStore(
-    (state) => state.userOrganization?.currentOrganization
-  );
-
   const currentMemberRoleIndex =
-    roles[currentOrganization?.role as keyof typeof roles];
+    roles[currentProject?.currentUser?.role as keyof typeof roles];
   const memberRoleIndex = roles[member.role as keyof typeof roles];
 
   return (
@@ -253,13 +245,10 @@ export function ChangeRoleDropdownMenuItem({
   );
 }
 
-export default function MembersActions({ member }: MembersActionsProps) {
-  const currentOrganization = useAuthStore(
-    (state) => state.userOrganization?.currentOrganization
-  );
-
-  const refreshOrganization = useRefreshOrganization();
-
+export default function MembersActions({
+  member,
+  currentProject,
+}: MembersActionsProps) {
   const [changeRoleInfo, setChangeRoleInfo] = useState<ChangeRoleInfo | null>(
     null
   );
@@ -282,10 +271,15 @@ export default function MembersActions({ member }: MembersActionsProps) {
   }>();
 
   if (member.currentUser) {
-    return <CurrentUserDropdownMenu member={member} />;
+    return (
+      <CurrentUserDropdownMenu
+        member={member}
+        currentProject={currentProject}
+      />
+    );
   }
 
-  if (isMemberRole(currentOrganization?.role)) {
+  if (isMemberRole(currentProject?.currentUser?.role)) {
     return (
       <HoverCardMessage
         description="You don't have permission to
@@ -294,7 +288,9 @@ export default function MembersActions({ member }: MembersActionsProps) {
     );
   }
 
-  if (!checkMemberHasPermission(currentOrganization?.role, member.role)) {
+  if (
+    !checkMemberHasPermission(currentProject?.currentUser?.role, member.role)
+  ) {
     return (
       <HoverCardMessage
         description="You don't have permission to 
@@ -315,16 +311,14 @@ export default function MembersActions({ member }: MembersActionsProps) {
         changeMemberRole(
           {
             memberId: member.id,
+            projectId: currentProject?.id,
             payload: {
               role: info.changeRoleTo,
             },
           },
           {
             onError: (error) => {
-              const { status } = handleApiErrorException(error, true);
-              if (status && status < 501) {
-                refreshOrganization();
-              }
+              handleApiErrorException(error, true);
             },
           }
         ),
@@ -346,13 +340,13 @@ export default function MembersActions({ member }: MembersActionsProps) {
         removeMember(
           {
             memberId: member.id,
-            organizationId: currentOrganization?.id,
+            projectId: currentProject?.id,
           },
           {
             onError: (error) => {
               const { status } = handleApiErrorException(error, true);
               if (status && status < 501) {
-                refreshOrganization();
+                location.reload();
               }
             },
           }
@@ -379,9 +373,11 @@ export default function MembersActions({ member }: MembersActionsProps) {
           <ChangeRoleDropdownMenuItem
             handleChangeRole={handleChangeRole}
             member={member}
+            currentProject={currentProject}
           />
           <RemoveMemberDropdownMenuItem
             member={member}
+            currentProject={currentProject}
             handleRemoveMember={handleRemoveMember}
           />
         </DropdownMenuContent>
@@ -396,25 +392,20 @@ export default function MembersActions({ member }: MembersActionsProps) {
           title={
             <>
               Add additional owner to{' '}
-              <span className="text-primary">{currentOrganization?.name}</span>
+              <span className="text-primary">{currentProject?.name}</span>
             </>
           }
           description={
             <>
               <span className="text-foreground">{member.user.email}</span> will
               be added as an <span className="text-foreground">owner</span> to{' '}
-              <span className="text-foreground">
-                {currentOrganization?.name}
-              </span>
+              <span className="text-foreground">{currentProject?.name}</span>
             </>
           }
           loadingText={'Making owner'}
           onConfirm={() => handleChangeRole(changeRoleInfo, true)}
-          confirmText={
-            <span className="flex items-center gap-2">
-              <CrownIcon className="size-4" /> Make owner
-            </span>
-          }
+          confirmIcon={<CrownIcon className="size-4" />}
+          confirmText={<>Make owner</>}
           confirmInput={true}
           confirmInputValue={member.user.email}
         />
@@ -432,7 +423,7 @@ export default function MembersActions({ member }: MembersActionsProps) {
             from the
             <span className="font-semibold text-foreground">
               {' '}
-              {currentOrganization?.name}
+              {currentProject?.name}
             </span>
             ?
           </>
@@ -441,11 +432,8 @@ export default function MembersActions({ member }: MembersActionsProps) {
         setOpen={setIsRemoveMemberDialogOpen}
         isDanger={true}
         loadingText="Removing member..."
-        confirmText={
-          <span className="flex items-center gap-2">
-            <XIcon className="size-5" /> Remove member
-          </span>
-        }
+        confirmIcon={<XIcon className="size-5" />}
+        confirmText={'Remove member'}
         title={
           <span className="flex items-center gap-2 text-destructive">
             <XIcon className="size-5" /> Remove member

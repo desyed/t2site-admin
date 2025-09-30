@@ -2,17 +2,17 @@ import { MoreHorizontal, XIcon, SendIcon } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-import type { InvitedMember } from '@/app/team-members/organizaion.type';
+import type { InvitedMember } from '@/app/project-member/project-member.type';
+import type { Project } from '@/app/project/project.type';
 
-import { useAuthStore } from '@/app/auth/auth.store';
 import {
   useResendInvitationMutation,
-  useCancelInvitationMutation,
-} from '@/app/team-members/organization.hooks';
+  useRemoveInvitationMutation,
+} from '@/app/project-member/project-member.hooks';
 import {
   checkSendInvitationPermission,
   checkCancelInvitationPermission,
-} from '@/app/team-members/organization.service';
+} from '@/app/project-member/project-member.service';
 import SiteAlertDialog from '@/components/site-alert-dialog';
 import { Button } from '@/components/site-button';
 import {
@@ -25,21 +25,19 @@ import { handleApiErrorException } from '@/lib/utils';
 
 type InvitedMemberActionsProps = {
   member: InvitedMember;
+  currentProject: Project;
 };
 
 export default function InvitedMemberActions({
   member,
+  currentProject,
 }: InvitedMemberActionsProps) {
-  const currentOrganization = useAuthStore(
-    (state) => state.userOrganization?.currentOrganization
-  );
-
   const hasSendInvitationPermission = checkSendInvitationPermission(
-    currentOrganization?.role,
+    currentProject?.currentUser?.role,
     member.role
   );
   const hasCancelInvitationPermission = checkCancelInvitationPermission(
-    currentOrganization?.role,
+    currentProject?.currentUser?.role,
     member.role
   );
 
@@ -55,7 +53,7 @@ export default function InvitedMemberActions({
       };
     }>();
   const { mutate: cancelInvitation, isPending: isCanceling } =
-    useCancelInvitationMutation<{
+    useRemoveInvitationMutation<{
       data: {
         data: {
           invitedMember: InvitedMember;
@@ -66,7 +64,7 @@ export default function InvitedMemberActions({
     resendInvitation(
       {
         invitedMemberId: member.id,
-        organizationId: member.organizationId,
+        projectId: currentProject.id,
       },
       {
         onSuccess: async ({ data }) => {
@@ -88,7 +86,7 @@ export default function InvitedMemberActions({
     cancelInvitation(
       {
         invitedMemberId: member.id,
-        organizationId: member.organizationId,
+        projectId: currentProject.id,
       },
       {
         onSuccess: async ({ data }) => {
@@ -145,11 +143,8 @@ export default function InvitedMemberActions({
           description={`This will resend the invitation for ${member.email}. This action cannot be
             undone.`}
           onConfirm={handleResendInvitation}
-          confirmText={
-            <>
-              <SendIcon className="size-4" /> Resend
-            </>
-          }
+          confirmText={<>Resend</>}
+          confirmIcon={<SendIcon className="size-4" />}
         />
       )}
       {hasCancelInvitationPermission && (
@@ -163,11 +158,8 @@ export default function InvitedMemberActions({
           description={`This will remove the pending invitation for ${member.email}. This action cannot be
             undone.`}
           onConfirm={handleCancelInvitation}
-          confirmText={
-            <>
-              <XIcon className="size-4" /> Remove
-            </>
-          }
+          confirmText={<>Remove</>}
+          confirmIcon={<XIcon className="size-4" />}
         />
       )}
     </>

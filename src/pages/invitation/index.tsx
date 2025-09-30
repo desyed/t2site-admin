@@ -4,7 +4,7 @@ import type { Params } from 'react-router';
 import { useLoaderData } from 'react-router';
 import { z } from 'zod';
 
-import { preFetchInvitedMember } from '@/app/team-members/organization.prefetch';
+import { preFetchInvitedMember } from '@/app/project-member/project-member.prefetch';
 import { validInvitedMemberId } from '@/lib/validations';
 import { createPrivateLoader } from '@/middlewares/auth-middleware';
 
@@ -26,6 +26,7 @@ const paramsSchema = z.object({
 export const loader: LoaderFunction<Params> = createPrivateLoader(
   async ({ params }) => {
     const paramsResult = paramsSchema.safeParse(params);
+    console.log('🚀 ~ createPrivateLoader ~ paramsResult:', paramsResult.error);
     if (paramsResult.error) {
       return {
         error: {

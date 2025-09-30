@@ -18,7 +18,7 @@ import {
   Users,
 } from 'lucide-react'; // Import Settings icon
 import { useState } from 'react';
-import { Link, Navigate, useLocation, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 
 import type { NavigationGroup } from '@/types/dashboard';
 

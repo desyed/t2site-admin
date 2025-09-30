@@ -5,15 +5,15 @@ import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-import type { InviteMemberInput } from '@/app/team-members/organizaion.type';
+import type { InviteMemberInput } from '@/app/project-member/project-member.type';
+import type { Project } from '@/app/project/project.type';
 
-import { useAuthStore } from '@/app/auth/auth.store';
-import { useInviteMembersMutaion } from '@/app/team-members/organization.hooks';
+import { useInviteMembersMutaion } from '@/app/project-member/project-member.hooks';
 import {
   inviteMemberSchema,
   MAX_MEMBERS,
   rolesOptions,
-} from '@/app/team-members/organization.schema';
+} from '@/app/project-member/project-member.schema';
 import { Button } from '@/components/site-button';
 import {
   Form,
@@ -36,13 +36,13 @@ import { delay, handleApiErrorException } from '@/lib/utils';
 
 interface InviteMemberFormProps {
   onClose: () => void;
+  currentProject: Project;
 }
 
-export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
-  const currentOrganization = useAuthStore(
-    (state) => state.userOrganization?.currentOrganization
-  );
-
+export function InviteMemberForm({
+  currentProject,
+  onClose,
+}: InviteMemberFormProps) {
   const [scrollContainerRef, smoothScrollToBottom] =
     useSmoothScroll<HTMLDivElement>();
 
@@ -68,37 +68,44 @@ export function InviteMemberForm({ onClose }: InviteMemberFormProps) {
 
   const { mutate, isPending } = useInviteMembersMutaion();
 
-  const handleSubmitInvitation = async (values: InviteMemberInput) => {
-    mutate(values, {
-      onSuccess: async () => {
-        toast.success('🎉 Invitation Sent Successfully!', {
-          description:
-            'Your team members will receive an email invitation to join your organization. 📧',
-        });
-        await delay(200);
-        onClose();
-      },
-      onError: (error) => {
-        handleApiErrorException(error, true);
-        if (error instanceof AxiosError) {
-          const code = error.response?.data.code;
-          if (code === 'members-already-exist') {
-            const membersError: any = {};
-            error.response?.data.membersError?.members?.forEach(
-              (member: any) => {
-                membersError[member.email] =
-                  error.response?.data.membersError?.message;
-              }
-            );
-            setMembersError(membersError);
+  const handleSubmitInvitation = async (
+    values: Omit<InviteMemberInput, 'projectId'>
+  ) => {
+    mutate(
+      { ...values, projectId: currentProject.id },
+      {
+        onSuccess: async () => {
+          toast.success('🎉 Invitation Sent Successfully!', {
+            description:
+              'Your team members will receive an email invitation to join your project. 📧',
+          });
+          await delay(200);
+          onClose();
+        },
+        onError: (error) => {
+          handleApiErrorException(error, true);
+          if (error instanceof AxiosError) {
+            const code = error.response?.data.code;
+            if (code === 'members-already-exist') {
+              const membersError: any = {};
+              error.response?.data.membersError?.members?.forEach(
+                (member: any) => {
+                  membersError[member.email] =
+                    error.response?.data.membersError?.message;
+                }
+              );
+              setMembersError(membersError);
+            }
           }
-        }
-      },
-    });
+        },
+      }
+    );
   };
 
   const roles =
-    rolesOptions[currentOrganization?.role as keyof typeof rolesOptions];
+    rolesOptions[
+      currentProject?.currentUser?.role as keyof typeof rolesOptions
+    ];
 
   return (
     <Form {...form}>

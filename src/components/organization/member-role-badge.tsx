@@ -2,7 +2,7 @@ import type { LucideIcon } from 'lucide-react';
 
 import { Shield, User, Crown } from 'lucide-react';
 
-import type { Role } from '@/app/team-members/organizaion.type';
+import type { Role } from '@/app/project-member/project-member.type';
 
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';

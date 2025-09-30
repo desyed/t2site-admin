@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 import type { TOrganization } from '@/app/auth/auth.store';
 
 import { useAuthStore } from '@/app/auth/auth.store';
-import { changeCurrentOrganizationApi } from '@/app/team-members/organization.api';
+import { changeCurrentOrganizationApi } from '@/app/project-member/projecet-memebr.api';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenuItem,

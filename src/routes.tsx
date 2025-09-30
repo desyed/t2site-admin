@@ -17,13 +17,10 @@ import NotFound from '@/pages/404';
 import AuthCheckPoint from '@/pages/auth-check-point';
 import NotFoundProject from '@/pages/dashboard/404';
 import LoginPage from '@/pages/login';
-import NavSettings from '@/pages/settings/_components/nav-settings';
 import SignupPage from '@/pages/signup';
 
-import PrivateLayout from './layouts/private-layout';
 import ProjectLayout from './layouts/project-layout';
 import Projects from './pages/projects/_components/Projects';
-import NotFoundSettings from './pages/settings/404';
 
 export const routes = createBrowserRouter([
   {
@@ -72,39 +69,6 @@ export const routes = createBrowserRouter([
           {
             index: true,
             lazy: () => import('@/pages/invitation'),
-          },
-        ],
-      },
-      {
-        path: '/settings',
-        element: <PrivateLayout />,
-        loader: privateLoader,
-        children: [
-          {
-            path: '/settings',
-            element: <NavSettings />,
-            children: [
-              {
-                index: true,
-                element: <Navigate to="/settings/organization" />,
-              },
-              {
-                path: '/settings/organization',
-                lazy: () => import('@/pages/settings/organization/general'),
-              },
-              {
-                path: '/settings/organization/members',
-                lazy: () => import('@/pages/settings/organization/members'),
-              },
-              {
-                path: '/settings/user/profile',
-                lazy: () => import('@/pages/settings/user/profile'),
-              },
-              {
-                path: '*',
-                element: <NotFoundSettings />,
-              },
-            ],
           },
         ],
       },

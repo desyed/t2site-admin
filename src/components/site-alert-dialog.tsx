@@ -25,6 +25,7 @@ export type SiteAlertDialogProps = {
   setOpen: (open: boolean) => void;
   loading?: boolean;
   confirmText?: React.ReactNode;
+  confirmIcon?: React.ReactNode;
   loadingText?: React.ReactNode;
   cancelText?: React.ReactNode;
   isDanger?: boolean;
@@ -42,6 +43,7 @@ export default function SiteAlertDialog({
   onCancel,
   loading,
   confirmText,
+  confirmIcon,
   cancelText,
   loadingText,
   isDanger,
@@ -132,12 +134,16 @@ export default function SiteAlertDialog({
             variant={isDanger ? 'destructive' : 'default'}
             className={cn(
               isDanger &&
-                'bg-destructive text-foreground hover:bg-destructive/90 focus-visible:ring-destructive'
+                'flex bg-destructive hover:bg-destructive/90 focus-visible:ring-destructive'
             )}
             onClick={handleConfirm}
             disabled={loading}
             icon={
-              loading ? <Loader2 className="size-4 animate-spin" /> : undefined
+              loading ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : (
+                confirmIcon
+              )
             }
             loadingText={loadingText}
           >

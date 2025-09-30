@@ -2,9 +2,9 @@ import { Check, X } from 'lucide-react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
-import type { InvitedMember } from '@/app/team-members/organizaion.type';
+import type { InvitedMember } from '@/app/project-member/project-member.type';
 
-import { useOptimisticInvitationPromptMutation } from '@/app/team-members/organization.hooks';
+import { useOptimisticInvitationPromptMutation } from '@/app/project-member/project-member.hooks';
 import { Button } from '@/components/site-button';
 type InvitationActionsProps = {
   invitedMember: InvitedMember;
@@ -20,7 +20,6 @@ export default function InvitationActions({
   const handleDeclineInvitation = () => {
     invitePrompt({
       invitedMemberId: invitedMember.id,
-      organizationId: invitedMember.organizationId,
       promptType: 'reject',
     });
   };
@@ -28,7 +27,6 @@ export default function InvitationActions({
   const handleAcceptInvitation = () => {
     invitePrompt({
       invitedMemberId: invitedMember.id,
-      organizationId: invitedMember.organizationId,
       promptType: 'accept',
     });
   };
@@ -39,11 +37,17 @@ export default function InvitationActions({
       invitedMember.status === 'accepted' &&
       !invitedMember?.optimisticallyUpdatedAt
     ) {
-      navigate(`/auth?ocr=true&rp=/projects`, {
+      navigate(`/${invitedMember.projectId}`, {
         replace: true,
       });
     }
-  }, [isSuccess, invitedMember, navigate]);
+  }, [
+    isSuccess,
+    invitedMember.projectId,
+    invitedMember.status,
+    navigate,
+    invitedMember?.optimisticallyUpdatedAt,
+  ]);
 
   if (invitedMember.status === 'pending') {
     return (

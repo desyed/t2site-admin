@@ -11,7 +11,6 @@ import type {
   ProjectService,
 } from './project.type';
 
-import { memberQueryKeys } from '../team-members/organization.keys';
 import { createProjectApi, updateProjectServiceApi } from './project.api';
 import {
   fetchProject,
@@ -71,7 +70,6 @@ export function useCreateProjectMutation<
       queryClient.invalidateQueries({
         queryKey: projectQueryKeys.projectList(),
       });
-      queryClient.invalidateQueries({ queryKey: memberQueryKeys.memberList() });
     },
     ...options,
   });

@@ -7,6 +7,7 @@ import {
   preFetchProject,
   preFetchProjects,
 } from '@/app/project/project.prefetch';
+import { isValidProjectInvitedMemberId } from '@/lib/validations';
 
 export const authMiddlewareLoader: LoaderFunction = async () => {
   const { user } = await authPreSessionLoader();
@@ -44,6 +45,7 @@ export const createPrivateLoader = (
       window.localStorage.setItem('redirect_to', pathname);
       return replace('/login');
     }
+
     if (user && !user.emailVerified) {
       const pathname = new URL(request.url).pathname;
       window.localStorage.setItem('redirect_to', pathname);
@@ -77,6 +79,9 @@ export const createDashboardLoader = (
   loader?: LoaderFunction
 ): LoaderFunction => {
   return createPrivateLoader(async (context) => {
+    if (isValidProjectInvitedMemberId(context.params.invitedMemberId ?? '')) {
+      return replace('/invitation/' + context.params.invitedMemberId);
+    }
     await preFetchProject(context.params.projectId ?? '');
     await preFetchProjects();
     return loader ? loader(context) : null;

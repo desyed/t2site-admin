@@ -2,7 +2,7 @@ import type { UseMutationOptions } from '@tanstack/react-query';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useCallback } from 'react';
-import { useNavigate, useLocation } from 'react-router';
+import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
 import { handleApiErrorException } from '@/lib/utils';
@@ -12,23 +12,23 @@ import type {
   InviteMemberInput,
   MemberActionPayload,
   UpdateInvitationPayload,
-} from './organizaion.type';
+} from './project-member.type';
 
 import {
-  inviteOrganizationMembersApi,
+  inviteProjectMembersApi,
   resendInvitationApi,
-  cancelInvitationApi,
+  removeInvitationApi,
   promptInvitationApi,
-  leaveOrganizationApi,
+  leaveProjectApi,
   changeMemberRoleApi,
   removeMemberApi,
-} from './organization.api';
+} from './projecet-memebr.api';
 import {
   fetchInvitedMember,
   fetchInvitedMembers,
-  fetchOrganizationMembers,
-} from './organization.fetch';
-import { invitedMemberQueryKeys, memberQueryKeys } from './organization.keys';
+  fetchProjectMembers,
+} from './project-member.fetch';
+import { invitedMemberQueryKeys, memberQueryKeys } from './project-member.keys';
 
 export function useRedirectIfProjectNotExists() {
   const navigate = useNavigate();
@@ -43,17 +43,10 @@ export function useRedirectIfProjectNotExists() {
   return redirect;
 }
 
-export function useRefreshOrganization() {
-  const refresh = useCallback(() => {
-    window.location.reload();
-  }, []);
-  return refresh;
-}
-
-export function useInviteMembersQuery() {
+export function useInviteMembersQuery(projectId: string) {
   const query = useQuery({
-    queryKey: invitedMemberQueryKeys.invitedMemberList(),
-    queryFn: fetchInvitedMembers,
+    queryKey: invitedMemberQueryKeys.invitedMemberList(projectId),
+    queryFn: () => fetchInvitedMembers(projectId),
   });
   return query;
 }
@@ -76,13 +69,15 @@ export function useInviteMembersMutaion<T = unknown>(
 
   const mutation = useMutation({
     mutationFn: (payload) => {
-      return inviteOrganizationMembersApi(payload) as Promise<T>;
+      return inviteProjectMembersApi(payload) as Promise<T>;
     },
-    onSettled: () => {
+    onSettled: (_, __, payload) => {
       queryClient.invalidateQueries({
-        queryKey: invitedMemberQueryKeys.invitedMemberList(),
+        queryKey: invitedMemberQueryKeys.invitedMemberList(payload.projectId),
       });
-      queryClient.invalidateQueries({ queryKey: memberQueryKeys.memberList() });
+      queryClient.invalidateQueries({
+        queryKey: memberQueryKeys.memberList(payload.projectId),
+      });
     },
     ...options,
   });
@@ -98,31 +93,35 @@ export function useResendInvitationMutation<T = unknown>(
     mutationFn: (payload) => {
       return resendInvitationApi(payload) as Promise<T>;
     },
-    onSettled: () => {
+    onSettled: (_, __, payload) => {
       queryClient.invalidateQueries({
-        queryKey: invitedMemberQueryKeys.invitedMemberList(),
+        queryKey: invitedMemberQueryKeys.invitedMemberList(payload.projectId),
       });
-      queryClient.invalidateQueries({ queryKey: memberQueryKeys.memberList() });
+      queryClient.invalidateQueries({
+        queryKey: memberQueryKeys.memberList(payload.projectId),
+      });
     },
     ...options,
   });
   return mutation;
 }
 
-export function useCancelInvitationMutation<T = unknown>(
+export function useRemoveInvitationMutation<T = unknown>(
   options?: UseMutationOptions<T, unknown, UpdateInvitationPayload>
 ) {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: (payload) => {
-      return cancelInvitationApi(payload) as Promise<T>;
+      return removeInvitationApi(payload) as Promise<T>;
     },
-    onSettled: () => {
+    onSettled: (_, __, payload) => {
       queryClient.invalidateQueries({
-        queryKey: invitedMemberQueryKeys.invitedMemberList(),
+        queryKey: invitedMemberQueryKeys.invitedMemberList(payload.projectId),
       });
-      queryClient.invalidateQueries({ queryKey: memberQueryKeys.memberList() });
+      queryClient.invalidateQueries({
+        queryKey: memberQueryKeys.memberList(payload.projectId),
+      });
     },
     ...options,
   });
@@ -152,7 +151,6 @@ export function useOptimisticInvitationPromptMutation() {
   const mutation = useMutation({
     mutationFn: (payload: {
       invitedMemberId: string;
-      organizationId: string;
       promptType: 'accept' | 'reject';
     }) => {
       return promptInvitationApi(payload.invitedMemberId, {
@@ -206,20 +204,20 @@ export function useOptimisticInvitationPromptMutation() {
   return mutation;
 }
 
-export function useOrganizationMembersQuery() {
+export function useProjectMembersQuery(projectId: string) {
   const query = useQuery({
-    queryKey: memberQueryKeys.memberList(),
-    queryFn: () => fetchOrganizationMembers(),
+    queryKey: memberQueryKeys.memberList(projectId),
+    queryFn: () => fetchProjectMembers(projectId),
   });
   return query;
 }
 
-export function useLeaveOrganizationMutation<T = unknown>(
+export function useLeaveProjectMutation<T = unknown>(
   options?: UseMutationOptions<T, unknown, string | undefined>
 ) {
   const mutation = useMutation({
-    mutationFn: (organizationId: string) => {
-      return leaveOrganizationApi(organizationId) as Promise<T>;
+    mutationFn: (projectId: string) => {
+      return leaveProjectApi(projectId) as Promise<T>;
     },
     ...options,
   });
@@ -235,12 +233,12 @@ export function useChangeMemberRoleMutation<T = unknown, P = unknown>(
     mutationFn: (payload) => {
       return changeMemberRoleApi(payload) as Promise<T>;
     },
-    onSettled: () => {
+    onSettled: (_, __, payload) => {
       queryClient.invalidateQueries({
-        queryKey: memberQueryKeys.memberList(),
+        queryKey: memberQueryKeys.memberList(payload.projectId),
       });
       queryClient.invalidateQueries({
-        queryKey: invitedMemberQueryKeys.invitedMemberList(),
+        queryKey: invitedMemberQueryKeys.invitedMemberList(payload.projectId),
       });
     },
     ...options,
@@ -257,12 +255,12 @@ export function useRemoveMemberMutation<T = unknown, P = unknown>(
     mutationFn: (payload) => {
       return removeMemberApi(payload) as Promise<T>;
     },
-    onSettled: () => {
+    onSettled: (_, __, payload) => {
       queryClient.invalidateQueries({
-        queryKey: memberQueryKeys.memberList(),
+        queryKey: memberQueryKeys.memberList(payload.projectId),
       });
       queryClient.invalidateQueries({
-        queryKey: invitedMemberQueryKeys.invitedMemberList(),
+        queryKey: invitedMemberQueryKeys.invitedMemberList(payload.projectId),
       });
     },
     ...options,

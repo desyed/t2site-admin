@@ -1,20 +1,25 @@
 import { AxiosError } from 'axios';
 import { useEffect } from 'react';
+import { useParams } from 'react-router';
+
+import type { Project } from '@/app/project/project.type';
 
 import {
-  useOrganizationMembersQuery,
+  useProjectMembersQuery,
   useRedirectIfProjectNotExists,
-} from '@/app/team-members/organization.hooks';
+} from '@/app/project-member/project-member.hooks';
 import { InputSearch } from '@/components/ui/search-input';
 
-import { OrgMembersTable } from './org-members-table';
+import { ProjectMembersTable } from './project-members-table';
 
-export default function OrgMembers({
+export default function ProjectMembers({
   refresh,
   setRefresh,
+  currentProject,
 }: {
   refresh: boolean;
   setRefresh: (refresh: boolean) => void;
+  currentProject: Project;
 }) {
   const {
     data: members,
@@ -22,7 +27,7 @@ export default function OrgMembers({
     isFetching,
     error,
     refetch,
-  } = useOrganizationMembersQuery();
+  } = useProjectMembersQuery(currentProject?.id ?? '');
 
   // const redirect = useRedirectIfProjectNotExists();
 
@@ -47,7 +52,7 @@ export default function OrgMembers({
     <section>
       <div className="mb-4 flex items-center justify-between">
         <h2 className="flex items-center gap-2 text-xl font-semibold">
-          Organization members
+          Project members
         </h2>
       </div>
 
@@ -57,12 +62,13 @@ export default function OrgMembers({
           className="h-9 max-w-sm"
         />
       </div>
-      <OrgMembersTable
+      <ProjectMembersTable
         members={members || []}
         isLoading={isLoading}
         isFetching={isFetching}
         error={error}
         refetch={refetch}
+        currentProject={currentProject}
       />
     </section>
   );

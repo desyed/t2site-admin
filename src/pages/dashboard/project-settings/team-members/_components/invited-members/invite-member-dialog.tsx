@@ -1,5 +1,3 @@
-'use client';
-
 import {
   PlusIcon,
   UserIcon,
@@ -10,7 +8,8 @@ import {
 import { forwardRef } from 'react';
 import { useState } from 'react';
 
-import { useAuthStore } from '@/app/auth/auth.store';
+import type { Project } from '@/app/project/project.type';
+
 import { Button } from '@/components/site-button';
 import {
   Dialog,
@@ -61,12 +60,11 @@ function RolePermissions() {
 export type InviteMemberDialogProps = {
   openFromParent?: boolean;
   setOpenFromParent?: (open: boolean) => void;
+  currentProject: Project;
 };
 
 const InviteMemberDialog = forwardRef<HTMLDivElement, InviteMemberDialogProps>(
-  ({ openFromParent, setOpenFromParent }, ref) => {
-    const userOrganizations = useAuthStore((state) => state.userOrganization);
-
+  ({ openFromParent, setOpenFromParent, currentProject }, ref) => {
     const isMobile = useIsMobile();
 
     const [open, setOpen] = useState(false);
@@ -77,7 +75,7 @@ const InviteMemberDialog = forwardRef<HTMLDivElement, InviteMemberDialogProps>(
 
     const instrauction = (
       <span className="text-base">
-        Invite others to your organization to collaborate together. An invite is
+        Invite others to your project to collaborate together. An invite is
         specific to an email address and expires after 3 days. Name can be
         provided for the team {`member's`} convenience.
       </span>
@@ -104,9 +102,7 @@ const InviteMemberDialog = forwardRef<HTMLDivElement, InviteMemberDialogProps>(
             <DialogHeader className="px-5 pt-5">
               <DialogTitle className="mb-1 text-xl">
                 Invite others to{' '}
-                <span className="text-primary/90">
-                  {userOrganizations?.currentOrganization?.name}
-                </span>
+                <span className="text-primary/90">{currentProject?.name}</span>
                 {isMobile && (
                   <Popover>
                     <PopoverTrigger asChild>
@@ -134,7 +130,10 @@ const InviteMemberDialog = forwardRef<HTMLDivElement, InviteMemberDialogProps>(
                 </>
               )}
             </DialogHeader>
-            <InviteMemberForm onClose={handleCloseDialog} />
+            <InviteMemberForm
+              currentProject={currentProject}
+              onClose={handleCloseDialog}
+            />
           </DialogContent>
         </Dialog>
       </div>

@@ -1,27 +1,34 @@
 import { AxiosError } from 'axios';
 import { useEffect } from 'react';
+import { useParams } from 'react-router';
+
+import type { Project } from '@/app/project/project.type';
 
 import {
   useInviteMembersQuery,
   useRedirectIfProjectNotExists,
-} from '@/app/team-members/organization.hooks';
+} from '@/app/project-member/project-member.hooks';
 import { InputSearch } from '@/components/ui/search-input';
 
 import InvitedMembersTable from './invited-members-table';
 export default function InvitedMembers({
   refresh,
   setRefresh,
+  currentProject,
 }: {
   refresh: boolean;
   setRefresh: (refresh: boolean) => void;
+  currentProject: Project;
 }) {
+  const { projectId } = useParams();
+
   const {
     data: invitedMembers,
     isFetching,
     error,
     refetch,
     isLoading,
-  } = useInviteMembersQuery();
+  } = useInviteMembersQuery(projectId ?? '');
 
   // const redirect = useRedirectIfProjectNotExists();
 
@@ -64,6 +71,7 @@ export default function InvitedMembers({
         isFetching={isFetching}
         error={error}
         refetch={refetch}
+        currentProject={currentProject}
       />
     </section>
   );
