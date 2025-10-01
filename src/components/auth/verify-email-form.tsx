@@ -54,7 +54,7 @@ export default function VerifyEmailForm() {
 
     if (success) {
       if (data?.access_token && data.user.email && data.user.emailVerified) {
-        // setAuth(data.user, data.access_token);
+        setAuth(data.user, data.access_token);
         navigate(
           '/auth?auth_login=success&rp=' +
             window.localStorage.getItem('redirect_to') || '/',

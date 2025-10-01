@@ -25,11 +25,7 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 
-interface FacebookDashboardProps {
-  projectId: string;
-}
-
-export function FacebookDashboard({ projectId }: FacebookDashboardProps) {
+export function FacebookDashboard() {
   const [selectedConversation, setSelectedConversation] = useState<
     number | null
   >(1);

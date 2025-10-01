@@ -1,8 +1,10 @@
 import { useLayoutEffect } from 'react';
-import { redirect, useLoaderData } from 'react-router';
+import { redirect, useLoaderData, useParams } from 'react-router';
 
-import { authStore } from '@/app/auth/auth.store';
-import { useProjectServicesQuery } from '@/app/project/project.hooks';
+import {
+  useCurrentProjectQuery,
+  useProjectServicesQuery,
+} from '@/app/project/project.hooks';
 import { preFetchProjectServices } from '@/app/project/project.prefetch';
 import FetchErrorView from '@/components/fetch-error-view';
 import { createDashboardLoader } from '@/middlewares/auth-middleware';
@@ -11,13 +13,13 @@ import ChatConnectionView from './_components/chat-connection-view.tsx';
 import ChatAssistantPage from './ChatAssistantPage.tsx';
 
 export const loader = createDashboardLoader(async () => {
-  const currentProject = authStore.getCurrentProject();
-  if (!currentProject) {
-    return redirect('/projects');
+  const { projectId } = useParams();
+  if (!projectId) {
+    return redirect('/');
   }
-  await preFetchProjectServices(currentProject.id);
+  await preFetchProjectServices(projectId);
   return {
-    projectId: currentProject.id,
+    projectId: projectId,
   };
 });
 

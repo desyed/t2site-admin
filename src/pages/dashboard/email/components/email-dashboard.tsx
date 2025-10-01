@@ -25,11 +25,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
-interface emailDashboardProps {
-  projectId: string;
-}
-
-export function EmailDashboard({ projectId }: emailDashboardProps) {
+export function EmailDashboard() {
   const [selectedChat, setSelectedChat] = useState<number | null>(1);
 
   const emailAccounts = [

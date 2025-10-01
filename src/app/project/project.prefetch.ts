@@ -15,14 +15,14 @@ export async function preFetchProjects() {
 }
 
 export async function preFetchProject(projectId: string) {
-  return await queryClient.prefetchQuery({
+  return await queryClient.fetchQuery({
     queryKey: projectQueryKeys.projectById(projectId),
     queryFn: () => fetchProject(projectId),
   });
 }
 
 export async function preFetchProjectServices(projectId: string) {
-  return await queryClient.prefetchQuery({
+  return await queryClient.fetchQuery({
     queryKey: projectServiceQueryKeys.projectServiceList(projectId),
     queryFn: () => fetchProjectServices(projectId),
   });

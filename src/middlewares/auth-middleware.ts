@@ -8,6 +8,7 @@ import {
   preFetchProject,
   preFetchProjects,
 } from '@/app/project/project.prefetch';
+import { handleApiErrorException } from '@/lib/utils';
 import { isValidProjectId } from '@/lib/validations';
 
 export const authMiddlewareLoader: LoaderFunction = async () => {
@@ -94,7 +95,13 @@ export const createDashboardLoader = (
       return replace('/');
     }
 
-    await preFetchProject(projectId);
+    try {
+      await preFetchProject(projectId);
+    } catch (err) {
+      handleApiErrorException(err, true);
+      return replace('/');
+    }
+
     await preFetchProjects();
     return loader ? loader(context) : null;
   });

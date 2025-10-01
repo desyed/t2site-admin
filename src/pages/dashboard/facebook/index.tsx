@@ -1,11 +1,11 @@
+import { createDashboardLoader } from '@/middlewares/auth-middleware';
+
 import { FacebookDashboard } from './components/facebook-dashboard';
 
-interface FacebookPageProps {
-  params?: { projectId: string };
-}
+export const loader = createDashboardLoader(async () => {
+  return {};
+});
 
-export default function FacebookPage({ params }: FacebookPageProps) {
-  return (
-    <FacebookDashboard projectId={params ? params.projectId : 'project-1'} />
-  );
-}
+export const Component = () => {
+  return <FacebookDashboard />;
+};

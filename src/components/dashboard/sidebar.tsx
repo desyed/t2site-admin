@@ -36,15 +36,13 @@ export function Sidebar({ projectId }: SidebarProps) {
   const pathname = location.pathname;
   const router = useNavigate();
 
-  const [isLiveDeskMode, setIsLiveDeskMode] = useState(false);
-
   const { data: currentProject } = useCurrentProjectQuery();
 
   const isProjectSettingsMode = pathname.includes('/project-settings');
   const isCookieConsentMode = pathname.includes('/cookie-consent');
+  const isLiveDeskMode = pathname.includes('/live-desk');
 
   const handleBackToMain = () => {
-    setIsLiveDeskMode(false);
     router(`/${projectId}/analytics`);
   };
 
@@ -56,9 +54,8 @@ export function Sidebar({ projectId }: SidebarProps) {
 
   const handleLiveDeskMode = (e: React.MouseEvent) => {
     e.preventDefault();
-    setIsLiveDeskMode(true);
     // Navigate to Live Chat (first option) by default
-    router(`/${projectId}/live-chat`);
+    router(`/${projectId}/live-desk/live-chat`);
   };
 
   const handleCookieConsentMode = (e: React.MouseEvent) => {
@@ -97,27 +94,27 @@ export function Sidebar({ projectId }: SidebarProps) {
   const liveDeskCategories = [
     {
       name: 'Live Chat',
-      href: `/${projectId}/live-chat`,
+      href: `/${projectId}/live-desk/live-chat`,
       icon: MessageSquare,
-      current: pathname === `/${projectId}/live-chat`,
+      current: pathname === `/${projectId}/live-desk/live-chat`,
     },
     {
       name: 'Facebook',
-      href: `/${projectId}/facebook`,
+      href: `/${projectId}/live-desk/facebook`,
       icon: Shield,
-      current: pathname === `/${projectId}/facebook`,
+      current: pathname === `/${projectId}/live-desk/facebook`,
     },
     {
       name: 'Whatsapp',
-      href: `/${projectId}/whatsapp`,
+      href: `/${projectId}/live-desk/whatsapp`,
       icon: MessageCircle,
-      current: pathname === `/${projectId}/whatsapp`,
+      current: pathname === `/${projectId}/live-desk/whatsapp`,
     },
     {
       name: 'Email',
-      href: `/${projectId}/email`,
+      href: `/${projectId}/live-desk/email`,
       icon: Lock,
-      current: pathname === `/${projectId}/email`,
+      current: pathname === `/${projectId}/live-desk/email`,
     },
   ];
 
@@ -189,13 +186,14 @@ export function Sidebar({ projectId }: SidebarProps) {
         },
         {
           name: 'Live Desk',
-          href: `/${projectId}/live-chat`,
+          href: `/${projectId}/live-desk`,
           icon: MessageSquare,
           current:
-            pathname.includes(`/${projectId}/live-chat`) ||
-            pathname.includes(`/${projectId}/facebook`) ||
-            pathname.includes(`/${projectId}/whatsapp`) ||
-            pathname.includes(`/${projectId}/email`),
+            pathname.includes(`/${projectId}/live-desk`) ||
+            pathname.includes(`/${projectId}/live-desk/live-chat`) ||
+            pathname.includes(`/${projectId}/live-desk/facebook`) ||
+            pathname.includes(`/${projectId}/live-desk/whatsapp`) ||
+            pathname.includes(`/${projectId}/live-desk/email`),
           onClick: handleLiveDeskMode, // Updated to use new handler
         },
       ],

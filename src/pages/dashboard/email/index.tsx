@@ -1,9 +1,11 @@
+import { createDashboardLoader } from '@/middlewares/auth-middleware';
+
 import { EmailDashboard } from './components/email-dashboard';
 
-interface EmailPageProps {
-  params?: { projectId: string };
-}
+export const loader = createDashboardLoader(async () => {
+  return {};
+});
 
-export default function EmailPage({ params }: EmailPageProps) {
-  return <EmailDashboard projectId={params ? params.projectId : 'project-1'} />;
-}
+export const Component = () => {
+  return <EmailDashboard />;
+};

@@ -1,11 +1,11 @@
+import { createDashboardLoader } from '@/middlewares/auth-middleware';
+
 import { WhatsappDashboard } from './components/whatsapp-dashboard';
 
-interface WhatsappPageProps {
-  params?: { projectId: string };
-}
+export const loader = createDashboardLoader(async () => {
+  return {};
+});
 
-export default function WhatsappPage({ params }: WhatsappPageProps) {
-  return (
-    <WhatsappDashboard projectId={params ? params.projectId : 'project-1'} />
-  );
-}
+export const Component = () => {
+  return <WhatsappDashboard />;
+};

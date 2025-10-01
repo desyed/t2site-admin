@@ -25,11 +25,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
-interface WhatsappDashboardProps {
-  projectId: string;
-}
-
-export function WhatsappDashboard({ projectId }: WhatsappDashboardProps) {
+export function WhatsappDashboard() {
   const [selectedChat, setSelectedChat] = useState<number | null>(1);
 
   const whatsappAccounts = [

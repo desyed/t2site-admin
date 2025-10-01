@@ -23,11 +23,7 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 
-interface LiveChatDashboardProps {
-  projectId: string;
-}
-
-export function LiveChatDashboard({ projectId }: LiveChatDashboardProps) {
+export function LiveChatDashboard() {
   const [selectedConversation, setSelectedConversation] = useState<
     number | null
   >(null);

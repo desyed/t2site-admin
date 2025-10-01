@@ -1,11 +1,11 @@
+import { createDashboardLoader } from '@/middlewares/auth-middleware';
+
 import { LiveChatDashboard } from './components/live-chat-dashboard';
 
-interface LiveChatPageProps {
-  params?: { projectId: string };
-}
+export const loader = createDashboardLoader(async () => {
+  return {};
+});
 
-export default function LiveChatPage({ params }: LiveChatPageProps) {
-  return (
-    <LiveChatDashboard projectId={params ? params.projectId : 'project-1'} />
-  );
-}
+export const Component = () => {
+  return <LiveChatDashboard />;
+};
