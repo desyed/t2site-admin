@@ -2,6 +2,7 @@ import { preFetchProjects } from '@/app/project/project.prefetch';
 import { createPrivateLoader } from '@/middlewares/auth-middleware';
 
 import Projects from './_components/Projects';
+
 export const loader = createPrivateLoader(async () => {
   await preFetchProjects();
   return {};

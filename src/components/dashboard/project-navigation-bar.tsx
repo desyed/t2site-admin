@@ -1,13 +1,6 @@
 'use client';
 
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@radix-ui/react-dropdown-menu';
-import {
   ExternalLink,
   Gift,
   HelpCircle,
@@ -19,8 +12,17 @@ import {
 import { useMemo } from 'react';
 import { Link } from 'react-router';
 
+import { useAuthStore } from '@/app/auth/auth.store';
 import { useProjectsQuery } from '@/app/project/project.hooks';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { useAuth } from '@/contexts/auth-provider';
+import { cn } from '@/lib/utils';
 
 import { Button } from '../site-button';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
@@ -62,6 +64,8 @@ const faqItems = [
 export function ProjectNavigationBar({ projectId }: { projectId: string }) {
   const { data: projectsResult } = useProjectsQuery();
   const projects = useMemo(() => projectsResult ?? [], [projectsResult]);
+
+  const { user } = useAuthStore();
 
   const { logout } = useAuth();
 
@@ -186,9 +190,11 @@ export function ProjectNavigationBar({ projectId }: { projectId: string }) {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <div className="flex size-11 flex-col items-center justify-center">
-              <Avatar className="size-7 cursor-pointer">
-                <AvatarImage src="/avatar.png" />
-                <AvatarFallback>SS</AvatarFallback>
+              <Avatar
+                className={cn('size-8 rounded-full border border-gray-400')}
+              >
+                <AvatarImage src={user?.avatar ?? ''} alt={user?.name} />
+                <AvatarFallback>{user?.name ?? ''}</AvatarFallback>
               </Avatar>
             </div>
           </DropdownMenuTrigger>
@@ -198,8 +204,8 @@ export function ProjectNavigationBar({ projectId }: { projectId: string }) {
             className="m-2 w-64 rounded-xl border bg-white shadow-lg"
           >
             <div className="mb-3 px-4 pt-2">
-              <h4 className="font-semibold text-gray-900">syed shihab</h4>
-              <p className="text-sm text-gray-600">syedshihabdu@gmail.com</p>
+              <h4 className="font-semibold text-gray-900">{user?.name}</h4>
+              <p className="text-sm text-gray-600">{user?.email}</p>
             </div>
 
             <DropdownMenuItem className="flex cursor-pointer items-center gap-3 px-4 py-2 hover:bg-gray-100">

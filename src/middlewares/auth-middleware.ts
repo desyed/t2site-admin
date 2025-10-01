@@ -1,13 +1,14 @@
 import type { ActionFunction, LoaderFunction } from 'react-router';
 
 import { replace } from 'react-router';
+import { toast } from 'sonner';
 
 import { authPreSessionLoader } from '@/app/auth/auth.loader';
 import {
   preFetchProject,
   preFetchProjects,
 } from '@/app/project/project.prefetch';
-import { isValidProjectInvitedMemberId } from '@/lib/validations';
+import { isValidProjectId } from '@/lib/validations';
 
 export const authMiddlewareLoader: LoaderFunction = async () => {
   const { user } = await authPreSessionLoader();
@@ -79,10 +80,21 @@ export const createDashboardLoader = (
   loader?: LoaderFunction
 ): LoaderFunction => {
   return createPrivateLoader(async (context) => {
-    if (isValidProjectInvitedMemberId(context.params.invitedMemberId ?? '')) {
-      return replace('/invitation/' + context.params.invitedMemberId);
+    const { projectId } = context.params;
+
+    if (!projectId) {
+      return replace('/');
     }
-    await preFetchProject(context.params.projectId ?? '');
+
+    if (!isValidProjectId(projectId)) {
+      toast.warning('Invalid project id', {
+        description: 'Please select a project from the list',
+        position: 'top-center',
+      });
+      return replace('/');
+    }
+
+    await preFetchProject(projectId);
     await preFetchProjects();
     return loader ? loader(context) : null;
   });

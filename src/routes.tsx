@@ -20,7 +20,6 @@ import LoginPage from '@/pages/login';
 import SignupPage from '@/pages/signup';
 
 import ProjectLayout from './layouts/project-layout';
-import Projects from './pages/projects/_components/Projects';
 
 export const routes = createBrowserRouter([
   {
@@ -45,7 +44,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: '/',
-        element: <Projects />,
+        lazy: () => import('@/pages/projects'),
       },
       {
         path: '/auth',

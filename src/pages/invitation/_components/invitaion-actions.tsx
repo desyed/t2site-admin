@@ -37,13 +37,13 @@ export default function InvitationActions({
       invitedMember.status === 'accepted' &&
       !invitedMember?.optimisticallyUpdatedAt
     ) {
-      navigate(`/${invitedMember.projectId}`, {
+      navigate(`/${invitedMember.project.id}`, {
         replace: true,
       });
     }
   }, [
     isSuccess,
-    invitedMember.projectId,
+    invitedMember.project.id,
     invitedMember.status,
     navigate,
     invitedMember?.optimisticallyUpdatedAt,

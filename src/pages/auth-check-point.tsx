@@ -13,6 +13,8 @@ export default function AuthCheckPoint() {
       const auth_login = getQuery('auth_login');
       if (auth_login === 'success') {
         const from = getQuery('rp') ?? '/';
+
+        // Detect if the user is logged in
         await authStore.fetchSession(true);
         navigate(from, { replace: true });
       }

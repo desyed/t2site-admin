@@ -1,35 +1,16 @@
 import { create } from 'zustand';
 
-import type { TService } from '@/app/project/project.type';
-import type { RoleName } from '@/constants/roles';
-
 import { handleApi } from '@/lib/utils';
 
 import { getSessionApi, logoutApi } from './auth.api';
-
-// Types
-export type TOrganization = {
-  role: RoleName;
-  id: string;
-  name: string;
-  slug: string;
-  logo: string | null;
-  memberId: string;
-};
 
 export type TAuthUser = {
   authType: string;
   id: string;
   avatar: null | string;
   email: string;
-  currentOrganizationId: string | null;
   emailVerified: null | string;
   name: string;
-};
-
-export type TUserOrganization = {
-  organizations: TOrganization[];
-  currentOrganization: TOrganization | null;
 };
 
 export type TSession = {
@@ -37,28 +18,14 @@ export type TSession = {
   expiresAt: string;
 };
 
-export type TCurrentProject = {
-  id: string;
-  name: string;
-  icon: string;
-  siteUrl: string;
-  organizationId: string;
-  services: TService[];
-};
-
 export type TAuthState = {
-  // State properties
   user: TAuthUser | null;
   accessToken: string | null;
-  userOrganization: TUserOrganization | null;
-  currentProject: TCurrentProject | null;
   // User methods
   getAuthUser: () => TAuthUser | null;
   getSession: () => {
     user: TAuthUser | null;
-    userOrganization: TUserOrganization | null;
     session: TSession | null;
-    currentProject: TCurrentProject | null;
   };
 
   // User methods
@@ -71,14 +38,6 @@ export type TAuthState = {
 
   session: TSession | null;
 
-  // Organization methods
-  setUserOrganization: (userOrganization: TUserOrganization) => void;
-
-  // Current project methods
-  setCurrentProject: (currentProject: TCurrentProject) => void;
-  getCurrentProject: () => TCurrentProject | null;
-
-  // Auth flow methods
   setAuth: (user: TAuthUser, access_token: string) => void;
   fetchSession: (refetch?: boolean) => Promise<void>;
   resetAuth: () => void;
@@ -89,10 +48,8 @@ export type TAuthState = {
 export const useAuthStore = create<TAuthState>((set, get) => ({
   // Initial state
   user: null,
-  userOrganization: null,
   accessToken: localStorage.getItem('t2_ac'),
   session: null,
-  currentProject: null,
 
   // User methods
   getAuthUser: () => get().user,
@@ -114,21 +71,9 @@ export const useAuthStore = create<TAuthState>((set, get) => ({
   getSession: () => {
     return {
       user: get().user,
-      userOrganization: get().userOrganization,
       session: get().session,
-      currentProject: get().currentProject,
     };
   },
-
-  // Organization methods
-  setUserOrganization: (userOrganization: TUserOrganization) =>
-    set({ userOrganization }),
-
-  // Current project methods
-  setCurrentProject: (currentProject: TCurrentProject) =>
-    set({ currentProject }),
-
-  getCurrentProject: () => get().currentProject,
 
   // Auth flow methods
   setAuth: (user, accessToken) => {
@@ -144,12 +89,10 @@ export const useAuthStore = create<TAuthState>((set, get) => ({
         if (data?.user) {
           set({
             user: data.user as TAuthUser,
-            userOrganization: data.userOrganization as TUserOrganization,
             session: {
               userAgent: data.userAgent,
               expiresAt: data.expiresAt,
             },
-            currentProject: data.currentProject as TCurrentProject,
           });
         } else {
           get().logout();

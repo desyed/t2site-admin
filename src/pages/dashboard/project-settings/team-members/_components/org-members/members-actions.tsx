@@ -62,17 +62,6 @@ export function CurrentUserDropdownMenu({
   const { mutate: leaveProject, isPending: isLeavingOrganization } =
     useLeaveProjectMutation<{ success: boolean }>();
 
-  useEffect(() => {
-    if (
-      member.currentUser &&
-      member.role !== currentProject?.currentUser?.role
-    ) {
-      console.log(member.role);
-      console.log(currentProject?.currentUser?.role);
-      // location.reload();
-    }
-  }, [currentProject?.currentUser?.role, member]);
-
   if (isOwner)
     return (
       <HoverCardMessage
