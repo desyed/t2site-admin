@@ -18,8 +18,12 @@ export type TService = {
   features: string[];
 };
 
-export type ProjectService = {
-  [key in TServiceType]: TService;
+export type ProjectServices = {
+  chatAssistant: {
+    id: string;
+    logo?: string | null | undefined;
+    theme?: string | null | undefined;
+  };
 };
 
 export type Project = {
@@ -31,6 +35,7 @@ export type Project = {
     memberId: string;
     role: Role;
   };
+  services: ProjectServices;
   createdAt: string;
 };
 

@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate, redirect } from 'react-router';
+import { createBrowserRouter, redirect } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
 
 import ErrorBoundary from '@/components/error-boundary';
@@ -20,6 +20,8 @@ import LoginPage from '@/pages/login';
 import SignupPage from '@/pages/signup';
 
 import ProjectLayout from './layouts/project-layout';
+import SelectNoConversation from './pages/services/chat-assistant/_components/select-no-conversation';
+import SelectNotFoundConversation from './pages/services/chat-assistant/_components/select-not-found-conversation';
 
 export const routes = createBrowserRouter([
   {
@@ -131,41 +133,38 @@ export const routes = createBrowserRouter([
                   return redirect('live-chat');
                 },
               },
-
-              // {
-              //   path: '/services/chat-assistant',
-              //   lazy: () => import('@/pages/services/chat-assistant'),
-              //   children: [
-              //     {
-              //       index: true,
-              //       element: <SelectNoConversation />,
-              //     },
-              //     {
-              //       path: ':ticketId/*',
-              //       lazy: () =>
-              //         import('@/pages/services/chat-assistant/conversation'),
-              //     },
-              //     {
-              //       path: 'not-found',
-              //       element: <SelectNotFoundConversation />,
-              //     },
-              //   ],
-              // }
               {
                 path: 'live-chat',
-                lazy: () => import('@/pages/services/chat-assistant'),
+                lazy: () => import('@/pages/dashboard/live-desk/live-chat'),
+                children: [
+                  {
+                    index: true,
+                    element: <SelectNoConversation />,
+                  },
+                  {
+                    path: ':ticketId/*',
+                    lazy: () =>
+                      import(
+                        '@/pages/dashboard/live-desk/live-chat/conversation'
+                      ),
+                  },
+                  {
+                    path: 'not-found',
+                    element: <SelectNotFoundConversation />,
+                  },
+                ],
               },
               {
                 path: 'facebook',
-                lazy: () => import('@/pages/dashboard/facebook'),
+                lazy: () => import('@/pages/dashboard/live-desk/facebook'),
               },
               {
                 path: 'whatsapp',
-                lazy: () => import('@/pages/dashboard/whatsapp'),
+                lazy: () => import('@/pages/dashboard/live-desk/whatsapp'),
               },
               {
                 path: 'email',
-                lazy: () => import('@/pages/dashboard/email'),
+                lazy: () => import('@/pages/dashboard/live-desk/email'),
               },
             ],
           },

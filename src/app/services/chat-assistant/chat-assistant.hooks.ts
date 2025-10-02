@@ -2,6 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { produce } from 'immer';
 import { useCallback } from 'react';
 
+import type { Role } from '@/app/project-member/project-member.type';
+
 import { useAuthStore } from '@/app/auth/auth.store';
 import { generateMessageId, handleApiErrorException } from '@/lib/utils';
 
@@ -45,13 +47,16 @@ export function useConversationListQuery(
 export function useOptimisticSendMessageMutation() {
   const queryClient = useQueryClient();
   const currentUser = useAuthStore((state) => state.user);
-  const userOrganization = useAuthStore((state) => state.userOrganization);
 
   const mutation = useMutation<
     SendMessageResponse,
     unknown,
     SendMessagePayload & {
       conversation: ConversationDetail;
+      currentUserAsMember: {
+        role: Role;
+        memberId: string;
+      };
     }
   >({
     networkMode: 'always',
@@ -96,7 +101,7 @@ export function useOptimisticSendMessageMutation() {
         sender: 'assistant',
         assistantMember: {
           email: currentUser?.email ?? '',
-          role: userOrganization?.currentOrganization?.role ?? '',
+          role: payload.currentUserAsMember.role,
           user: {
             id: currentUser?.id ?? '',
             name: currentUser?.name ?? '',
@@ -104,8 +109,7 @@ export function useOptimisticSendMessageMutation() {
             email: currentUser?.email ?? '',
           },
         },
-        assistantMemberId:
-          userOrganization?.currentOrganization?.memberId ?? '',
+        assistantMemberId: payload?.currentUserAsMember?.memberId,
         content: payload.content,
         conversationId: payload.conversation.id,
         createdAt: timeStamp,

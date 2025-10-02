@@ -10,7 +10,6 @@ import { toast } from 'sonner';
 import type { CreateProjectInput } from '@/app/project/project.type';
 
 import { useCreateProjectMutation } from '@/app/project/project.hooks';
-import { preFetchProjectServices } from '@/app/project/project.prefetch';
 import { createProjectSchema } from '@/app/project/project.schema';
 import { projectQueryKeys } from '@/app/project/projects.keys';
 import { Button } from '@/components/site-button';
@@ -50,7 +49,6 @@ export function CreateProjectForm() {
         queryClient.invalidateQueries({
           queryKey: projectQueryKeys.projectList(),
         });
-        await preFetchProjectServices(result.data.data.id);
         navigate(`/${result.data.data.id}`);
       },
       onError: (error) => {

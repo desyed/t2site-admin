@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 
 import type { ConversationDetail } from '@/app/services/chat-assistant/chat-assistant.type';
 
+import { useCurrentProjectQuery } from '@/app/project/project.hooks';
 import { useOptimisticSendMessageMutation } from '@/app/services/chat-assistant/chat-assistant.hooks';
 import {
   playSendMessageSound,
@@ -19,9 +20,16 @@ type ChatToolbarProps = {
 
 export const ChatToolbar = memo<ChatToolbarProps>(
   ({ conversation, onSendTextMessage, onSendEmojiMessage }) => {
+    const { data: currentProject } = useCurrentProjectQuery();
+
     const { ticketId } = useParams();
 
     const { sendAsync } = useOptimisticSendMessageMutation();
+
+    const currentUserAsMember = {
+      memberId: currentProject?.currentUser.memberId ?? Date.now().toString(),
+      role: currentProject?.currentUser?.role ?? 'member',
+    };
 
     const handleSendTextMessage = (text: string) => {
       if (!ticketId) return;
@@ -31,6 +39,7 @@ export const ChatToolbar = memo<ChatToolbarProps>(
         ticketId,
         conversation,
         content: { type: 'text', text },
+        currentUserAsMember,
       });
 
       onSendTextMessage(text);
@@ -46,6 +55,7 @@ export const ChatToolbar = memo<ChatToolbarProps>(
         ticketId,
         conversation,
         content: { type: 'emojiOrSticker', emoji },
+        currentUserAsMember,
       });
 
       onSendEmojiMessage(emoji);

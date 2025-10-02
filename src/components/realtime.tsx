@@ -6,8 +6,9 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
-import type { IncommingRealTimeMessage } from '@/app/services/chat-assistant/chat-assistant.type';
+import type { IncomingRealTimeMessage } from '@/app/services/chat-assistant/chat-assistant.type';
 
+import { useCurrentProjectQuery } from '@/app/project/project.hooks';
 import {
   useConversationListQuery,
   useMessageMutationState,
@@ -33,19 +34,21 @@ export const RealtimeContext = createContext<RealtimeContextType>(
 );
 
 export default function RealtimeProvider({
-  chatAssistantId,
   children,
 }: {
-  chatAssistantId: string;
   children: React.ReactNode;
 }) {
+  const { data: currentProject } = useCurrentProjectQuery();
+
   const { sendMessage } = useMessageMutationState();
   const navigate = useNavigate();
+
+  const chatAssistantId = currentProject?.services?.chatAssistant.id;
 
   const {
     isLoading: isConversationsLoading,
     isSuccess: isConversationsSuccess,
-  } = useConversationListQuery(chatAssistantId, !!chatAssistantId);
+  } = useConversationListQuery(chatAssistantId ?? '', !!chatAssistantId);
 
   const [isPusherConnected, setIsPusherConnected] = useState(false);
   const [channelInfo, setChannelInfo] = useState<ChannelInfo>({
@@ -105,7 +108,7 @@ export default function RealtimeProvider({
 
       // });
 
-      const handleNotification = (data: IncommingRealTimeMessage) => {
+      const handleNotification = (data: IncomingRealTimeMessage) => {
         const ticketId = data.conversation.ticketId;
         const message = data.message;
 
@@ -146,7 +149,7 @@ export default function RealtimeProvider({
         playNotificationSound();
       };
 
-      const handleTrafficMessage = (data: IncommingRealTimeMessage) => {
+      const handleTrafficMessage = (data: IncomingRealTimeMessage) => {
         handleNotification(data);
         sendMessage(data);
       };
@@ -167,7 +170,11 @@ export default function RealtimeProvider({
 
   return (
     <RealtimeContext.Provider
-      value={{ chatAssistantId, isPusherConnected: isConnected, channelInfo }}
+      value={{
+        chatAssistantId: chatAssistantId ?? '',
+        isPusherConnected: isConnected,
+        channelInfo,
+      }}
     >
       {children}
     </RealtimeContext.Provider>

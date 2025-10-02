@@ -1,10 +1,6 @@
-import type { Project, ProjectService } from './project.type';
+import type { Project } from './project.type';
 
-import {
-  getProjectApi,
-  getProjectsApi,
-  getProjectServicesApi,
-} from './project.api';
+import { getProjectApi, getProjectsApi } from './project.api';
 
 export async function fetchProjects() {
   const response = await getProjectsApi({});
@@ -14,9 +10,4 @@ export async function fetchProjects() {
 export async function fetchProject(projectId: string) {
   const response = await getProjectApi({ projectId });
   return response.data?.data as Project;
-}
-
-export async function fetchProjectServices(projectId: string) {
-  const response = await getProjectServicesApi({ projectId });
-  return response.data?.data as ProjectService;
 }
