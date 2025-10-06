@@ -8,13 +8,6 @@ export type InviteMemberInput = z.infer<typeof inviteMemberSchema> & {
 };
 export type Role = (typeof roles)[number];
 
-export interface Organization {
-  id: string;
-  name: string;
-  slug: string | null;
-  logo: string | null;
-  role: Role;
-}
 export interface MemberUser {
   id: string;
   name: string;
@@ -43,16 +36,6 @@ export interface UpdateInvitationPayload {
 
 export interface InvitedMemberResponse extends InvitedMember {
   project: Project;
-}
-
-export interface OrganizationMember {
-  id: string;
-  email: string;
-  role: Role;
-  user: MemberUser;
-  currentUser: boolean;
-  organizationId: string;
-  createdAt: string;
 }
 
 export interface ProjectMember {

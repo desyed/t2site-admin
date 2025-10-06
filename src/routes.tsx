@@ -20,8 +20,8 @@ import LoginPage from '@/pages/login';
 import SignupPage from '@/pages/signup';
 
 import ProjectLayout from './layouts/project-layout';
-import SelectNoConversation from './pages/services/chat-assistant/_components/select-no-conversation';
-import SelectNotFoundConversation from './pages/services/chat-assistant/_components/select-not-found-conversation';
+import SelectNoConversation from './pages/dashboard/live-desk/live-chat/_components/select-no-conversation';
+import SelectNotFoundConversation from './pages/dashboard/live-desk/live-chat/_components/select-not-found-conversation';
 
 export const routes = createBrowserRouter([
   {

@@ -54,7 +54,7 @@ export default function ProjectPopupContent({
             >
               <h3 className="text-base font-semibold">No projects, yet!</h3>
               <span className="text-sm text-muted-foreground">
-                This organization has no projects.
+                No project found!
               </span>
             </CommandItem>
           ) : (

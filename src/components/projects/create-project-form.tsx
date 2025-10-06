@@ -58,7 +58,7 @@ export function CreateProjectForm() {
           if (errorResponse?.code === 'project-name-already-exists') {
             form.setError('name', {
               message:
-                'Project name already exists in this organization, please choose another name',
+                'Project name already exists, please choose another name',
             });
           }
         }

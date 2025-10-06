@@ -6,11 +6,11 @@ import type { SiteTableColumn } from '@/components/site-table';
 import type { StatusType } from '@/components/status-badge';
 
 import CopyButton from '@/components/copy-button';
-import MemberRoleBadge from '@/components/organization/member-role-badge';
+import MemberRoleBadge from '@/components/project-member/member-role-badge';
 import SiteTable from '@/components/site-table';
 import { StatusBadge } from '@/components/status-badge';
 import { UserLabel } from '@/components/user-label';
-import { createOrganizationInvitationLink } from '@/lib/organization';
+import { createProjectInvitationLink } from '@/lib/project';
 import { dayJs, tableTimeRelativeFormat } from '@/lib/time';
 
 import InvitedMemberActions from './invited-member-actions';
@@ -71,7 +71,7 @@ export default function InvitedMembersTable({
       width: 'w-[200px]',
       noWrap: true,
       render: (member) => {
-        const inviteLink = createOrganizationInvitationLink(member.id);
+        const inviteLink = createProjectInvitationLink(member.id);
         const hasExpired = dayJs(member.expiresAt).isBefore(dayJs());
         return (
           <div className="flex items-center gap-2">

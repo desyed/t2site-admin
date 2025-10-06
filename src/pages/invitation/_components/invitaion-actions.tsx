@@ -106,7 +106,7 @@ export default function InvitationActions({
           You have accepted the invitation.
         </p>
         <p className="mt-2 text-center text-sm text-muted-foreground">
-          You are sortly redirected to the organization.
+          You are shortly redirected to the project.
         </p>
       </div>
     );

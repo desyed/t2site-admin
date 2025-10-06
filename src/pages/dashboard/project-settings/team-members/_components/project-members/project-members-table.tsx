@@ -1,13 +1,10 @@
 import { UserPlusIcon } from 'lucide-react';
 
-import type {
-  OrganizationMember,
-  ProjectMember,
-} from '@/app/project-member/project-member.type';
+import type { ProjectMember } from '@/app/project-member/project-member.type';
 import type { Project } from '@/app/project/project.type';
 import type { SiteTableColumn } from '@/components/site-table';
 
-import MemberRoleBadge from '@/components/organization/member-role-badge';
+import MemberRoleBadge from '@/components/project-member/member-role-badge';
 import SiteTable from '@/components/site-table';
 import { UserLabel } from '@/components/user-label';
 import { tableTimeRelativeFormat } from '@/lib/time';
@@ -76,7 +73,7 @@ export function ProjectMembersTable({
 
   return (
     <SiteTable
-      title="Organization Members"
+      title="Project Members"
       data={members ?? []}
       columns={columns}
       loading={isLoading}
@@ -84,7 +81,7 @@ export function ProjectMembersTable({
       rowKey="id"
       error={error}
       onRefresh={refetch}
-      description="There are no members in this organization. Invite a new team member to get started."
+      description="There are no members in this project. Invite a new team member to get started."
       emptyStateAction={{
         label: 'Invite member',
         icon: <UserPlusIcon className="size-4" />,

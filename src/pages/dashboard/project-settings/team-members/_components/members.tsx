@@ -9,7 +9,7 @@ import { Switch } from '@/components/ui/switch';
 
 import InviteMemberDialog from './invited-members/invite-member-dialog';
 import InvitedMembers from './invited-members/invited-members';
-import ProjectMembers from './org-members/project-members';
+import ProjectMembers from './project-members/project-members';
 
 export default function Members() {
   const [refresh, setRefresh] = useState(false);
@@ -46,7 +46,7 @@ export default function Members() {
           Refresh
         </Button>
       </div>
-      {/* Organization Members Section */}
+
       {currentProject && (
         <ProjectMembers
           refresh={refresh}
@@ -63,8 +63,7 @@ export default function Members() {
           <h2 className="text-xl font-semibold">Enforce 2FA</h2>
         </div>
         <p className="mb-4 text-muted-foreground">
-          Require all users in your organization to enable two-factor
-          authentication.
+          Require all users in your project to enable two-factor authentication.
         </p>
         <p className="mb-4 text-muted-foreground">
           Subscribe to the Teams addon to use this feature.

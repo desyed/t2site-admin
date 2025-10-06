@@ -6,7 +6,7 @@ import {
   ArrowUpIcon,
   CrownIcon,
 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
@@ -59,7 +59,7 @@ export function CurrentUserDropdownMenu({
 
   const isOwner = isOwnerRole(member.role);
 
-  const { mutate: leaveProject, isPending: isLeavingOrganization } =
+  const { mutate: leaveProject, isPending: isLeavingProject } =
     useLeaveProjectMutation<{ success: boolean }>();
 
   if (isOwner)
@@ -70,7 +70,7 @@ export function CurrentUserDropdownMenu({
       />
     );
 
-  const handleLeaveOrganization = () => {
+  const handleLeaveProject = () => {
     leaveProject(currentProject?.id ?? '', {
       onSuccess: () => {
         navigate(`/`, { replace: true });
@@ -110,7 +110,7 @@ export function CurrentUserDropdownMenu({
         isDanger={true}
         loadingText="Leaving project..."
         title="Leave project"
-        loading={isLeavingOrganization}
+        loading={isLeavingProject}
         confirmIcon={<LogOutIcon className="size-4" />}
         description={
           <>
@@ -120,7 +120,7 @@ export function CurrentUserDropdownMenu({
             </span>
           </>
         }
-        onConfirm={handleLeaveOrganization}
+        onConfirm={handleLeaveProject}
         confirmText={<>Leave project</>}
       />
     </>
