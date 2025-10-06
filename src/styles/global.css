@@ -151,7 +151,7 @@ html.dark {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply !min-w-full bg-background text-foreground selection:bg-yellow-500/20 selection:text-yellow-700 dark:selection:bg-primary/20 dark:selection:text-primary;
+    @apply !min-w-full bg-background text-foreground;
     font-feature-settings:
       'rlig' 1,
       'calt' 1;

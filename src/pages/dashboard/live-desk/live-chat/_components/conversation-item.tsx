@@ -62,7 +62,7 @@ export const ConversationItemView = memo(
 
     return (
       <Link
-        to={`live-desk/live-chat/${conversationItem.ticketId}`}
+        to={`${conversationItem.ticketId}`}
         key={conversationItem.ticketId}
         onClick={() => setClicked(true)}
       >

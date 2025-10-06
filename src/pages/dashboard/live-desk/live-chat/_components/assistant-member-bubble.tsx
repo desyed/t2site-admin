@@ -220,7 +220,7 @@ export const AssistantMemberBubble = memo(
               {message.content.type === 'text' && (
                 <div
                   className={cn(
-                    'rounded-xl bg-yellow-300 px-3 py-1 text-primary-foreground shadow-sm dark:bg-yellow-300 selection:dark:bg-yellow-600/40 selection:dark:text-background',
+                    'rounded-xl bg-primary px-3 py-1 text-primary-foreground shadow-sm',
                     {
                       'rounded-l-2xl rounded-br-2xl rounded-tr-lg':
                         isLastTextMessage(),

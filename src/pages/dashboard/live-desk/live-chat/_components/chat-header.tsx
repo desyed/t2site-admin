@@ -1,6 +1,6 @@
 import { ChevronLeft, Clock, Star } from 'lucide-react';
 import { memo } from 'react';
-import { Link } from 'react-router';
+import { Link, useParams } from 'react-router';
 
 import type { ConversationDetail } from '@/app/services/chat-assistant/chat-assistant.type';
 
@@ -12,12 +12,17 @@ import { formatSmartTimestamp } from '@/lib/time';
 export const ChatHeader = memo(
   ({ conversation }: { conversation: ConversationDetail }) => {
     const isDesktop = useMediaQuery('(min-width: 1024px)');
+
+    const params = useParams();
+
+    const projectId = params.projectId;
+
     return (
       <div className="flex items-center justify-between border-b px-3 py-2 pt-3 sm:px-4">
         {/* Left Side */}
         <div className="flex min-w-0 items-center gap-1.5">
           {!isDesktop && (
-            <Link to="/services/chat-assistant">
+            <Link to={`/${projectId}/live-desk/live-chat`}>
               <Button
                 variant="ghost"
                 size="icon"
