@@ -6,13 +6,13 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
-import type { IncomingRealTimeMessage } from '@/app/services/chat-assistant/chat-assistant.type';
+import type { IncomingRealTimeMessage } from '@/app/features/chat-assistant/chat-assistant.type';
 
-import { useCurrentProjectQuery } from '@/app/project/project.hooks';
 import {
   useConversationListQuery,
   useMessageMutationState,
-} from '@/app/services/chat-assistant/chat-assistant.hooks';
+} from '@/app/features/chat-assistant/chat-assistant.hooks';
+import { useCurrentProjectQuery } from '@/app/project/project.hooks';
 import { playNotificationSound } from '@/audio-contenxt/system';
 import pusher from '@/lib/pusher-client';
 
@@ -43,7 +43,7 @@ export default function RealtimeProvider({
   const { sendMessage } = useMessageMutationState();
   const navigate = useNavigate();
 
-  const chatAssistantId = currentProject?.services?.chatAssistant.id;
+  const chatAssistantId = currentProject?.features?.chatAssistant.id;
 
   const {
     isLoading: isConversationsLoading,
@@ -112,7 +112,7 @@ export default function RealtimeProvider({
         const ticketId = data.conversation.ticketId;
         const message = data.message;
 
-        if (window.location.pathname.includes('/services/chat-assistant')) {
+        if (window.location.pathname.includes('/live-desk/live-chat')) {
           return;
         }
 
@@ -139,7 +139,7 @@ export default function RealtimeProvider({
           action: {
             label: 'View',
             onClick: () => {
-              navigate(`/services/chat-assistant/${ticketId}`);
+              navigate(`${currentProject?.id}/live-desk/live-chat/${ticketId}`);
               toast.dismiss();
             },
           },

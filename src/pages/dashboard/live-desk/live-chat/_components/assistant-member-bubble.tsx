@@ -1,6 +1,6 @@
 import { memo, useMemo } from 'react';
 
-import type { Message } from '@/app/services/chat-assistant/chat-assistant.type';
+import type { Message } from '@/app/features/chat-assistant/chat-assistant.type';
 
 import { useAuthStore } from '@/app/auth/auth.store';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';

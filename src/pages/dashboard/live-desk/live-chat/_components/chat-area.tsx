@@ -6,11 +6,11 @@ import { useParams } from 'react-router';
 import type {
   ApiMessagesResponse,
   ConversationDetail,
-} from '@/app/services/chat-assistant/chat-assistant.type';
+} from '@/app/features/chat-assistant/chat-assistant.type';
 
-import { fetchConversationMessagesPage } from '@/app/services/chat-assistant/chat-assistant.fetch';
-import { useConversationDetailQuery } from '@/app/services/chat-assistant/chat-assistant.hooks';
-import { chatAreaQueryKey } from '@/app/services/chat-assistant/chat-assistant.keys';
+import { fetchConversationMessagesPage } from '@/app/features/chat-assistant/chat-assistant.fetch';
+import { useConversationDetailQuery } from '@/app/features/chat-assistant/chat-assistant.hooks';
+import { chatAreaQueryKey } from '@/app/features/chat-assistant/chat-assistant.keys';
 import FetchErrorView from '@/components/fetch-error-view';
 import { Button } from '@/components/ui/button';
 

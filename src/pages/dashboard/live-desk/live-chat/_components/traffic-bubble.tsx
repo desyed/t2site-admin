@@ -1,6 +1,6 @@
 import { memo, useMemo } from 'react';
 
-import type { Message } from '@/app/services/chat-assistant/chat-assistant.type';
+import type { Message } from '@/app/features/chat-assistant/chat-assistant.type';
 
 import { formatSmartTimestamp, timeGap } from '@/lib/time';
 import { cn } from '@/lib/utils';

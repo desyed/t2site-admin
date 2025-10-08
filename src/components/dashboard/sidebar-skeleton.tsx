@@ -35,7 +35,6 @@ export function SidebarSkeleton({ className = '' }: SidebarSkeletonProps) {
           </div>
         </div>
 
-        {/* Services Group */}
         <div>
           <Skeleton className="mb-3 h-3 w-16" />
           <div className="space-y-0.5">
@@ -50,7 +49,6 @@ export function SidebarSkeleton({ className = '' }: SidebarSkeletonProps) {
           </div>
         </div>
 
-        {/* Settings Group */}
         <div>
           <Skeleton className="mb-3 h-3 w-16" />
           <div className="space-y-0.5">
@@ -66,7 +64,6 @@ export function SidebarSkeleton({ className = '' }: SidebarSkeletonProps) {
         </div>
       </div>
 
-      {/* Usage Section Skeleton */}
       <div className="border-t border-gray-200 p-3">
         <div className="mb-4">
           <Skeleton className="mb-3 h-3 w-12" />
@@ -95,7 +92,6 @@ export function SidebarSkeleton({ className = '' }: SidebarSkeletonProps) {
   );
 }
 
-// Skeleton for Project Settings Mode
 export function ProjectSettingsSidebarSkeleton({
   className = '',
 }: SidebarSkeletonProps) {
@@ -134,7 +130,6 @@ export function ProjectSettingsSidebarSkeleton({
   );
 }
 
-// Skeleton for Live Desk Mode
 export function LiveDeskSidebarSkeleton({
   className = '',
 }: SidebarSkeletonProps) {
@@ -173,7 +168,6 @@ export function LiveDeskSidebarSkeleton({
   );
 }
 
-// Skeleton for Cookie Consent Mode
 export function CookieConsentSidebarSkeleton({
   className = '',
 }: SidebarSkeletonProps) {
