@@ -139,7 +139,9 @@ export default function RealtimeProvider({
           action: {
             label: 'View',
             onClick: () => {
-              navigate(`${currentProject?.id}/live-desk/live-chat/${ticketId}`);
+              navigate(
+                `/${currentProject?.id}/live-desk/live-chat/${ticketId}`
+              );
               toast.dismiss();
             },
           },
