@@ -15,14 +15,11 @@ import type {
   Message,
   SendMessagePayload,
   SendMessageResponse,
-} from './chat-assistant.type';
+} from './live-desk.type';
 
-import { sendMessageApi } from './chat-assistant.api';
-import {
-  fetchConversationDetail,
-  fetchConversations,
-} from './chat-assistant.fetch';
-import { chatAreaQueryKey, conversationKeys } from './chat-assistant.keys';
+import { sendMessageApi } from './live-desk.api';
+import { fetchConversationDetail, fetchConversations } from './live-desk.fetch';
+import { chatAreaQueryKey, conversationKeys } from './live-desk.keys';
 
 export function useConversationDetailQuery(ticketId: string) {
   const query = useQuery({
@@ -33,12 +30,12 @@ export function useConversationDetailQuery(ticketId: string) {
 }
 
 export function useConversationListQuery(
-  chatAssistantId: string,
+  liveDeskId: string,
   enabled: boolean = true
 ) {
   const query = useQuery({
-    queryKey: conversationKeys.list(chatAssistantId),
-    queryFn: () => fetchConversations(chatAssistantId),
+    queryKey: conversationKeys.list(liveDeskId),
+    queryFn: () => fetchConversations(liveDeskId),
     enabled,
   });
   return query;
@@ -68,7 +65,7 @@ export function useOptimisticSendMessageMutation() {
       const messagesPageKey = chatAreaQueryKey(payload.ticketId);
       const conversationDetailKey = conversationKeys.detail(payload.ticketId);
       const conversationListKey = conversationKeys.list(
-        payload.conversation.chatAssistantId
+        payload.conversation.liveDeskId
       );
 
       await queryClient.cancelQueries({
@@ -321,7 +318,7 @@ export function useMessageMutationState() {
         messageResponse.conversation.ticketId
       );
       const conversationListKey = conversationKeys.list(
-        messageResponse.conversation.chatAssistantId
+        messageResponse.conversation.liveDeskId
       );
 
       const oldMessagesResponse = queryClient.getQueryData<{
@@ -388,7 +385,7 @@ export function useMessageMutationState() {
             updatedAt: messageResponse.message.createdAt,
             unread: true,
             optimistic: undefined,
-            chatAssistantId: messageResponse.conversation.chatAssistantId,
+            liveDeskId: messageResponse.conversation.liveDeskId,
           },
           ...(oldConversationList ?? []),
         ];

@@ -17,7 +17,6 @@ import {
   UserPlus,
   Users,
 } from 'lucide-react'; // Import Settings icon
-import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 
 import type { NavigationGroup } from '@/types/dashboard';
@@ -96,25 +95,25 @@ export function Sidebar({ projectId }: SidebarProps) {
       name: 'Live Chat',
       href: `/${projectId}/live-desk/live-chat`,
       icon: MessageSquare,
-      current: pathname === `/${projectId}/live-desk/live-chat`,
+      current: pathname.includes(`/${projectId}/live-desk/live-chat`),
     },
     {
       name: 'Facebook',
       href: `/${projectId}/live-desk/facebook`,
       icon: Shield,
-      current: pathname === `/${projectId}/live-desk/facebook`,
+      current: pathname.includes(`/${projectId}/live-desk/facebook`),
     },
     {
       name: 'Whatsapp',
       href: `/${projectId}/live-desk/whatsapp`,
       icon: MessageCircle,
-      current: pathname === `/${projectId}/live-desk/whatsapp`,
+      current: pathname.includes(`/${projectId}/live-desk/whatsapp`),
     },
     {
       name: 'Email',
       href: `/${projectId}/live-desk/email`,
       icon: Lock,
-      current: pathname === `/${projectId}/live-desk/email`,
+      current: pathname.includes(`/${projectId}/live-desk/email`),
     },
   ];
 
@@ -124,7 +123,7 @@ export function Sidebar({ projectId }: SidebarProps) {
       href: `/${projectId}/cookie-consent?category=banner`,
       icon: Shield,
       current:
-        pathname === `/${projectId}/cookie-consent` &&
+        pathname.includes(`/${projectId}/cookie-consent`) &&
         new URLSearchParams(window?.location?.search || '').get('category') ===
           'banner',
     },
@@ -133,7 +132,7 @@ export function Sidebar({ projectId }: SidebarProps) {
       href: `/${projectId}/cookie-consent?category=categories`,
       icon: Settings,
       current:
-        pathname === `/${projectId}/cookie-consent` &&
+        pathname.includes(`/${projectId}/cookie-consent`) &&
         new URLSearchParams(window?.location?.search || '').get('category') ===
           'categories',
     },
@@ -142,7 +141,7 @@ export function Sidebar({ projectId }: SidebarProps) {
       href: `/${projectId}/cookie-consent?category=legal`,
       icon: Lock,
       current:
-        pathname === `/${projectId}/cookie-consent` &&
+        pathname.includes(`/${projectId}/cookie-consent`) &&
         new URLSearchParams(window?.location?.search || '').get('category') ===
           'legal',
     },
@@ -181,19 +180,15 @@ export function Sidebar({ projectId }: SidebarProps) {
           name: 'Cookie Consent',
           href: `/${projectId}/cookie-consent`,
           icon: Shield,
-          current: pathname === `/${projectId}/cookie-consent`,
+          current: pathname.includes(`/${projectId}/cookie-consent`),
           onClick: handleCookieConsentMode, // Updated to use new handler
         },
         {
           name: 'Live Desk',
           href: `/${projectId}/live-desk`,
           icon: MessageSquare,
-          current:
-            pathname.includes(`/${projectId}/live-desk`) ||
-            pathname.includes(`/${projectId}/live-desk/live-chat`) ||
-            pathname.includes(`/${projectId}/live-desk/facebook`) ||
-            pathname.includes(`/${projectId}/live-desk/whatsapp`) ||
-            pathname.includes(`/${projectId}/live-desk/email`),
+          current: pathname.includes(`/${projectId}/live-desk`),
+
           onClick: handleLiveDeskMode, // Updated to use new handler
         },
       ],

@@ -4,7 +4,7 @@ import type { Role } from '../project-member/project-member.type';
 import type { createProjectSchema } from './project.schema';
 
 export type ProjectFeatures = {
-  chatAssistant: {
+  liveDesk: {
     id: string;
     logo?: string | null | undefined;
     theme?: string | null | undefined;

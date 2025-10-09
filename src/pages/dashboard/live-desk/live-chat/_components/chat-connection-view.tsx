@@ -9,7 +9,7 @@ export default function ChatConnectionView() {
       </div>
       <div className="text-center">
         <p className="text-lg font-medium text-foreground">
-          Connecting to Chat Assistant
+          Connecting to Live Desk
         </p>
         <p className="text-sm text-muted-foreground">
           Please wait while we establish a secure connection...

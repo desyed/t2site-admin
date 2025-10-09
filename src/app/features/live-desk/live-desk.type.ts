@@ -75,7 +75,7 @@ export interface LatestMessage {
 
 export interface ConversationListItem {
   id: string;
-  chatAssistantId: string;
+  liveDeskId: string;
   trafficId: string;
   ticketId: string;
   unread: boolean;
@@ -88,7 +88,7 @@ export interface ConversationListItem {
 
 export interface ConversationDetail {
   id: string;
-  chatAssistantId: string;
+  liveDeskId: string;
   trafficId: string;
   ticketId: string;
   unread: boolean;

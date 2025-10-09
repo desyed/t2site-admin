@@ -1,7 +1,7 @@
 import { memo, useEffect } from 'react';
 import { useParams } from 'react-router';
 
-import type { Message } from '@/app/features/chat-assistant/chat-assistant.type';
+import type { Message } from '@/app/features/live-desk/live-desk.type';
 
 import { AssistantMemberBubble } from './assistant-member-bubble';
 import { TrafficBubble } from './traffic-bubble';

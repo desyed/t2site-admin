@@ -1,13 +1,13 @@
 import { queryClient } from '@/query-client';
 
-import type { ApiMessagesResponse } from './chat-assistant.type';
+import type { ApiMessagesResponse } from './live-desk.type';
 
 import {
   fetchConversationDetail,
   fetchConversationMessagesPage,
   fetchConversations,
-} from './chat-assistant.fetch';
-import { chatAreaQueryKey, conversationKeys } from './chat-assistant.keys';
+} from './live-desk.fetch';
+import { chatAreaQueryKey, conversationKeys } from './live-desk.keys';
 
 export async function preFetchConversationDetail(ticketId: string) {
   return await queryClient.fetchQuery({
@@ -16,10 +16,10 @@ export async function preFetchConversationDetail(ticketId: string) {
   });
 }
 
-export function preFetchConversationListQuery(chatAssistantId: string) {
+export function preFetchConversationListQuery(liveDeskId: string) {
   const query = queryClient.prefetchQuery({
-    queryKey: conversationKeys.list(chatAssistantId),
-    queryFn: () => fetchConversations(chatAssistantId),
+    queryKey: conversationKeys.list(liveDeskId),
+    queryFn: () => fetchConversations(liveDeskId),
   });
   return query;
 }

@@ -6,7 +6,7 @@ import { useMediaQuery } from '@/hooks/use-mobile';
 
 import { ConversationList } from './_components/conversation-list';
 
-export default function ChatAssistant() {
+export default function LiveChat() {
   const isDesktop = useMediaQuery('(min-width: 1024px)');
 
   return (
@@ -16,9 +16,8 @@ export default function ChatAssistant() {
           id="conversation-list"
           order={1}
           defaultSize={30}
-          className="border-l"
           minSize={20}
-          maxSize={40}
+          maxSize={50}
         >
           <ConversationList />
         </ResizablePanel>
@@ -29,7 +28,7 @@ export default function ChatAssistant() {
               id="chat-area"
               order={2}
               defaultSize={70}
-              minSize={60}
+              minSize={20}
               maxSize={80}
             >
               <Outlet />

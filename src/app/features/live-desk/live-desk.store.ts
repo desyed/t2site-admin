@@ -1,17 +1,17 @@
 import { create } from 'zustand';
 
-import type { ConversationDetail } from './chat-assistant.type';
+import type { ConversationDetail } from './live-desk.type';
 
-export type ChatAssistantStore = {
+export type LiveDeskStore = {
   currentConversation: ConversationDetail | null;
   setCurrentConversation: (
     currentConversation: ConversationDetail | null
   ) => void;
 };
 
-export const useChatAssistantStore = create<ChatAssistantStore>((set) => ({
+export const useLiveDeskStore = create<LiveDeskStore>((set) => ({
   currentConversation: null,
   setCurrentConversation: (currentConversation) => set({ currentConversation }),
 }));
 
-export const chatAssistantStore = useChatAssistantStore.getState();
+export const liveDeskStore = useLiveDeskStore.getState();

@@ -3,7 +3,7 @@ import { useLayoutEffect } from 'react';
 import { PageHeader } from '@/components/dashboard/page-header.tsx';
 import { createDashboardLoader } from '@/middlewares/auth-middleware';
 
-import ChatAssistantPage from './ChatAssistantPage.tsx';
+import LiveChatPage from './live-chat-page.tsx';
 
 export const loader = createDashboardLoader(async () => {
   return {};
@@ -18,7 +18,7 @@ export function Component() {
     <div>
       <PageHeader title="Live Chat" />
       <div className="dashboard-container space-y-6">
-        <ChatAssistantPage />
+        <LiveChatPage />
       </div>
     </div>
   );

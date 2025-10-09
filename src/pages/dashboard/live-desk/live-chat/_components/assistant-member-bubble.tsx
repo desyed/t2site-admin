@@ -1,6 +1,6 @@
 import { memo, useMemo } from 'react';
 
-import type { Message } from '@/app/features/chat-assistant/chat-assistant.type';
+import type { Message } from '@/app/features/live-desk/live-desk.type';
 
 import { useAuthStore } from '@/app/auth/auth.store';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -231,7 +231,7 @@ export const AssistantMemberBubble = memo(
                     }
                   )}
                 >
-                  <p className="whitespace-pre-line break-all text-sm leading-relaxed sm:text-[1rem]">
+                  <p className="whitespace-pre-line break-all text-sm leading-relaxed">
                     {message.content.text}
                   </p>
                 </div>

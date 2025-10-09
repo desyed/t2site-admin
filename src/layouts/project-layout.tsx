@@ -8,7 +8,7 @@ import { ProjectNavigationBar } from '@/components/dashboard/project-navigation-
 import { Sidebar } from '@/components/dashboard/sidebar';
 import { SidebarSkeleton } from '@/components/dashboard/sidebar-skeleton';
 import ErrorScreen from '@/components/ErrorScreen';
-import RealtimeProvider from '@/components/realtime';
+import RealtimeProvider from '@/components/realtime-provider';
 import { useAuth } from '@/contexts/auth-provider';
 
 export default function ProjectLayout() {

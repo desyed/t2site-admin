@@ -1,7 +1,7 @@
 import { memo, useEffect, useState } from 'react';
 import { Link, useNavigation, useParams } from 'react-router';
 
-import type { ConversationListItem } from '@/app/features/chat-assistant/chat-assistant.type';
+import type { ConversationListItem } from '@/app/features/live-desk/live-desk.type';
 
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { formatSmartTimestamp } from '@/lib/time';

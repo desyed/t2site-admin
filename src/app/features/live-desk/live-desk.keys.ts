@@ -1,9 +1,9 @@
 export const conversationKeys = {
   all: ['conversations'] as const,
-  list: (chatAssistantId: string) =>
-    [...conversationKeys.all, chatAssistantId, 'list'] as const,
-  cursor: (chatAssistantId: string, cursor: string) =>
-    [...conversationKeys.all, chatAssistantId, 'cursor', cursor] as const,
+  list: (liveDeskId: string) =>
+    [...conversationKeys.all, liveDeskId, 'list'] as const,
+  cursor: (liveDeskId: string, cursor: string) =>
+    [...conversationKeys.all, liveDeskId, 'cursor', cursor] as const,
   detail: (ticketId: string) =>
     [...conversationKeys.all, ticketId, 'detail'] as const,
 };

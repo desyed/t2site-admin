@@ -1,6 +1,6 @@
 import { memo, useMemo } from 'react';
 
-import type { Message } from '@/app/features/chat-assistant/chat-assistant.type';
+import type { Message } from '@/app/features/live-desk/live-desk.type';
 
 import { formatSmartTimestamp, timeGap } from '@/lib/time';
 import { cn } from '@/lib/utils';
@@ -174,7 +174,7 @@ export const TrafficBubble = memo(
                   }
                 )}
               >
-                <p className="whitespace-pre-line break-all text-sm leading-relaxed sm:text-[1rem]">
+                <p className="whitespace-pre-line break-all text-sm leading-relaxed">
                   {message.content.text}
                 </p>
               </div>

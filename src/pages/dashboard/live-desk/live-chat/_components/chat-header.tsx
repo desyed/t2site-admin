@@ -2,7 +2,7 @@ import { ChevronLeft, Clock, Star } from 'lucide-react';
 import { memo } from 'react';
 import { Link, useParams } from 'react-router';
 
-import type { ConversationDetail } from '@/app/features/chat-assistant/chat-assistant.type';
+import type { ConversationDetail } from '@/app/features/live-desk/live-desk.type';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';

@@ -6,23 +6,23 @@ import type {
   ConversationDetail,
   ConversationListItem,
   Message,
-} from './chat-assistant.type';
+} from './live-desk.type';
 
 import {
   getConversationApi,
   getConversationDetailApi,
   getConversationMessagesApi,
-} from './chat-assistant.api';
+} from './live-desk.api';
 
-export async function fetchConversations(chatAssistantId: string) {
-  const result = (await getConversationApi(chatAssistantId)) as any;
+export async function fetchConversations(liveDeskId: string) {
+  const result = (await getConversationApi(liveDeskId)) as any;
   return result?.data?.data as ConversationListItem[];
 }
 
 export async function fetchConversationsMap(
-  chatAssistantId: string
+  liveDeskId: string
 ): Promise<Map<string, ConversationListItem>> {
-  const result = (await getConversationApi(chatAssistantId)) as any;
+  const result = (await getConversationApi(liveDeskId)) as any;
   const items = result?.data?.data as ConversationListItem[];
 
   return new Map<string, ConversationListItem>(
@@ -30,8 +30,8 @@ export async function fetchConversationsMap(
   );
 }
 
-export async function fetchConversationDetail(ticketId: string) {
-  const result = (await getConversationDetailApi(ticketId)) as any;
+export async function fetchConversationDetail(liveDeskId: string) {
+  const result = (await getConversationDetailApi(liveDeskId)) as any;
   return result?.data?.data as ConversationDetail;
 }
 

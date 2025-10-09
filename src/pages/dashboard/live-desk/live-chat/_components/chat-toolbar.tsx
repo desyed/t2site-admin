@@ -1,9 +1,9 @@
 import { memo } from 'react';
 import { useParams } from 'react-router';
 
-import type { ConversationDetail } from '@/app/features/chat-assistant/chat-assistant.type';
+import type { ConversationDetail } from '@/app/features/live-desk/live-desk.type';
 
-import { useOptimisticSendMessageMutation } from '@/app/features/chat-assistant/chat-assistant.hooks';
+import { useOptimisticSendMessageMutation } from '@/app/features/live-desk/live-desk.hooks';
 import { useCurrentProjectQuery } from '@/app/project/project.hooks';
 import {
   playSendMessageSound,

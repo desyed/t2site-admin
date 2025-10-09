@@ -4,7 +4,7 @@ import { redirect } from 'react-router';
 import {
   preFetchConversationDetail,
   preFetchConversationMessagesInfiniteQuery,
-} from '@/app/features/chat-assistant/chat-assistant.prefetch';
+} from '@/app/features/live-desk/live-desk.prefetch';
 import { createDashboardLoader } from '@/middlewares/auth-middleware';
 
 import { ChatArea } from '../_components/chat-area';

@@ -6,11 +6,11 @@ import { useParams } from 'react-router';
 import type {
   ApiMessagesResponse,
   ConversationDetail,
-} from '@/app/features/chat-assistant/chat-assistant.type';
+} from '@/app/features/live-desk/live-desk.type';
 
-import { fetchConversationMessagesPage } from '@/app/features/chat-assistant/chat-assistant.fetch';
-import { useConversationDetailQuery } from '@/app/features/chat-assistant/chat-assistant.hooks';
-import { chatAreaQueryKey } from '@/app/features/chat-assistant/chat-assistant.keys';
+import { fetchConversationMessagesPage } from '@/app/features/live-desk/live-desk.fetch';
+import { useConversationDetailQuery } from '@/app/features/live-desk/live-desk.hooks';
+import { chatAreaQueryKey } from '@/app/features/live-desk/live-desk.keys';
 import FetchErrorView from '@/components/fetch-error-view';
 import { Button } from '@/components/ui/button';
 
@@ -196,7 +196,7 @@ export function ChatArea() {
           ref={scrollContainerRef}
         >
           {isFetchingPreviousPage && <MessageSkeletonList />}
-          <div className="flex flex-1 flex-col gap-2">
+          <div className="flex flex-1 flex-col gap-1">
             <MessagesList
               messages={messages}
               handleScrollToBottom={handleFirstScrollToBottom}

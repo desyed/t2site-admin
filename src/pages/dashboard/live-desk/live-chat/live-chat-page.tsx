@@ -2,17 +2,17 @@ import { Outlet, useParams } from 'react-router';
 
 import { useMediaQuery } from '@/hooks/use-mobile';
 
-import ChatAssistant from './chat-assistant.tsx';
+import LiveChat from './live-chat.tsx';
 
-export default function ChatAssistantPage() {
+export default function LiveChatPage() {
   const { ticketId } = useParams();
   const isDesktop = useMediaQuery('(min-width: 1024px)');
 
   return ticketId && !isDesktop ? (
-    <div className="h-[calc(100vh-52px)] w-full overflow-hidden bg-background">
+    <div className="h-[calc(99vh)] w-full overflow-hidden bg-background">
       <Outlet />
     </div>
   ) : (
-    <ChatAssistant />
+    <LiveChat />
   );
 }

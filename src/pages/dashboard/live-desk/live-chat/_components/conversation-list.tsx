@@ -1,9 +1,9 @@
 import { ChevronDown } from 'lucide-react';
 import { useState, memo } from 'react';
 
-import type { ConversationListItem } from '@/app/features/chat-assistant/chat-assistant.type';
+import type { ConversationListItem } from '@/app/features/live-desk/live-desk.type';
 
-import { useConversationListQuery } from '@/app/features/chat-assistant/chat-assistant.hooks';
+import { useConversationListQuery } from '@/app/features/live-desk/live-desk.hooks';
 import { useCurrentProjectQuery } from '@/app/project/project.hooks';
 import FetchErrorView from '@/components/fetch-error-view';
 import { Button } from '@/components/ui/button';
@@ -30,8 +30,8 @@ export const ConversationList = memo(() => {
     error: conversationsError,
     refetch: refetchConversations,
   } = useConversationListQuery(
-    currentProject?.features.chatAssistant.id ?? '',
-    !!currentProject?.features.chatAssistant.id
+    currentProject?.features.liveDesk.id ?? '',
+    !!currentProject?.features.liveDesk.id
   );
 
   const isLoading = isConversationsLoading;

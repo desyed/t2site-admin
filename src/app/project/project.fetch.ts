@@ -4,7 +4,7 @@ import { getProjectApi, getProjectsApi } from './project.api';
 
 export async function fetchProjects() {
   const response = await getProjectsApi();
-  return response.data?.data as Project[];
+  return response.data?.data as Omit<Project, 'features'>[];
 }
 
 export async function fetchProject(projectId: string) {
