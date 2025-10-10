@@ -189,7 +189,7 @@ export function ProjectNavigationBar({ projectId }: { projectId: string }) {
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <div className="flex size-11 flex-col items-center justify-center">
+            <div className="flex size-11 cursor-pointer flex-col items-center justify-center">
               <Avatar
                 className={cn('size-8 rounded-full border border-gray-400')}
               >
