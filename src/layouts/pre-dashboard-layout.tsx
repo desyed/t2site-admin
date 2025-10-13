@@ -14,7 +14,7 @@ import {
 import { useAuth } from '@/contexts/auth-provider';
 import { cn } from '@/lib/utils';
 
-export default function VerifyLayout() {
+export default function PreDashboardLayout() {
   const { isAuthenticated } = useAuth();
 
   const { user } = useAuthStore();

@@ -5,8 +5,8 @@ import ErrorBoundary from '@/components/error-boundary';
 import SplashScreen from '@/components/splash-screen';
 import AuthLayout from '@/layouts/auth-layout';
 import InvitationLayout from '@/layouts/invitation-layout';
+import PreDashboardLayout from '@/layouts/pre-dashboard-layout';
 import RootLayout from '@/layouts/root-layout';
-import VerifyLayout from '@/layouts/verify-layout';
 import {
   authMiddlewareLoader,
   dashboardLoader,
@@ -55,7 +55,7 @@ export const routes = createBrowserRouter([
       {
         loader: verifyMiddlewareLoader,
         path: '/verify',
-        element: <VerifyLayout />,
+        element: <PreDashboardLayout />,
         children: [
           {
             index: true,
@@ -75,7 +75,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: '/create-project',
-        element: <VerifyLayout />,
+        element: <PreDashboardLayout />,
         loader: privateLoader,
         children: [
           {
