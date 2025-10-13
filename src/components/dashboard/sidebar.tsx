@@ -218,7 +218,7 @@ export function Sidebar({ projectId }: SidebarProps) {
   }
 
   return (
-    <div className="flex h-full w-[232px] flex-col rounded-xl border-r border-gray-200 bg-sidebar-primary pt-1">
+    <div className="flex h-full w-[232px] flex-col rounded-xl border-r border-gray-200 bg-sidebar-primary">
       {/* Project Name */}
       <div className="p-4">
         <h2 className="text-lg font-semibold text-gray-900">

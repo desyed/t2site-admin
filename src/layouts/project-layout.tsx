@@ -10,6 +10,7 @@ import { SidebarSkeleton } from '@/components/dashboard/sidebar-skeleton';
 import ErrorScreen from '@/components/ErrorScreen';
 import RealtimeProvider from '@/components/realtime-provider';
 import { useAuth } from '@/contexts/auth-provider';
+import { cn } from '@/lib/utils';
 
 export default function ProjectLayout() {
   const { isAuthenticated } = useAuth();
@@ -42,41 +43,51 @@ export default function ProjectLayout() {
 
   return (
     <RealtimeProvider>
-      <div className="relative flex size-full h-screen">
-        <div
-          className={`top-0 z-50 flex h-full bg-sidebar transition-all duration-1000 max-md:fixed ${isMobileNavOpened ? 'left-0' : '-left-full'}`}
-        >
-          <ProjectNavigationBar projectId={params.projectId ?? ''} />
-          <div className="py-2 pr-2">
-            {isProjectLoading ? (
-              <SidebarSkeleton />
-            ) : (
-              <Sidebar
-                projectId={params.projectId ?? ''}
-                onNavItemSelect={closeMobileNav}
-              />
-            )}
-          </div>
+      <div
+        className={cn(
+          'fixed top-0 z-50 flex h-screen w-[var(--sidebar-width)] overflow-hidden bg-sidebar max-md:fixed',
+          { 'max-md:left-full': !isMobileNavOpened }
+        )}
+      >
+        <ProjectNavigationBar projectId={params.projectId ?? ''} />
+        <div className="md:py-2 md:pr-2">
+          {isProjectLoading ? (
+            <SidebarSkeleton />
+          ) : (
+            <Sidebar
+              projectId={params.projectId ?? ''}
+              onNavItemSelect={closeMobileNav}
+            />
+          )}
         </div>
-        <main
-          className={`-100 relative w-full bg-sidebar md:py-2 ${isMobileNavOpened && 'blur-sm'} h-full overflow-y-auto transition-all duration-1000`}
-        >
-          {/* Transparent Overlay for preventing background click */}
-          <div
-            className={`absolute left-0 top-0 z-10 size-full ${isMobileNavOpened ? 'block' : 'hidden'}`}
-            onClick={closeMobileNav}
-          />
-          <div className="size-full min-h-fit bg-white pb-10 md:rounded-l-xl">
-            {isProjectLoading ? (
-              <DashboardContentAreaSkeleton />
-            ) : (
-              <Outlet context={[toggleMobileNav]} />
-            )}
-          </div>
-
-          <ProfileCompletionFloat />
-        </main>
       </div>
+      <main
+        className={cn(
+          `relative h-full w-full overflow-y-auto bg-sidebar pl-[var(--sidebar-width)] md:py-2`,
+          {
+            'max-md:blur-sm': isMobileNavOpened,
+            'max-md:pl-0': !isMobileNavOpened,
+          }
+        )}
+      >
+        {/* Transparent Overlay for preventing background click */}
+        <div
+          className={cn(`absolute left-0 top-0 z-10 size-full`, {
+            block: isMobileNavOpened,
+            hidden: !isMobileNavOpened,
+          })}
+          onClick={closeMobileNav}
+        />
+        <div className="size-full min-h-fit bg-white pb-10 md:rounded-l-xl">
+          {isProjectLoading ? (
+            <DashboardContentAreaSkeleton />
+          ) : (
+            <Outlet context={[toggleMobileNav]} />
+          )}
+        </div>
+
+        <ProfileCompletionFloat />
+      </main>
     </RealtimeProvider>
   );
 }

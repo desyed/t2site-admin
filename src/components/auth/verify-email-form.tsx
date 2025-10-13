@@ -55,11 +55,13 @@ export default function VerifyEmailForm() {
     if (success) {
       if (data?.access_token && data.user.email && data.user.emailVerified) {
         setAuth(data.user, data.access_token);
-        navigate(
-          '/auth?auth_login=success&rp=' +
-            window.localStorage.getItem('redirect_to') || '/',
-          { replace: true }
-        );
+        let redirectTo = window.localStorage.getItem('redirect_to');
+        if (!redirectTo) {
+          redirectTo = '/';
+        }
+        navigate('/auth?auth_login=success&rp=' + redirectTo, {
+          replace: true,
+        });
         toast.success('Email Verified!', {
           description: 'Your email has been successfully verified. 🎉',
           duration: 3000,

@@ -178,7 +178,7 @@ export function ChatArea() {
       )}
 
       {isLoading ? (
-        <div className="site-scrollbar flex-1 overflow-y-auto bg-neutral-100 p-4 dark:bg-background">
+        <div className="site-scrollbar flex-1 overflow-y-auto bg-neutral-50 p-4 dark:bg-background">
           <MessageSkeletonList />
         </div>
       ) : messagesError || !messages ? (
@@ -192,7 +192,7 @@ export function ChatArea() {
         </div>
       ) : messages.length > 0 ? (
         <div
-          className="site-scrollbar flex flex-1 flex-col gap-1 overflow-y-auto bg-neutral-100 py-5 pl-4 pr-1 dark:bg-background"
+          className="site-scrollbar flex flex-1 flex-col gap-1 overflow-y-auto bg-neutral-50 py-5 pl-4 pr-1 dark:bg-background"
           ref={scrollContainerRef}
         >
           {isFetchingPreviousPage && <MessageSkeletonList />}

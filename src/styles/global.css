@@ -6,6 +6,7 @@
 
 html {
   overflow-y: scroll !important;
+  color-scheme: light;
 }
 
 html.dark {
@@ -19,6 +20,7 @@ html.dark {
 
 @layer base {
   :root {
+    --sidebar-width: 19rem;
     --background: 0 0% 100%;
     --background-input: 0 0% 100%;
     --foreground: 20 14.3% 4.1%;
@@ -98,7 +100,7 @@ html.dark {
 @layer components {
   .site-scrollbar {
     scrollbar-width: thin;
-    scrollbar-color: hsl(var(--accent-foreground) / 0.6) transparent;
+    scrollbar-color: hsl(var(--accent-foreground) / 0.3);
     -webkit-overflow-scrolling: touch;
   }
 
@@ -123,11 +125,6 @@ html.dark {
   .nested-dashboard-container {
     @apply dashboard-container space-y-6 py-10;
   }
-}
-
-[data-scroll-locked][data-scroll-locked] {
-  overflow: auto !important;
-  width: 100%;
 }
 
 @keyframes loading-line {
@@ -170,6 +167,11 @@ html.dark {
 html body[data-scroll-locked] {
   --removed-body-scroll-bar-size: 0 !important;
   margin-right: 0 !important;
+}
+
+[data-scroll-locked][data-scroll-locked] {
+  overflow: auto !important;
+  width: 100%;
 }
 
 /* Mobile optimizations */
