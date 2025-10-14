@@ -129,10 +129,9 @@ export const useAuthStore = create<TAuthState>()(
       name: 'auth',
       storage: zustantPersistorLocalforage,
       partialize: (state) => ({
-        user: state.user,
         accessToken: state.accessToken,
-        session: state.session,
       }),
+      version: 2,
     }
   )
 );
