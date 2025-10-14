@@ -18,7 +18,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -75,19 +74,16 @@ export function CreateProjectForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleCreateProject)}
-        className="space-y-4"
+        className="space-y-5"
       >
-        <div className="grid gap-2">
+        <div className="grid gap-5">
           <FormField
             control={form.control}
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-xs uppercase text-gray-500">
-                  Project Name
-                </FormLabel>
                 <FormControl>
-                  <Input placeholder="My Awesome Project" {...field} />
+                  <Input placeholder="Project Name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -99,11 +95,8 @@ export function CreateProjectForm() {
             name="siteUrl"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-xs uppercase text-gray-500">
-                  Site URL
-                </FormLabel>
                 <FormControl>
-                  <Input placeholder="https://example.com" {...field} />
+                  <Input placeholder="Site URL" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
