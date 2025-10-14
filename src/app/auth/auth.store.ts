@@ -87,6 +87,7 @@ export const useAuthStore = create<TAuthState>((set, get) => ({
         const { data } = await handleApi(getSessionApi, {}, { toast: true });
 
         if (data?.user) {
+          localStorage.setItem('t2_ac', data.access_token);
           set({
             user: data.user as TAuthUser,
             session: {
