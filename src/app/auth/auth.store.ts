@@ -80,7 +80,6 @@ export const useAuthStore = create<TAuthState>()(
 
       // Auth flow methods
       setAuth: (user, accessToken) => {
-        console.log('setAuth', user, accessToken);
         set({ user, accessToken });
       },
 
