@@ -4,7 +4,7 @@ import { fetchProject, fetchProjects } from './project.fetch';
 import { projectQueryKeys } from './projects.keys';
 
 export async function preFetchProjects() {
-  return await queryClient.prefetchQuery({
+  return await queryClient.fetchQuery({
     queryKey: projectQueryKeys.projectList(),
     queryFn: () => fetchProjects(),
   });
