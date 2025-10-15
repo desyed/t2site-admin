@@ -1,16 +1,19 @@
-import type * as z from 'zod';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
+import { z } from 'zod';
 
 import type { CreateProjectInput } from '@/app/project/project.type';
 
 import { useCreateProjectMutation } from '@/app/project/project.hooks';
-import { createProjectSchema } from '@/app/project/project.schema';
+import {
+  projectNameSchema,
+  createProjectSchema,
+} from '@/app/project/project.schema';
 import { projectQueryKeys } from '@/app/project/projects.keys';
 import { Button } from '@/components/site-button';
 import {
@@ -26,6 +29,9 @@ import { handleApiErrorException } from '@/lib/utils';
 export type CreateProjectFormData = z.infer<typeof createProjectSchema>;
 
 export function CreateProjectForm() {
+  const [showSiteUrlField, setShowSiteUrlField] = useState(false);
+  const [projectNameValidated, setProjectNameValidated] = useState(false);
+
   const navigate = useNavigate();
 
   const form = useForm<CreateProjectInput>({
@@ -36,11 +42,69 @@ export function CreateProjectForm() {
     },
   });
 
+  const handleProjectNameValidation = async () => {
+    const projectNameValue = form.getValues('name');
+
+    try {
+      projectNameSchema.parse({ name: projectNameValue });
+
+      setProjectNameValidated(true);
+      setShowSiteUrlField(true);
+
+      form.clearErrors('name');
+
+      setTimeout(() => {
+        const siteUrlField = document.querySelector(
+          'input[name="siteUrl"]'
+        ) as HTMLInputElement;
+        siteUrlField?.focus();
+      }, 300);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const projectNameError = error.errors.find((err) =>
+          err.path.includes('name')
+        );
+        if (projectNameError) {
+          form.setError('name', {
+            type: 'manual',
+            message: projectNameError.message,
+          });
+        }
+      }
+    }
+  };
+
   const queryClient = useQueryClient();
 
   const { mutate: createProject, isPending } = useCreateProjectMutation();
 
-  const handleCreateProject = (data: CreateProjectInput) => {
+  const handleCreateProject = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const data = form.getValues();
+
+    if (!projectNameValidated) {
+      handleProjectNameValidation();
+      return;
+    }
+
+    try {
+      createProjectSchema.parse(data);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        error.errors.forEach((err) => {
+          const fieldName = err.path[0] as keyof typeof data;
+          form.setError(fieldName, {
+            type: 'manual',
+            message: err.message,
+          });
+        });
+      }
+      return;
+    }
+
+    form.clearErrors();
+
     createProject(data, {
       onSuccess: async (result) => {
         toast.success('Project created successfully');
@@ -72,11 +136,8 @@ export function CreateProjectForm() {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(handleCreateProject)}
-        className="space-y-5"
-      >
-        <div className="grid gap-5">
+      <form onSubmit={handleCreateProject} className="space-y-5">
+        <div>
           <FormField
             control={form.control}
             name="name"
@@ -90,18 +151,26 @@ export function CreateProjectForm() {
             )}
           />
 
-          <FormField
-            control={form.control}
-            name="siteUrl"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input placeholder="Site URL" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div
+            className={`transition-all duration-300 ease-in-out ${
+              showSiteUrlField
+                ? 'mt-5 max-h-32 translate-y-0 opacity-100'
+                : 'max-h-0 -translate-y-2 overflow-hidden opacity-0'
+            }`}
+          >
+            <FormField
+              control={form.control}
+              name="siteUrl"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input placeholder="Site URL" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
         </div>
 
         <Button
@@ -111,7 +180,7 @@ export function CreateProjectForm() {
           loadingText="Creating Project"
           loading={isPending}
         >
-          Create Project
+          {showSiteUrlField ? 'Create Project' : 'Continue'}
         </Button>
       </form>
     </Form>

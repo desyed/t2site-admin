@@ -1,4 +1,6 @@
 import { LogOut } from 'lucide-react';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
 
 import { useAuthStore } from '@/app/auth/auth.store';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
@@ -12,9 +14,19 @@ import { useAuth } from '@/contexts/auth-provider';
 import { cn } from '@/lib/utils';
 
 const LogoutAvatar = () => {
+  const { isAuthenticated } = useAuth();
+
+  const navigate = useNavigate();
+
   const { user } = useAuthStore();
 
   const { logout } = useAuth();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
+    }
+  }, [isAuthenticated, navigate]);
 
   return (
     <DropdownMenu>

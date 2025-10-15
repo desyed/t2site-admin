@@ -21,6 +21,8 @@ import {
 } from '@/components/ui/card';
 import { handleApiErrorException } from '@/lib/utils';
 
+import LogoutAvatar from './logout-avatar';
+
 interface ErrorScreenProps {
   error?: unknown;
   onRetry?: () => void;
@@ -145,74 +147,82 @@ export default function ErrorScreen({
   };
 
   return (
-    <div
-      className={`fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm ${className}`}
-    >
-      <Card
-        className={`w-[90%] max-w-md border-2 ${errorDetails.borderColor} ${errorDetails.bgColor}`}
-      >
-        <CardHeader className="text-center">
-          <div className="mb-6 flex justify-center">
-            <div className="rounded-full bg-background/80 p-4 shadow-lg">
-              {errorDetails.icon}
-            </div>
-          </div>
-          <CardTitle className={`text-2xl font-bold ${errorDetails.textColor}`}>
-            {errorDetails.title}
-          </CardTitle>
-          <CardDescription
-            className={`text-base ${errorDetails.textColor} opacity-80`}
-          >
-            {errorDetails.description}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          {/* Show technical error details in development */}
-          {import.meta.env.DEV && error ? (
-            <div className="rounded-lg border bg-background/60 p-4 text-xs">
-              <div className="mb-2 font-semibold text-foreground">
-                Debug Info:
-              </div>
-              <div className="space-y-1 text-muted-foreground">
-                <div>
-                  Status: <span className="font-mono">{status || 'N/A'}</span>
-                </div>
-                <div>
-                  Code: <span className="font-mono">{code || 'N/A'}</span>
-                </div>
-                <div>
-                  Message: <span className="font-mono">{message}</span>
-                </div>
-              </div>
-            </div>
-          ) : null}
+    <div className="relative min-h-screen w-screen">
+      <div className="absolute right-5 top-5 z-[100]">
+        <LogoutAvatar />
+      </div>
 
-          <div className="flex gap-3">
-            <Button
-              onClick={handleRetry}
-              disabled={loading}
-              className="h-11 flex-1 font-medium"
-              size="lg"
+      <div
+        className={`fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm ${className}`}
+      >
+        <Card
+          className={`w-[90%] max-w-md border-2 ${errorDetails.borderColor} ${errorDetails.bgColor}`}
+        >
+          <CardHeader className="text-center">
+            <div className="mb-6 flex justify-center">
+              <div className="rounded-full bg-background/80 p-4 shadow-lg">
+                {errorDetails.icon}
+              </div>
+            </div>
+            <CardTitle
+              className={`text-2xl font-bold ${errorDetails.textColor}`}
             >
-              {loading ? (
-                <RefreshCw className="mr-2 size-4 animate-spin" />
-              ) : (
-                <RefreshCw className="mr-2 size-4" />
-              )}
-              Try Again
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => (window.location.href = '/')}
-              className="h-11 flex-1 font-medium"
-              size="lg"
+              {errorDetails.title}
+            </CardTitle>
+            <CardDescription
+              className={`text-base ${errorDetails.textColor} opacity-80`}
             >
-              <Home className="mr-2 size-4" />
-              Go Home
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+              {errorDetails.description}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {/* Show technical error details in development */}
+            {import.meta.env.DEV && error ? (
+              <div className="rounded-lg border bg-background/60 p-4 text-xs">
+                <div className="mb-2 font-semibold text-foreground">
+                  Debug Info:
+                </div>
+                <div className="space-y-1 text-muted-foreground">
+                  <div>
+                    Status: <span className="font-mono">{status || 'N/A'}</span>
+                  </div>
+                  <div>
+                    Code: <span className="font-mono">{code || 'N/A'}</span>
+                  </div>
+                  <div>
+                    Message: <span className="font-mono">{message}</span>
+                  </div>
+                </div>
+              </div>
+            ) : null}
+
+            <div className="flex gap-3">
+              <Button
+                onClick={handleRetry}
+                disabled={loading}
+                className="h-11 flex-1 font-medium"
+                size="lg"
+              >
+                {loading ? (
+                  <RefreshCw className="mr-2 size-4 animate-spin" />
+                ) : (
+                  <RefreshCw className="mr-2 size-4" />
+                )}
+                Try Again
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => (window.location.href = '/')}
+                className="h-11 flex-1 font-medium"
+                size="lg"
+              >
+                <Home className="mr-2 size-4" />
+                Go Home
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
