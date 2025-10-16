@@ -41,7 +41,7 @@ html.dark {
     --destructive-foreground: 60 9.1% 97.8%;
     --border: 20 5.9% 90%;
     --input: 0 0% 81.25%;
-    --ring: 47.9 95.8% 53.1%;
+    --ring: 0 0% 0% / 40%;
     --radius: 0.5rem;
     --chart-1: oklch(0.646 0.222 41.116);
     --chart-2: oklch(63.219% 0.13917 237.537);
@@ -154,6 +154,7 @@ html.dark {
       'calt' 1;
   }
 }
+
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
