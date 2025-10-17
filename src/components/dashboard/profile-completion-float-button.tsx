@@ -1,11 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import { Link, useParams } from 'react-router';
 
 import { Button } from '@/components/ui/button';
 
-export function ProfileCompletionFloat() {
+export function ProfileCompletionFloatButton() {
   const [isVisible] = useState(true);
+
+  const { projectId } = useParams();
 
   if (!isVisible) return null;
 
@@ -19,10 +22,10 @@ export function ProfileCompletionFloat() {
           console.log('Redirecting to profile completion...');
         }}
       >
-        <div className="text-xs">
+        <Link to={`/${projectId}/project-settings`} className="text-xs">
           <div className="font-medium">Getting Started</div>
           <div className="text-xs opacity-70">33% complete</div>
-        </div>
+        </Link>
       </Button>
     </div>
   );

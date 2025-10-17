@@ -16,6 +16,7 @@ import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 import type { ChartConfig } from '@/components/ui/chart';
 
 import { PageHeader } from '@/components/dashboard/page-header';
+import ProfileCompletionFloatDialog from '@/components/dashboard/profile-completion-float-dialog';
 import { Button } from '@/components/ui/button';
 import {
   ChartContainer,
@@ -94,7 +95,7 @@ export function AnalyticsDashboard() {
   const [value, setValue] = useState('');
 
   return (
-    <div>
+    <div className="relative">
       <PageHeader title="Analytics" />
 
       <div className="dashboard-container">
@@ -381,6 +382,8 @@ export function AnalyticsDashboard() {
           />
         </div>
       </div>
+
+      <ProfileCompletionFloatDialog />
     </div>
   );
 }

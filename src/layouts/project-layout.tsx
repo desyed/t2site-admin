@@ -3,7 +3,7 @@ import { Outlet, useNavigate, useParams } from 'react-router';
 
 import { useCurrentProjectQuery } from '@/app/project/project.hooks';
 import { DashboardContentAreaSkeleton } from '@/components/dashboard/dashboard-content-area-skeleton';
-import { ProfileCompletionFloat } from '@/components/dashboard/profile-completion-float';
+import { ProfileCompletionFloatButton } from '@/components/dashboard/profile-completion-float-button';
 import { ProjectNavigationBar } from '@/components/dashboard/project-navigation-bar';
 import { Sidebar } from '@/components/dashboard/sidebar';
 import { SidebarSkeleton } from '@/components/dashboard/sidebar-skeleton';
@@ -86,7 +86,7 @@ export default function ProjectLayout() {
           )}
         </div>
 
-        <ProfileCompletionFloat />
+        <ProfileCompletionFloatButton />
       </main>
     </RealtimeProvider>
   );
