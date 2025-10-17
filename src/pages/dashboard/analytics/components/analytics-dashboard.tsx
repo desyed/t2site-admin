@@ -89,11 +89,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-interface AnalyticsDashboardProps {
-  projectId: string;
-}
-
-export function AnalyticsDashboard({ projectId }: AnalyticsDashboardProps) {
+export function AnalyticsDashboard() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
 
