@@ -27,8 +27,8 @@ const ProfileCompletionFloatDialog = () => {
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogContent className="flex max-w-2xl items-center justify-between p-8">
-        <AlertDialogHeader className="flex flex-row items-center gap-4">
+      <AlertDialogContent className="flex max-w-2xl flex-col items-center justify-center gap-8 p-8 sm:flex-row sm:justify-between">
+        <AlertDialogHeader className="flex flex-col items-center gap-4 sm:flex-row">
           <div>
             <AlertCircleIcon className="size-8" />
           </div>
