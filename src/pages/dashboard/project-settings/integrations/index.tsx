@@ -1,12 +1,22 @@
+/* eslint-disable no-console */
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Check, Copy } from 'lucide-react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { PageHeader } from '@/components/dashboard/page-header';
 import { Button } from '@/components/site-button';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -44,6 +54,8 @@ const emailSchema = z.object({
 });
 
 export const Component = () => {
+  const [copiedCode, setCopiedCode] = useState(false);
+
   const messengerForm = useForm({
     resolver: zodResolver(messengerSchema),
     defaultValues: {
@@ -92,13 +104,33 @@ export const Component = () => {
     console.log('Email Config:', data);
   };
 
+  const copyCodeSnippet = () => {
+    const code = `<script>
+  (function(d,s,id){
+    var js,fjs=d.getElementsByTagName(s)[0];
+    if(d.getElementById(id))return;
+    js=d.createElement(s);js.id=id;
+    js.src="https://widget.t2live.com/widget.js";
+    js.setAttribute('data-project-id','project-id-here');
+    js.setAttribute('data-theme','auto');
+    fjs.parentNode.insertBefore(js,fjs);
+  }(document,'script','t2live-widget'));
+</script>`;
+    navigator.clipboard.writeText(code);
+    setCopiedCode(true);
+    setTimeout(() => setCopiedCode(false), 2000);
+  };
+
   return (
     <div>
       <PageHeader title="Integrations" />
       <div className="dashboard-container">
         <div className="flex w-full max-w-xl flex-col gap-6">
-          <Tabs defaultValue="messenger">
+          <Tabs defaultValue="live-chat">
             <TabsList className="mb-4">
+              <TabsTrigger value="live-chat" className="px-8">
+                Live Chat
+              </TabsTrigger>
               <TabsTrigger value="messenger" className="px-8">
                 Messenger
               </TabsTrigger>
@@ -109,6 +141,60 @@ export const Component = () => {
                 Email
               </TabsTrigger>
             </TabsList>
+
+            {/* LIVE CHAT */}
+            <TabsContent value="live-chat">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Website Integration Code</CardTitle>
+                  <CardDescription>
+                    Add this code snippet to your website to enable chat
+                    functionality
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div>
+                    <Label>Code Snippet</Label>
+                    <div className="relative mt-2">
+                      <pre className="overflow-x-auto rounded-lg bg-gray-50 p-4 text-sm text-gray-800">
+                        <code>{`<script src="http://localhost:8000/t2s-prj_8214353e-
+c361-4490-9bb7-9ddbc3bd1b6e/scripts/main.js"
+async defer></script>`}</code>
+                      </pre>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="absolute right-2 top-2 bg-white hover:bg-gray-200"
+                        onClick={copyCodeSnippet}
+                      >
+                        {copiedCode ? (
+                          <Check className="size-4" />
+                        ) : (
+                          <Copy className="size-4" />
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label className="font-semibold">
+                      Installation Instructions
+                    </Label>
+                    <div className="rounded-lg p-4 text-sm text-gray-500">
+                      <p className="mb-2">1. Copy the code snippet below</p>
+                      <p className="mb-2">
+                        2. Paste it before the closing &lt;/body&gt; tag on your
+                        website
+                      </p>
+                      <p>
+                        3. The chat widget will automatically appear on your
+                        site
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
 
             {/* MESSENGER */}
             <TabsContent value="messenger">
