@@ -146,7 +146,6 @@ export const Component = () => {
             <TabsContent value="live-chat">
               <Card>
                 <CardHeader>
-                  <CardTitle>Website Integration Code</CardTitle>
                   <CardDescription>
                     Add this code snippet to your website to enable chat
                     functionality
