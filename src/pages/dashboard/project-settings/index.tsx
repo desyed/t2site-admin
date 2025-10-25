@@ -142,7 +142,9 @@ export const Component = () => {
         />
 
         <div className="dashboard-container">
-          <div className="w-full max-w-xl">{renderDetailedContent()}</div>
+          <div className="mx-auto w-full max-w-xl">
+            {renderDetailedContent()}
+          </div>
         </div>
       </div>
     );
@@ -153,7 +155,7 @@ export const Component = () => {
       <PageHeader title={'General Settings'} />
 
       <div className="dashboard-container">
-        <div className="w-full max-w-xl space-y-3">
+        <div className="mx-auto w-full max-w-xl space-y-3">
           {generalSettingsData.map((item) => (
             <Card
               key={item.id}

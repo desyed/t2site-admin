@@ -132,7 +132,7 @@ export const Component = () => {
     <div>
       <PageHeader title="Integrations" />
       <div className="dashboard-container">
-        <div className="flex w-full max-w-xl flex-col gap-6">
+        <div className="mx-auto flex w-full max-w-xl flex-col gap-6">
           <Tabs
             defaultValue="live-chat"
             value={tabValue}
