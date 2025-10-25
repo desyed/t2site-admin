@@ -18,6 +18,13 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { createDashboardLoader } from '@/middlewares/auth-middleware';
 
@@ -54,6 +61,7 @@ const emailSchema = z.object({
 
 export const Component = () => {
   const [copiedCode, setCopiedCode] = useState(false);
+  const [tabValue, setTabValue] = useState('live-chat'); // Track active tab manually
 
   const messengerForm = useForm({
     resolver: zodResolver(messengerSchema),
@@ -125,21 +133,43 @@ export const Component = () => {
       <PageHeader title="Integrations" />
       <div className="dashboard-container">
         <div className="flex w-full max-w-xl flex-col gap-6">
-          <Tabs defaultValue="live-chat">
-            <TabsList className="mb-4">
-              <TabsTrigger value="live-chat" className="px-8">
-                Live Chat
-              </TabsTrigger>
-              <TabsTrigger value="messenger" className="px-8">
-                Messenger
-              </TabsTrigger>
-              <TabsTrigger value="whatsapp" className="px-8">
-                WhatsApp
-              </TabsTrigger>
-              <TabsTrigger value="email" className="px-8">
-                Email
-              </TabsTrigger>
-            </TabsList>
+          <Tabs
+            defaultValue="live-chat"
+            value={tabValue}
+            onValueChange={setTabValue}
+          >
+            {/* Desktop Tabs */}
+            <div className="hidden md:block">
+              <TabsList className="mb-4">
+                <TabsTrigger value="live-chat" className="px-8">
+                  Live Chat
+                </TabsTrigger>
+                <TabsTrigger value="messenger" className="px-8">
+                  Messenger
+                </TabsTrigger>
+                <TabsTrigger value="whatsapp" className="px-8">
+                  WhatsApp
+                </TabsTrigger>
+                <TabsTrigger value="email" className="px-8">
+                  Email
+                </TabsTrigger>
+              </TabsList>
+            </div>
+
+            {/* 🆕 Mobile Select Dropdown */}
+            <div className="mb-4 block md:hidden">
+              <Select value={tabValue} onValueChange={setTabValue}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select Integration" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="live-chat">Live Chat</SelectItem>
+                  <SelectItem value="messenger">Messenger</SelectItem>
+                  <SelectItem value="whatsapp">WhatsApp</SelectItem>
+                  <SelectItem value="email">Email</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
             {/* LIVE CHAT */}
             <TabsContent value="live-chat">

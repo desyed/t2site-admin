@@ -15,13 +15,7 @@ import {
 } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 
-interface CookieConsentDashboardProps {
-  projectId: string;
-}
-
-export function CookieConsentDashboard({
-  projectId,
-}: CookieConsentDashboardProps) {
+export function CookieConsentDashboard() {
   const [searchParams] = useSearchParams();
   const category = searchParams.get('category') || 'banner';
   const [navigation, setNavigation] = useState({
