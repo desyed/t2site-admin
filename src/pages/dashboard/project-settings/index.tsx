@@ -75,33 +75,58 @@ export const Component = () => {
           <CardContent className="space-y-4 p-0">
             <div className="grid gap-2">
               <Label>Primary Background Color</Label>
-
-              <Input
-                type="color"
-                value={primaryBgColor}
-                id="primary-bg-color"
-                onChange={(e) => setPrimaryBgColor(e.target.value)}
-              />
+              <div className="flex items-center gap-2">
+                <Input
+                  type="color"
+                  value={primaryBgColor}
+                  id="primary-bg-color"
+                  onChange={(e) => setPrimaryBgColor(e.target.value)}
+                  className="w-12 p-1.5"
+                />
+                <Input
+                  type="text"
+                  value={primaryBgColor}
+                  onChange={(e) => setPrimaryBgColor(e.target.value)}
+                  placeholder="#FFFFFF"
+                />
+              </div>
             </div>
             <div className="grid gap-2">
               <Label>Primary Foreground Color</Label>
-
-              <Input
-                type="color"
-                value={primaryFgColor}
-                id="primary-fg-color"
-                onChange={(e) => setPrimaryFgColor(e.target.value)}
-              />
+              <div className="flex items-center gap-2">
+                <Input
+                  type="color"
+                  value={primaryFgColor}
+                  id="primary-fg-color"
+                  onChange={(e) => setPrimaryFgColor(e.target.value)}
+                  className="w-12 p-1.5"
+                />
+                <Input
+                  type="text"
+                  value={primaryFgColor}
+                  onChange={(e) => setPrimaryFgColor(e.target.value)}
+                  placeholder="#FFA500"
+                />
+              </div>
             </div>
             <div className="grid gap-2">
               <Label>Logo Badge Background Color</Label>
-              <Input
-                type="color"
-                value={logoBadgeBgColor}
-                id="logo-badge-bg-color"
-                placeholder="#000000"
-                onChange={(e) => setLogoBadgeBgColor(e.target.value)}
-              />
+              <div className="flex items-center gap-2">
+                <Input
+                  type="color"
+                  value={logoBadgeBgColor}
+                  id="logo-badge-bg-color"
+                  placeholder="#000000"
+                  onChange={(e) => setLogoBadgeBgColor(e.target.value)}
+                  className="w-12 p-1.5"
+                />
+                <Input
+                  type="text"
+                  value={logoBadgeBgColor}
+                  onChange={(e) => setLogoBadgeBgColor(e.target.value)}
+                  placeholder="#471515"
+                />
+              </div>
             </div>
           </CardContent>
         </Card>
