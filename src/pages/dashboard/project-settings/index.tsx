@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import { PageHeader } from '@/components/dashboard/page-header';
 import { Button } from '@/components/site-button';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { createDashboardLoader } from '@/middlewares/auth-middleware';
@@ -18,17 +18,20 @@ const generalSettingsData = [
   {
     id: 'project-information',
     name: 'Project Information',
-    description: 'View and edit project details',
+    description:
+      'Easily review and update your project details to keep everything accurate.',
   },
   {
     id: 'chat-widget-configurations',
     name: 'Chat Widget Configurations',
-    description: 'Configure the chat widget settings',
+    description:
+      'Customize your chat widget so it looks great and works the way you want.',
   },
   {
     id: 'cookie-consent-settings',
     name: 'Cookie Consent Settings',
-    description: 'Manage cookie consent preferences',
+    description:
+      'Manage how your visitors see and control cookie permissions on your site.',
   },
 ];
 
@@ -42,9 +45,9 @@ export const Component = () => {
   const [logoBadgeBgColor, setLogoBadgeBgColor] = useState('#555555');
 
   const renderProjectInformation = () => (
-    <div className="space-y-6">
-      <Card className="pt-6">
-        <CardContent className="space-y-4">
+    <div className="space-y-12">
+      <Card className="border-none shadow-none">
+        <CardContent className="space-y-4 p-0">
           <div className="grid gap-2">
             <Label>Project Name</Label>
             <Input id="project-name" placeholder="Your Project Name" />
@@ -57,20 +60,19 @@ export const Component = () => {
             <Label>Description</Label>
             <Input id="description" placeholder="Project Description" />
           </div>
-        </CardContent>
-        <CardFooter>
+
           <Button>Save</Button>
-        </CardFooter>
+        </CardContent>
       </Card>
     </div>
   );
 
   const renderChatWidgetConfigurations = () => (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        <h3 className="text-xs uppercase text-gray-500">Colors</h3>
-        <Card className="pt-6">
-          <CardContent className="space-y-4">
+    <div className="space-y-12">
+      <div className="space-y-4">
+        <h3 className="text-[12px] uppercase text-gray-500">Colors</h3>
+        <Card className="border-none shadow-none">
+          <CardContent className="space-y-4 p-0">
             <div className="grid gap-2">
               <Label>Primary Background Color</Label>
 
@@ -102,16 +104,13 @@ export const Component = () => {
               />
             </div>
           </CardContent>
-          <CardFooter>
-            <Button>Save</Button>
-          </CardFooter>
         </Card>
       </div>
 
-      <div className="space-y-2">
-        <h3 className="text-xs uppercase text-gray-500">Images</h3>
-        <Card className="pt-6">
-          <CardContent className="space-y-4">
+      <div className="space-y-4">
+        <h3 className="text-[12px] uppercase text-gray-500">Images</h3>
+        <Card className="border-none shadow-none">
+          <CardContent className="space-y-4 p-0">
             <div className="grid gap-2">
               <Label>Logo Image</Label>
               <Input id="logo" type="file" />
@@ -125,16 +124,13 @@ export const Component = () => {
               <Input id="promotional" type="file" />
             </div>
           </CardContent>
-          <CardFooter>
-            <Button>Save</Button>
-          </CardFooter>
         </Card>
       </div>
 
-      <div className="space-y-2">
-        <h3 className="text-xs uppercase text-gray-500">Contents</h3>
-        <Card className="pt-6">
-          <CardContent className="space-y-4">
+      <div className="space-y-4">
+        <h3 className="text-[12px] uppercase text-gray-500">Contents</h3>
+        <Card className="border-none shadow-none">
+          <CardContent className="space-y-4 p-0">
             <div className="grid gap-2">
               <Label>Welcome Text</Label>
               <Input id="welcome-text" />
@@ -148,18 +144,15 @@ export const Component = () => {
               <Input id="promotional-link" />
             </div>
           </CardContent>
-          <CardFooter>
-            <Button>Save</Button>
-          </CardFooter>
         </Card>
       </div>
     </div>
   );
 
   const renderCookieConsentSettings = () => (
-    <div className="space-y-6">
-      <Card className="pt-6">
-        <CardContent className="space-y-4">
+    <div className="space-y-12">
+      <Card className="border-none shadow-none">
+        <CardContent className="space-y-4 p-0">
           <div className="grid gap-2">
             <Label>Cookie Banner Message</Label>
             <Input
@@ -174,10 +167,9 @@ export const Component = () => {
               placeholder="https://www.yourwebsite.com/cookie-policy"
             />
           </div>
-        </CardContent>
-        <CardFooter>
+
           <Button>Save</Button>
-        </CardFooter>
+        </CardContent>
       </Card>
     </div>
   );
@@ -243,11 +235,11 @@ export const Component = () => {
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium text-gray-900">{item.name}</h3>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-gray-400">
                         {item.description}
                       </p>
                     </div>
-                    <ArrowRight className="size-4 text-gray-400" />
+                    <ArrowRight className="size-4 text-gray-600" />
                   </div>
                 </button>
               </CardContent>

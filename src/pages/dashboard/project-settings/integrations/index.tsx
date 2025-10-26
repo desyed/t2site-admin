@@ -20,10 +20,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
   Select,
-  SelectTrigger,
-  SelectValue,
   SelectContent,
   SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { createDashboardLoader } from '@/middlewares/auth-middleware';
@@ -132,7 +132,7 @@ export const Component = () => {
     <div>
       <PageHeader title="Integrations" />
       <div className="dashboard-container">
-        <div className="mx-auto flex w-full max-w-xl flex-col gap-6">
+        <div className="flex w-full max-w-3xl flex-col gap-6">
           <Tabs
             defaultValue="live-chat"
             value={tabValue}
@@ -185,9 +185,8 @@ export const Component = () => {
                     <Label>Code Snippet</Label>
                     <div className="relative mt-2">
                       <pre className="overflow-x-auto rounded-lg bg-gray-50 p-4 text-sm text-gray-800">
-                        <code>{`<script src="http://localhost:8000/t2s-prj_8214353e-
-c361-4490-9bb7-9ddbc3bd1b6e/scripts/main.js"
-async defer></script>`}</code>
+                        <code>{`<script src="http://localhost:8000/t2s-prj_8214353e-c361-4490-9bb7-9ddbc3bd1b6e
+/scripts/main.js" async defer></script>`}</code>
                       </pre>
                       <Button
                         variant="outline"

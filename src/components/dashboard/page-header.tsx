@@ -20,9 +20,9 @@ export function PageHeader({
   const [toggleMobileNav] = useOutletContext<[() => void]>();
 
   return (
-    <div className="border-b max-md:bg-black max-md:text-white">
+    <div className="max-md:bg-black max-md:text-white max-sm:border-b">
       <div className="mx-auto w-full px-3 lg:px-6">
-        <div className="flex h-12 items-center justify-between gap-4 sm:h-16">
+        <div className="flex h-12 items-center justify-between gap-4 sm:h-16 sm:border-b">
           <div className="flex min-w-0 items-center gap-4">
             {/* Mobile nav toggle */}
 
