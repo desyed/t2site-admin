@@ -63,7 +63,7 @@ export default function ProjectLayout() {
       </div>
       <main
         className={cn(
-          `relative h-full w-full overflow-y-auto bg-sidebar pl-[var(--sidebar-width)] md:py-2`,
+          `relative h-full min-h-screen w-full overflow-y-auto bg-sidebar pl-[var(--sidebar-width)] md:py-2 md:pr-2`,
           {
             'max-md:blur-sm': isMobileNavOpened,
             'max-md:pl-0': !isMobileNavOpened,
@@ -78,7 +78,7 @@ export default function ProjectLayout() {
           })}
           onClick={closeMobileNav}
         />
-        <div className="size-full min-h-fit bg-white pb-10 md:rounded-l-xl">
+        <div className="size-full min-h-fit bg-white pb-10 md:rounded-xl">
           {isProjectLoading ? (
             <DashboardContentAreaSkeleton />
           ) : (

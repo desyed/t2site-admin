@@ -18,7 +18,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
@@ -74,7 +73,7 @@ export function ProjectNavigationBar({ projectId }: { projectId: string }) {
     <div className="flex h-full w-16 flex-col items-center border-r border-gray-200 p-2">
       {/* Logo */}
       <div className="flex select-none items-center justify-center border-b border-gray-200 py-1">
-        <div className="px-1 py-4 text-xl font-bold text-black">T2</div>
+        <div className="px-1 py-4 text-xl font-bold text-[#bdbaba]">T2</div>
       </div>
 
       <div className="flex flex-col gap-3 overflow-y-auto">
@@ -82,10 +81,8 @@ export function ProjectNavigationBar({ projectId }: { projectId: string }) {
           <Link
             key={project.id}
             to={`/${project.id}`}
-            className={`flex size-11 flex-col items-center justify-center rounded-lg p-1.5 text-xs font-medium text-icon transition-colors ${
-              projectId === project.id
-                ? `border-current bg-white`
-                : 'hover:bg-gray-300'
+            className={`flex size-11 flex-col items-center justify-center rounded-full p-1.5 text-xs font-medium text-icon transition-colors ${
+              projectId === project.id ? `bg-[#dcdcdc]` : 'hover:bg-gray-300'
             }`}
             title={project.name}
           >
@@ -117,7 +114,7 @@ export function ProjectNavigationBar({ projectId }: { projectId: string }) {
       <div className="flex-1" />
 
       {/* Bottom Actions */}
-      <div className="flex flex-col items-center gap-3 border-t border-gray-200 py-3">
+      <div className="flex flex-col items-center gap-3 border-t border-gray-200 py-2">
         <Button
           variant="ghost"
           size="sm"
@@ -191,11 +188,11 @@ export function ProjectNavigationBar({ projectId }: { projectId: string }) {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <div className="flex size-11 cursor-pointer flex-col items-center justify-center">
-              <Avatar
-                className={cn('size-8 rounded-full border border-gray-400')}
-              >
+              <Avatar className={cn('size-7 rounded-full')}>
                 <AvatarImage src={user?.avatar ?? ''} alt={user?.name} />
-                <AvatarFallback>{user?.name ?? ''}</AvatarFallback>
+                <AvatarFallback className="bg-black text-xs text-white">
+                  {user?.name ?? ''}
+                </AvatarFallback>
               </Avatar>
             </div>
           </DropdownMenuTrigger>

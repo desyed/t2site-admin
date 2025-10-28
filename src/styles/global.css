@@ -13,6 +13,12 @@ html.dark {
   color-scheme: dark light;
 }
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
 .no-transitions * {
   transition: none !important;
   animation: none !important;

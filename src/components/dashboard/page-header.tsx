@@ -22,7 +22,7 @@ export function PageHeader({
   return (
     <div className="max-md:bg-black max-md:text-white max-sm:border-b">
       <div className="mx-auto w-full px-3 lg:px-6">
-        <div className="flex h-12 items-center justify-between gap-4 sm:h-16 sm:border-b">
+        <div className="flex h-12 items-center justify-between gap-4 sm:h-16">
           <div className="flex min-w-0 items-center gap-4">
             {/* Mobile nav toggle */}
 
@@ -34,42 +34,26 @@ export function PageHeader({
               {/* Default icon if no custom one passed */}
               {icon ?? (
                 <svg
-                  height="18"
-                  width="18"
-                  viewBox="0 0 18 18"
+                  // width="800px"
+                  // height="800px"
+                  viewBox="0 0 14 14"
+                  fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="size-4"
+                  className="relative -top-1"
                 >
-                  <g fill="currentColor">
-                    <path
-                      d="M4,2.75H14.25c1.105,0,2,.895,2,2V13.25c0,1.105-.895,2-2,2H4"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1.5"
-                    />
-                    <rect
-                      height="12.5"
-                      width="4.5"
-                      fill="none"
-                      rx="2"
-                      ry="2"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1.5"
-                      x="1.75"
-                      y="2.75"
-                    />
-                  </g>
+                  <path
+                    d="M5 8H13.75M5 12H19M10.25 16L19 16"
+                    stroke="#FFFFFF"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               )}
             </Button>
 
             {/* Title */}
             <div className="flex items-center gap-2">
-              <h1 className="text-lg font-semibold leading-7">{title}</h1>
+              <h1 className="text-xs uppercase">{title}</h1>
             </div>
           </div>
 

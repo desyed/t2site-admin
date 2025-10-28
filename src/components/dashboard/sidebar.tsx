@@ -47,8 +47,7 @@ export function Sidebar({ projectId }: SidebarProps) {
 
   const handleProjectSettingsMode = (e: React.MouseEvent) => {
     e.preventDefault();
-    // Navigate to General (first option) by default
-    router(`/${projectId}/project-settings?category=general`);
+    router(`/${projectId}/project-settings`);
   };
 
   const handleLiveDeskMode = (e: React.MouseEvent) => {
@@ -60,7 +59,7 @@ export function Sidebar({ projectId }: SidebarProps) {
   const handleCookieConsentMode = (e: React.MouseEvent) => {
     e.preventDefault();
     // Navigate to Banner Settings (first option) by default
-    router(`/${projectId}/cookie-consent?category=banner`);
+    router(`/${projectId}/cookie-consent`);
   };
 
   const projectSettingsCategories = [
@@ -218,10 +217,18 @@ export function Sidebar({ projectId }: SidebarProps) {
   }
 
   return (
-    <div className="flex h-full w-[232px] flex-col rounded-xl border-r border-gray-200 bg-sidebar-primary">
+    <div className="relative flex h-full w-[232px] flex-col overflow-hidden rounded-xl border-r border-gray-200 bg-sidebar-primary">
+      <div>
+        <img
+          src="https://res.cloudinary.com/dlqhvgxch/image/upload/v1761545961/bg_zrchck.png"
+          alt="bg"
+          className="absolute left-0 top-0 w-16 -scale-x-100 opacity-50"
+        />
+      </div>
+
       {/* Project Name */}
-      <div className="p-4">
-        <h2 className="text-lg font-semibold text-gray-900">
+      <div className="p-4 pt-[22px]">
+        <h2 className="text-right text-sm font-semibold text-gray-900">
           {currentProject.name}
         </h2>
       </div>
@@ -236,11 +243,11 @@ export function Sidebar({ projectId }: SidebarProps) {
       >
         {isProjectSettingsMode ? (
           /* Project Settings Mode */
-          <div className="p-3">
+          <div className="p-3 pt-0">
             {/* Back Button */}
             <button
               onClick={handleBackToMain} // Updated to use handleBackToMain function
-              className="mb-6 flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900"
+              className="mb-6 flex w-full items-center gap-2 rounded-md bg-gray-50 px-3 py-2 text-xs text-gray-700 transition-colors hover:text-gray-900"
             >
               <ArrowLeft className="size-4" />
               Back to Settings
@@ -276,11 +283,11 @@ export function Sidebar({ projectId }: SidebarProps) {
           </div>
         ) : isLiveDeskMode ? (
           /* Live Desk Chrome-like navigation mode */
-          <div className="p-3">
+          <div className="p-3 pt-0">
             {/* Back Button */}
             <button
               onClick={handleBackToMain} // Updated to use handleBackToMain function
-              className="mb-6 flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900"
+              className="mb-6 flex w-full items-center gap-2 rounded-md bg-gray-50 px-3 py-2 text-xs text-gray-700 transition-colors hover:text-gray-900"
             >
               <ArrowLeft className="size-4" />
               Back to Services
@@ -316,11 +323,11 @@ export function Sidebar({ projectId }: SidebarProps) {
           </div>
         ) : isCookieConsentMode ? (
           /* Cookie Consent Chrome-like navigation mode */
-          <div className="p-3">
+          <div className="p-3 pt-0">
             {/* Back Button */}
             <button
               onClick={handleBackToMain} // Updated to use handleBackToMain function
-              className="mb-6 flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900"
+              className="mb-6 flex w-full items-center gap-2 rounded-md bg-gray-50 px-3 py-2 text-xs text-gray-700 transition-colors hover:text-gray-900"
             >
               <ArrowLeft className="size-4" />
               Back to Services

@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 
 import { PageHeader } from '@/components/dashboard/page-header';
@@ -233,7 +233,7 @@ export const Component = () => {
         />
 
         <div className="dashboard-container">
-          <div className="w-full max-w-3xl">{renderDetailedContent()}</div>
+          <div className="w-full lg:w-1/2">{renderDetailedContent()}</div>
         </div>
       </div>
     );
@@ -244,7 +244,7 @@ export const Component = () => {
       <PageHeader title={'General Settings'} />
 
       <div className="dashboard-container">
-        <div className="w-full max-w-3xl space-y-3">
+        <div className="w-full space-y-3 lg:w-1/2">
           {generalSettingsData.map((item) => (
             <Card
               key={item.id}
@@ -264,7 +264,8 @@ export const Component = () => {
                         {item.description}
                       </p>
                     </div>
-                    <ArrowRight className="size-4 text-gray-600" />
+                    {/* <ArrowRight  /> */}
+                    <ChevronRight className="w-5 text-gray-400" />
                   </div>
                 </button>
               </CardContent>
