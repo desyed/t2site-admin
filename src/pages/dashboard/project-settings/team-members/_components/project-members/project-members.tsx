@@ -1,13 +1,8 @@
-import { AxiosError } from 'axios';
 import { useEffect } from 'react';
-import { useParams } from 'react-router';
 
 import type { Project } from '@/app/project/project.type';
 
-import {
-  useProjectMembersQuery,
-  useRedirectIfProjectNotExists,
-} from '@/app/project-member/project-member.hooks';
+import { useProjectMembersQuery } from '@/app/project-member/project-member.hooks';
 import { InputSearch } from '@/components/ui/search-input';
 
 import { ProjectMembersTable } from './project-members-table';

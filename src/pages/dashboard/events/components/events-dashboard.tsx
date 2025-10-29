@@ -3,11 +3,7 @@
 import { PageHeader } from '@/components/dashboard/page-header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-interface EventsDashboardProps {
-  projectId: string;
-}
-
-export function EventsDashboard({ projectId }: EventsDashboardProps) {
+export function EventsDashboard() {
   return (
     <div>
       <PageHeader title="Events" />

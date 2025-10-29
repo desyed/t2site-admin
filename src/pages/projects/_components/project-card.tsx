@@ -16,7 +16,7 @@ import {
 import { dayJs } from '@/lib/time';
 
 interface ProjectCardProps {
-  project: Project;
+  project: Project | Omit<Project, 'features'>;
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
@@ -28,10 +28,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       className="group relative overflow-hidden transition-all hover:shadow-md"
     >
       <div className="flex items-center gap-4 p-4">
-        <Link
-          to={`/${project.id}`}
-          className="shrink-0"
-        >
+        <Link to={`/${project.id}`} className="shrink-0">
           <Avatar className="size-8 rounded-md bg-muted shadow-sm">
             <AvatarImage src={project.icon ?? undefined} alt={project.name} />
             <AvatarFallback className="text-lg">
@@ -41,10 +38,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </Link>
         <div className="min-w-0 flex-1 space-y-1">
           <div className="flex items-start justify-between gap-4">
-            <Link
-              to={`/${project.id}`}
-              className="hover:underline"
-            >
+            <Link to={`/${project.id}`} className="hover:underline">
               <h2 className="max-w-[200px] truncate font-semibold tracking-tight">
                 {project.name}
               </h2>
@@ -79,20 +73,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuItem
-              onSelect={() =>
-                navigate(`/${project.id}`)
-              }
+              onSelect={() => navigate(`/${project.id}`)}
               className="gap-2"
             >
               <Home className="size-4" />
               Dashboard
             </DropdownMenuItem>
             <DropdownMenuItem
-              onSelect={() =>
-                navigate(
-                  `/${project.id}/project-settings`
-                )
-              }
+              onSelect={() => navigate(`/${project.id}/project-settings`)}
               className="gap-2"
             >
               <SettingsIcon className="size-4" />

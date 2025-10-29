@@ -28,30 +28,6 @@ import { Textarea } from '@/components/ui/textarea';
 export function EmailDashboard() {
   const [selectedChat, setSelectedChat] = useState<number | null>(1);
 
-  const emailAccounts = [
-    {
-      id: 1,
-      name: 'Main Business',
-      phone: '+1 (555) 123-4567',
-      status: 'connected',
-      messages: 89,
-    },
-    {
-      id: 2,
-      name: 'Customer Support',
-      phone: '+1 (555) 987-6543',
-      status: 'connected',
-      messages: 156,
-    },
-    {
-      id: 3,
-      name: 'Sales Team',
-      phone: '+1 (555) 456-7890',
-      status: 'pending',
-      messages: 0,
-    },
-  ];
-
   const conversations = [
     {
       id: 1,
