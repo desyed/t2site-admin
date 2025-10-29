@@ -12,7 +12,7 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <ThemeProvider defaultTheme="system" storageKey="t2site-theme">
+        <ThemeProvider defaultTheme="light" storageKey="t2site-theme">
           <Routers />
           <Toaster />
         </ThemeProvider>

@@ -3,24 +3,19 @@ import { useNavigate } from 'react-router';
 
 import { authStore } from '@/app/auth/auth.store';
 import Brand from '@/components/Brand';
-import { ModeToggle } from '@/components/mode-toggle';
 import { getQuery } from '@/lib/utils';
-import { queryClient } from '@/query-client';
 
 export default function AuthCheckPoint() {
   const navigate = useNavigate();
+
   useEffect(() => {
     async function initSession() {
       const auth_login = getQuery('auth_login');
       if (auth_login === 'success') {
         const from = getQuery('rp') ?? '/';
+
+        // Detect if the user is logged in
         await authStore.fetchSession(true);
-        navigate(from, { replace: true });
-      }
-      if (getQuery('ocr') === 'true') {
-        const from = getQuery('rp') ?? '/';
-        await authStore.fetchSession(true);
-        queryClient.resetQueries();
         navigate(from, { replace: true });
       }
     }
@@ -33,11 +28,8 @@ export default function AuthCheckPoint() {
         <div>
           <Brand />
         </div>
-        <div>
-          <ModeToggle />
-        </div>
       </div>
-      <div className="mt-20 flex flex-1 flex-col items-center gap-5 px-5 ">
+      <div className="mt-20 flex flex-1 flex-col items-center gap-5 px-5">
         <h1 className="text-xl font-bold"> Authentication Checkpoint</h1>
         <p className="text-center text-muted-foreground">
           Please wait while we verify your credentials...

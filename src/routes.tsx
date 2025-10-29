@@ -1,13 +1,12 @@
-import { createBrowserRouter, Navigate } from 'react-router';
+import { createBrowserRouter, redirect } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
 
 import ErrorBoundary from '@/components/error-boundary';
 import SplashScreen from '@/components/splash-screen';
 import AuthLayout from '@/layouts/auth-layout';
-import DashboardLayout from '@/layouts/dashboard-layout';
 import InvitationLayout from '@/layouts/invitation-layout';
+import PreDashboardLayout from '@/layouts/pre-dashboard-layout';
 import RootLayout from '@/layouts/root-layout';
-import VerifyLayout from '@/layouts/verify-layout';
 import {
   authMiddlewareLoader,
   dashboardLoader,
@@ -15,18 +14,15 @@ import {
   verifyMiddlewareLoader,
 } from '@/middlewares/auth-middleware';
 import NotFound from '@/pages/404';
-import NotFoundPrivate from '@/pages/404-private';
 import AuthCheckPoint from '@/pages/auth-check-point';
+import NotFoundProject from '@/pages/dashboard/404';
 import LoginPage from '@/pages/login';
-import NavSettingsProject from '@/pages/projects/settings/_components/nav-settings';
-import NavSettings from '@/pages/settings/_components/nav-settings';
 import SignupPage from '@/pages/signup';
 
-import PrivateLayout from './layouts/private-layout';
-import NotFoundProjectSettings from './pages/projects/settings/404';
-import SelectNoConversation from './pages/services/chat-assistant/_components/select-no-conversation';
-import SelectNotFoundConversation from './pages/services/chat-assistant/_components/select-not-found-conversation';
-import NotFoundSettings from './pages/settings/404';
+import ProjectLayout from './layouts/project-layout';
+import SelectNoConversation from './pages/dashboard/live-desk/live-chat/_components/select-no-conversation';
+import SelectNotFoundConversation from './pages/dashboard/live-desk/live-chat/_components/select-not-found-conversation';
+
 export const routes = createBrowserRouter([
   {
     path: '/',
@@ -34,87 +30,6 @@ export const routes = createBrowserRouter([
     errorElement: <ErrorBoundary />,
     hydrateFallbackElement: <SplashScreen />,
     children: [
-      {
-        element: <DashboardLayout />,
-        loader: dashboardLoader,
-        children: [
-          {
-            index: true,
-            element: <Navigate to="/dashboard" />,
-          },
-          {
-            path: '/dashboard',
-            lazy: () => import('@/pages/home'),
-          },
-          {
-            path: '/tickets',
-            lazy: () => import('@/pages/tickets'),
-          },
-          {
-            path: '/settings/project',
-            element: <NavSettingsProject />,
-            children: [
-              {
-                index: true,
-                lazy: () => import('@/pages/projects/settings/index'),
-              },
-              {
-                path: 'services',
-                lazy: () => import('@/pages/projects/settings/services'),
-                loader: dashboardLoader,
-              },
-              {
-                path: '*',
-                element: <NotFoundProjectSettings />,
-              },
-            ],
-          },
-          {
-            path: 'services',
-            children: [
-              {
-                index: true,
-                element: <Navigate to="/settings/project/services" />,
-              },
-              {
-                path: '/services/web-analytics',
-                lazy: () => import('@/pages/services/web-analytics'),
-              },
-              {
-                path: '/services/chat-assistant',
-                lazy: () => import('@/pages/services/chat-assistant'),
-                children: [
-                  {
-                    index: true,
-                    element: <SelectNoConversation />,
-                  },
-                  {
-                    path: ':ticketId/*',
-                    lazy: () =>
-                      import('@/pages/services/chat-assistant/conversation'),
-                  },
-                  {
-                    path: 'not-found',
-                    element: <SelectNotFoundConversation />,
-                  },
-                ],
-              },
-              {
-                path: '/services/cookie-consent',
-                lazy: () => import('@/pages/services/cookie-consent'),
-              },
-              {
-                path: '*',
-                element: <NotFoundPrivate />,
-              },
-            ],
-          },
-          {
-            path: '*',
-            element: <NotFoundPrivate />,
-          },
-        ],
-      },
       {
         loader: authMiddlewareLoader,
         element: <AuthLayout />,
@@ -130,9 +45,17 @@ export const routes = createBrowserRouter([
         ],
       },
       {
+        path: '/',
+        lazy: () => import('@/pages/projects'),
+      },
+      {
+        path: '/auth',
+        element: <AuthCheckPoint />,
+      },
+      {
         loader: verifyMiddlewareLoader,
         path: '/verify',
-        element: <VerifyLayout />,
+        element: <PreDashboardLayout />,
         children: [
           {
             index: true,
@@ -151,60 +74,130 @@ export const routes = createBrowserRouter([
         ],
       },
       {
-        path: '/projects',
-        element: <PrivateLayout />,
+        path: '/create-project',
+        element: <PreDashboardLayout />,
         loader: privateLoader,
         children: [
           {
             index: true,
-            lazy: () => import('@/pages/projects'),
-          },
-          {
-            path: '/projects/new',
-            lazy: () => import('@/pages/projects/new'),
-          },
-          {
-            path: '/projects/:projectId',
-            lazy: () => import('@/pages/projects/project'),
+            lazy: () => import('@/pages/projects/create-project'),
           },
         ],
       },
       {
-        path: '/settings',
-        element: <PrivateLayout />,
-        loader: privateLoader,
+        path: '/:projectId',
+        element: <ProjectLayout />,
+        loader: dashboardLoader,
         children: [
           {
-            path: '/settings',
-            element: <NavSettings />,
+            index: true,
+            lazy: async () => {
+              const module = await import('@/pages/dashboard/analytics');
+              return { element: <module.default /> };
+            },
+          },
+          {
+            path: 'analytics',
+            lazy: async () => {
+              const module = await import('@/pages/dashboard/analytics');
+              return { element: <module.default /> };
+            },
+          },
+          {
+            path: 'events',
+            lazy: async () => {
+              const module = await import('@/pages/dashboard/events');
+              return { element: <module.default /> };
+            },
+          },
+          {
+            path: 'customers',
+            lazy: async () => {
+              const module = await import('@/pages/dashboard/customers');
+              return { element: <module.default /> };
+            },
+          },
+          {
+            path: 'cookie-consent',
+            lazy: async () => {
+              const module = await import('@/pages/dashboard/cookie-consent');
+              return { element: <module.default /> };
+            },
+          },
+          {
+            path: 'live-desk',
             children: [
               {
                 index: true,
-                element: <Navigate to="/settings/organization" />,
+                loader: () => {
+                  return redirect('live-chat');
+                },
               },
               {
-                path: '/settings/organization',
-                lazy: () => import('@/pages/settings/organization/general'),
+                path: 'live-chat',
+                lazy: () => import('@/pages/dashboard/live-desk/live-chat'),
+                children: [
+                  {
+                    index: true,
+                    element: <SelectNoConversation />,
+                  },
+                  {
+                    path: ':ticketId/*',
+                    lazy: () =>
+                      import(
+                        '@/pages/dashboard/live-desk/live-chat/conversation'
+                      ),
+                  },
+                  {
+                    path: 'not-found',
+                    element: <SelectNotFoundConversation />,
+                  },
+                ],
               },
               {
-                path: '/settings/organization/members',
-                lazy: () => import('@/pages/settings/organization/members'),
+                path: 'facebook',
+                lazy: () => import('@/pages/dashboard/live-desk/facebook'),
               },
               {
-                path: '/settings/user/profile',
-                lazy: () => import('@/pages/settings/user/profile'),
+                path: 'whatsapp',
+                lazy: () => import('@/pages/dashboard/live-desk/whatsapp'),
               },
               {
-                path: '*',
-                element: <NotFoundSettings />,
+                path: 'email',
+                lazy: () => import('@/pages/dashboard/live-desk/email'),
               },
             ],
+          },
+          {
+            path: 'project-settings',
+            lazy: () => import('@/pages/dashboard/project-settings'),
+          },
+          {
+            path: 'project-settings/team-members',
+            lazy: () =>
+              import('@/pages/dashboard/project-settings/team-members'),
+          },
+          {
+            path: 'project-settings/integrations',
+            lazy: () =>
+              import('@/pages/dashboard/project-settings/integrations'),
+          },
+          {
+            path: 'project-settings/security',
+            lazy: () => import('@/pages/dashboard/project-settings/security'),
+          },
+          {
+            path: 'billing',
+            lazy: async () => {
+              const module = await import('@/pages/dashboard/billing');
+              return { element: <module.default /> };
+            },
           },
         ],
       },
       {
-        path: '/auth',
-        element: <AuthCheckPoint />,
+        path: '/404-project',
+        element: <NotFoundProject />,
       },
       {
         path: '*',

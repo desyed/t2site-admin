@@ -47,12 +47,12 @@ const InputPassword = React.forwardRef<HTMLInputElement, InputPasswordProps>(
           >
             {!showPassword ? (
               <Icon
-                className={cn('w-5 h-5', className)}
+                className={cn('h-5 w-5', className)}
                 icon="mdi:eye-outline"
               />
             ) : (
               <Icon
-                className={cn('w-5 h-5', className)}
+                className={cn('h-5 w-5', className)}
                 icon="mdi:eye-off-outline"
               />
             )}

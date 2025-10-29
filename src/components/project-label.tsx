@@ -46,7 +46,7 @@ export default function ProjectLabel({
                 <TooltipTrigger asChild>
                   <span
                     className={cn(
-                      ' truncate text-sm font-semibold',
+                      'truncate text-sm font-semibold',
                       labelClassName
                     )}
                     style={{
@@ -66,7 +66,7 @@ export default function ProjectLabel({
                 <TooltipTrigger asChild>
                   <span
                     className={cn(
-                      ' truncate text-xs text-muted-foreground',
+                      'truncate text-xs text-muted-foreground',
                       siteUrlClassName
                     )}
                     style={{

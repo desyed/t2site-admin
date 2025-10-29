@@ -18,7 +18,7 @@ export default function InvitationErrorTemplate({
       <div className="flex flex-col items-center justify-center">
         <div
           className={cn(
-            'w-12 h-12 rounded-full flex items-center justify-center mb-2',
+            'mb-2 flex h-12 w-12 items-center justify-center rounded-full',
             type === 'warning' ? 'bg-primary/20' : 'bg-destructive/20'
           )}
         >

@@ -1,6 +1,5 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Icon } from '@iconify/react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
@@ -56,11 +55,13 @@ export default function VerifyEmailForm() {
     if (success) {
       if (data?.access_token && data.user.email && data.user.emailVerified) {
         setAuth(data.user, data.access_token);
-        navigate(
-          '/auth?auth_login=success&rp=' +
-            window.localStorage.getItem('redirect_to') || '/',
-          { replace: true }
-        );
+        let redirectTo = window.localStorage.getItem('redirect_to');
+        if (!redirectTo) {
+          redirectTo = '/';
+        }
+        navigate('/auth?auth_login=success&rp=' + redirectTo, {
+          replace: true,
+        });
         toast.success('Email Verified!', {
           description: 'Your email has been successfully verified. 🎉',
           duration: 3000,
@@ -92,13 +93,7 @@ export default function VerifyEmailForm() {
           />
         </div>
         <div className="mt-5 flex flex-col sm:mt-2">
-          <Button
-            type="submit"
-            size="sm"
-            disabled={loading}
-            icon={<Icon icon="material-symbols:domain-verification" />}
-            loading={loading}
-          >
+          <Button type="submit" size="sm" disabled={loading} loading={loading}>
             Verify
           </Button>
         </div>

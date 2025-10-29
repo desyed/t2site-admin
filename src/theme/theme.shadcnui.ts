@@ -14,7 +14,7 @@ export default plugin(() => {}, {
       fontFamily: {
         serif: [...defaultTheme.fontFamily.serif, 'Arial'],
         mono: [...defaultTheme.fontFamily.mono],
-        sans: [...defaultTheme.fontFamily.sans],
+        sans: ['Inter', ...defaultTheme.fontFamily.sans], // Add Inter as the primary sans font
       },
       screens: {
         xs: '439px',
@@ -70,6 +70,9 @@ export default plugin(() => {}, {
           'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))',
+        },
+        icon: {
+          DEFAULT: 'hsl(var(--icon))',
         },
       },
       borderRadius: {

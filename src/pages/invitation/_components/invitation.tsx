@@ -2,7 +2,7 @@ import { AxiosError } from 'axios';
 
 import type { StatusType } from '@/components/status-badge';
 
-import { useInvitedMemberQuery } from '@/app/organization/organization.hooks';
+import { useInvitedMemberQuery } from '@/app/project-member/project-member.hooks';
 import { StatusBadge } from '@/components/status-badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { dayJs } from '@/lib/time';
@@ -25,7 +25,7 @@ export default function Invitation({
   if (isLoading || isFetching) {
     return (
       <div className="flex min-h-56 items-center justify-center">
-        <div className="size-8 animate-spin rounded-full border-b-2 border-primary " />
+        <div className="size-8 animate-spin rounded-full border-b-2 border-primary" />
       </div>
     );
   }
@@ -59,13 +59,13 @@ export default function Invitation({
     <div>
       <div className="mb-6 text-center sm:mb-8">
         <Avatar className="mx-auto mb-3 size-16 sm:mb-4 sm:size-20">
-          <AvatarImage src={invitedMember?.organization.logo ?? undefined} />
+          <AvatarImage src={invitedMember?.project.icon ?? undefined} />
           <AvatarFallback className="text-xl sm:text-2xl">
-            {invitedMember?.organization.name}
+            {invitedMember?.project.name}
           </AvatarFallback>
         </Avatar>
         <h1 className="mb-2 text-xl font-semibold sm:text-2xl">
-          Join {invitedMember?.organization.name}
+          Join {invitedMember?.project.name}
         </h1>
         <p className="text-sm text-muted-foreground sm:text-base">
           {`You've`} been invited to join as a {invitedMember?.role}

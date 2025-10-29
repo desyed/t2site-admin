@@ -13,7 +13,7 @@ export const TicketCard = ({ ticketId }: TicketCardProps) => {
   return (
     <Card
       className={cn(
-        'p-4 rounded-md hover:bg-muted/40 transition-colors space-y-2',
+        'space-y-2 rounded-md p-4 transition-colors hover:bg-muted/40',
         selectedTicketId === ticketId && 'border-orange-400'
       )}
     >

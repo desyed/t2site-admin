@@ -2,9 +2,9 @@ import { Check, X } from 'lucide-react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
-import type { InvitedMember } from '@/app/organization/organizaion.type';
+import type { InvitedMember } from '@/app/project-member/project-member.type';
 
-import { useOptimisticInvitationPromptMutation } from '@/app/organization/organization.hooks';
+import { useOptimisticInvitationPromptMutation } from '@/app/project-member/project-member.hooks';
 import { Button } from '@/components/site-button';
 type InvitationActionsProps = {
   invitedMember: InvitedMember;
@@ -20,7 +20,6 @@ export default function InvitationActions({
   const handleDeclineInvitation = () => {
     invitePrompt({
       invitedMemberId: invitedMember.id,
-      organizationId: invitedMember.organizationId,
       promptType: 'reject',
     });
   };
@@ -28,7 +27,6 @@ export default function InvitationActions({
   const handleAcceptInvitation = () => {
     invitePrompt({
       invitedMemberId: invitedMember.id,
-      organizationId: invitedMember.organizationId,
       promptType: 'accept',
     });
   };
@@ -39,11 +37,17 @@ export default function InvitationActions({
       invitedMember.status === 'accepted' &&
       !invitedMember?.optimisticallyUpdatedAt
     ) {
-      navigate(`/auth?ocr=true&rp=/projects`, {
+      navigate(`/${invitedMember.project.id}`, {
         replace: true,
       });
     }
-  }, [isSuccess, invitedMember, navigate]);
+  }, [
+    isSuccess,
+    invitedMember.project.id,
+    invitedMember.status,
+    navigate,
+    invitedMember?.optimisticallyUpdatedAt,
+  ]);
 
   if (invitedMember.status === 'pending') {
     return (
@@ -52,7 +56,7 @@ export default function InvitationActions({
           onClick={handleAcceptInvitation}
           className="flex-1"
           size="sm"
-          icon={<Check className="size-3 sm:size-4 " />}
+          icon={<Check className="size-3 sm:size-4" />}
         >
           Accept
         </Button>
@@ -82,7 +86,7 @@ export default function InvitationActions({
               variant="outline"
               onClick={handleAcceptInvitation}
               size="sm"
-              icon={<Check className="size-3 sm:size-4 " />}
+              icon={<Check className="size-3 sm:size-4" />}
             >
               Accept
             </Button>
@@ -102,7 +106,7 @@ export default function InvitationActions({
           You have accepted the invitation.
         </p>
         <p className="mt-2 text-center text-sm text-muted-foreground">
-          You are sortly redirected to the organization.
+          You are shortly redirected to the project.
         </p>
       </div>
     );

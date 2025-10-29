@@ -12,7 +12,7 @@ export default function LoginPage() {
     if (error && error.length > 3) {
       const message = error;
       setTimeout(() => {
-        toast.error('Loging Failed', {
+        toast.error('Logging Failed', {
           description: message,
           position: 'top-center',
           duration: 1600,
@@ -25,17 +25,14 @@ export default function LoginPage() {
 
   return (
     <>
-      <h3 className="text-center text-2xl font-semibold ">Welcome back</h3>
-      <p className="mb-2 mt-4 text-center text-sm text-muted-foreground">
-        Login with your Google or Github account
+      <h3 className="text-center text-2xl font-semibold">Login</h3>
+      <p className="mb-4 mt-2 text-center text-sm text-muted-foreground">
+        Welcome to T2site Admin
       </p>
 
-      <div className="mt-2 grid grid-cols-2 gap-6">
-        <OAuthButton type="google" label={false} />
-        <OAuthButton type="github" label={false} />
-      </div>
+      <LoginForm />
 
-      <div className="mb-2 mt-4 flex items-center justify-between gap-2.5">
+      <div className="my-6 flex items-center justify-between gap-2.5">
         <div className="h-px w-1/2 bg-border" />
         <div className="shrink-0 text-xs text-muted-foreground">
           OR CONTINUE WITH
@@ -43,9 +40,12 @@ export default function LoginPage() {
         <div className="h-px w-1/2 bg-border" />
       </div>
 
-      <LoginForm />
+      <div className="mt-2 grid grid-cols-2 gap-6">
+        <OAuthButton type="google" label={false} />
+        <OAuthButton type="github" label={false} />
+      </div>
 
-      <div className="mt-4 text-center text-muted-foreground">
+      <div className="mt-8 text-center text-sm text-muted-foreground">
         {`Don't`} have an account?{' '}
         <Link
           className="font-semibold underline hover:text-foreground"

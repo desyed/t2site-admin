@@ -10,7 +10,7 @@ export function loginApi(payload: object) {
 /**
  * @POST /auth/signup
  */
-export function singupApi(payload: object) {
+export function singUpApi(payload: object) {
   return api.post('/auth/signup', payload);
 }
 
@@ -45,7 +45,7 @@ export function getProfileApi() {
 /**
  * @POST /send-email-verification
  */
-export async function sendEmailVericationApi() {
+export async function sendEmailVerificationApi() {
   return api.post('/verification/email/send');
 }
 

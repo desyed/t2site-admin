@@ -80,7 +80,7 @@ export function SiteBreadcrumb() {
                       'transition-colors hover:bg-muted/60',
                       {
                         'text-muted-foreground': !segment.isLast,
-                        'text-foreground font-medium': segment.isLast,
+                        'font-medium text-foreground': segment.isLast,
                       }
                     )}
                   >
