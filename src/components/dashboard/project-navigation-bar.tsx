@@ -24,40 +24,60 @@ import {
 import { useAuth } from '@/contexts/auth-provider';
 import { cn } from '@/lib/utils';
 
-import { Button } from '../site-button';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 
 const faqItems = [
   {
-    title: 'What is Dub?',
+    title: 'What is T2site?',
     description:
-      'How Dub works, what it can do for your business and what makes it different...',
+      'T2site unifies WhatsApp, Messenger, Instagram, and Email — helping teams manage all customer chats from one simple dashboard.',
   },
   {
-    title: 'How to create a short link on Dub?',
+    title: 'Who is T2site for?',
     description:
-      'Learn how to create your first short link on Dub and start tracking your links.',
+      'Perfect for businesses, agencies, and marketing teams that handle multiple brand accounts and want to simplify communication.',
   },
   {
-    title: 'How to add a custom domain to Dub',
+    title: 'Which platforms can I connect?',
     description:
-      'Learn how to add a custom domain your Dub workspace for free - no credit...',
+      'Connect WhatsApp Business, Facebook Messenger, Instagram DM, and Email (Gmail, Outlook, or custom). More coming soon!',
   },
   {
-    title: 'How to invite teammates on Dub',
+    title: 'Can I reply directly from T2site?',
     description:
-      'Learn how to invite teammates to your Dub workspace and start collaborating...',
+      'Yes! Send, receive, and manage all messages, attachments, and threads without switching apps.',
   },
   {
-    title: 'Dub Analytics Overview',
+    title: 'Is my data secure?',
     description:
-      'Learn about how you can use Dub Analytics to better understand your...',
+      'Absolutely. T2site uses official APIs and encrypted channels to keep your data safe and compliant.',
   },
   {
-    title: 'Dub Conversions Overview',
+    title: 'Can my team collaborate?',
     description:
-      "Learn how you can use Dub's Conversion Analytics feature to understand h...",
+      'Yes. Invite teammates, assign chats, and manage roles to keep your communication organized.',
+  },
+  {
+    title: 'Do I get instant notifications?',
+    description:
+      'T2site alerts you instantly for new messages or mentions across all connected channels.',
+  },
+  {
+    title: 'Can I search messages easily?',
+    description:
+      'Use the smart search to find any message, contact, or keyword across all platforms — instantly.',
+  },
+  {
+    title: 'Does it include analytics?',
+    description:
+      'Yes! Track message volume, response times, and team performance with real-time insights.',
+  },
+  {
+    title: 'What makes T2site unique?',
+    description:
+      'Unlike typical social tools, T2site focuses on real conversations — not just posts. It’s your all-in-one chat hub.',
   },
 ];
 
@@ -136,7 +156,7 @@ export function ProjectNavigationBar({ projectId }: { projectId: string }) {
           <DropdownMenuContent
             align="start"
             side="right"
-            className="w-96 rounded-xl border bg-white p-4 shadow-lg"
+            className="w-80 rounded-xl border bg-white p-4 shadow-lg sm:w-96"
           >
             <div className="mb-4">
               <h3 className="mb-2 flex items-center gap-2 text-lg font-semibold">
