@@ -1,13 +1,9 @@
-import { AxiosError } from 'axios';
 import { useEffect } from 'react';
 import { useParams } from 'react-router';
 
 import type { Project } from '@/app/project/project.type';
 
-import {
-  useInviteMembersQuery,
-  useRedirectIfProjectNotExists,
-} from '@/app/project-member/project-member.hooks';
+import { useInviteMembersQuery } from '@/app/project-member/project-member.hooks';
 import { InputSearch } from '@/components/ui/search-input';
 
 import InvitedMembersTable from './invited-members-table';

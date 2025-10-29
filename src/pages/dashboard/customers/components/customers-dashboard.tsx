@@ -3,11 +3,7 @@
 import { PageHeader } from '@/components/dashboard/page-header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-interface CustomersDashboardProps {
-  projectId: string;
-}
-
-export function CustomersDashboard({ projectId }: CustomersDashboardProps) {
+export function CustomersDashboard() {
   return (
     <div>
       <PageHeader title="Customers" />

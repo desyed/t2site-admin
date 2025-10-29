@@ -10,11 +10,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-interface BillingDashboardProps {
-  projectId: string;
-}
-
-export function BillingDashboard({ projectId }: BillingDashboardProps) {
+export function BillingDashboard() {
   return (
     <div>
       <PageHeader title="Billing" />
