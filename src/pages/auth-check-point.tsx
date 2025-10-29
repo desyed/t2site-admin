@@ -22,7 +22,7 @@ export default function AuthCheckPoint() {
     initSession();
   }, [navigate]);
 
-  return !getQuery('ocr') ? (
+  return (
     <div className="relative flex min-h-screen flex-col">
       <div className="flex h-[90px] items-center justify-between px-6 sm:px-10">
         <div>
@@ -37,20 +37,6 @@ export default function AuthCheckPoint() {
         <div className="mt-4 animate-pulse">
           <div className="h-2 w-24 rounded-full bg-primary/40" />
         </div>
-      </div>
-    </div>
-  ) : (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-4 px-4">
-      <p className="text-center text-muted-foreground">
-        Configuring your workspace settings...
-      </p>
-      <div className="flex flex-col items-center gap-3">
-        <span className="text-sm text-muted-foreground">
-          This may take a few moments
-        </span>
-      </div>
-      <div className="mt-4 animate-pulse">
-        <div className="h-2 w-24 rounded-full bg-primary/40" />
       </div>
     </div>
   );
