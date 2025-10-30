@@ -58,7 +58,7 @@ export default function SplashScreen() {
         <img
           draggable="false"
           src="/t2-chat-icon-light.svg"
-          className="h-20 w-[90px] sm:w-[140px] lg:w-[160px]"
+          className="h-16 w-[80px] sm:w-[100px] lg:w-[120px]"
           style={{
             display: colorMode.isLight ? 'block' : 'none',
           }}
