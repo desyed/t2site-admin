@@ -5,7 +5,7 @@ import { MessageCircle } from 'lucide-react';
 import { PageHeader } from '@/components/dashboard/page-header';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 
 const customersData = [
   {
@@ -96,21 +96,6 @@ const getStatusColor = (status: string) => {
     : 'bg-gray-100 text-gray-800';
 };
 
-const getChannelIcon = (channel: string) => {
-  switch (channel) {
-    case 'WhatsApp':
-      return '🟢';
-    case 'Facebook':
-      return '🔵';
-    case 'Instagram':
-      return '💗';
-    case 'Email':
-      return '✉️';
-    default:
-      return '💬';
-  }
-};
-
 export function CustomersDashboard() {
   return (
     <div>
@@ -118,9 +103,6 @@ export function CustomersDashboard() {
 
       <div className="dashboard-container">
         <Card>
-          <CardHeader>
-            <CardTitle>Customer List</CardTitle>
-          </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
