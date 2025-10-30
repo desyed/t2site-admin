@@ -47,7 +47,7 @@ export default function SplashScreen() {
       <div className="px-5">
         <img
           draggable="false"
-          src="/t2-site-brand-dark.svg"
+          src="/t2-chat-icon-light.svg"
           className="h-20 w-[90px] sm:w-[140px] lg:w-[160px]"
           style={{
             display: colorMode.isDark ? 'block' : 'none',
@@ -57,7 +57,7 @@ export default function SplashScreen() {
 
         <img
           draggable="false"
-          src="/t2-site-brand-light.svg"
+          src="/t2-chat-icon-light.svg"
           className="h-20 w-[90px] sm:w-[140px] lg:w-[160px]"
           style={{
             display: colorMode.isLight ? 'block' : 'none',

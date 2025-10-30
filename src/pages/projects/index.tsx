@@ -27,7 +27,8 @@ export const loader = createPrivateLoader(async () => {
       if (!firstProject) {
         return redirect('/create-project');
       }
-      const redirectTo = window.localStorage.getItem('redirect_to') || '/';
+      const redirectTo =
+        window.localStorage.getItem('redirect_to') || `${firstProject.id}`;
       return redirect(redirectTo);
     }
   } catch (error) {
