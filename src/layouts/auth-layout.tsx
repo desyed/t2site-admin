@@ -15,7 +15,7 @@ export default function AuthLayout() {
         <div className="flex w-full gap-5 max-sm:justify-between max-sm:p-4 sm:max-w-sm">
           <div className="relative w-full overflow-x-hidden rounded-xl px-6 py-10 dark:border-border sm:border sm:bg-card sm:px-8 sm:shadow-sm dark:sm:bg-muted/15">
             {/* Background Gradient */}
-            <div className="absolute inset-0 isolate overflow-hidden bg-white">
+            {/* <div className="absolute inset-0 isolate overflow-hidden bg-white">
               <div className="absolute left-1/2 top-6 size-[80px] -translate-x-1/2 -translate-y-1/2 scale-x-[1.6] mix-blend-overlay">
                 <div className="absolute -inset-16 bg-[conic-gradient(from_90deg,#F00_5deg,#EAB308_63deg,#5CFF80_115deg,#1E00FF_170deg,#855AFC_220deg,#3A8BFD_286deg,#F00_360deg)] mix-blend-overlay blur-[50px] saturate-200"></div>
                 <div className="absolute -inset-16 bg-[conic-gradient(from_90deg,#F00_5deg,#EAB308_63deg,#5CFF80_115deg,#1E00FF_170deg,#855AFC_220deg,#3A8BFD_286deg,#F00_360deg)] mix-blend-overlay blur-[50px] saturate-200"></div>
@@ -23,6 +23,15 @@ export default function AuthLayout() {
               <div className="absolute left-1/2 top-6 size-[80px] -translate-x-1/2 -translate-y-1/2 scale-x-[1.6] opacity-10">
                 <div className="absolute -inset-16 bg-[conic-gradient(from_90deg,#F00_5deg,#EAB308_63deg,#5CFF80_115deg,#1E00FF_170deg,#855AFC_220deg,#3A8BFD_286deg,#F00_360deg)] mix-blend-overlay blur-[50px] saturate-200"></div>
               </div>
+            </div> */}
+
+            {/* T2 Pattern */}
+            <div>
+              <img
+                src="https://res.cloudinary.com/dlqhvgxch/image/upload/v1761545961/bg_zrchck.png"
+                alt="bg"
+                className="absolute left-0 top-0 w-16 -scale-x-100 opacity-50"
+              />
             </div>
 
             <div className="relative">
