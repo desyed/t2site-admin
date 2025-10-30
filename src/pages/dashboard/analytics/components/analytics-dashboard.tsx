@@ -1,16 +1,6 @@
 'use client';
 
-import {
-  Calendar,
-  ChartLine,
-  Check,
-  ChevronDown,
-  Download,
-  EllipsisVertical,
-  Grid3x3,
-  ListFilter,
-} from 'lucide-react';
-import { useState } from 'react';
+import { ChartLine, ListFilter } from 'lucide-react';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 
 import type { ChartConfig } from '@/components/ui/chart';
@@ -23,57 +13,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from '@/components/ui/command';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { cn } from '@/lib/utils';
-
-import { AnalyticsCard } from './analyticsCard';
-
-const frameworks = [
-  {
-    value: 'next.js',
-    label: 'Next.js',
-  },
-  {
-    value: 'sveltekit',
-    label: 'SvelteKit',
-  },
-  {
-    value: 'nuxt.js',
-    label: 'Nuxt.js',
-  },
-  {
-    value: 'remix',
-    label: 'Remix',
-  },
-  {
-    value: 'astro',
-    label: 'Astro',
-  },
-];
 
 const chartData = [
   { month: 'January', mobile: 80 },
@@ -91,15 +30,12 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function AnalyticsDashboard() {
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState('');
-
   return (
     <div className="relative">
       <PageHeader title="Analytics" />
 
       <div className="dashboard-container">
-        <div className="flex items-center justify-between gap-3 pb-3 max-md:flex-col">
+        {/* <div className="flex items-center justify-between gap-3 pb-3 max-md:flex-col">
           <div className="flex w-full items-center gap-3">
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger asChild>
@@ -203,7 +139,7 @@ export function AnalyticsDashboard() {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-        </div>
+        </div> */}
 
         {/* Analytics Stats & Charts */}
         <div className="w-full overflow-hidden bg-white">
@@ -214,7 +150,7 @@ export function AnalyticsDashboard() {
                   <div className="absolute bottom-0 left-0 h-0.5 w-full bg-black transition-transform duration-100"></div>
                   <div className="flex items-center gap-2.5 text-sm text-neutral-600">
                     <div className="size-2 bg-current text-blue-500/50 shadow-[inset_0_0_0_1px_#00000019]"></div>
-                    <span>Clicks</span>
+                    <span>Session</span>
                   </div>
                   <div className="mt-1 flex h-12 items-center text-xl font-medium md:text-3xl">
                     0
@@ -270,14 +206,14 @@ export function AnalyticsDashboard() {
                 <div className="border-box relative block h-full min-w-[110px] flex-none px-4 py-3 ring-inset ring-neutral-500 transition-colors hover:bg-neutral-50 focus:outline-none focus-visible:ring-1 active:bg-neutral-100 sm:min-w-[240px] sm:px-8 sm:py-6 sm:first:rounded-tl-xl">
                   <div className="flex items-center gap-2.5 text-sm text-neutral-600">
                     <div className="size-2 bg-current text-neutral-500/50 shadow-[inset_0_0_0_1px_#00000019]"></div>
-                    <span>Sales</span>
+                    <span>Events</span>
                   </div>
                   <div className="mt-1 flex h-12 items-center text-xl font-medium md:text-3xl">
-                    US$0
+                    0
                   </div>
                 </div>
 
-                <div className="absolute right-3 top-3 z-0 hidden w-fit shrink-0 items-center gap-1 rounded-xl border border-neutral-100 bg-neutral-100 p-1 sm:flex">
+                {/* <div className="absolute right-3 top-3 z-0 hidden w-fit shrink-0 items-center gap-1 rounded-xl border border-neutral-100 bg-neutral-100 p-1 sm:flex">
                   <button
                     type="button"
                     data-selected="true"
@@ -293,7 +229,7 @@ export function AnalyticsDashboard() {
                   >
                     <div className="text-[11px]">123</div>
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -315,8 +251,8 @@ export function AnalyticsDashboard() {
               </Button>
             </div>
 
-            <div className="h-96">
-              <ChartContainer config={chartConfig}>
+            <div className="aspect-auto h-96 w-full">
+              <ChartContainer config={chartConfig} className="w-full">
                 <AreaChart
                   accessibilityLayer
                   data={chartData}
@@ -368,7 +304,7 @@ export function AnalyticsDashboard() {
         </div>
 
         {/* Analytics Cards */}
-        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+        {/* <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
           <AnalyticsCard titleTabs={['Short Links', 'Destination URLs']} />
           <AnalyticsCard
             titleTabs={['Referrers', 'UTM Parameters']}
@@ -380,7 +316,7 @@ export function AnalyticsDashboard() {
           <AnalyticsCard
             titleTabs={['Devices', 'Browsers', 'OS', 'Triggers']}
           />
-        </div>
+        </div> */}
       </div>
 
       <ProfileCompletionFloatDialog />

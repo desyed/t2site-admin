@@ -426,14 +426,14 @@ export function Sidebar({ projectId }: SidebarProps) {
                   <Sparkles className="size-4 text-gray-400" />
                   <span className="text-gray-700">Sessions</span>
                 </div>
-                <span className="text-gray-500">{123}</span>
+                <span className="text-gray-500">{89}</span>
               </div>
               <div className="flex items-center justify-between border-b-2 py-2 text-xs font-medium">
                 <div className="flex items-center gap-2">
                   <Users className="size-4 text-gray-400" />
                   <span className="text-gray-700">Members</span>
                 </div>
-                <span className="text-gray-500">{12345}</span>
+                <span className="text-gray-500">{13}</span>
               </div>
             </div>
             <p className="mt-2 pt-1 text-xs text-gray-400">
