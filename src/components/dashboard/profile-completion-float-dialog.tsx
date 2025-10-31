@@ -33,15 +33,16 @@ const ProfileCompletionFloatDialog = () => {
             <AlertCircleIcon className="size-8" />
           </div>
           <div>
-            <AlertDialogTitle>Your profile is incomplete</AlertDialogTitle>
+            <AlertDialogTitle>Almost there!</AlertDialogTitle>
             <AlertDialogDescription>
-              Please complete your profile to unlock all features.
+              Complete chat integration to start chatting live with your
+              visitors.
             </AlertDialogDescription>
           </div>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <Link to={`/${projectId}/project-settings`}>
-            <AlertDialogAction>Complete Profile</AlertDialogAction>
+            <AlertDialogAction>Continue</AlertDialogAction>
           </Link>
         </AlertDialogFooter>
       </AlertDialogContent>
