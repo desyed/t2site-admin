@@ -1,4 +1,4 @@
-import { ChevronLeft, Clock, Star } from 'lucide-react';
+import { ChevronDown, ChevronLeft } from 'lucide-react';
 import { memo } from 'react';
 import { Link, useParams } from 'react-router';
 
@@ -6,6 +6,13 @@ import type { ConversationDetail } from '@/app/features/live-desk/live-desk.type
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+} from '@/components/ui/dropdown-menu';
 import { useMediaQuery } from '@/hooks/use-mobile';
 import { formatSmartTimestamp } from '@/lib/time';
 
@@ -56,13 +63,21 @@ export const ChatHeader = memo(
 
         {/* Right Side */}
         <div className="flex items-center gap-1 sm:gap-2">
-          <Button variant="ghost" size="icon" className="hidden sm:flex">
-            <Star className="size-4" />
-          </Button>
-
-          <Button variant="ghost" size="icon" className="hidden sm:flex">
-            <Clock className="size-4" />
-          </Button>
+          <>
+            <DropdownMenu modal={false}>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="hidden sm:flex">
+                  <ChevronDown />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-40" align="end">
+                <DropdownMenuGroup>
+                  <DropdownMenuItem>Close Session</DropdownMenuItem>
+                  <DropdownMenuItem>Send Transcript</DropdownMenuItem>
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </>
         </div>
       </div>
     );
