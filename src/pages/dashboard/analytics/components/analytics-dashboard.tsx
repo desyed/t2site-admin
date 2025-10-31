@@ -15,16 +15,17 @@ import {
 } from '@/components/ui/chart';
 
 const chartData = [
-  { month: 'January', mobile: 80 },
-  { month: 'February', mobile: 200 },
-  { month: 'March', mobile: 120 },
-  { month: 'April', mobile: 190 },
-  { month: 'May', mobile: 130 },
-  { month: 'June', mobile: 140 },
+  { month: 'January', desktop: 80 },
+  { month: 'February', desktop: 200 },
+  { month: 'March', desktop: 120 },
+  { month: 'April', desktop: 190 },
+  { month: 'May', desktop: 130 },
+  { month: 'June', desktop: 140 },
 ];
+
 const chartConfig = {
-  mobile: {
-    label: 'Mobile',
+  desktop: {
+    label: 'Desktop',
     color: 'var(--chart-2)',
   },
 } satisfies ChartConfig;
@@ -251,16 +252,18 @@ export function AnalyticsDashboard() {
               </Button>
             </div>
 
-            <div className="aspect-auto h-96 w-full">
-              <ChartContainer config={chartConfig} className="w-full">
+            <div className="aspect-auto h-fit w-full">
+              <ChartContainer
+                config={chartConfig}
+                className="h-96 w-full pt-12"
+              >
                 <AreaChart
                   accessibilityLayer
                   data={chartData}
                   margin={{
                     left: 12,
                     right: 12,
-                    top: 100,
-                    bottom: 300,
+                    top: 12,
                   }}
                 >
                   <CartesianGrid vertical={false} />
@@ -276,26 +279,31 @@ export function AnalyticsDashboard() {
                     content={<ChartTooltipContent />}
                   />
                   <defs>
-                    <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient
+                      id="fillDesktop"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
                       <stop
                         offset="5%"
-                        stopColor="var(--color-mobile)"
+                        stopColor="var(--color-desktop)"
                         stopOpacity={0.8}
                       />
                       <stop
                         offset="95%"
-                        stopColor="var(--color-mobile)"
+                        stopColor="var(--color-desktop)"
                         stopOpacity={0.1}
                       />
                     </linearGradient>
                   </defs>
                   <Area
-                    dataKey="mobile"
+                    dataKey="desktop"
                     type="natural"
-                    fill="url(#fillMobile)"
+                    fill="url(#fillDesktop)"
                     fillOpacity={0.4}
-                    stroke="var(--color-mobile)"
-                    stackId="a"
+                    stroke="var(--color-desktop)"
                   />
                 </AreaChart>
               </ChartContainer>
