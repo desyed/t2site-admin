@@ -4,11 +4,18 @@ import type React from 'react';
 
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
-import { Smile, SendIcon, Plus } from 'lucide-react';
+import { Smile, SendIcon, Plus, FileIcon, Camera, Phone } from 'lucide-react';
 import { memo, useState, useRef, useEffect } from 'react';
 
 import { useTheme } from '@/components/theme-provider';
 import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+} from '@/components/ui/dropdown-menu';
 import { useMediaQuery } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 
@@ -116,21 +123,34 @@ export const MessageInputArea = memo(
               <div className="flex flex-wrap items-center gap-2 overflow-hidden rounded-[28px] border bg-background py-1">
                 <div
                   className={cn(
-                    'px-2',
+                    'pl-2',
                     isTextMultiLine ? 'order-2 w-fit flex-1' : 'order-1 w-fit'
                   )}
                 >
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className={cn(
-                      'size-8 rounded-full text-muted-foreground hover:text-foreground',
-                      showEmojiPicker && '!bg-accent !text-primary'
-                    )}
-                    onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                  >
-                    <Plus className="size-4" />
-                  </Button>
+                  <DropdownMenu modal={false}>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className={cn(
+                          'size-8 rounded-full text-muted-foreground hover:text-foreground',
+                          showEmojiPicker && '!bg-accent !text-primary'
+                        )}
+                      >
+                        <Plus className="size-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-fit p-2" align="start">
+                      <DropdownMenuGroup>
+                        <DropdownMenuItem className="py-2 pr-6">
+                          <FileIcon className="mr-2 size-4" /> Files
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="py-2 pr-6">
+                          <Camera className="mr-2 size-4" /> Photos & Videos
+                        </DropdownMenuItem>
+                      </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
 
                 <EnhancedTextarea
