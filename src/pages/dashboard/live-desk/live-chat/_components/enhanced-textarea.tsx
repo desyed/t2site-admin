@@ -9,6 +9,7 @@ import type { TextareaProps } from '@/components/ui/textarea';
 import { Textarea } from '@/components/ui/textarea';
 
 interface EnhancedTextareaProps extends Omit<TextareaProps, 'onChange'> {
+  value?: string;
   onChange: (value: string) => void;
   isTextMultiLine?: boolean;
   onHeightChange?: (isMultiLine: boolean) => void;
@@ -21,7 +22,7 @@ export const EnhancedTextarea = forwardRef<
 >(
   (
     {
-      value = '',
+      value,
       onChange,
       onHeightChange,
       isTextMultiLine,
