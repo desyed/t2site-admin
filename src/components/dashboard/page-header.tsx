@@ -9,6 +9,7 @@ type PageHeaderProps = {
   actions?: ReactNode;
   onToggleMobileNav?: () => void;
   icon?: ReactNode;
+  className?: string;
 };
 
 export function PageHeader({
@@ -16,11 +17,14 @@ export function PageHeader({
   actions,
   onToggleMobileNav,
   icon,
+  className,
 }: PageHeaderProps) {
   const [toggleMobileNav] = useOutletContext<[() => void]>();
 
   return (
-    <div className="max-md:bg-black max-md:text-white max-sm:border-b">
+    <div
+      className={`max-md:bg-black max-md:text-white max-sm:border-b ${className}`}
+    >
       <div className="mx-auto w-full px-3 lg:px-6">
         <div className="flex h-12 items-center justify-between gap-4 sm:h-16">
           <div className="flex min-w-0 items-center gap-4">

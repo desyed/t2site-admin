@@ -16,8 +16,8 @@ export function Component() {
 
   return (
     <div>
-      <PageHeader title="Live Chat" />
-      <div className="dashboard-container space-y-6">
+      <PageHeader title="Live Chat" className="md:hidden" />
+      <div className="dashboard-container p-0">
         <LiveChatPage />
       </div>
     </div>

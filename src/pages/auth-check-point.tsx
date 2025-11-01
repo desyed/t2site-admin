@@ -17,6 +17,10 @@ export default function AuthCheckPoint() {
         // Detect if the user is logged in
         await authStore.fetchSession(true);
         navigate(from, { replace: true });
+
+        setTimeout(() => {
+          window.localStorage.removeItem('redirect_to');
+        }, 300);
       }
     }
     initSession();

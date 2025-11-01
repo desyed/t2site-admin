@@ -10,7 +10,7 @@ export default function LiveChat() {
   const isDesktop = useMediaQuery('(min-width: 1024px)');
 
   return (
-    <div className="h-[calc(100vh-52px)] w-full overflow-hidden bg-background">
+    <div className="h-[calc(100vh-16px)] w-full overflow-hidden rounded-lg bg-background">
       <ResizablePanelGroup direction="horizontal" className="h-full">
         <ResizablePanel
           id="conversation-list"

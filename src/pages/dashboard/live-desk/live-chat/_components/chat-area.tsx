@@ -170,7 +170,7 @@ export function ChatArea() {
   }
 
   return (
-    <div className="relative flex h-full flex-col">
+    <div className="relative flex h-full flex-col bg-neutral-100">
       {isLoading ? (
         <ChatHeaderSkeleton />
       ) : (
@@ -192,7 +192,7 @@ export function ChatArea() {
         </div>
       ) : messages.length > 0 ? (
         <div
-          className="site-scrollbar flex flex-1 flex-col gap-1 overflow-y-auto bg-neutral-50 py-5 pl-4 pr-1 dark:bg-background"
+          className="site-scrollbar flex flex-1 flex-col gap-1 overflow-y-auto py-5 pl-4 pr-1 dark:bg-background"
           ref={scrollContainerRef}
         >
           {isFetchingPreviousPage && <MessageSkeletonList />}
@@ -214,7 +214,7 @@ export function ChatArea() {
         size="icon"
         variant="outline"
         style={{
-          bottom: isUserFacingBottom ? '11rem' : '0px',
+          bottom: isUserFacingBottom ? '5rem' : '10px',
           transition: 'bottom 0.2s ease-in-out',
         }}
       >
