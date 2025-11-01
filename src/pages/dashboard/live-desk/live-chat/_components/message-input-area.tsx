@@ -4,7 +4,7 @@ import type React from 'react';
 
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
-import { Smile, SendIcon, Plus, FileIcon, Camera, Phone } from 'lucide-react';
+import { Smile, SendIcon, Plus, FileIcon, Camera } from 'lucide-react';
 import { memo, useState, useRef, useEffect } from 'react';
 
 import { useTheme } from '@/components/theme-provider';
