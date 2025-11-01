@@ -170,7 +170,7 @@ export function ChatArea() {
   }
 
   return (
-    <div className="relative flex h-full flex-col bg-neutral-50">
+    <div className="relative flex h-full flex-col bg-neutral-100">
       {isLoading ? (
         <ChatHeaderSkeleton />
       ) : (
