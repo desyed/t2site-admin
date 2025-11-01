@@ -25,7 +25,7 @@ export const ChatHeader = memo(
     const projectId = params.projectId;
 
     return (
-      <div className="flex items-center justify-between border-b px-3 py-2 pt-3 sm:px-4">
+      <div className="flex items-center justify-between border-b bg-background px-3 py-2 pt-3 sm:px-4">
         {/* Left Side */}
         <div className="flex min-w-0 items-center gap-1.5">
           {!isDesktop && (

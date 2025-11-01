@@ -78,7 +78,7 @@ export default function ProjectLayout() {
           })}
           onClick={closeMobileNav}
         />
-        <div className="size-full min-h-fit bg-white pb-10 md:rounded-xl">
+        <div className="size-full min-h-fit bg-white md:rounded-xl">
           {isProjectLoading ? (
             <DashboardContentAreaSkeleton />
           ) : (

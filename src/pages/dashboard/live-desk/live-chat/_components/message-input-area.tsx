@@ -4,13 +4,6 @@ import type React from 'react';
 
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-} from '@radix-ui/react-dropdown-menu';
 import { Smile, SendIcon, Plus } from 'lucide-react';
 import { memo, useState, useRef, useEffect } from 'react';
 
@@ -126,26 +119,17 @@ export const MessageInputArea = memo(
                     isTextMultiLine ? 'order-2 w-fit flex-1' : 'order-1 w-fit'
                   )}
                 >
-                  <DropdownMenu modal={false}>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className={cn(
-                          'size-8 rounded-full text-muted-foreground hover:text-foreground',
-                          showEmojiPicker && '!bg-accent !text-primary'
-                        )}
-                      >
-                        <Plus className="size-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-40" align="start">
-                      <DropdownMenuGroup>
-                        <DropdownMenuItem>Close Session</DropdownMenuItem>
-                        <DropdownMenuItem>Send Transcript</DropdownMenuItem>
-                      </DropdownMenuGroup>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className={cn(
+                      'size-8 rounded-full text-muted-foreground hover:text-foreground',
+                      showEmojiPicker && '!bg-accent !text-primary'
+                    )}
+                    onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                  >
+                    <Plus className="size-4" />
+                  </Button>
                 </div>
 
                 <EnhancedTextarea
