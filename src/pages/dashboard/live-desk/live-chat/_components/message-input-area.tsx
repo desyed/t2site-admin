@@ -100,11 +100,12 @@ export const MessageInputArea = memo(
                 style={{
                   display: showEmojiPicker ? 'block' : 'none',
                 }}
-                className="absolute -top-2 left-0 -translate-y-full"
+                className="absolute -top-2 right-0 -translate-y-full"
               >
                 <Picker
                   onEmojiSelect={(emoji: any) => {
                     handleEmojiInsert(emoji.native);
+                    setShowEmojiPicker(false);
                   }}
                   data={data}
                   theme={theme}
