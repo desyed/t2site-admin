@@ -8,6 +8,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { createDashboardLoader } from '@/middlewares/auth-middleware';
 
+import { FaqForm } from './general/_components/FaqForm';
+
 export const loader = createDashboardLoader(() => {
   return {
     title: 'Project General Settings',
@@ -173,27 +175,7 @@ export const Component = () => {
       </div>
 
       <div className="space-y-4">
-        <h3 className="text-[12px] uppercase text-gray-500">FAQ Questions</h3>
-        <Card className="border-none shadow-none">
-          <CardContent className="space-y-4 p-0">
-            <div className="grid gap-2">
-              <Label>Question 1</Label>
-              <Input id="welcome-text" />
-            </div>
-            <div className="grid gap-2">
-              <Label>Question 2</Label>
-              <Input id="cta-text" />
-            </div>
-            <div className="grid gap-2">
-              <Label>Question 3</Label>
-              <Input id="promotional-link" />
-            </div>
-            <div className="grid gap-2">
-              <Label>Question 4</Label>
-              <Input id="promotional-link" />
-            </div>
-          </CardContent>
-        </Card>
+        <FaqForm />
       </div>
     </div>
   );
