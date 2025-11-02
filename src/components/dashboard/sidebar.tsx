@@ -46,7 +46,7 @@ export function Sidebar({ projectId }: SidebarProps) {
   const isAccountSettingsMode = pathname.includes('/account-settings');
 
   const handleBackToMain = () => {
-    router(`/${projectId}/analytics`);
+    router(`/${projectId}`);
   };
 
   const handleProjectSettingsMode = (e: React.MouseEvent) => {
@@ -64,6 +64,14 @@ export function Sidebar({ projectId }: SidebarProps) {
     e.preventDefault();
     // Navigate to Banner Settings (first option) by default
     router(`/${projectId}/cookie-consent`);
+  };
+
+  const handleBackToDashboard = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const lastActiveProjectId = window.localStorage.getItem(
+      'lastActiveProjectId'
+    );
+    router(lastActiveProjectId ? `/${lastActiveProjectId}` : '/');
   };
 
   const projectSettingsCategories = [
@@ -397,7 +405,7 @@ export function Sidebar({ projectId }: SidebarProps) {
           <div className="p-3 pt-5">
             {/* Back Button */}
             <button
-              onClick={handleBackToMain} // Updated to use handleBackToMain function
+              onClick={handleBackToDashboard} // Updated to use handleBackToMain function
               className="mb-6 flex w-full items-center gap-2 rounded-md bg-gray-50 px-3 py-2 text-xs text-gray-700 transition-colors hover:text-gray-900"
             >
               <ArrowLeft className="size-4" />

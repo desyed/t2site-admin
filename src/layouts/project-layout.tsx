@@ -26,6 +26,10 @@ export default function ProjectLayout() {
 
   const params = useParams();
 
+  if (params.projectId) {
+    window.localStorage.setItem('lastActiveProjectId', params.projectId);
+  }
+
   const toggleMobileNav = () => setIsMobileNavOpened((prev) => !prev);
 
   const isProjectLoading = isLoading || isFetching;
