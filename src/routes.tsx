@@ -85,6 +85,20 @@ export const routes = createBrowserRouter([
         ],
       },
       {
+        path: '/account-settings',
+        element: <ProjectLayout />,
+        loader: privateLoader,
+        children: [
+          {
+            index: true,
+            lazy: async () => {
+              const module = await import('@/pages/account-settings');
+              return { element: <module.default /> };
+            },
+          },
+        ],
+      },
+      {
         path: '/:projectId',
         element: <ProjectLayout />,
         loader: dashboardLoader,
