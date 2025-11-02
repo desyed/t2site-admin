@@ -3,7 +3,6 @@ import { Outlet, useNavigate, useParams } from 'react-router';
 
 import { useCurrentProjectQuery } from '@/app/project/project.hooks';
 import { DashboardContentAreaSkeleton } from '@/components/dashboard/dashboard-content-area-skeleton';
-import { ProfileCompletionFloatButton } from '@/components/dashboard/profile-completion-float-button';
 import { ProjectNavigationBar } from '@/components/dashboard/project-navigation-bar';
 import { Sidebar } from '@/components/dashboard/sidebar';
 import { SidebarSkeleton } from '@/components/dashboard/sidebar-skeleton';
@@ -85,8 +84,6 @@ export default function ProjectLayout() {
             <Outlet context={[toggleMobileNav]} />
           )}
         </div>
-
-        <ProfileCompletionFloatButton />
       </main>
     </RealtimeProvider>
   );
