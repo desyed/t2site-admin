@@ -96,6 +96,31 @@ export const routes = createBrowserRouter([
               return { element: <module.default /> };
             },
           },
+          {
+            path: 'billing-information',
+            lazy: async () => {
+              const module = await import(
+                '@/pages/account-settings/billing-information'
+              );
+              return { element: <module.default /> };
+            },
+          },
+          {
+            path: 'billing-items',
+            lazy: async () => {
+              const module = await import(
+                '@/pages/account-settings/billing-items'
+              );
+              return { element: <module.default /> };
+            },
+          },
+          {
+            path: 'invoices',
+            lazy: async () => {
+              const module = await import('@/pages/account-settings/invoices');
+              return { element: <module.default /> };
+            },
+          },
         ],
       },
       {
