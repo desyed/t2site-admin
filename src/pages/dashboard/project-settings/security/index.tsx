@@ -26,41 +26,6 @@ export const Component = () => {
       <div className="dashboard-container">
         <div className="w-full space-y-12 lg:w-1/2">
           <div className="space-y-4">
-            <h3 className="text-[12px] uppercase text-gray-500">
-              Change Password
-            </h3>
-            <Card className="border-none shadow-none">
-              <CardContent className="space-y-4 p-0">
-                <div className="space-y-4">
-                  <div className="grid gap-2">
-                    <Label htmlFor="current-password">Current Password</Label>
-                    <Input
-                      id="current-password"
-                      type="password"
-                      className="mt-1"
-                    />
-                  </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="new-password">New Password</Label>
-                    <Input id="new-password" type="password" className="mt-1" />
-                  </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="confirm-password">
-                      Confirm New Password
-                    </Label>
-                    <Input
-                      id="confirm-password"
-                      type="password"
-                      className="mt-1"
-                    />
-                  </div>
-                  <Button>Update Password</Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="space-y-4">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-base text-red-600">
@@ -68,7 +33,7 @@ export const Component = () => {
                   Danger Zone
                 </CardTitle>
                 <CardDescription>
-                  Permanently delete your account and all associated data
+                  Permanently delete your project and all associated data
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -77,8 +42,8 @@ export const Component = () => {
                     This action cannot be undone
                   </h4>
                   <p className="mb-4 text-sm text-gray-500">
-                    Deleting your account will permanently remove all your
-                    projects, team members, chat history, and settings. This
+                    Deleting your project will permanently remove all your
+                    project data, team members, chat history, and settings. This
                     action is irreversible.
                   </p>
                   <div className="space-y-3">
@@ -94,7 +59,7 @@ export const Component = () => {
                     </div>
                     <Button>
                       <Trash2 className="mr-2 size-4" />
-                      Delete Account Permanently
+                      Delete Project Permanently
                     </Button>
                   </div>
                 </div>
