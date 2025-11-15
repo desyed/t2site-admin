@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
-// ✅ Validation schema using Zod
+// Validation schema using Zod
 const faqSchema = z.object({
   faqs: z
     .array(
@@ -45,7 +45,7 @@ export const FaqForm = () => {
     name: 'faqs',
   });
 
-  // ✅ Handle Add More with validation check
+  // Handle Add More with validation check
   const handleAddMore = async () => {
     const isValid = await trigger('faqs');
     if (!isValid) {
@@ -60,7 +60,7 @@ export const FaqForm = () => {
 
   const onSubmit = (data: FaqFormValues) => {
     // eslint-disable-next-line no-console
-    console.log('✅ Submitted Data:', data);
+    console.log('Submitted Data:', data);
     toast.success('Form submitted successfully!');
   };
 
