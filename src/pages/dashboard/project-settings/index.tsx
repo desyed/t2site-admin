@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { createDashboardLoader } from '@/middlewares/auth-middleware';
 
-import { FaqForm } from './general/_components/FaqForm';
+import { FaqForm } from './general/_components/faq-form';
 
 export const loader = createDashboardLoader(() => {
   return {
