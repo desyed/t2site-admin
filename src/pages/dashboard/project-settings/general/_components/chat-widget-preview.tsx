@@ -1,4 +1,9 @@
+import { Plus, Triangle } from 'lucide-react';
+
 import { ArrowRightOutline, MessageIcon } from '@/components/icons';
+import { Button } from '@/components/site-button';
+import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 
 const ChatWidgetPreview = () => {
   return (
@@ -31,6 +36,48 @@ const ChatWidgetPreview = () => {
       </div>
 
       {/* Inbox Section */}
+
+      {/* Chat Toolbar */}
+      <div className="relative bg-gray-200 pb-2 pt-4">
+        <div className="px-2 pb-1 sm:px-3 sm:pb-2">
+          <div className="relative">
+            {/* Reply Dropdown */}
+
+            <div className="relative">
+              <div className="flex flex-wrap items-center gap-2 overflow-hidden rounded-[28px] border bg-background py-1">
+                <div className={cn('pl-2', 'order-1 w-fit')}>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className={cn(
+                      'size-8 rounded-full text-muted-foreground hover:text-foreground'
+                    )}
+                  >
+                    <Plus className="size-4" />
+                  </Button>
+                </div>
+
+                <Input
+                  className="order-2 flex-1 border-none focus-visible:shadow-none focus-visible:outline-none"
+                  placeholder="Write a message..."
+                  readOnly
+                />
+
+                <div className="order-3 flex items-center gap-2 px-2">
+                  <div className="relative">
+                    <Button
+                      size="icon"
+                      className="size-8 gap-2 rounded-full transition-colors"
+                    >
+                      <Triangle className="ml-0.5 size-4 rotate-90" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
