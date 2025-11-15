@@ -62,6 +62,8 @@ body,
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
     --icon: 0 0% 25%;
+    --chat-primary: 52 97% 66%;
+    --chat-logo-badge-background: '52 97% 66%';
   }
 
   .dark {

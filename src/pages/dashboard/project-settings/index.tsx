@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { createDashboardLoader } from '@/middlewares/auth-middleware';
 
+import ChatWidgetPreview from './general/_components/chat-widget-preview';
 import { FaqForm } from './general/_components/faq-form';
 
 export const loader = createDashboardLoader(() => {
@@ -70,112 +71,118 @@ export const Component = () => {
   );
 
   const renderChatWidgetConfigurations = () => (
-    <div className="space-y-12">
-      <div className="space-y-4">
-        <h3 className="text-[12px] uppercase text-gray-500">Colors</h3>
-        <Card className="border-none shadow-none">
-          <CardContent className="space-y-4 p-0">
-            <div className="grid gap-2">
-              <Label>Primary Background Color</Label>
-              <div className="flex items-center gap-2">
-                <Input
-                  type="color"
-                  value={primaryBgColor}
-                  id="primary-bg-color"
-                  onChange={(e) => setPrimaryBgColor(e.target.value)}
-                  className="w-12 p-1.5"
-                />
-                <Input
-                  type="text"
-                  value={primaryBgColor}
-                  onChange={(e) => setPrimaryBgColor(e.target.value)}
-                  placeholder="#FFFFFF"
-                />
+    <div>
+      <div className="space-y-12">
+        <div className="space-y-4">
+          <h3 className="text-[12px] uppercase text-gray-500">Colors</h3>
+          <Card className="border-none shadow-none">
+            <CardContent className="space-y-4 p-0">
+              <div className="grid gap-2">
+                <Label>Primary Background Color</Label>
+                <div className="flex items-center gap-2">
+                  <Input
+                    type="color"
+                    value={primaryBgColor}
+                    id="primary-bg-color"
+                    onChange={(e) => setPrimaryBgColor(e.target.value)}
+                    className="w-12 p-1.5"
+                  />
+                  <Input
+                    type="text"
+                    value={primaryBgColor}
+                    onChange={(e) => setPrimaryBgColor(e.target.value)}
+                    placeholder="#FFFFFF"
+                  />
+                </div>
               </div>
-            </div>
-            <div className="grid gap-2">
-              <Label>Primary Foreground Color</Label>
-              <div className="flex items-center gap-2">
-                <Input
-                  type="color"
-                  value={primaryFgColor}
-                  id="primary-fg-color"
-                  onChange={(e) => setPrimaryFgColor(e.target.value)}
-                  className="w-12 p-1.5"
-                />
-                <Input
-                  type="text"
-                  value={primaryFgColor}
-                  onChange={(e) => setPrimaryFgColor(e.target.value)}
-                  placeholder="#FFA500"
-                />
+              <div className="grid gap-2">
+                <Label>Primary Foreground Color</Label>
+                <div className="flex items-center gap-2">
+                  <Input
+                    type="color"
+                    value={primaryFgColor}
+                    id="primary-fg-color"
+                    onChange={(e) => setPrimaryFgColor(e.target.value)}
+                    className="w-12 p-1.5"
+                  />
+                  <Input
+                    type="text"
+                    value={primaryFgColor}
+                    onChange={(e) => setPrimaryFgColor(e.target.value)}
+                    placeholder="#FFA500"
+                  />
+                </div>
               </div>
-            </div>
-            <div className="grid gap-2">
-              <Label>Logo Badge Background Color</Label>
-              <div className="flex items-center gap-2">
-                <Input
-                  type="color"
-                  value={logoBadgeBgColor}
-                  id="logo-badge-bg-color"
-                  placeholder="#000000"
-                  onChange={(e) => setLogoBadgeBgColor(e.target.value)}
-                  className="w-12 p-1.5"
-                />
-                <Input
-                  type="text"
-                  value={logoBadgeBgColor}
-                  onChange={(e) => setLogoBadgeBgColor(e.target.value)}
-                  placeholder="#471515"
-                />
+              <div className="grid gap-2">
+                <Label>Logo Badge Background Color</Label>
+                <div className="flex items-center gap-2">
+                  <Input
+                    type="color"
+                    value={logoBadgeBgColor}
+                    id="logo-badge-bg-color"
+                    placeholder="#000000"
+                    onChange={(e) => setLogoBadgeBgColor(e.target.value)}
+                    className="w-12 p-1.5"
+                  />
+                  <Input
+                    type="text"
+                    value={logoBadgeBgColor}
+                    onChange={(e) => setLogoBadgeBgColor(e.target.value)}
+                    placeholder="#471515"
+                  />
+                </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="space-y-4">
+          <h3 className="text-[12px] uppercase text-gray-500">Images</h3>
+          <Card className="border-none shadow-none">
+            <CardContent className="space-y-4 p-0">
+              <div className="grid gap-2">
+                <Label>Logo Image</Label>
+                <Input id="logo" type="file" />
+              </div>
+              <div className="grid gap-2">
+                <Label>Banner Image</Label>
+                <Input id="banner" type="file" />
+              </div>
+              <div className="grid gap-2">
+                <Label>Promotional Image</Label>
+                <Input id="promotional" type="file" />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="space-y-4">
+          <h3 className="text-[12px] uppercase text-gray-500">Contents</h3>
+          <Card className="border-none shadow-none">
+            <CardContent className="space-y-4 p-0">
+              <div className="grid gap-2">
+                <Label>Welcome Text</Label>
+                <Input id="welcome-text" />
+              </div>
+              <div className="grid gap-2">
+                <Label>CTA Text</Label>
+                <Input id="cta-text" />
+              </div>
+              <div className="grid gap-2">
+                <Label>Promotional Image Link</Label>
+                <Input id="promotional-link" />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="space-y-4">
+          <FaqForm />
+        </div>
       </div>
 
-      <div className="space-y-4">
-        <h3 className="text-[12px] uppercase text-gray-500">Images</h3>
-        <Card className="border-none shadow-none">
-          <CardContent className="space-y-4 p-0">
-            <div className="grid gap-2">
-              <Label>Logo Image</Label>
-              <Input id="logo" type="file" />
-            </div>
-            <div className="grid gap-2">
-              <Label>Banner Image</Label>
-              <Input id="banner" type="file" />
-            </div>
-            <div className="grid gap-2">
-              <Label>Promotional Image</Label>
-              <Input id="promotional" type="file" />
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="space-y-4">
-        <h3 className="text-[12px] uppercase text-gray-500">Contents</h3>
-        <Card className="border-none shadow-none">
-          <CardContent className="space-y-4 p-0">
-            <div className="grid gap-2">
-              <Label>Welcome Text</Label>
-              <Input id="welcome-text" />
-            </div>
-            <div className="grid gap-2">
-              <Label>CTA Text</Label>
-              <Input id="cta-text" />
-            </div>
-            <div className="grid gap-2">
-              <Label>Promotional Image Link</Label>
-              <Input id="promotional-link" />
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="space-y-4">
-        <FaqForm />
+      <div className="fixed bottom-20 right-20">
+        <ChatWidgetPreview />
       </div>
     </div>
   );
