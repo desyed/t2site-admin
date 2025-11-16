@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router';
 
 import { Button } from '@/components/ui/button';
 
-export function ProfileCompletionFloatButton() {
+export function ProjectCompletionFloatButton() {
   const [isVisible] = useState(true);
 
   const { projectId } = useParams();

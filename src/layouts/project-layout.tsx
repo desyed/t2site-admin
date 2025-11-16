@@ -3,6 +3,7 @@ import { Outlet, useNavigate, useParams } from 'react-router';
 
 import { useCurrentProjectQuery } from '@/app/project/project.hooks';
 import { DashboardContentAreaSkeleton } from '@/components/dashboard/dashboard-content-area-skeleton';
+import ProjectConfigurationAlert from '@/components/dashboard/project-configuration-alert';
 import { ProjectNavigationBar } from '@/components/dashboard/project-navigation-bar';
 import { Sidebar } from '@/components/dashboard/sidebar';
 import { SidebarSkeleton } from '@/components/dashboard/sidebar-skeleton';
@@ -12,9 +13,17 @@ import { useAuth } from '@/contexts/auth-provider';
 import { cn } from '@/lib/utils';
 
 export default function ProjectLayout() {
+  const [showProjectConfigurationAlert, setShowProjectConfigurationAlert] =
+    useState(false);
   const { isAuthenticated } = useAuth();
   const [isMobileNavOpened, setIsMobileNavOpened] = useState(false);
-  const { error, refetch, isLoading, isFetching } = useCurrentProjectQuery();
+  const {
+    data: currentProjectData,
+    error,
+    refetch,
+    isLoading,
+    isFetching,
+  } = useCurrentProjectQuery();
 
   const navigate = useNavigate();
 
@@ -23,6 +32,12 @@ export default function ProjectLayout() {
       navigate('/login');
     }
   }, [isAuthenticated, navigate]);
+
+  useEffect(() => {
+    if (!currentProjectData?.isRunning) {
+      setShowProjectConfigurationAlert(true);
+    }
+  }, [currentProjectData]);
 
   const params = useParams();
 
@@ -85,7 +100,10 @@ export default function ProjectLayout() {
           {isProjectLoading ? (
             <DashboardContentAreaSkeleton />
           ) : (
-            <Outlet context={[toggleMobileNav]} />
+            <div>
+              {showProjectConfigurationAlert && <ProjectConfigurationAlert />}
+              <Outlet context={[toggleMobileNav]} />
+            </div>
           )}
         </div>
       </main>
