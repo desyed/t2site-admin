@@ -5,7 +5,7 @@ type ChatOption = {
   text: string;
 };
 
-type ChatMessage = {
+export type ChatMessage = {
   id: number;
   type: 'bot' | 'user-options';
   avatar?: string;

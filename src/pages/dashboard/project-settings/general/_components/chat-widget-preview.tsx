@@ -5,9 +5,11 @@ import { Button } from '@/components/site-button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 
+import type { ChatMessage } from './chat-conversation';
+
 import ChatConversation from './chat-conversation';
 
-const conversation = [
+const conversation: ChatMessage[] = [
   {
     id: 1,
     type: 'bot',
