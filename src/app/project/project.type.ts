@@ -22,6 +22,7 @@ export type Project = {
   };
   features: ProjectFeatures;
   createdAt: string;
+  isRunning?: boolean;
 };
 
 export type CreateProjectInput = z.infer<typeof createProjectSchema>;
