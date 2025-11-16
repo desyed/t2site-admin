@@ -1,5 +1,5 @@
 import { ArrowLeft, ChevronRight } from 'lucide-react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { PageHeader } from '@/components/dashboard/page-header';
 import { Button } from '@/components/site-button';
@@ -10,6 +10,28 @@ import { createDashboardLoader } from '@/middlewares/auth-middleware';
 
 import ChatWidgetPreview from './general/_components/chat-widget-preview';
 import { FaqForm } from './general/_components/faq-form';
+
+type WidgetConfig = {
+  background: string;
+  foreground: string;
+  logoBadgeBackgroundColor: string;
+};
+
+const DEFAULTS: WidgetConfig = {
+  background: '#FFFCE8',
+  foreground: '#000000',
+  logoBadgeBackgroundColor: '#FCE654',
+};
+
+// Small helper to keep color input tidy
+const normalizeHex = (value: string) => {
+  const v = value.trim();
+  if (!v) return '';
+  if (v.startsWith('#')) return v.slice(0, 7);
+  return `#${v}`.slice(0, 7);
+};
+
+const isValidHex = (value: string) => /^#([\dA-Fa-f]{6})$/.test(value);
 
 export const loader = createDashboardLoader(() => {
   return {
@@ -43,9 +65,57 @@ export const Component = () => {
     level: 'index',
     item: '',
   });
-  const [primaryBgColor, setPrimaryBgColor] = useState('#EEEEEE');
-  const [primaryFgColor, setPrimaryFgColor] = useState('#FFA500');
-  const [logoBadgeBgColor, setLogoBadgeBgColor] = useState('#555555');
+
+  const [primaryBgColor, setPrimaryBgColor] = useState(DEFAULTS.background);
+  const [primaryFgColor, setPrimaryFgColor] = useState(DEFAULTS.foreground);
+  const [logoBadgeBgColor, setLogoBadgeBgColor] = useState(
+    DEFAULTS.logoBadgeBackgroundColor
+  );
+
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+
+  const config: WidgetConfig = useMemo(
+    () => ({
+      background: primaryBgColor,
+      foreground: primaryFgColor,
+      logoBadgeBackgroundColor: logoBadgeBgColor,
+    }),
+    [primaryBgColor, primaryFgColor, logoBadgeBgColor]
+  );
+
+  const handleSave = async () => {
+    setSaving(true);
+    setError(null);
+    setSuccess(null);
+
+    // Validate before submit
+    if (
+      !isValidHex(config.background) ||
+      !isValidHex(config.foreground) ||
+      !isValidHex(config.logoBadgeBackgroundColor)
+    ) {
+      setError('Please enter valid 6-digit hex colors, e.g. #A1B2C3.');
+      setSaving(false);
+      return;
+    }
+
+    try {
+      // Replace with your API endpoint + auth
+      const res = await fetch('/api/chat-widget/config', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(config),
+      });
+      if (!res.ok) throw new Error(`Failed with status ${res.status}`);
+      setSuccess('Saved successfully!');
+    } catch (e: any) {
+      setError(e?.message ?? 'Failed to save configuration.');
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const renderProjectInformation = () => (
     <div className="space-y-12">
@@ -84,13 +154,17 @@ export const Component = () => {
                     type="color"
                     value={primaryBgColor}
                     id="primary-bg-color"
-                    onChange={(e) => setPrimaryBgColor(e.target.value)}
+                    onChange={(e) =>
+                      setPrimaryBgColor(normalizeHex(e.target.value))
+                    }
                     className="w-12 p-1.5"
                   />
                   <Input
                     type="text"
                     value={primaryBgColor}
-                    onChange={(e) => setPrimaryBgColor(e.target.value)}
+                    onChange={(e) =>
+                      setPrimaryBgColor(normalizeHex(e.target.value))
+                    }
                     placeholder="#FFFFFF"
                   />
                 </div>
@@ -102,13 +176,17 @@ export const Component = () => {
                     type="color"
                     value={primaryFgColor}
                     id="primary-fg-color"
-                    onChange={(e) => setPrimaryFgColor(e.target.value)}
+                    onChange={(e) =>
+                      setPrimaryFgColor(normalizeHex(e.target.value))
+                    }
                     className="w-12 p-1.5"
                   />
                   <Input
                     type="text"
                     value={primaryFgColor}
-                    onChange={(e) => setPrimaryFgColor(e.target.value)}
+                    onChange={(e) =>
+                      setPrimaryFgColor(normalizeHex(e.target.value))
+                    }
                     placeholder="#FFA500"
                   />
                 </div>
@@ -121,16 +199,34 @@ export const Component = () => {
                     value={logoBadgeBgColor}
                     id="logo-badge-bg-color"
                     placeholder="#000000"
-                    onChange={(e) => setLogoBadgeBgColor(e.target.value)}
+                    onChange={(e) =>
+                      setLogoBadgeBgColor(normalizeHex(e.target.value))
+                    }
                     className="w-12 p-1.5"
                   />
                   <Input
                     type="text"
                     value={logoBadgeBgColor}
-                    onChange={(e) => setLogoBadgeBgColor(e.target.value)}
+                    onChange={(e) =>
+                      setLogoBadgeBgColor(normalizeHex(e.target.value))
+                    }
                     placeholder="#471515"
                   />
                 </div>
+              </div>
+
+              <div className="flex items-center justify-end gap-3">
+                <Button
+                  onClick={handleSave}
+                  disabled={saving}
+                  className="rounded bg-black px-4 py-2 text-white disabled:opacity-60"
+                >
+                  {saving ? 'Saving…' : 'Save'}
+                </Button>
+                {error && <span className="text-sm text-red-600">{error}</span>}
+                {success && (
+                  <span className="text-sm text-green-600">{success}</span>
+                )}
               </div>
             </CardContent>
           </Card>
@@ -181,7 +277,16 @@ export const Component = () => {
         </div>
       </div>
 
-      <div className="fixed bottom-20 right-20">
+      <div
+        className="fixed bottom-20 right-20"
+        style={
+          {
+            '--chat-bg': config.background,
+            '--chat-fg': config.foreground,
+            '--chat-badge': config.logoBadgeBackgroundColor,
+          } as React.CSSProperties
+        }
+      >
         <ChatWidgetPreview />
       </div>
     </div>

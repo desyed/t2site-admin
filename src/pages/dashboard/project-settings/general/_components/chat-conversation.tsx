@@ -30,7 +30,7 @@ const ChatConversation: React.FC<ChatProps> = ({ conversation }) => {
                   alt="Bot Avatar"
                   width={36}
                   height={36}
-                  className="bg-chat-primary rounded-full p-2"
+                  className="rounded-full bg-[var(--chat-badge)] p-2"
                 />
               )}
               <div className="max-w-[80%] rounded-xl bg-[#D9D9D9] px-4 py-2 text-sm text-gray-800">
@@ -44,7 +44,7 @@ const ChatConversation: React.FC<ChatProps> = ({ conversation }) => {
               {item.options?.map((option) => (
                 <div
                   key={option.id}
-                  className="max-w-[80%] rounded-xl bg-[#1F2023] px-4 py-2 text-right text-sm text-white"
+                  className="max-w-[80%] rounded-xl bg-[var(--chat-fg)] px-4 py-2 text-right text-sm text-white"
                 >
                   {option.text}
                 </div>

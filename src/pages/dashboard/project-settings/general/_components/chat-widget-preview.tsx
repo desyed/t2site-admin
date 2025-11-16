@@ -30,23 +30,21 @@ const conversation: ChatMessage[] = [
 
 const ChatWidgetPreview = () => {
   return (
-    <div className="w-[400px] overflow-hidden rounded-xl bg-gradient-to-b from-[#FFFCE8] to-[#F5F5F5]">
+    <div className="w-[400px] overflow-hidden rounded-xl border bg-gradient-to-b from-[var(--chat-bg)] to-[#F5F5F5] shadow">
       {/* Chat Header */}
       <div className="flex items-center justify-between px-6 py-4 text-primary">
         <div className="flex items-center gap-2.5">
-          <div>
-            <div
-              className={`bg-chat-primary flex size-11 items-center justify-center rounded-full`}
-            >
-              <div className="mt-[2px] size-3/5">
-                <MessageIcon />
-              </div>
+          <div
+            className={`flex size-11 items-center justify-center rounded-full bg-[var(--chat-badge)]`}
+          >
+            <div className="mt-[2px] size-3/5">
+              <MessageIcon />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Chat Section */}
+      {/* Chat Conversation */}
       <div className="px-2">
         <div className="rounded-t-xl bg-[#F5F5F5] p-4">
           <ChatConversation conversation={conversation} />
@@ -54,42 +52,34 @@ const ChatWidgetPreview = () => {
       </div>
 
       {/* Chat Toolbar */}
-      <div className="relative bg-[#E6E6E6] pb-2 pt-4">
+      <div className="bg-[#E6E6E6] pb-2 pt-4">
         <div className="px-2 pb-1 sm:px-3 sm:pb-2">
-          <div className="relative">
-            {/* Reply Dropdown */}
+          <div className="flex items-center gap-2 overflow-hidden rounded-[28px] border bg-background">
+            <div className={cn('pl-2', 'order-1 w-fit')}>
+              <Button
+                variant="ghost"
+                size="icon"
+                className={cn(
+                  'size-8 rounded-full text-muted-foreground hover:text-foreground'
+                )}
+              >
+                <Plus className="size-4" />
+              </Button>
+            </div>
 
-            <div className="relative">
-              <div className="flex flex-wrap items-center gap-2 overflow-hidden rounded-[28px] border bg-background">
-                <div className={cn('pl-2', 'order-1 w-fit')}>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className={cn(
-                      'size-8 rounded-full text-muted-foreground hover:text-foreground'
-                    )}
-                  >
-                    <Plus className="size-4" />
-                  </Button>
-                </div>
+            <Input
+              className="order-2 flex-1 border-none focus-visible:shadow-none focus-visible:outline-none"
+              placeholder="Write a message..."
+              readOnly
+            />
 
-                <Input
-                  className="order-2 flex-1 border-none focus-visible:shadow-none focus-visible:outline-none"
-                  placeholder="Write a message..."
-                  readOnly
-                />
-
-                <div className="order-3 flex items-center gap-2 px-2">
-                  <div className="relative">
-                    <Button
-                      size="icon"
-                      className="size-7 gap-2 rounded-full transition-colors"
-                    >
-                      <Triangle className="ml-0.5 size-4 rotate-90" />
-                    </Button>
-                  </div>
-                </div>
-              </div>
+            <div className="order-3 flex items-center gap-2 px-2">
+              <Button
+                size="icon"
+                className="size-7 gap-2 rounded-full bg-[var(--chat-fg)]"
+              >
+                <Triangle className="ml-0.5 size-4 rotate-90" />
+              </Button>
             </div>
           </div>
         </div>
