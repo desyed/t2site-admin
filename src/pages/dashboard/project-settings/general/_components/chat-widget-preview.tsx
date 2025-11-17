@@ -1,4 +1,4 @@
-import { Plus, Triangle } from 'lucide-react';
+import { Plus, Triangle, HelpCircle } from 'lucide-react';
 
 import { MessageIcon } from '@/components/icons';
 import { Button } from '@/components/site-button';
@@ -53,8 +53,8 @@ const ChatWidgetPreview = () => {
 
       {/* Chat Toolbar */}
       <div className="bg-[#E6E6E6] pb-2 pt-4">
-        <div className="px-2 pb-1 sm:px-3 sm:pb-2">
-          <div className="flex items-center gap-2 overflow-hidden rounded-[28px] border bg-background">
+        <div className="flex items-center gap-2 px-2 pb-1 sm:px-3 sm:pb-2">
+          <div className="flex w-full items-center gap-2 overflow-hidden rounded-[28px] border bg-background">
             <div className={cn('pl-2', 'order-1 w-fit')}>
               <Button
                 variant="ghost"
@@ -81,6 +81,9 @@ const ChatWidgetPreview = () => {
                 <Triangle className="ml-0.5 size-4 rotate-90" />
               </Button>
             </div>
+          </div>
+          <div>
+            <HelpCircle />
           </div>
         </div>
       </div>
