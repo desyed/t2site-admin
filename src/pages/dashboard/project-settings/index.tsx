@@ -1,43 +1,24 @@
 import { ArrowLeft, ChevronRight } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useState, useMemo } from 'react';
 
 import { PageHeader } from '@/components/dashboard/page-header';
-import { Button } from '@/components/site-button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { createDashboardLoader } from '@/middlewares/auth-middleware';
 
-import ChatWidgetPreview from './general/_components/chat-widget-preview';
-import { FaqForm } from './general/_components/faq-form';
+import type { WidgetConfig } from './helpers';
 
-type WidgetConfig = {
-  background: string;
-  foreground: string;
-  logoBadgeBackgroundColor: string;
-};
+import ChatWidgetPreview from './_components/chat-widget-preview';
+import { ColorsForm } from './_components/colors-form';
+import { ContentForm } from './_components/content-form';
+import { CookieConsentSettings } from './_components/cookie-consent-settings';
+import { FaqForm } from './_components/faq-form';
+import { ImagesForm } from './_components/images-form';
+import { ProjectInformation } from './_components/project-information';
+import { DEFAULTS, isValidHex } from './helpers';
 
-const DEFAULTS: WidgetConfig = {
-  background: '#FFFCE8',
-  foreground: '#000000',
-  logoBadgeBackgroundColor: '#FCE654',
-};
-
-// Small helper to keep color input tidy
-const normalizeHex = (value: string) => {
-  const v = value.trim();
-  if (!v) return '';
-  if (v.startsWith('#')) return v.slice(0, 7);
-  return `#${v}`.slice(0, 7);
-};
-
-const isValidHex = (value: string) => /^#([\dA-Fa-f]{6})$/.test(value);
-
-export const loader = createDashboardLoader(() => {
-  return {
-    title: 'Project General Settings',
-  };
-});
+export const loader = createDashboardLoader(() => ({
+  title: 'Project General Settings',
+}));
 
 const generalSettingsData = [
   {
@@ -90,25 +71,25 @@ export const Component = () => {
     setError(null);
     setSuccess(null);
 
-    // Validate before submit
     if (
       !isValidHex(config.background) ||
       !isValidHex(config.foreground) ||
       !isValidHex(config.logoBadgeBackgroundColor)
     ) {
-      setError('Please enter valid 6-digit hex colors, e.g. #A1B2C3.');
+      setError('Please enter valid hex colors (e.g. #A1B2C3)');
       setSaving(false);
       return;
     }
 
     try {
-      // Replace with your API endpoint + auth
       const res = await fetch('/api/chat-widget/config', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(config),
       });
+
       if (!res.ok) throw new Error(`Failed with status ${res.status}`);
+
       setSuccess('Saved successfully!');
     } catch (e: any) {
       setError(e?.message ?? 'Failed to save configuration.');
@@ -117,214 +98,49 @@ export const Component = () => {
     }
   };
 
-  const renderProjectInformation = () => (
-    <div className="space-y-12">
-      <Card className="border-none shadow-none">
-        <CardContent className="space-y-4 p-0">
-          <div className="grid gap-2">
-            <Label>Project Name</Label>
-            <Input id="project-name" placeholder="Your Project Name" />
-          </div>
-          <div className="grid gap-2">
-            <Label>Website URL</Label>
-            <Input id="website-url" placeholder="https://www.yourwebsite.com" />
-          </div>
-          <div className="grid gap-2">
-            <Label>Description</Label>
-            <Input id="description" placeholder="Project Description" />
-          </div>
-
-          <Button>Save</Button>
-        </CardContent>
-      </Card>
-    </div>
-  );
-
-  const renderChatWidgetConfigurations = () => (
-    <div>
-      <div className="space-y-12">
-        <div className="space-y-4">
-          <h3 className="text-[12px] uppercase text-gray-500">Colors</h3>
-          <Card className="border-none shadow-none">
-            <CardContent className="space-y-4 p-0">
-              <div className="grid gap-2">
-                <Label>Primary Background Color</Label>
-                <div className="flex items-center gap-2">
-                  <Input
-                    type="color"
-                    value={primaryBgColor}
-                    id="primary-bg-color"
-                    onChange={(e) =>
-                      setPrimaryBgColor(normalizeHex(e.target.value))
-                    }
-                    className="w-12 p-1.5"
-                  />
-                  <Input
-                    type="text"
-                    value={primaryBgColor}
-                    onChange={(e) =>
-                      setPrimaryBgColor(normalizeHex(e.target.value))
-                    }
-                    placeholder="#FFFFFF"
-                  />
-                </div>
-              </div>
-              <div className="grid gap-2">
-                <Label>Primary Foreground Color</Label>
-                <div className="flex items-center gap-2">
-                  <Input
-                    type="color"
-                    value={primaryFgColor}
-                    id="primary-fg-color"
-                    onChange={(e) =>
-                      setPrimaryFgColor(normalizeHex(e.target.value))
-                    }
-                    className="w-12 p-1.5"
-                  />
-                  <Input
-                    type="text"
-                    value={primaryFgColor}
-                    onChange={(e) =>
-                      setPrimaryFgColor(normalizeHex(e.target.value))
-                    }
-                    placeholder="#FFA500"
-                  />
-                </div>
-              </div>
-              <div className="grid gap-2">
-                <Label>Logo Badge Background Color</Label>
-                <div className="flex items-center gap-2">
-                  <Input
-                    type="color"
-                    value={logoBadgeBgColor}
-                    id="logo-badge-bg-color"
-                    placeholder="#000000"
-                    onChange={(e) =>
-                      setLogoBadgeBgColor(normalizeHex(e.target.value))
-                    }
-                    className="w-12 p-1.5"
-                  />
-                  <Input
-                    type="text"
-                    value={logoBadgeBgColor}
-                    onChange={(e) =>
-                      setLogoBadgeBgColor(normalizeHex(e.target.value))
-                    }
-                    placeholder="#471515"
-                  />
-                </div>
-              </div>
-
-              <div className="flex items-center justify-end gap-3">
-                <Button
-                  onClick={handleSave}
-                  disabled={saving}
-                  className="rounded bg-black px-4 py-2 text-white disabled:opacity-60"
-                >
-                  {saving ? 'Saving…' : 'Save'}
-                </Button>
-                {error && <span className="text-sm text-red-600">{error}</span>}
-                {success && (
-                  <span className="text-sm text-green-600">{success}</span>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="space-y-4">
-          <h3 className="text-[12px] uppercase text-gray-500">Images</h3>
-          <Card className="border-none shadow-none">
-            <CardContent className="space-y-4 p-0">
-              <div className="grid gap-2">
-                <Label>Logo Image</Label>
-                <Input id="logo" type="file" />
-              </div>
-              <div className="grid gap-2">
-                <Label>Banner Image</Label>
-                <Input id="banner" type="file" />
-              </div>
-              <div className="grid gap-2">
-                <Label>Promotional Image</Label>
-                <Input id="promotional" type="file" />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="space-y-4">
-          <h3 className="text-[12px] uppercase text-gray-500">Contents</h3>
-          <Card className="border-none shadow-none">
-            <CardContent className="space-y-4 p-0">
-              <div className="grid gap-2">
-                <Label>Welcome Text</Label>
-                <Input id="welcome-text" />
-              </div>
-              <div className="grid gap-2">
-                <Label>CTA Text</Label>
-                <Input id="cta-text" />
-              </div>
-              <div className="grid gap-2">
-                <Label>Promotional Image Link</Label>
-                <Input id="promotional-link" />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="space-y-4">
-          <FaqForm />
-        </div>
-      </div>
-
-      <div
-        className="fixed bottom-20 right-20"
-        style={
-          {
-            '--chat-bg': config.background,
-            '--chat-fg': config.foreground,
-            '--chat-badge': config.logoBadgeBackgroundColor,
-          } as React.CSSProperties
-        }
-      >
-        <ChatWidgetPreview />
-      </div>
-    </div>
-  );
-
-  const renderCookieConsentSettings = () => (
-    <div className="space-y-12">
-      <Card className="border-none shadow-none">
-        <CardContent className="space-y-4 p-0">
-          <div className="grid gap-2">
-            <Label>Cookie Banner Message</Label>
-            <Input
-              id="cookie-banner-message"
-              placeholder="Your Cookie Banner Message"
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label>Cookie Policy URL</Label>
-            <Input
-              id="cookie-policy-url"
-              placeholder="https://www.yourwebsite.com/cookie-policy"
-            />
-          </div>
-
-          <Button>Save</Button>
-        </CardContent>
-      </Card>
-    </div>
-  );
-
   const renderDetailedContent = () => {
     switch (navigation.item) {
       case 'project-information':
-        return renderProjectInformation();
+        return <ProjectInformation />;
+
       case 'chat-widget-configurations':
-        return renderChatWidgetConfigurations();
+        return (
+          <div className="space-y-12">
+            <ColorsForm
+              primaryBgColor={primaryBgColor}
+              primaryFgColor={primaryFgColor}
+              logoBadgeBgColor={logoBadgeBgColor}
+              setPrimaryBgColor={setPrimaryBgColor}
+              setPrimaryFgColor={setPrimaryFgColor}
+              setLogoBadgeBgColor={setLogoBadgeBgColor}
+              handleSave={handleSave}
+              saving={saving}
+              error={error}
+              success={success}
+            />
+
+            <ImagesForm />
+            <ContentForm />
+            <FaqForm />
+
+            <div
+              className="fixed bottom-20 right-20"
+              style={
+                {
+                  '--chat-bg': config.background,
+                  '--chat-fg': config.foreground,
+                  '--chat-badge': config.logoBadgeBackgroundColor,
+                } as React.CSSProperties
+              }
+            >
+              <ChatWidgetPreview />
+            </div>
+          </div>
+        );
+
       case 'cookie-consent-settings':
-        return renderCookieConsentSettings();
+        return <CookieConsentSettings />;
+
       default:
         return (
           <Card>
@@ -359,7 +175,7 @@ export const Component = () => {
 
   return (
     <>
-      <PageHeader title={'General Settings'} />
+      <PageHeader title="General Settings" />
 
       <div className="dashboard-container">
         <div className="w-full space-y-3 lg:w-1/2">
@@ -382,7 +198,7 @@ export const Component = () => {
                         {item.description}
                       </p>
                     </div>
-                    {/* <ArrowRight  /> */}
+
                     <ChevronRight className="w-5 text-gray-400" />
                   </div>
                 </button>
