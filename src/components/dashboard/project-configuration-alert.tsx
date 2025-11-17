@@ -26,7 +26,7 @@ const ProjectConfigurationAlert = () => {
             <div className="flex items-center gap-2">
               <Link
                 className="rounded-lg bg-primary px-5 py-2 font-medium text-white"
-                to={`/${projectId}/project-settings`}
+                to={`/${projectId}/project-settings/integrations`}
               >
                 Configure Now
               </Link>
