@@ -56,6 +56,9 @@ export const Component = () => {
   const [logoPreviewUrl, setLogoPreviewUrl] = useState<string | null>(null);
   const [logoFile, setLogoFile] = useState<File | null>(null);
 
+  const [bannerPreviewUrl, setBannerPreviewUrl] = useState<string | null>(null);
+  const [bannerFile, setBannerFile] = useState<File | null>(null);
+
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -109,9 +112,22 @@ export const Component = () => {
     }
   };
 
+  const handleBannerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setBannerFile(file);
+      setBannerPreviewUrl(URL.createObjectURL(file)); // instant preview
+    }
+  };
+
   const handleLogoReset = () => {
     setLogoFile(null);
     setLogoPreviewUrl(null);
+  };
+
+  const handleBannerReset = () => {
+    setBannerFile(null);
+    setBannerPreviewUrl(null);
   };
 
   const handleLogoSave = async () => {
@@ -126,6 +142,20 @@ export const Component = () => {
     });
 
     alert('Logo saved!');
+  };
+
+  const handleBannerSave = async () => {
+    if (!bannerFile) return alert('Please select a banner first.');
+
+    const formData = new FormData();
+    formData.append('banner', bannerFile);
+
+    await fetch('/api/update-banner', {
+      method: 'POST',
+      body: formData,
+    });
+
+    alert('Banner saved!');
   };
 
   const renderDetailedContent = () => {
@@ -154,6 +184,10 @@ export const Component = () => {
               handleLogoChange={handleLogoChange}
               handleLogoSave={handleLogoSave}
               handleLogoReset={handleLogoReset}
+              bannerPreviewUrl={bannerPreviewUrl ?? ''}
+              handleBannerChange={handleBannerChange}
+              handleBannerSave={handleBannerSave}
+              handleBannerReset={handleBannerReset}
             />
             <ContentForm />
             <FaqForm />
@@ -168,7 +202,10 @@ export const Component = () => {
                 } as React.CSSProperties
               }
             >
-              <ChatWidgetPreview logoPreviewUrl={logoPreviewUrl ?? ''} />
+              <ChatWidgetPreview
+                logoPreviewUrl={logoPreviewUrl ?? ''}
+                bannerPreviewUrl={bannerPreviewUrl ?? ''}
+              />
             </div>
           </div>
         );
