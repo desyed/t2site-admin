@@ -53,6 +53,9 @@ export const Component = () => {
     DEFAULTS.logoBadgeBackgroundColor
   );
 
+  const [logoPreviewUrl, setLogoPreviewUrl] = useState<string | null>(null);
+  const [logoFile, setLogoFile] = useState<File | null>(null);
+
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -66,7 +69,7 @@ export const Component = () => {
     [primaryBgColor, primaryFgColor, logoBadgeBgColor]
   );
 
-  const handleSave = async () => {
+  const handleColorSave = async () => {
     setSaving(true);
     setError(null);
     setSuccess(null);
@@ -98,6 +101,33 @@ export const Component = () => {
     }
   };
 
+  const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setLogoFile(file);
+      setLogoPreviewUrl(URL.createObjectURL(file)); // instant preview
+    }
+  };
+
+  const handleLogoReset = () => {
+    setLogoFile(null);
+    setLogoPreviewUrl(null);
+  };
+
+  const handleLogoSave = async () => {
+    if (!logoFile) return alert('Please select a logo first.');
+
+    const formData = new FormData();
+    formData.append('logo', logoFile);
+
+    await fetch('/api/update-logo', {
+      method: 'POST',
+      body: formData,
+    });
+
+    alert('Logo saved!');
+  };
+
   const renderDetailedContent = () => {
     switch (navigation.item) {
       case 'project-information':
@@ -113,13 +143,18 @@ export const Component = () => {
               setPrimaryBgColor={setPrimaryBgColor}
               setPrimaryFgColor={setPrimaryFgColor}
               setLogoBadgeBgColor={setLogoBadgeBgColor}
-              handleSave={handleSave}
+              handleSave={handleColorSave}
               saving={saving}
               error={error}
               success={success}
             />
 
-            <ImagesForm />
+            <ImagesForm
+              logoPreviewUrl={logoPreviewUrl ?? ''}
+              handleLogoChange={handleLogoChange}
+              handleLogoSave={handleLogoSave}
+              handleLogoReset={handleLogoReset}
+            />
             <ContentForm />
             <FaqForm />
 
@@ -133,7 +168,7 @@ export const Component = () => {
                 } as React.CSSProperties
               }
             >
-              <ChatWidgetPreview />
+              <ChatWidgetPreview logoPreviewUrl={logoPreviewUrl ?? ''} />
             </div>
           </div>
         );

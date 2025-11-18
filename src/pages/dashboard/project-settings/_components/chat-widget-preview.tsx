@@ -5,30 +5,13 @@ import { Button } from '@/components/site-button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 
-import type { ChatMessage } from './chat-conversation';
-
 import ChatConversation from './chat-conversation';
 
-const conversation: ChatMessage[] = [
-  {
-    id: 1,
-    type: 'bot',
-    avatar: '/t2-chat-icon-light.svg',
-    message: "Hi! I'm t2chat, an AI Assistant. Ask me anything about t2chat!",
-  },
-  {
-    id: 2,
-    type: 'user-options',
-    options: [
-      { id: 'opt1', text: 'What is t2chat?' },
-      { id: 'opt2', text: 'Why should I choose t2chat?' },
-      { id: 'opt3', text: 'How do I set up an AI Chatbot?' },
-      { id: 'opt4', text: 'I have a different question?' },
-    ],
-  },
-];
+interface ChatWidgetPreviewProps {
+  logoPreviewUrl: string;
+}
 
-const ChatWidgetPreview = () => {
+const ChatWidgetPreview = ({ logoPreviewUrl }: ChatWidgetPreviewProps) => {
   return (
     <div className="w-[400px] overflow-hidden rounded-xl border bg-gradient-to-b from-[var(--chat-bg)] to-[#F5F5F5] shadow">
       {/* Chat Header */}
@@ -37,8 +20,16 @@ const ChatWidgetPreview = () => {
           <div
             className={`flex size-11 items-center justify-center rounded-full bg-[var(--chat-badge)]`}
           >
-            <div className="mt-[2px] size-3/5">
-              <MessageIcon />
+            <div className="size-3/5">
+              {logoPreviewUrl ? (
+                <img
+                  src={logoPreviewUrl}
+                  alt="logo"
+                  className="size-full object-contain"
+                />
+              ) : (
+                <MessageIcon />
+              )}
             </div>
           </div>
         </div>
@@ -47,7 +38,7 @@ const ChatWidgetPreview = () => {
       {/* Chat Conversation */}
       <div className="px-2">
         <div className="rounded-t-xl bg-[#F5F5F5] p-4">
-          <ChatConversation conversation={conversation} />
+          <ChatConversation logoPreviewUrl={logoPreviewUrl} />
         </div>
       </div>
 
