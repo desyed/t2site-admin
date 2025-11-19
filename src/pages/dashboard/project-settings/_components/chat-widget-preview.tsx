@@ -1,8 +1,8 @@
-import { Plus, Triangle, HelpCircle } from 'lucide-react';
+import { Plus, Triangle, HelpCircle, Send, Activity } from 'lucide-react';
 import Slider from 'react-slick';
 
 import { MessageIcon } from '@/components/icons';
-import { Button } from '@/components/site-button';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 
@@ -77,13 +77,61 @@ const ConversationBody = ({ logoPreviewUrl }: { logoPreviewUrl: string }) => (
   </div>
 );
 
-const InitialBody = () => (
-  <div className="flex h-[424px] items-center justify-center px-4">
-    <div className="text-center text-gray-600">
-      <p className="text-lg font-medium">Welcome to T2 Chat</p>
-      <p className="text-sm opacity-70">
-        Start conversation by clicking below.
-      </p>
+const InitialBody = ({ logoPreviewUrl }: { logoPreviewUrl: string }) => (
+  <div className="flex h-[424px] flex-col justify-end gap-4 overflow-y-auto px-4 py-2">
+    <div>
+      <p className="text-lg font-medium">Hello Syed Shihab,</p>
+      <p className="text-2xl font-bold">How Can I Help?</p>
+    </div>
+
+    <div className="rounded-xl bg-[#F5F5F5] p-4 shadow">
+      <div className="flex gap-3">
+        <div>
+          <div className="flex size-9 items-center justify-center rounded-full bg-[var(--chat-badge)]">
+            <div className="size-5">
+              {logoPreviewUrl ? (
+                <img
+                  src={logoPreviewUrl}
+                  alt="logo"
+                  className="size-full object-contain"
+                />
+              ) : (
+                <MessageIcon />
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="flex w-3/4 flex-col gap-4">
+          <div>
+            <p className="text-sm font-bold">t2chat</p>
+            <p className="text-sm text-gray-400">Welcome to t2chat</p>
+          </div>
+
+          <p className="text-sm text-gray-800">
+            Feel free to leave a message, we are here to help!
+          </p>
+
+          <Button className="flex items-center gap-2 rounded-full">
+            Start a chat
+            <Send />
+          </Button>
+        </div>
+      </div>
+    </div>
+
+    <div className="relative overflow-hidden rounded-xl border">
+      <div className="absolute left-0 top-0 z-10 flex items-center gap-2 px-4 py-2 text-sm text-white">
+        <Activity className="size-4" /> T2Connects
+      </div>
+      <div className="absolute inset-0 size-full bg-gradient-to-b from-[#00000074] to-transparent" />
+      <div>
+        <img
+          src="https://images.unsplash.com/photo-1450133064473-71024230f91b?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3V5JTIwaW4lMjBibGFjayUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D"
+          alt="promotional banner"
+          className="h-auto w-full object-contain"
+        />
+      </div>
     </div>
   </div>
 );
@@ -143,7 +191,7 @@ const ChatScreen = ({
 
     switch (type) {
       case 'initial':
-        return <InitialBody />;
+        return <InitialBody logoPreviewUrl={logoPreviewUrl} />;
       case 'conversation':
       default:
         return <ConversationBody logoPreviewUrl={logoPreviewUrl} />;
