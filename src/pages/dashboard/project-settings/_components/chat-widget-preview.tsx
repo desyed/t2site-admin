@@ -1,4 +1,5 @@
 import { Plus, Triangle, HelpCircle, Send, Activity } from 'lucide-react';
+import { Link } from 'react-router';
 import Slider from 'react-slick';
 
 import { MessageIcon } from '@/components/icons';
@@ -12,6 +13,14 @@ interface ChatWidgetPreviewProps {
   logoPreviewUrl: string;
   bannerPreviewUrl: string;
   promotionalImagePreviewUrl: string;
+  bannerTitle: string;
+  bannerSubtitle: string;
+  ctaTitle: string;
+  ctaSubtitle: string;
+  ctaDescription: string;
+  ctaButtonText: string;
+  promotionalTitle: string;
+  promotionalLink: string;
   screens?: ChatScreenConfig[];
 }
 
@@ -80,66 +89,85 @@ const ConversationBody = ({ logoPreviewUrl }: { logoPreviewUrl: string }) => (
 const InitialBody = ({
   logoPreviewUrl,
   promotionalImagePreviewUrl,
+  bannerTitle,
+  bannerSubtitle,
+  ctaTitle,
+  ctaSubtitle,
+  ctaDescription,
+  ctaButtonText,
+  promotionalTitle,
+  promotionalLink,
 }: {
   logoPreviewUrl: string;
   promotionalImagePreviewUrl: string;
+  bannerTitle: string;
+  bannerSubtitle: string;
+  ctaTitle: string;
+  ctaSubtitle: string;
+  ctaDescription: string;
+  ctaButtonText: string;
+  promotionalTitle: string;
+  promotionalLink: string;
 }) => (
-  <div className="flex h-[424px] flex-col justify-end gap-4 overflow-y-auto px-4 py-2">
-    <div>
-      <p className="text-lg font-medium">Hello Syed Shihab,</p>
-      <p className="text-2xl font-bold">How Can I Help?</p>
-    </div>
+  <div className="flex h-[424px] flex-col justify-end gap-4 overflow-y-auto px-4">
+    <div className="flex h-full flex-col gap-4">
+      <div>
+        <p className="text-lg font-medium">{bannerTitle},</p>
+        <p className="text-2xl font-bold">{bannerSubtitle}</p>
+      </div>
 
-    <div className="rounded-xl bg-[#F5F5F5] p-4 shadow">
-      <div className="flex gap-3">
-        <div>
-          <div className="flex size-9 items-center justify-center rounded-full bg-[var(--chat-badge)]">
-            <div className="size-5">
-              {logoPreviewUrl ? (
-                <img
-                  src={logoPreviewUrl}
-                  alt="logo"
-                  className="size-full object-contain"
-                />
-              ) : (
-                <MessageIcon />
-              )}
+      <div className="rounded-xl bg-[#F5F5F5] p-4 shadow">
+        <div className="flex gap-3">
+          <div>
+            <div className="flex size-9 items-center justify-center rounded-full bg-[var(--chat-badge)]">
+              <div className="size-5">
+                {logoPreviewUrl ? (
+                  <img
+                    src={logoPreviewUrl}
+                    alt="logo"
+                    className="size-full object-contain"
+                  />
+                ) : (
+                  <MessageIcon />
+                )}
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="flex w-3/4 flex-col gap-4">
-          <div>
-            <p className="text-sm font-bold">t2chat</p>
-            <p className="text-sm text-gray-400">Welcome to t2chat</p>
+          {/* CTA Card */}
+          <div className="flex w-3/4 flex-col gap-4">
+            <div>
+              <p className="text-sm font-bold">{ctaTitle}</p>
+              <p className="text-sm text-gray-400">{ctaSubtitle}</p>
+            </div>
+
+            <p className="text-sm text-gray-800">{ctaDescription}</p>
+
+            <Button className="flex items-center gap-2 rounded-full bg-[var(--chat-fg)]">
+              {ctaButtonText}
+              <Send />
+            </Button>
           </div>
-
-          <p className="text-sm text-gray-800">
-            Feel free to leave a message, we are here to help!
-          </p>
-
-          <Button className="flex items-center gap-2 rounded-full">
-            Start a chat
-            <Send />
-          </Button>
         </div>
       </div>
-    </div>
 
-    <div className="relative h-40 overflow-hidden rounded-xl border">
-      <div className="absolute left-0 top-0 z-10 flex items-center gap-2 px-4 py-2 text-sm text-white">
-        <Activity className="size-4" /> T2Connects
-      </div>
-      <div className="absolute inset-0 size-full bg-gradient-to-b from-[#00000074] to-transparent" />
-      <div>
-        {promotionalImagePreviewUrl && (
-          <img
-            src={promotionalImagePreviewUrl}
-            alt="promotional banner"
-            className="h-auto w-full object-contain"
-          />
-        )}
-      </div>
+      <Link to={promotionalLink} target="_blank" title={promotionalLink}>
+        <div className="relative h-40 overflow-hidden rounded-xl border">
+          <div className="absolute left-0 top-0 z-10 flex items-center gap-2 px-4 py-2 text-sm text-white">
+            <Activity className="size-4" /> {promotionalTitle}
+          </div>
+          <div className="absolute inset-0 size-full bg-gradient-to-b from-[#00000074] to-transparent" />
+          <div>
+            {promotionalImagePreviewUrl && (
+              <img
+                src={promotionalImagePreviewUrl}
+                alt="promotional banner"
+                className="h-auto w-full object-contain"
+              />
+            )}
+          </div>
+        </div>
+      </Link>
     </div>
   </div>
 );
@@ -188,11 +216,27 @@ const ChatScreen = ({
   logoPreviewUrl,
   bannerPreviewUrl,
   promotionalImagePreviewUrl,
+  bannerTitle,
+  bannerSubtitle,
+  ctaTitle,
+  ctaSubtitle,
+  ctaDescription,
+  ctaButtonText,
+  promotionalTitle,
+  promotionalLink,
 }: {
   config: ChatScreenConfig;
   logoPreviewUrl: string;
   bannerPreviewUrl: string;
   promotionalImagePreviewUrl: string;
+  bannerTitle: string;
+  bannerSubtitle: string;
+  ctaTitle: string;
+  ctaSubtitle: string;
+  ctaDescription: string;
+  ctaButtonText: string;
+  promotionalTitle: string;
+  promotionalLink: string;
 }) => {
   const { type, showToolbar = true, customBody, customHeader } = config;
 
@@ -205,6 +249,14 @@ const ChatScreen = ({
           <InitialBody
             logoPreviewUrl={logoPreviewUrl}
             promotionalImagePreviewUrl={promotionalImagePreviewUrl}
+            bannerTitle={bannerTitle}
+            bannerSubtitle={bannerSubtitle}
+            ctaTitle={ctaTitle}
+            ctaSubtitle={ctaSubtitle}
+            ctaDescription={ctaDescription}
+            ctaButtonText={ctaButtonText}
+            promotionalTitle={promotionalTitle}
+            promotionalLink={promotionalLink}
           />
         );
       case 'conversation':
@@ -236,6 +288,14 @@ const ChatWidgetPreview = ({
   logoPreviewUrl,
   bannerPreviewUrl,
   promotionalImagePreviewUrl,
+  bannerTitle,
+  bannerSubtitle,
+  ctaTitle,
+  ctaSubtitle,
+  ctaDescription,
+  ctaButtonText,
+  promotionalTitle,
+  promotionalLink,
   screens = [{ type: 'conversation' }, { type: 'initial' }],
 }: ChatWidgetPreviewProps) => {
   return (
@@ -255,6 +315,14 @@ const ChatWidgetPreview = ({
               logoPreviewUrl={logoPreviewUrl}
               bannerPreviewUrl={bannerPreviewUrl}
               promotionalImagePreviewUrl={promotionalImagePreviewUrl}
+              bannerTitle={bannerTitle}
+              bannerSubtitle={bannerSubtitle}
+              ctaTitle={ctaTitle}
+              ctaSubtitle={ctaSubtitle}
+              ctaDescription={ctaDescription}
+              ctaButtonText={ctaButtonText}
+              promotionalTitle={promotionalTitle}
+              promotionalLink={promotionalLink}
             />
           </div>
         ))}

@@ -66,6 +66,20 @@ export const Component = () => {
     null
   );
 
+  const [bannerTitle, setBannerTitle] = useState(DEFAULTS.bannerTitle);
+  const [bannerSubtitle, setBannerSubtitle] = useState(DEFAULTS.bannerSubtitle);
+
+  const [ctaTitle, setCtaTitle] = useState(DEFAULTS.ctaTitle);
+  const [ctaSubtitle, setCtaSubtitle] = useState(DEFAULTS.ctaSubtitle);
+  const [ctaDescription, setCtaDescription] = useState(DEFAULTS.ctaDescription);
+  const [ctaButtonText, setCtaButtonText] = useState(DEFAULTS.ctaButtonText);
+  const [promotionalTitle, setPromotionalTitle] = useState(
+    DEFAULTS.promotionalTitle
+  );
+  const [promotionalLink, setPromotionalLink] = useState(
+    DEFAULTS.promotionalLink
+  );
+
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -75,8 +89,28 @@ export const Component = () => {
       background: primaryBgColor,
       foreground: primaryFgColor,
       logoBadgeBackgroundColor: logoBadgeBgColor,
+      bannerTitle,
+      bannerSubtitle,
+      ctaTitle,
+      ctaSubtitle,
+      ctaDescription,
+      ctaButtonText,
+      promotionalTitle,
+      promotionalLink,
     }),
-    [primaryBgColor, primaryFgColor, logoBadgeBgColor]
+    [
+      primaryBgColor,
+      primaryFgColor,
+      logoBadgeBgColor,
+      bannerTitle,
+      bannerSubtitle,
+      ctaTitle,
+      ctaSubtitle,
+      ctaDescription,
+      ctaButtonText,
+      promotionalTitle,
+      promotionalLink,
+    ]
   );
 
   const handleColorSave = async () => {
@@ -230,7 +264,24 @@ export const Component = () => {
               handlePromotionalImageSave={handlePromotionalImageSave}
               handlePromotionalImageReset={handlePromotionalImageReset}
             />
-            <ContentForm />
+            <ContentForm
+              bannerTitle={bannerTitle}
+              setBannerTitle={setBannerTitle}
+              bannerSubtitle={bannerSubtitle}
+              setBannerSubtitle={setBannerSubtitle}
+              ctaTitle={ctaTitle}
+              setCtaTitle={setCtaTitle}
+              ctaSubtitle={ctaSubtitle}
+              setCtaSubtitle={setCtaSubtitle}
+              ctaDescription={ctaDescription}
+              setCtaDescription={setCtaDescription}
+              ctaButtonText={ctaButtonText}
+              setCtaButtonText={setCtaButtonText}
+              promotionalTitle={promotionalTitle}
+              setPromotionalTitle={setPromotionalTitle}
+              promotionalLink={promotionalLink}
+              setPromotionalLink={setPromotionalLink}
+            />
             <FaqForm />
 
             <div
@@ -247,6 +298,14 @@ export const Component = () => {
                 logoPreviewUrl={logoPreviewUrl ?? ''}
                 bannerPreviewUrl={bannerPreviewUrl ?? ''}
                 promotionalImagePreviewUrl={promotionalImagePreviewUrl ?? ''}
+                bannerTitle={bannerTitle}
+                bannerSubtitle={bannerSubtitle}
+                ctaTitle={ctaTitle}
+                ctaSubtitle={ctaSubtitle}
+                ctaDescription={ctaDescription}
+                ctaButtonText={ctaButtonText}
+                promotionalTitle={promotionalTitle}
+                promotionalLink={promotionalLink}
               />
             </div>
           </div>
