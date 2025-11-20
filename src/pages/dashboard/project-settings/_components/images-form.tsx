@@ -15,6 +15,12 @@ interface ImagesFormProps {
   handleBannerChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleBannerSave: () => void;
   handleBannerReset: () => void;
+  promotionalImagePreviewUrl: string;
+  handlePromotionalImageChange: (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => void;
+  handlePromotionalImageSave: () => void;
+  handlePromotionalImageReset: () => void;
 }
 
 export const ImagesForm = ({
@@ -26,9 +32,14 @@ export const ImagesForm = ({
   handleBannerChange,
   handleBannerSave,
   handleBannerReset,
+  promotionalImagePreviewUrl,
+  handlePromotionalImageChange,
+  handlePromotionalImageSave,
+  handlePromotionalImageReset,
 }: ImagesFormProps) => {
   const logoInputRef = useRef<HTMLInputElement | null>(null);
   const bannerInputRef = useRef<HTMLInputElement | null>(null);
+  const promotionalImageInputRef = useRef<HTMLInputElement | null>(null);
 
   const clearInput = (
     targetedFileRef: React.RefObject<HTMLInputElement | null>
@@ -72,9 +83,7 @@ export const ImagesForm = ({
               type="file"
             />
 
-            {logoPreviewUrl && (
-              <Button onClick={handleLogoSave}>Save Logo</Button>
-            )}
+            {logoPreviewUrl && <Button onClick={handleLogoSave}>Save</Button>}
           </div>
         </div>
 
@@ -110,14 +119,46 @@ export const ImagesForm = ({
             />
 
             {bannerPreviewUrl && (
-              <Button onClick={handleBannerSave}>Save Banner</Button>
+              <Button onClick={handleBannerSave}>Save</Button>
             )}
           </div>
         </div>
 
         <div className="grid gap-2">
           <Label>Promotional Image</Label>
-          <Input id="promo" type="file" />
+          <div className="flex items-center gap-2">
+            {promotionalImagePreviewUrl && (
+              <div className="relative">
+                <Button
+                  variant="destructive"
+                  className="absolute -right-1 -top-1 size-4 rounded-full p-0"
+                  onClick={() => {
+                    handlePromotionalImageReset();
+                    clearInput(promotionalImageInputRef);
+                  }}
+                >
+                  <X />
+                </Button>
+                <div className="flex size-10 flex-col items-center justify-center overflow-hidden rounded border border-gray-300">
+                  <img
+                    src={promotionalImagePreviewUrl}
+                    alt="promotional"
+                    className="w-full object-contain"
+                  />
+                </div>
+              </div>
+            )}
+            <Input
+              ref={promotionalImageInputRef}
+              onChange={handlePromotionalImageChange}
+              id="promotional"
+              type="file"
+            />
+
+            {promotionalImagePreviewUrl && (
+              <Button onClick={handlePromotionalImageSave}>Save</Button>
+            )}
+          </div>
         </div>
       </CardContent>
     </Card>

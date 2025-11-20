@@ -59,6 +59,13 @@ export const Component = () => {
   const [bannerPreviewUrl, setBannerPreviewUrl] = useState<string | null>(null);
   const [bannerFile, setBannerFile] = useState<File | null>(null);
 
+  const [promotionalImagePreviewUrl, setPromotionalImagePreviewUrl] = useState<
+    string | null
+  >(null);
+  const [promotionalImageFile, setPromotionalImageFile] = useState<File | null>(
+    null
+  );
+
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -120,6 +127,16 @@ export const Component = () => {
     }
   };
 
+  const handlePromotionalImageChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setPromotionalImageFile(file);
+      setPromotionalImagePreviewUrl(URL.createObjectURL(file)); // instant preview
+    }
+  };
+
   const handleLogoReset = () => {
     setLogoFile(null);
     setLogoPreviewUrl(null);
@@ -128,6 +145,11 @@ export const Component = () => {
   const handleBannerReset = () => {
     setBannerFile(null);
     setBannerPreviewUrl(null);
+  };
+
+  const handlePromotionalImageReset = () => {
+    setPromotionalImageFile(null);
+    setPromotionalImagePreviewUrl(null);
   };
 
   const handleLogoSave = async () => {
@@ -156,6 +178,21 @@ export const Component = () => {
     });
 
     alert('Banner saved!');
+  };
+
+  const handlePromotionalImageSave = async () => {
+    if (!promotionalImageFile)
+      return alert('Please select a promotional image first.');
+
+    const formData = new FormData();
+    formData.append('promotionalImage', promotionalImageFile);
+
+    await fetch('/api/update-promotional-image', {
+      method: 'POST',
+      body: formData,
+    });
+
+    alert('Promotional image saved!');
   };
 
   const renderDetailedContent = () => {
@@ -188,6 +225,10 @@ export const Component = () => {
               handleBannerChange={handleBannerChange}
               handleBannerSave={handleBannerSave}
               handleBannerReset={handleBannerReset}
+              promotionalImagePreviewUrl={promotionalImagePreviewUrl ?? ''}
+              handlePromotionalImageChange={handlePromotionalImageChange}
+              handlePromotionalImageSave={handlePromotionalImageSave}
+              handlePromotionalImageReset={handlePromotionalImageReset}
             />
             <ContentForm />
             <FaqForm />
@@ -205,6 +246,7 @@ export const Component = () => {
               <ChatWidgetPreview
                 logoPreviewUrl={logoPreviewUrl ?? ''}
                 bannerPreviewUrl={bannerPreviewUrl ?? ''}
+                promotionalImagePreviewUrl={promotionalImagePreviewUrl ?? ''}
               />
             </div>
           </div>

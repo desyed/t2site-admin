@@ -11,7 +11,7 @@ import ChatConversation from './chat-conversation';
 interface ChatWidgetPreviewProps {
   logoPreviewUrl: string;
   bannerPreviewUrl: string;
-
+  promotionalImagePreviewUrl: string;
   screens?: ChatScreenConfig[];
 }
 
@@ -77,7 +77,13 @@ const ConversationBody = ({ logoPreviewUrl }: { logoPreviewUrl: string }) => (
   </div>
 );
 
-const InitialBody = ({ logoPreviewUrl }: { logoPreviewUrl: string }) => (
+const InitialBody = ({
+  logoPreviewUrl,
+  promotionalImagePreviewUrl,
+}: {
+  logoPreviewUrl: string;
+  promotionalImagePreviewUrl: string;
+}) => (
   <div className="flex h-[424px] flex-col justify-end gap-4 overflow-y-auto px-4 py-2">
     <div>
       <p className="text-lg font-medium">Hello Syed Shihab,</p>
@@ -120,17 +126,19 @@ const InitialBody = ({ logoPreviewUrl }: { logoPreviewUrl: string }) => (
       </div>
     </div>
 
-    <div className="relative overflow-hidden rounded-xl border">
+    <div className="relative h-40 overflow-hidden rounded-xl border">
       <div className="absolute left-0 top-0 z-10 flex items-center gap-2 px-4 py-2 text-sm text-white">
         <Activity className="size-4" /> T2Connects
       </div>
       <div className="absolute inset-0 size-full bg-gradient-to-b from-[#00000074] to-transparent" />
       <div>
-        <img
-          src="https://images.unsplash.com/photo-1450133064473-71024230f91b?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3V5JTIwaW4lMjBibGFjayUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D"
-          alt="promotional banner"
-          className="h-auto w-full object-contain"
-        />
+        {promotionalImagePreviewUrl && (
+          <img
+            src={promotionalImagePreviewUrl}
+            alt="promotional banner"
+            className="h-auto w-full object-contain"
+          />
+        )}
       </div>
     </div>
   </div>
@@ -179,10 +187,12 @@ const ChatScreen = ({
   config,
   logoPreviewUrl,
   bannerPreviewUrl,
+  promotionalImagePreviewUrl,
 }: {
   config: ChatScreenConfig;
   logoPreviewUrl: string;
   bannerPreviewUrl: string;
+  promotionalImagePreviewUrl: string;
 }) => {
   const { type, showToolbar = true, customBody, customHeader } = config;
 
@@ -191,7 +201,12 @@ const ChatScreen = ({
 
     switch (type) {
       case 'initial':
-        return <InitialBody logoPreviewUrl={logoPreviewUrl} />;
+        return (
+          <InitialBody
+            logoPreviewUrl={logoPreviewUrl}
+            promotionalImagePreviewUrl={promotionalImagePreviewUrl}
+          />
+        );
       case 'conversation':
       default:
         return <ConversationBody logoPreviewUrl={logoPreviewUrl} />;
@@ -220,6 +235,7 @@ const ChatScreen = ({
 const ChatWidgetPreview = ({
   logoPreviewUrl,
   bannerPreviewUrl,
+  promotionalImagePreviewUrl,
   screens = [{ type: 'conversation' }, { type: 'initial' }],
 }: ChatWidgetPreviewProps) => {
   return (
@@ -238,6 +254,7 @@ const ChatWidgetPreview = ({
               config={screen}
               logoPreviewUrl={logoPreviewUrl}
               bannerPreviewUrl={bannerPreviewUrl}
+              promotionalImagePreviewUrl={promotionalImagePreviewUrl}
             />
           </div>
         ))}
