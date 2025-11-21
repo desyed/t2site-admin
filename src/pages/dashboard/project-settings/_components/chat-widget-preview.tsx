@@ -1,4 +1,4 @@
-import { Plus, Triangle, HelpCircle, Send, Activity } from 'lucide-react';
+import { Plus, Triangle, HelpCircle, Send, Activity, X } from 'lucide-react';
 import { Link } from 'react-router';
 import Slider from 'react-slick';
 
@@ -299,34 +299,42 @@ const ChatWidgetPreview = ({
   screens = [{ type: 'conversation' }, { type: 'initial' }],
 }: ChatWidgetPreviewProps) => {
   return (
-    <div className="h-[600px] w-[400px]">
-      <Slider
-        dots
-        infinite
-        speed={500}
-        slidesToShow={1}
-        slidesToScroll={1}
-        className="h-full overflow-hidden rounded-xl border"
-      >
-        {screens.map((screen, idx) => (
-          <div key={idx}>
-            <ChatScreen
-              config={screen}
-              logoPreviewUrl={logoPreviewUrl}
-              bannerPreviewUrl={bannerPreviewUrl}
-              promotionalImagePreviewUrl={promotionalImagePreviewUrl}
-              bannerTitle={bannerTitle}
-              bannerSubtitle={bannerSubtitle}
-              ctaTitle={ctaTitle}
-              ctaSubtitle={ctaSubtitle}
-              ctaDescription={ctaDescription}
-              ctaButtonText={ctaButtonText}
-              promotionalTitle={promotionalTitle}
-              promotionalLink={promotionalLink}
-            />
-          </div>
-        ))}
-      </Slider>
+    <div className="flex flex-col gap-8">
+      <div className="h-[600px] w-[400px]">
+        <Slider
+          dots
+          infinite
+          speed={500}
+          slidesToShow={1}
+          slidesToScroll={1}
+          className="h-full overflow-hidden rounded-xl border"
+        >
+          {screens.map((screen, idx) => (
+            <div key={idx}>
+              <ChatScreen
+                config={screen}
+                logoPreviewUrl={logoPreviewUrl}
+                bannerPreviewUrl={bannerPreviewUrl}
+                promotionalImagePreviewUrl={promotionalImagePreviewUrl}
+                bannerTitle={bannerTitle}
+                bannerSubtitle={bannerSubtitle}
+                ctaTitle={ctaTitle}
+                ctaSubtitle={ctaSubtitle}
+                ctaDescription={ctaDescription}
+                ctaButtonText={ctaButtonText}
+                promotionalTitle={promotionalTitle}
+                promotionalLink={promotionalLink}
+              />
+            </div>
+          ))}
+        </Slider>
+      </div>
+
+      <div className="flex justify-end">
+        <div className="flex size-16 items-center justify-center rounded-full bg-[var(--chat-fg)] text-primary">
+          <X size={36} strokeWidth={2} />
+        </div>
+      </div>
     </div>
   );
 };

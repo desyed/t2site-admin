@@ -285,7 +285,7 @@ export const Component = () => {
             <FaqForm />
 
             <div
-              className="fixed bottom-20 right-20"
+              className="fixed bottom-5 right-14"
               style={
                 {
                   '--chat-bg': config.background,
