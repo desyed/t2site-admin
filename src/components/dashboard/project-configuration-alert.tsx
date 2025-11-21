@@ -1,6 +1,6 @@
 import { AlertCircle, X } from 'lucide-react';
 import { useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router';
+import { Link, useParams } from 'react-router';
 
 import { AlertDescription, Alert } from '../ui/alert';
 import { Button } from '../ui/button';
@@ -10,13 +10,9 @@ const ProjectConfigurationAlert = () => {
 
   const { projectId } = useParams();
 
-  const location = useLocation();
-
-  const isProjectSettingsPage = location.pathname.includes('project-settings');
-
   return (
     <>
-      {!isProjectSettingsPage && isVisible && (
+      {isVisible && (
         <Alert className="rounded-b-none border-orange-200 bg-orange-50">
           <AlertDescription className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-orange-800">
