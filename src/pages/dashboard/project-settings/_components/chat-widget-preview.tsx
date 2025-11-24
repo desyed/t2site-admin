@@ -1,4 +1,13 @@
-import { Plus, Triangle, HelpCircle, Send, Activity, X } from 'lucide-react';
+import {
+  Plus,
+  Triangle,
+  HelpCircle,
+  Send,
+  Activity,
+  X,
+  Search,
+  ChevronRight,
+} from 'lucide-react';
 import { Link } from 'react-router';
 import Slider from 'react-slick';
 
@@ -172,6 +181,54 @@ const InitialBody = ({
   </div>
 );
 
+const FaqBody = ({
+  bannerTitle,
+  bannerSubtitle,
+}: {
+  bannerTitle: string;
+  bannerSubtitle: string;
+}) => (
+  <div className="flex h-[424px] flex-col justify-end gap-4 overflow-y-auto px-4">
+    <div className="flex h-full flex-col justify-end gap-4">
+      <div>
+        <p className="text-lg font-medium">{bannerTitle},</p>
+        <p className="text-2xl font-bold">{bannerSubtitle}</p>
+      </div>
+
+      <div className="h-[280px] rounded-xl bg-[#F5F5F5] px-4 py-6">
+        {/* Input Field with Search Icon */}
+        <div className="relative">
+          <Input
+            placeholder="Search for help"
+            className="rounded-full border-none !bg-[#E6E6E6] px-4 focus-visible:shadow-none focus-visible:outline-none"
+            readOnly
+          />
+          <Search
+            size={20}
+            strokeWidth={3}
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
+          />
+        </div>
+
+        {/* FAQ List */}
+        <div className="no-scrollbar mt-4 flex h-[200px] flex-col gap-3 overflow-y-auto px-4 pb-4">
+          {[1, 2, 3, 4, 5].map((faq) => (
+            <div
+              key={faq}
+              className="flex cursor-pointer items-center justify-between text-gray-400 hover:text-gray-600"
+            >
+              <p className="text-sm">
+                This is a sample frequently asked question #{faq}?
+              </p>
+              <ChevronRight />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
 const Toolbar = () => (
   <div className="h-[76px] bg-[#E6E6E6] pb-2 pt-4">
     <div className="flex items-center gap-2 px-2 pb-1 sm:px-3 sm:pb-2">
@@ -259,6 +316,11 @@ const ChatScreen = ({
             promotionalLink={promotionalLink}
           />
         );
+
+      case 'faq':
+        return (
+          <FaqBody bannerTitle={bannerTitle} bannerSubtitle={bannerSubtitle} />
+        );
       case 'conversation':
       default:
         return <ConversationBody logoPreviewUrl={logoPreviewUrl} />;
@@ -296,7 +358,7 @@ const ChatWidgetPreview = ({
   ctaButtonText,
   promotionalTitle,
   promotionalLink,
-  screens = [{ type: 'conversation' }, { type: 'initial' }],
+  screens = [{ type: 'conversation' }, { type: 'initial' }, { type: 'faq' }],
 }: ChatWidgetPreviewProps) => {
   return (
     <div className="flex flex-col gap-8">
@@ -331,7 +393,7 @@ const ChatWidgetPreview = ({
       </div>
 
       <div className="flex justify-end">
-        <div className="flex size-16 items-center justify-center rounded-full bg-[var(--chat-fg)] text-primary">
+        <div className="flex size-16 items-center justify-center rounded-full bg-[var(--chat-badge)] text-primary">
           <X size={36} strokeWidth={2} />
         </div>
       </div>
