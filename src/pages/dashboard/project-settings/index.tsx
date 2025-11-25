@@ -237,6 +237,27 @@ export const Component = () => {
       case 'chat-widget-configurations':
         return (
           <div className="space-y-12">
+            <ContentForm
+              bannerTitle={bannerTitle}
+              setBannerTitle={setBannerTitle}
+              bannerSubtitle={bannerSubtitle}
+              setBannerSubtitle={setBannerSubtitle}
+              ctaTitle={ctaTitle}
+              setCtaTitle={setCtaTitle}
+              ctaSubtitle={ctaSubtitle}
+              setCtaSubtitle={setCtaSubtitle}
+              ctaDescription={ctaDescription}
+              setCtaDescription={setCtaDescription}
+              ctaButtonText={ctaButtonText}
+              setCtaButtonText={setCtaButtonText}
+              promotionalTitle={promotionalTitle}
+              setPromotionalTitle={setPromotionalTitle}
+              promotionalLink={promotionalLink}
+              setPromotionalLink={setPromotionalLink}
+            />
+
+            <FaqForm />
+
             <ColorsForm
               primaryBgColor={primaryBgColor}
               primaryFgColor={primaryFgColor}
@@ -264,25 +285,6 @@ export const Component = () => {
               handlePromotionalImageSave={handlePromotionalImageSave}
               handlePromotionalImageReset={handlePromotionalImageReset}
             />
-            <ContentForm
-              bannerTitle={bannerTitle}
-              setBannerTitle={setBannerTitle}
-              bannerSubtitle={bannerSubtitle}
-              setBannerSubtitle={setBannerSubtitle}
-              ctaTitle={ctaTitle}
-              setCtaTitle={setCtaTitle}
-              ctaSubtitle={ctaSubtitle}
-              setCtaSubtitle={setCtaSubtitle}
-              ctaDescription={ctaDescription}
-              setCtaDescription={setCtaDescription}
-              ctaButtonText={ctaButtonText}
-              setCtaButtonText={setCtaButtonText}
-              promotionalTitle={promotionalTitle}
-              setPromotionalTitle={setPromotionalTitle}
-              promotionalLink={promotionalLink}
-              setPromotionalLink={setPromotionalLink}
-            />
-            <FaqForm />
 
             <div
               className="fixed bottom-5 right-14"

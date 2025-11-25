@@ -118,7 +118,7 @@ const InitialBody = ({
   promotionalTitle: string;
   promotionalLink: string;
 }) => (
-  <div className="flex h-[424px] flex-col justify-end gap-4 overflow-y-auto px-4">
+  <div className="no-scrollbar flex h-[424px] flex-col justify-end gap-4 overflow-y-auto px-4">
     <div className="flex h-full flex-col gap-4">
       <div>
         <p className="text-lg font-medium">{bannerTitle},</p>
