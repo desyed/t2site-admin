@@ -1,3 +1,4 @@
+import { useChatWidgetStore } from '@/app/settings/chat-widget/chat-widget.store';
 import { Button } from '@/components/site-button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -6,94 +7,97 @@ import { Label } from '@/components/ui/label';
 import { normalizeHex } from '../helpers';
 
 type Props = {
-  primaryBgColor: string;
-  primaryFgColor: string;
-  logoBadgeBgColor: string;
-  setPrimaryBgColor: (v: string) => void;
-  setPrimaryFgColor: (v: string) => void;
-  setLogoBadgeBgColor: (v: string) => void;
   handleSave: () => void;
-  saving: boolean;
-  error: string | null;
-  success: string | null;
 };
 
-export const ColorsForm = ({
-  primaryBgColor,
-  primaryFgColor,
-  logoBadgeBgColor,
-  setPrimaryBgColor,
-  setPrimaryFgColor,
-  setLogoBadgeBgColor,
-  handleSave,
-  saving,
-  error,
-  success,
-}: Props) => (
-  <Card className="border-none shadow-none">
-    <CardContent className="space-y-4 p-0">
-      {/* Primary Background */}
-      <div className="grid gap-2">
-        <Label>Primary Background Color</Label>
-        <div className="flex items-center gap-2">
-          <Input
-            type="color"
-            value={primaryBgColor}
-            className="w-12 p-1.5"
-            onChange={(e) => setPrimaryBgColor(normalizeHex(e.target.value))}
-          />
-          <Input
-            type="text"
-            value={primaryBgColor}
-            onChange={(e) => setPrimaryBgColor(normalizeHex(e.target.value))}
-          />
+export const ColorsForm = ({ handleSave }: Props) => {
+  const primaryBgColor = useChatWidgetStore((s) => s.background);
+  const primaryFgColor = useChatWidgetStore((s) => s.foreground);
+  const logoBadgeBgColor = useChatWidgetStore(
+    (s) => s.logoBadgeBackgroundColor
+  );
+
+  const setPrimaryBgColor = useChatWidgetStore((s) => s.setBackground);
+  const setPrimaryFgColor = useChatWidgetStore((s) => s.setForeground);
+  const setLogoBadgeBgColor = useChatWidgetStore(
+    (s) => s.setLogoBadgeBackgroundColor
+  );
+
+  const status = useChatWidgetStore((s) => s.status);
+  return (
+    <Card className="border-none shadow-none">
+      <CardContent className="space-y-4 p-0">
+        {/* Primary Background */}
+        <div className="grid gap-2">
+          <Label>Primary Background Color</Label>
+          <div className="flex items-center gap-2">
+            <Input
+              type="color"
+              value={primaryBgColor}
+              className="w-12 p-1.5"
+              onChange={(e) => setPrimaryBgColor(normalizeHex(e.target.value))}
+            />
+            <Input
+              type="text"
+              value={primaryBgColor}
+              onChange={(e) => setPrimaryBgColor(normalizeHex(e.target.value))}
+            />
+          </div>
         </div>
-      </div>
 
-      {/* Primary Foreground */}
-      <div className="grid gap-2">
-        <Label>Primary Foreground Color</Label>
-        <div className="flex items-center gap-2">
-          <Input
-            type="color"
-            value={primaryFgColor}
-            className="w-12 p-1.5"
-            onChange={(e) => setPrimaryFgColor(normalizeHex(e.target.value))}
-          />
-          <Input
-            type="text"
-            value={primaryFgColor}
-            onChange={(e) => setPrimaryFgColor(normalizeHex(e.target.value))}
-          />
+        {/* Primary Foreground */}
+        <div className="grid gap-2">
+          <Label>Primary Foreground Color</Label>
+          <div className="flex items-center gap-2">
+            <Input
+              type="color"
+              value={primaryFgColor}
+              className="w-12 p-1.5"
+              onChange={(e) => setPrimaryFgColor(normalizeHex(e.target.value))}
+            />
+            <Input
+              type="text"
+              value={primaryFgColor}
+              onChange={(e) => setPrimaryFgColor(normalizeHex(e.target.value))}
+            />
+          </div>
         </div>
-      </div>
 
-      {/* Logo Badge */}
-      <div className="grid gap-2">
-        <Label>Logo Badge Background</Label>
-        <div className="flex items-center gap-2">
-          <Input
-            type="color"
-            value={logoBadgeBgColor}
-            className="w-12 p-1.5"
-            onChange={(e) => setLogoBadgeBgColor(normalizeHex(e.target.value))}
-          />
-          <Input
-            type="text"
-            value={logoBadgeBgColor}
-            onChange={(e) => setLogoBadgeBgColor(normalizeHex(e.target.value))}
-          />
+        {/* Logo Badge */}
+        <div className="grid gap-2">
+          <Label>Logo Badge Background</Label>
+          <div className="flex items-center gap-2">
+            <Input
+              type="color"
+              value={logoBadgeBgColor}
+              className="w-12 p-1.5"
+              onChange={(e) =>
+                setLogoBadgeBgColor(normalizeHex(e.target.value))
+              }
+            />
+            <Input
+              type="text"
+              value={logoBadgeBgColor}
+              onChange={(e) =>
+                setLogoBadgeBgColor(normalizeHex(e.target.value))
+              }
+            />
+          </div>
         </div>
-      </div>
 
-      <div className="flex justify-end">
-        <Button onClick={handleSave} disabled={saving}>
-          {saving ? 'Saving…' : 'Save'}
-        </Button>
+        <div className="flex justify-end">
+          <Button onClick={handleSave} disabled={status.saving}>
+            {status.saving ? 'Saving…' : 'Save'}
+          </Button>
 
-        {error && <p className="ml-3 text-sm text-red-500">{error}</p>}
-        {success && <p className="ml-3 text-sm text-green-600">{success}</p>}
-      </div>
-    </CardContent>
-  </Card>
-);
+          {status.error && (
+            <p className="ml-3 text-sm text-red-500">{status.error}</p>
+          )}
+          {status.success && (
+            <p className="ml-3 text-sm text-green-600">{status.success}</p>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+};

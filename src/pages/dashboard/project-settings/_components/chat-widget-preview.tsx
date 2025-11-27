@@ -2,8 +2,6 @@ import {
   Plus,
   Triangle,
   HelpCircle,
-  Send,
-  Activity,
   X,
   Search,
   ChevronRight,
@@ -28,7 +26,6 @@ interface ChatWidgetPreviewProps {
   ctaSubtitle: string;
   ctaDescription: string;
   ctaButtonText: string;
-  promotionalTitle: string;
   promotionalLink: string;
   screens?: ChatScreenConfig[];
 }
@@ -104,7 +101,6 @@ const InitialBody = ({
   ctaSubtitle,
   ctaDescription,
   ctaButtonText,
-  promotionalTitle,
   promotionalLink,
 }: {
   logoPreviewUrl: string;
@@ -115,7 +111,6 @@ const InitialBody = ({
   ctaSubtitle: string;
   ctaDescription: string;
   ctaButtonText: string;
-  promotionalTitle: string;
   promotionalLink: string;
 }) => (
   <div className="no-scrollbar flex h-[424px] flex-col justify-end gap-4 overflow-y-auto px-4">
@@ -154,7 +149,6 @@ const InitialBody = ({
 
             <Button className="flex items-center gap-2 rounded-full bg-[var(--chat-fg)]">
               {ctaButtonText}
-              <Send />
             </Button>
           </div>
         </div>
@@ -162,9 +156,6 @@ const InitialBody = ({
 
       <Link to={promotionalLink} target="_blank" title={promotionalLink}>
         <div className="relative h-40 overflow-hidden rounded-xl border">
-          <div className="absolute left-0 top-0 z-10 flex items-center gap-2 px-4 py-2 text-sm text-white">
-            <Activity className="size-4" /> {promotionalTitle}
-          </div>
           <div className="absolute inset-0 size-full bg-gradient-to-b from-[#00000074] to-transparent" />
           <div>
             {promotionalImagePreviewUrl && (
@@ -279,7 +270,6 @@ const ChatScreen = ({
   ctaSubtitle,
   ctaDescription,
   ctaButtonText,
-  promotionalTitle,
   promotionalLink,
 }: {
   config: ChatScreenConfig;
@@ -292,7 +282,6 @@ const ChatScreen = ({
   ctaSubtitle: string;
   ctaDescription: string;
   ctaButtonText: string;
-  promotionalTitle: string;
   promotionalLink: string;
 }) => {
   const { type, showToolbar = true, customBody, customHeader } = config;
@@ -312,7 +301,6 @@ const ChatScreen = ({
             ctaSubtitle={ctaSubtitle}
             ctaDescription={ctaDescription}
             ctaButtonText={ctaButtonText}
-            promotionalTitle={promotionalTitle}
             promotionalLink={promotionalLink}
           />
         );
@@ -356,7 +344,6 @@ const ChatWidgetPreview = ({
   ctaSubtitle,
   ctaDescription,
   ctaButtonText,
-  promotionalTitle,
   promotionalLink,
   screens = [{ type: 'conversation' }, { type: 'initial' }, { type: 'faq' }],
 }: ChatWidgetPreviewProps) => {
@@ -384,7 +371,6 @@ const ChatWidgetPreview = ({
                 ctaSubtitle={ctaSubtitle}
                 ctaDescription={ctaDescription}
                 ctaButtonText={ctaButtonText}
-                promotionalTitle={promotionalTitle}
                 promotionalLink={promotionalLink}
               />
             </div>

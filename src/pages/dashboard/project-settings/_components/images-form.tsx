@@ -1,21 +1,19 @@
 import { X } from 'lucide-react';
 import { useRef } from 'react';
 
+import { useChatWidgetStore } from '@/app/settings/chat-widget/chat-widget.store';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 interface ImagesFormProps {
-  logoPreviewUrl: string;
   handleLogoChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleLogoSave: () => void;
   handleLogoReset: () => void;
-  bannerPreviewUrl: string;
   handleBannerChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleBannerSave: () => void;
   handleBannerReset: () => void;
-  promotionalImagePreviewUrl: string;
   handlePromotionalImageChange: (
     event: React.ChangeEvent<HTMLInputElement>
   ) => void;
@@ -24,15 +22,12 @@ interface ImagesFormProps {
 }
 
 export const ImagesForm = ({
-  logoPreviewUrl,
   handleLogoChange,
   handleLogoSave,
   handleLogoReset,
-  bannerPreviewUrl,
   handleBannerChange,
   handleBannerSave,
   handleBannerReset,
-  promotionalImagePreviewUrl,
   handlePromotionalImageChange,
   handlePromotionalImageSave,
   handlePromotionalImageReset,
@@ -40,6 +35,12 @@ export const ImagesForm = ({
   const logoInputRef = useRef<HTMLInputElement | null>(null);
   const bannerInputRef = useRef<HTMLInputElement | null>(null);
   const promotionalImageInputRef = useRef<HTMLInputElement | null>(null);
+
+  const logoPreviewUrl = useChatWidgetStore((s) => s.images.logoPreviewUrl);
+  const bannerPreviewUrl = useChatWidgetStore((s) => s.images.bannerPreviewUrl);
+  const promotionalImagePreviewUrl = useChatWidgetStore(
+    (s) => s.images.promotionalImagePreviewUrl
+  );
 
   const clearInput = (
     targetedFileRef: React.RefObject<HTMLInputElement | null>

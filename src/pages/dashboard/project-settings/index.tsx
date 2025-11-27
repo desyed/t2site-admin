@@ -1,11 +1,15 @@
 import { ArrowLeft, ChevronRight } from 'lucide-react';
 import { useState, useMemo } from 'react';
 
+import type { WidgetConfig } from '@/app/settings/chat-widget/chat-widget.store';
+
+import {
+  useChatWidgetStore,
+  type ChatWidgetStore,
+} from '@/app/settings/chat-widget/chat-widget.store';
 import { PageHeader } from '@/components/dashboard/page-header';
 import { Card, CardContent } from '@/components/ui/card';
 import { createDashboardLoader } from '@/middlewares/auth-middleware';
-
-import type { WidgetConfig } from './helpers';
 
 import ChatWidgetPreview from './_components/chat-widget-preview';
 import { ColorsForm } from './_components/colors-form';
@@ -14,7 +18,7 @@ import { CookieConsentSettings } from './_components/cookie-consent-settings';
 import { FaqForm } from './_components/faq-form';
 import { ImagesForm } from './_components/images-form';
 import { ProjectInformation } from './_components/project-information';
-import { DEFAULTS, isValidHex } from './helpers';
+import { isValidHex } from './helpers';
 
 export const loader = createDashboardLoader(() => ({
   title: 'Project General Settings',
@@ -47,68 +51,122 @@ export const Component = () => {
     item: '',
   });
 
-  const [primaryBgColor, setPrimaryBgColor] = useState(DEFAULTS.background);
-  const [primaryFgColor, setPrimaryFgColor] = useState(DEFAULTS.foreground);
-  const [logoBadgeBgColor, setLogoBadgeBgColor] = useState(
-    DEFAULTS.logoBadgeBackgroundColor
+  // colors
+  const background = useChatWidgetStore((s: ChatWidgetStore) => s.background);
+  const foreground = useChatWidgetStore((s: ChatWidgetStore) => s.foreground);
+  const logoBadgeBackgroundColor = useChatWidgetStore(
+    (s: ChatWidgetStore) => s.logoBadgeBackgroundColor
   );
 
-  const [logoPreviewUrl, setLogoPreviewUrl] = useState<string | null>(null);
-  const [logoFile, setLogoFile] = useState<File | null>(null);
+  // const [primaryBgColor, setPrimaryBgColor] = useState(DEFAULTS.background);
+  // const [primaryFgColor, setPrimaryFgColor] = useState(DEFAULTS.foreground);
+  // const [logoBadgeBgColor, setLogoBadgeBgColor] = useState(
+  //   DEFAULTS.logoBadgeBackgroundColor
+  // );
 
-  const [bannerPreviewUrl, setBannerPreviewUrl] = useState<string | null>(null);
-  const [bannerFile, setBannerFile] = useState<File | null>(null);
+  // Image previews + actions
+  const logoPreviewUrl =
+    useChatWidgetStore((s: ChatWidgetStore) => s.images.logoPreviewUrl) ?? null;
+  const bannerPreviewUrl =
+    useChatWidgetStore((s: ChatWidgetStore) => s.images.bannerPreviewUrl) ??
+    null;
+  const promotionalImagePreviewUrl =
+    useChatWidgetStore(
+      (s: ChatWidgetStore) => s.images.promotionalImagePreviewUrl
+    ) ?? null;
 
-  const [promotionalImagePreviewUrl, setPromotionalImagePreviewUrl] = useState<
-    string | null
-  >(null);
-  const [promotionalImageFile, setPromotionalImageFile] = useState<File | null>(
-    null
+  const setLogoFileAndPreview = useChatWidgetStore(
+    (s: ChatWidgetStore) => s.setLogoFileAndPreview
+  );
+  const setBannerFileAndPreview = useChatWidgetStore(
+    (s: ChatWidgetStore) => s.setBannerFileAndPreview
+  );
+  const setPromotionalFileAndPreview = useChatWidgetStore(
+    (s: ChatWidgetStore) => s.setPromotionalFileAndPreview
   );
 
-  const [bannerTitle, setBannerTitle] = useState(DEFAULTS.bannerTitle);
-  const [bannerSubtitle, setBannerSubtitle] = useState(DEFAULTS.bannerSubtitle);
-
-  const [ctaTitle, setCtaTitle] = useState(DEFAULTS.ctaTitle);
-  const [ctaSubtitle, setCtaSubtitle] = useState(DEFAULTS.ctaSubtitle);
-  const [ctaDescription, setCtaDescription] = useState(DEFAULTS.ctaDescription);
-  const [ctaButtonText, setCtaButtonText] = useState(DEFAULTS.ctaButtonText);
-  const [promotionalTitle, setPromotionalTitle] = useState(
-    DEFAULTS.promotionalTitle
-  );
-  const [promotionalLink, setPromotionalLink] = useState(
-    DEFAULTS.promotionalLink
+  const resetLogo = useChatWidgetStore((s: ChatWidgetStore) => s.resetLogo);
+  const resetBanner = useChatWidgetStore((s: ChatWidgetStore) => s.resetBanner);
+  const resetPromotionalImage = useChatWidgetStore(
+    (s: ChatWidgetStore) => s.resetPromotionalImage
   );
 
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  // const [logoPreviewUrl, setLogoPreviewUrl] = useState<string | null>(null);
+  // const [logoFile, setLogoFile] = useState<File | null>(null);
+
+  // const [bannerPreviewUrl, setBannerPreviewUrl] = useState<string | null>(null);
+  // const [bannerFile, setBannerFile] = useState<File | null>(null);
+
+  // const [promotionalImagePreviewUrl, setPromotionalImagePreviewUrl] = useState<
+  //   string | null
+  // >(null);
+  // const [promotionalImageFile, setPromotionalImageFile] = useState<File | null>(
+  //   null
+  // );
+
+  // Content fields
+  const bannerTitle = useChatWidgetStore((s: ChatWidgetStore) => s.bannerTitle);
+  const bannerSubtitle = useChatWidgetStore(
+    (s: ChatWidgetStore) => s.bannerSubtitle
+  );
+  const ctaTitle = useChatWidgetStore((s: ChatWidgetStore) => s.ctaTitle);
+  const ctaSubtitle = useChatWidgetStore((s: ChatWidgetStore) => s.ctaSubtitle);
+  const ctaDescription = useChatWidgetStore(
+    (s: ChatWidgetStore) => s.ctaDescription
+  );
+  const ctaButtonText = useChatWidgetStore(
+    (s: ChatWidgetStore) => s.ctaButtonText
+  );
+
+  const promotionalLink = useChatWidgetStore(
+    (s: ChatWidgetStore) => s.promotionalLink
+  );
+
+  // const [bannerTitle, setBannerTitle] = useState(DEFAULTS.bannerTitle);
+  // const [bannerSubtitle, setBannerSubtitle] = useState(DEFAULTS.bannerSubtitle);
+
+  // const [ctaTitle, setCtaTitle] = useState(DEFAULTS.ctaTitle);
+  // const [ctaSubtitle, setCtaSubtitle] = useState(DEFAULTS.ctaSubtitle);
+  // const [ctaDescription, setCtaDescription] = useState(DEFAULTS.ctaDescription);
+  // const [ctaButtonText, setCtaButtonText] = useState(DEFAULTS.ctaButtonText);
+  // const [promotionalTitle, setPromotionalTitle] = useState(
+  //   DEFAULTS.promotionalTitle
+  // );
+  // const [promotionalLink, setPromotionalLink] = useState(
+  //   DEFAULTS.promotionalLink
+  // );
+
+  const setSaving = useChatWidgetStore((s: ChatWidgetStore) => s.setSaving);
+  const setError = useChatWidgetStore((s: ChatWidgetStore) => s.setError);
+  const setSuccess = useChatWidgetStore((s: ChatWidgetStore) => s.setSuccess);
+
+  // const [saving, setSaving] = useState(false);
+  // const [error, setError] = useState<string | null>(null);
+  // const [success, setSuccess] = useState<string | null>(null);
 
   const config: WidgetConfig = useMemo(
     () => ({
-      background: primaryBgColor,
-      foreground: primaryFgColor,
-      logoBadgeBackgroundColor: logoBadgeBgColor,
+      background,
+      foreground,
+      logoBadgeBackgroundColor,
       bannerTitle,
       bannerSubtitle,
       ctaTitle,
       ctaSubtitle,
       ctaDescription,
       ctaButtonText,
-      promotionalTitle,
       promotionalLink,
     }),
     [
-      primaryBgColor,
-      primaryFgColor,
-      logoBadgeBgColor,
+      background,
+      foreground,
+      logoBadgeBackgroundColor,
       bannerTitle,
       bannerSubtitle,
       ctaTitle,
       ctaSubtitle,
       ctaDescription,
       ctaButtonText,
-      promotionalTitle,
       promotionalLink,
     ]
   );
@@ -146,51 +204,49 @@ export const Component = () => {
   };
 
   const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+    const file = e.target.files?.[0] ?? null;
     if (file) {
-      setLogoFile(file);
-      setLogoPreviewUrl(URL.createObjectURL(file)); // instant preview
+      const preview = URL.createObjectURL(file);
+      setLogoFileAndPreview(file, preview);
     }
   };
 
   const handleBannerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+    const file = e.target.files?.[0] ?? null;
     if (file) {
-      setBannerFile(file);
-      setBannerPreviewUrl(URL.createObjectURL(file)); // instant preview
+      const preview = URL.createObjectURL(file);
+      setBannerFileAndPreview(file, preview);
     }
   };
 
   const handlePromotionalImageChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const file = e.target.files?.[0];
+    const file = e.target.files?.[0] ?? null;
     if (file) {
-      setPromotionalImageFile(file);
-      setPromotionalImagePreviewUrl(URL.createObjectURL(file)); // instant preview
+      const preview = URL.createObjectURL(file);
+      setPromotionalFileAndPreview(file, preview);
     }
   };
 
   const handleLogoReset = () => {
-    setLogoFile(null);
-    setLogoPreviewUrl(null);
+    resetLogo();
   };
 
   const handleBannerReset = () => {
-    setBannerFile(null);
-    setBannerPreviewUrl(null);
+    resetBanner();
   };
 
   const handlePromotionalImageReset = () => {
-    setPromotionalImageFile(null);
-    setPromotionalImagePreviewUrl(null);
+    resetPromotionalImage();
   };
 
   const handleLogoSave = async () => {
-    if (!logoFile) return alert('Please select a logo first.');
+    const file = useChatWidgetStore.getState().images.logoFile;
+    if (!file) return alert('Please select a logo first.');
 
     const formData = new FormData();
-    formData.append('logo', logoFile);
+    formData.append('logo', file);
 
     await fetch('/api/update-logo', {
       method: 'POST',
@@ -201,10 +257,11 @@ export const Component = () => {
   };
 
   const handleBannerSave = async () => {
-    if (!bannerFile) return alert('Please select a banner first.');
+    const file = useChatWidgetStore.getState().images.bannerFile;
+    if (!file) return alert('Please select a banner first.');
 
     const formData = new FormData();
-    formData.append('banner', bannerFile);
+    formData.append('banner', file);
 
     await fetch('/api/update-banner', {
       method: 'POST',
@@ -215,11 +272,11 @@ export const Component = () => {
   };
 
   const handlePromotionalImageSave = async () => {
-    if (!promotionalImageFile)
-      return alert('Please select a promotional image first.');
+    const file = useChatWidgetStore.getState().images.promotionalImageFile;
+    if (!file) return alert('Please select a promotional image first.');
 
     const formData = new FormData();
-    formData.append('promotionalImage', promotionalImageFile);
+    formData.append('promotionalImage', file);
 
     await fetch('/api/update-promotional-image', {
       method: 'POST',
@@ -237,50 +294,19 @@ export const Component = () => {
       case 'chat-widget-configurations':
         return (
           <div className="space-y-12">
-            <ContentForm
-              bannerTitle={bannerTitle}
-              setBannerTitle={setBannerTitle}
-              bannerSubtitle={bannerSubtitle}
-              setBannerSubtitle={setBannerSubtitle}
-              ctaTitle={ctaTitle}
-              setCtaTitle={setCtaTitle}
-              ctaSubtitle={ctaSubtitle}
-              setCtaSubtitle={setCtaSubtitle}
-              ctaDescription={ctaDescription}
-              setCtaDescription={setCtaDescription}
-              ctaButtonText={ctaButtonText}
-              setCtaButtonText={setCtaButtonText}
-              promotionalTitle={promotionalTitle}
-              setPromotionalTitle={setPromotionalTitle}
-              promotionalLink={promotionalLink}
-              setPromotionalLink={setPromotionalLink}
-            />
+            <ContentForm />
 
             <FaqForm />
 
-            <ColorsForm
-              primaryBgColor={primaryBgColor}
-              primaryFgColor={primaryFgColor}
-              logoBadgeBgColor={logoBadgeBgColor}
-              setPrimaryBgColor={setPrimaryBgColor}
-              setPrimaryFgColor={setPrimaryFgColor}
-              setLogoBadgeBgColor={setLogoBadgeBgColor}
-              handleSave={handleColorSave}
-              saving={saving}
-              error={error}
-              success={success}
-            />
+            <ColorsForm handleSave={handleColorSave} />
 
             <ImagesForm
-              logoPreviewUrl={logoPreviewUrl ?? ''}
               handleLogoChange={handleLogoChange}
               handleLogoSave={handleLogoSave}
               handleLogoReset={handleLogoReset}
-              bannerPreviewUrl={bannerPreviewUrl ?? ''}
               handleBannerChange={handleBannerChange}
               handleBannerSave={handleBannerSave}
               handleBannerReset={handleBannerReset}
-              promotionalImagePreviewUrl={promotionalImagePreviewUrl ?? ''}
               handlePromotionalImageChange={handlePromotionalImageChange}
               handlePromotionalImageSave={handlePromotionalImageSave}
               handlePromotionalImageReset={handlePromotionalImageReset}
@@ -306,7 +332,6 @@ export const Component = () => {
                 ctaSubtitle={ctaSubtitle}
                 ctaDescription={ctaDescription}
                 ctaButtonText={ctaButtonText}
-                promotionalTitle={promotionalTitle}
                 promotionalLink={promotionalLink}
               />
             </div>
