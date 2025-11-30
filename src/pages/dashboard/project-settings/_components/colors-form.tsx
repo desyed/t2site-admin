@@ -4,10 +4,14 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-import { normalizeHex } from '../helpers';
+import { hexToHsl, normalizeHex } from '../helpers';
 
 type Props = {
-  handleSave: () => void;
+  handleSave: (
+    hslBackground: string,
+    hslForeground: string,
+    hslBadge: string
+  ) => void;
 };
 
 export const ColorsForm = ({ handleSave }: Props) => {
@@ -24,6 +28,15 @@ export const ColorsForm = ({ handleSave }: Props) => {
   );
 
   const status = useChatWidgetStore((s) => s.status);
+
+  const handleSaveClick = () => {
+    const hslBg = hexToHsl(primaryBgColor);
+    const hslFg = hexToHsl(primaryFgColor);
+    const hslBadge = hexToHsl(logoBadgeBgColor);
+
+    handleSave(hslBg, hslFg, hslBadge);
+  };
+
   return (
     <Card className="border-none shadow-none">
       <CardContent className="space-y-4 p-0">
@@ -86,7 +99,7 @@ export const ColorsForm = ({ handleSave }: Props) => {
         </div>
 
         <div className="flex justify-end">
-          <Button onClick={handleSave} disabled={status.saving}>
+          <Button onClick={handleSaveClick} disabled={status.saving}>
             {status.saving ? 'Saving…' : 'Save'}
           </Button>
 

@@ -6,8 +6,26 @@ import type { createProjectSchema } from './project.schema';
 export type ProjectFeatures = {
   liveDesk: {
     id: string;
+    cta?: {
+      title: string;
+      subtitle: string;
+      buttonText: string;
+      description: string;
+    };
+    banner?: {
+      title: string;
+      subtitle: string;
+    };
+    theme?: {
+      primary: string;
+      background: string;
+      foreground: string;
+      primaryForeground: string;
+      logoBadgeBackgroundColor: string;
+    };
     logo?: string | null | undefined;
-    theme?: string | null | undefined;
+    promotionalImage?: string | null | undefined;
+    bannerImage?: string | null | undefined;
   };
 };
 

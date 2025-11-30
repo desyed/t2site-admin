@@ -4,7 +4,15 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-export const ContentForm = () => {
+interface ContentFormProps {
+  handleBannerSave: () => void;
+  handleCtaSave: () => void;
+}
+
+export const ContentForm = ({
+  handleBannerSave,
+  handleCtaSave,
+}: ContentFormProps) => {
   const bannerTitle = useChatWidgetStore((s) => s.bannerTitle);
   const setBannerTitle = useChatWidgetStore((s) => s.setBannerTitle);
   const bannerSubtitle = useChatWidgetStore((s) => s.bannerSubtitle);
@@ -43,7 +51,9 @@ export const ContentForm = () => {
             />
           </div>
 
-          <Button>Save</Button>
+          <div className="flex justify-end">
+            <Button onClick={handleBannerSave}>Save</Button>
+          </div>
         </div>
 
         {/* CTA Content */}
@@ -80,7 +90,9 @@ export const ContentForm = () => {
             />
           </div>
 
-          <Button>Save</Button>
+          <div className="flex justify-end">
+            <Button onClick={handleCtaSave}>Save</Button>
+          </div>
         </div>
 
         {/* Promotional Content */}
@@ -93,7 +105,9 @@ export const ContentForm = () => {
             />
           </div>
 
-          <Button>Save</Button>
+          <div className="flex justify-end">
+            <Button>Save</Button>
+          </div>
         </div>
       </CardContent>
     </Card>
