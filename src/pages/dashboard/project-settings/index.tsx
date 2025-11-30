@@ -1,5 +1,6 @@
 import { ArrowLeft, ChevronRight } from 'lucide-react';
 import { useState, useMemo, useEffect } from 'react';
+import { toast } from 'sonner';
 
 import type { WidgetConfig } from '@/app/settings/chat-widget/chat-widget.store';
 
@@ -8,6 +9,9 @@ import {
   useUpdateChatWidgetColors,
   useUpdateChatWidgetBanner,
   useUpdateChatWidgetCta,
+  useUpdateChatWidgetLogo,
+  useUpdateChatWidgetBannerImage,
+  useUpdateChatWidgetPromotionalImage,
 } from '@/app/settings/chat-widget/chat-widget.hooks';
 import {
   useChatWidgetStore,
@@ -89,7 +93,9 @@ export const Component = () => {
   );
 
   const resetLogo = useChatWidgetStore((s: ChatWidgetStore) => s.resetLogo);
-  const resetBanner = useChatWidgetStore((s: ChatWidgetStore) => s.resetBanner);
+  const resetBannerImage = useChatWidgetStore(
+    (s: ChatWidgetStore) => s.resetBanner
+  );
   const resetPromotionalImage = useChatWidgetStore(
     (s: ChatWidgetStore) => s.resetPromotionalImage
   );
@@ -131,6 +137,10 @@ export const Component = () => {
   const setPromoFromApi = useChatWidgetStore(
     (s) => s.setPromotionalFileAndPreview
   );
+
+  const setSaving = useChatWidgetStore((s: ChatWidgetStore) => s.setSaving);
+  const setError = useChatWidgetStore((s: ChatWidgetStore) => s.setError);
+  const setSuccess = useChatWidgetStore((s: ChatWidgetStore) => s.setSuccess);
 
   useEffect(() => {
     if (!currentProject?.features?.liveDesk) return;
@@ -182,10 +192,6 @@ export const Component = () => {
     setPromoFromApi,
   ]);
 
-  const setSaving = useChatWidgetStore((s: ChatWidgetStore) => s.setSaving);
-  const setError = useChatWidgetStore((s: ChatWidgetStore) => s.setError);
-  const setSuccess = useChatWidgetStore((s: ChatWidgetStore) => s.setSuccess);
-
   const config: WidgetConfig = useMemo(
     () => ({
       background,
@@ -217,6 +223,9 @@ export const Component = () => {
   const updateColors = useUpdateChatWidgetColors();
   const updateBanner = useUpdateChatWidgetBanner();
   const updateCta = useUpdateChatWidgetCta();
+  const updateLogo = useUpdateChatWidgetLogo();
+  const updateBannerImage = useUpdateChatWidgetBannerImage();
+  const updatePromotionalImage = useUpdateChatWidgetPromotionalImage();
 
   const handleColorSave = async (
     hslBackground: string,
@@ -250,13 +259,19 @@ export const Component = () => {
       });
       setSuccess('Saved successfully!');
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save colors.');
+      const msg = e?.message ?? 'Failed to save colors.';
+      toast.error(msg);
+      setError(msg);
     } finally {
       setSaving(false);
     }
   };
 
   const handleBannerSave = async () => {
+    setSaving(true);
+    setError(null);
+    setSuccess(null);
+
     try {
       await updateBanner.mutateAsync({
         liveDeskId,
@@ -267,11 +282,19 @@ export const Component = () => {
       });
       setSuccess('Banner saved!');
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save banner.');
+      const msg = e?.message ?? 'Failed to save banner.';
+      toast.error(msg);
+      setError(msg);
+    } finally {
+      setSaving(false);
     }
   };
 
   const handleCtaSave = async () => {
+    setSaving(true);
+    setError(null);
+    setSuccess(null);
+
     try {
       await updateCta.mutateAsync({
         liveDeskId,
@@ -284,7 +307,11 @@ export const Component = () => {
       });
       setSuccess('CTA saved!');
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save CTA.');
+      const msg = e?.message ?? 'Failed to save CTA.';
+      toast.error(msg);
+      setError(msg);
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -296,7 +323,7 @@ export const Component = () => {
     }
   };
 
-  const handleBannerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleBannerImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] ?? null;
     if (file) {
       const preview = URL.createObjectURL(file);
@@ -314,46 +341,108 @@ export const Component = () => {
     }
   };
 
-  const handleLogoReset = () => {
-    resetLogo();
-  };
-
-  const handleBannerReset = () => {
-    resetBanner();
-  };
-
-  const handlePromotionalImageReset = () => {
-    resetPromotionalImage();
-  };
-
   const handleLogoSave = async () => {
     const file = useChatWidgetStore.getState().images.logoFile;
-    if (!file) return alert('Please select a logo first.');
+    if (!file) return toast.error('Please select a logo image first.');
 
-    const formData = new FormData();
-    formData.append('logo', file);
+    setSaving(true);
+    setError(null);
+    setSuccess(null);
 
-    await fetch('/api/update-logo', {
-      method: 'POST',
-      body: formData,
-    });
+    try {
+      const res = await updateLogo.mutateAsync({
+        liveDeskId,
+        file,
+      });
 
-    alert('Logo saved!');
+      const uploadedUrl = res?.data?.logo ?? null;
+      setLogoFileAndPreview(null, uploadedUrl);
+      setSuccess('Logo updated!');
+      toast.success('Logo updated!');
+    } catch (err: any) {
+      const message =
+        err?.response?.data?.message ??
+        err?.message ??
+        'Failed to update logo.';
+
+      toast.error(message);
+      setError(message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleBannerImageSave = async () => {
+    const file = useChatWidgetStore.getState().images.bannerFile;
+    if (!file) return toast.error('Please select a banner first.');
+
+    setSaving(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      const res = await updateBannerImage.mutateAsync({
+        liveDeskId,
+        file,
+      });
+      const uploadedUrl = res?.data?.bannerImage ?? null;
+
+      setBannerFileAndPreview(null, uploadedUrl);
+      setSuccess('Banner updated!');
+      toast.success('Banner updated!');
+    } catch (err: any) {
+      const message =
+        err?.response?.data?.message ??
+        err?.message ??
+        'Failed to upload banner.';
+      toast.error(message);
+      setError(message);
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handlePromotionalImageSave = async () => {
     const file = useChatWidgetStore.getState().images.promotionalImageFile;
-    if (!file) return alert('Please select a promotional image first.');
+    if (!file) return toast.error('Please select a promotional image first.');
 
-    const formData = new FormData();
-    formData.append('promotionalImage', file);
+    setSaving(true);
+    setError(null);
+    setSuccess(null);
 
-    await fetch('/api/update-promotional-image', {
-      method: 'POST',
-      body: formData,
-    });
+    try {
+      const res = await updatePromotionalImage.mutateAsync({
+        liveDeskId,
+        file,
+      });
 
-    alert('Promotional image saved!');
+      const uploadedUrl = res?.data?.promotionalImage ?? null;
+
+      setPromotionalFileAndPreview(null, uploadedUrl);
+      setSuccess('Promotional image updated!');
+      toast.success('Promotional image updated!');
+    } catch (err: any) {
+      const message =
+        err?.response?.data?.message ??
+        err?.message ??
+        'Failed to upload promotional image.';
+      toast.error(message);
+      setError(message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleLogoReset = () => {
+    resetLogo();
+  };
+
+  const handleBannerImageReset = () => {
+    resetBannerImage();
+  };
+
+  const handlePromotionalImageReset = () => {
+    resetPromotionalImage();
   };
 
   const renderDetailedContent = () => {
@@ -377,9 +466,9 @@ export const Component = () => {
               handleLogoChange={handleLogoChange}
               handleLogoSave={handleLogoSave}
               handleLogoReset={handleLogoReset}
-              handleBannerChange={handleBannerChange}
-              handleBannerSave={handleBannerSave}
-              handleBannerReset={handleBannerReset}
+              handleBannerChange={handleBannerImageChange}
+              handleBannerSave={handleBannerImageSave}
+              handleBannerReset={handleBannerImageReset}
               handlePromotionalImageChange={handlePromotionalImageChange}
               handlePromotionalImageSave={handlePromotionalImageSave}
               handlePromotionalImageReset={handlePromotionalImageReset}
