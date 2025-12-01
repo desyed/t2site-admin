@@ -113,8 +113,8 @@ const InitialBody = ({
   ctaButtonText: string;
   promotionalLink: string;
 }) => (
-  <div className="no-scrollbar flex h-[424px] flex-col justify-end gap-4 overflow-y-auto px-4">
-    <div className="flex h-full flex-col gap-4">
+  <div className="no-scrollbar flex h-[424px] flex-col justify-end gap-4 px-4">
+    <div className="no-scrollbar flex h-full flex-col gap-4 overflow-y-auto pb-4">
       <div>
         <p className="text-lg font-medium">{bannerTitle},</p>
         <p className="text-2xl font-bold">{bannerSubtitle}</p>
@@ -180,7 +180,7 @@ const FaqBody = ({
   bannerSubtitle: string;
 }) => (
   <div className="flex h-[424px] flex-col justify-end gap-4 overflow-y-auto px-4">
-    <div className="flex h-full flex-col justify-end gap-4">
+    <div className="flex h-full flex-col justify-end gap-4 pb-4">
       <div>
         <p className="text-lg font-medium">{bannerTitle},</p>
         <p className="text-2xl font-bold">{bannerSubtitle}</p>
