@@ -7,10 +7,13 @@ import {
   BarChart3,
   Calendar,
   ChevronRight,
+  FileStack,
+  Info,
   Lock,
   MessageCircle,
   MessageSquare,
   Puzzle,
+  ScrollText,
   Settings,
   Shield,
   Sparkles,
@@ -40,9 +43,10 @@ export function Sidebar({ projectId }: SidebarProps) {
   const isProjectSettingsMode = pathname.includes('/project-settings');
   const isCookieConsentMode = pathname.includes('/cookie-consent');
   const isLiveDeskMode = pathname.includes('/live-desk');
+  const isAccountSettingsMode = pathname.includes('/account-settings');
 
   const handleBackToMain = () => {
-    router(`/${projectId}/analytics`);
+    router(`/${projectId}`);
   };
 
   const handleProjectSettingsMode = (e: React.MouseEvent) => {
@@ -60,6 +64,14 @@ export function Sidebar({ projectId }: SidebarProps) {
     e.preventDefault();
     // Navigate to Banner Settings (first option) by default
     router(`/${projectId}/cookie-consent`);
+  };
+
+  const handleBackToDashboard = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const lastActiveProjectId = window.localStorage.getItem(
+      'lastActiveProjectId'
+    );
+    router(lastActiveProjectId ? `/${lastActiveProjectId}` : '/');
   };
 
   const projectSettingsCategories = [
@@ -146,13 +158,40 @@ export function Sidebar({ projectId }: SidebarProps) {
     },
   ];
 
+  const accountSettingsCategories = [
+    {
+      name: 'General',
+      href: `/account-settings`,
+      icon: Shield,
+      current: pathname === `/account-settings`,
+    },
+    {
+      name: 'Billing Information',
+      href: `/account-settings/billing-information`,
+      icon: Info,
+      current: pathname === `/account-settings/billing-information`,
+    },
+    {
+      name: 'Billing Items',
+      href: `/account-settings/billing-items`,
+      icon: ScrollText,
+      current: pathname === `/account-settings/billing-items`,
+    },
+    {
+      name: 'Invoices',
+      href: `/account-settings/invoices`,
+      icon: FileStack,
+      current: pathname === `/account-settings/invoices`,
+    },
+  ];
+
   const navigationGroups: NavigationGroup[] = [
     {
       name: 'Insights',
       items: [
         {
           name: 'Analytics',
-          href: `/${projectId}/analytics`,
+          href: `/${projectId}`,
           icon: BarChart3,
           current:
             pathname === `/${projectId}/analytics` ||
@@ -340,6 +379,46 @@ export function Sidebar({ projectId }: SidebarProps) {
               </h3>
               <ul className="space-y-0.5">
                 {cookieConsentCategories.map((category) => {
+                  const Icon = category.icon;
+                  return (
+                    <li key={category.name}>
+                      <Link
+                        to={category.href}
+                        className={cn(
+                          'flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors',
+                          category.current
+                            ? 'bg-blue-100 font-medium text-blue-700'
+                            : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+                        )}
+                      >
+                        <Icon className="size-4" />
+                        {category.name}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </div>
+        ) : isAccountSettingsMode ? (
+          /* Account Settings Chrome-like navigation mode */
+          <div className="p-3 pt-5">
+            {/* Back Button */}
+            <button
+              onClick={handleBackToDashboard} // Updated to use handleBackToMain function
+              className="mb-6 flex w-full items-center gap-2 rounded-md bg-gray-50 px-3 py-2 text-xs text-gray-700 transition-colors hover:text-gray-900"
+            >
+              <ArrowLeft className="size-4" />
+              Back to Dashboard
+            </button>
+
+            {/* Account Settings Categories */}
+            <div>
+              <h3 className="mb-3 text-xs font-medium uppercase tracking-wider text-gray-500">
+                Account Settings
+              </h3>
+              <ul className="space-y-0.5">
+                {accountSettingsCategories.map((category) => {
                   const Icon = category.icon;
                   return (
                     <li key={category.name}>
