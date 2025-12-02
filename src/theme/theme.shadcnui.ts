@@ -74,6 +74,10 @@ export default plugin(() => {}, {
         icon: {
           DEFAULT: 'hsl(var(--icon))',
         },
+        chat: {
+          primary: 'hsl(var(--chat-primary))',
+          logoBadgeBackground: 'hsl(var(--chat-logo-badge-background))',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',

@@ -12,7 +12,7 @@ import {
 
 import { AlertDialogHeader, AlertDialogFooter } from '../ui/alert-dialog';
 
-const ProfileCompletionFloatDialog = () => {
+const ProjectCompletionFloatDialog = () => {
   const [open, setOpen] = useState(false);
 
   const { projectId } = useParams();
@@ -49,4 +49,4 @@ const ProfileCompletionFloatDialog = () => {
     </AlertDialog>
   );
 };
-export default ProfileCompletionFloatDialog;
+export default ProjectCompletionFloatDialog;
