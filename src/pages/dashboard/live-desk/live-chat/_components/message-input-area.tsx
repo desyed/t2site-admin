@@ -4,17 +4,17 @@ import type React from 'react';
 
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
-import { Smile, SendIcon, Plus, FileIcon, Camera } from 'lucide-react';
-import { memo, useState, useRef, useEffect } from 'react';
+import { Camera, FileIcon, Plus, Smile, Triangle } from 'lucide-react';
+import { memo, useEffect, useRef, useState } from 'react';
 
 import { useTheme } from '@/components/theme-provider';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useMediaQuery } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
@@ -36,6 +36,7 @@ export const MessageInputArea = memo(
     const [isTextMessageFieldDirty, setIsTextMessageFieldDirty] =
       useState(false);
     const messageField = useRef<HTMLTextAreaElement | null>(null);
+    const emojiPickerRef = useRef<HTMLDivElement>(null);
 
     const isDesktop = useMediaQuery('(min-width: 1024px)');
 
@@ -44,6 +45,22 @@ export const MessageInputArea = memo(
     useEffect(() => {
       setIsTextMessageFieldDirty(/\S/.test(textMessage));
     }, [textMessage]);
+
+    useEffect(() => {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }, []);
+
+    const handleClickOutside = (event: MouseEvent | React.MouseEvent) => {
+      if (
+        emojiPickerRef.current &&
+        !emojiPickerRef.current.contains(event.target as Node)
+      ) {
+        setShowEmojiPicker(false);
+      }
+    };
 
     const handleSendTextMessage = () => {
       onSendTextMessage(textMessage);
@@ -107,7 +124,8 @@ export const MessageInputArea = memo(
                 style={{
                   display: showEmojiPicker ? 'block' : 'none',
                 }}
-                className="absolute -top-2 right-0 -translate-y-full"
+                className="absolute -top-2 left-0 -translate-y-full"
+                ref={emojiPickerRef}
               >
                 <Picker
                   onEmojiSelect={(emoji: any) => {
@@ -148,6 +166,12 @@ export const MessageInputArea = memo(
                         <DropdownMenuItem className="py-2 pr-6">
                           <Camera className="mr-2 size-4" /> Photos & Videos
                         </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="py-2 pr-6"
+                          onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                        >
+                          <Smile className="mr-2 size-4" /> Emoji
+                        </DropdownMenuItem>
                       </DropdownMenuGroup>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -170,18 +194,6 @@ export const MessageInputArea = memo(
                 />
 
                 <div className="order-3 flex items-center gap-2 px-2">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className={cn(
-                      'size-8 rounded-full text-muted-foreground hover:text-foreground',
-                      showEmojiPicker && '!bg-accent !text-primary'
-                    )}
-                    onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                  >
-                    <Smile className="size-4" />
-                  </Button>
-
                   <div className="relative">
                     <Button
                       onClick={handleSendTextMessage}
@@ -189,7 +201,7 @@ export const MessageInputArea = memo(
                       size="icon"
                       className="size-8 gap-2 rounded-full transition-colors"
                     >
-                      <SendIcon className="size-4" />
+                      <Triangle className="ml-0.5 size-4 rotate-90" />
                     </Button>
                     {showSendOptions && (
                       <div className="absolute bottom-full right-0 z-50 mb-2">
