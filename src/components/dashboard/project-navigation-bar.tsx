@@ -226,10 +226,12 @@ export function ProjectNavigationBar({ projectId }: { projectId: string }) {
               <p className="text-sm text-gray-600">{user?.email}</p>
             </div>
 
-            <DropdownMenuItem className="flex cursor-pointer items-center gap-3 px-4 py-2 hover:bg-gray-100">
-              <User className="size-4 text-gray-500" />
-              Account settings
-            </DropdownMenuItem>
+            <Link to="/account-settings">
+              <DropdownMenuItem className="flex cursor-pointer items-center gap-3 px-4 py-2 hover:bg-gray-100">
+                <User className="size-4 text-gray-500" />
+                Account settings
+              </DropdownMenuItem>
+            </Link>
 
             <DropdownMenuItem className="flex cursor-pointer items-center gap-3 px-4 py-2 hover:bg-gray-100">
               <Gift className="size-4 text-gray-500" />

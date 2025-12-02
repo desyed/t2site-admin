@@ -1,3 +1,5 @@
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import { Outlet, useNavigation } from 'react-router';
 import TopBarProgress from 'react-topbar-progress-indicator';
 
