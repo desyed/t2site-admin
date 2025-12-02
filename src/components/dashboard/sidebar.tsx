@@ -191,7 +191,7 @@ export function Sidebar({ projectId }: SidebarProps) {
       items: [
         {
           name: 'Analytics',
-          href: `/${projectId}/analytics`,
+          href: `/${projectId}`,
           icon: BarChart3,
           current:
             pathname === `/${projectId}/analytics` ||
