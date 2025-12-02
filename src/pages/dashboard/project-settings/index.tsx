@@ -1,18 +1,38 @@
 import { ArrowLeft, ChevronRight } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { toast } from 'sonner';
 
+import type { WidgetConfig } from '@/app/settings/chat-widget/chat-widget.store';
+
+import { useCurrentProjectQuery } from '@/app/project/project.hooks';
+import {
+  useUpdateChatWidgetColors,
+  useUpdateChatWidgetBanner,
+  useUpdateChatWidgetCta,
+  useUpdateChatWidgetLogo,
+  useUpdateChatWidgetBannerImage,
+  useUpdateChatWidgetPromotionalImage,
+} from '@/app/settings/chat-widget/chat-widget.hooks';
+import {
+  useChatWidgetStore,
+  type ChatWidgetStore,
+} from '@/app/settings/chat-widget/chat-widget.store';
 import { PageHeader } from '@/components/dashboard/page-header';
-import { Button } from '@/components/site-button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { createDashboardLoader } from '@/middlewares/auth-middleware';
 
-export const loader = createDashboardLoader(() => {
-  return {
-    title: 'Project General Settings',
-  };
-});
+import ChatWidgetPreview from './_components/chat-widget-preview';
+import { ColorsForm } from './_components/colors-form';
+import { ContentForm } from './_components/content-form';
+import { CookieConsentSettings } from './_components/cookie-consent-settings';
+import { FaqForm } from './_components/faq-form';
+import { ImagesForm } from './_components/images-form';
+import { ProjectInformation } from './_components/project-information';
+import { hslStringToHex, isValidHex } from './helpers';
+
+export const loader = createDashboardLoader(() => ({
+  title: 'Project General Settings',
+}));
 
 const generalSettingsData = [
   {
@@ -40,173 +60,449 @@ export const Component = () => {
     level: 'index',
     item: '',
   });
-  const [primaryBgColor, setPrimaryBgColor] = useState('#EEEEEE');
-  const [primaryFgColor, setPrimaryFgColor] = useState('#FFA500');
-  const [logoBadgeBgColor, setLogoBadgeBgColor] = useState('#555555');
 
-  const renderProjectInformation = () => (
-    <div className="space-y-12">
-      <Card className="border-none shadow-none">
-        <CardContent className="space-y-4 p-0">
-          <div className="grid gap-2">
-            <Label>Project Name</Label>
-            <Input id="project-name" placeholder="Your Project Name" />
-          </div>
-          <div className="grid gap-2">
-            <Label>Website URL</Label>
-            <Input id="website-url" placeholder="https://www.yourwebsite.com" />
-          </div>
-          <div className="grid gap-2">
-            <Label>Description</Label>
-            <Input id="description" placeholder="Project Description" />
-          </div>
+  const { data: currentProject } = useCurrentProjectQuery();
+  const liveDeskId = currentProject?.features?.liveDesk.id ?? '';
 
-          <Button>Save</Button>
-        </CardContent>
-      </Card>
-    </div>
+  // colors
+  const background = useChatWidgetStore((s: ChatWidgetStore) => s.background);
+  const foreground = useChatWidgetStore((s: ChatWidgetStore) => s.foreground);
+  const logoBadgeBackgroundColor = useChatWidgetStore(
+    (s: ChatWidgetStore) => s.logoBadgeBackgroundColor
   );
 
-  const renderChatWidgetConfigurations = () => (
-    <div className="space-y-12">
-      <div className="space-y-4">
-        <h3 className="text-[12px] uppercase text-gray-500">Colors</h3>
-        <Card className="border-none shadow-none">
-          <CardContent className="space-y-4 p-0">
-            <div className="grid gap-2">
-              <Label>Primary Background Color</Label>
-              <div className="flex items-center gap-2">
-                <Input
-                  type="color"
-                  value={primaryBgColor}
-                  id="primary-bg-color"
-                  onChange={(e) => setPrimaryBgColor(e.target.value)}
-                  className="w-12 p-1.5"
-                />
-                <Input
-                  type="text"
-                  value={primaryBgColor}
-                  onChange={(e) => setPrimaryBgColor(e.target.value)}
-                  placeholder="#FFFFFF"
-                />
-              </div>
-            </div>
-            <div className="grid gap-2">
-              <Label>Primary Foreground Color</Label>
-              <div className="flex items-center gap-2">
-                <Input
-                  type="color"
-                  value={primaryFgColor}
-                  id="primary-fg-color"
-                  onChange={(e) => setPrimaryFgColor(e.target.value)}
-                  className="w-12 p-1.5"
-                />
-                <Input
-                  type="text"
-                  value={primaryFgColor}
-                  onChange={(e) => setPrimaryFgColor(e.target.value)}
-                  placeholder="#FFA500"
-                />
-              </div>
-            </div>
-            <div className="grid gap-2">
-              <Label>Logo Badge Background Color</Label>
-              <div className="flex items-center gap-2">
-                <Input
-                  type="color"
-                  value={logoBadgeBgColor}
-                  id="logo-badge-bg-color"
-                  placeholder="#000000"
-                  onChange={(e) => setLogoBadgeBgColor(e.target.value)}
-                  className="w-12 p-1.5"
-                />
-                <Input
-                  type="text"
-                  value={logoBadgeBgColor}
-                  onChange={(e) => setLogoBadgeBgColor(e.target.value)}
-                  placeholder="#471515"
-                />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+  // Image previews + actions
+  const logoPreviewUrl =
+    useChatWidgetStore((s: ChatWidgetStore) => s.images.logoPreviewUrl) ?? null;
+  const bannerPreviewUrl =
+    useChatWidgetStore((s: ChatWidgetStore) => s.images.bannerPreviewUrl) ??
+    null;
+  const promotionalImagePreviewUrl =
+    useChatWidgetStore(
+      (s: ChatWidgetStore) => s.images.promotionalImagePreviewUrl
+    ) ?? null;
 
-      <div className="space-y-4">
-        <h3 className="text-[12px] uppercase text-gray-500">Images</h3>
-        <Card className="border-none shadow-none">
-          <CardContent className="space-y-4 p-0">
-            <div className="grid gap-2">
-              <Label>Logo Image</Label>
-              <Input id="logo" type="file" />
-            </div>
-            <div className="grid gap-2">
-              <Label>Banner Image</Label>
-              <Input id="banner" type="file" />
-            </div>
-            <div className="grid gap-2">
-              <Label>Promotional Image</Label>
-              <Input id="promotional" type="file" />
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="space-y-4">
-        <h3 className="text-[12px] uppercase text-gray-500">Contents</h3>
-        <Card className="border-none shadow-none">
-          <CardContent className="space-y-4 p-0">
-            <div className="grid gap-2">
-              <Label>Welcome Text</Label>
-              <Input id="welcome-text" />
-            </div>
-            <div className="grid gap-2">
-              <Label>CTA Text</Label>
-              <Input id="cta-text" />
-            </div>
-            <div className="grid gap-2">
-              <Label>Promotional Image Link</Label>
-              <Input id="promotional-link" />
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+  const setLogoFileAndPreview = useChatWidgetStore(
+    (s: ChatWidgetStore) => s.setLogoFileAndPreview
+  );
+  const setBannerFileAndPreview = useChatWidgetStore(
+    (s: ChatWidgetStore) => s.setBannerFileAndPreview
+  );
+  const setPromotionalFileAndPreview = useChatWidgetStore(
+    (s: ChatWidgetStore) => s.setPromotionalFileAndPreview
   );
 
-  const renderCookieConsentSettings = () => (
-    <div className="space-y-12">
-      <Card className="border-none shadow-none">
-        <CardContent className="space-y-4 p-0">
-          <div className="grid gap-2">
-            <Label>Cookie Banner Message</Label>
-            <Input
-              id="cookie-banner-message"
-              placeholder="Your Cookie Banner Message"
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label>Cookie Policy URL</Label>
-            <Input
-              id="cookie-policy-url"
-              placeholder="https://www.yourwebsite.com/cookie-policy"
-            />
-          </div>
-
-          <Button>Save</Button>
-        </CardContent>
-      </Card>
-    </div>
+  const resetLogo = useChatWidgetStore((s: ChatWidgetStore) => s.resetLogo);
+  const resetBannerImage = useChatWidgetStore(
+    (s: ChatWidgetStore) => s.resetBanner
   );
+  const resetPromotionalImage = useChatWidgetStore(
+    (s: ChatWidgetStore) => s.resetPromotionalImage
+  );
+
+  // Content fields
+  const bannerTitle = useChatWidgetStore((s: ChatWidgetStore) => s.bannerTitle);
+  const bannerSubtitle = useChatWidgetStore(
+    (s: ChatWidgetStore) => s.bannerSubtitle
+  );
+  const ctaTitle = useChatWidgetStore((s: ChatWidgetStore) => s.ctaTitle);
+  const ctaSubtitle = useChatWidgetStore((s: ChatWidgetStore) => s.ctaSubtitle);
+  const ctaDescription = useChatWidgetStore(
+    (s: ChatWidgetStore) => s.ctaDescription
+  );
+  const ctaButtonText = useChatWidgetStore(
+    (s: ChatWidgetStore) => s.ctaButtonText
+  );
+
+  const promotionalLink = useChatWidgetStore(
+    (s: ChatWidgetStore) => s.promotionalLink
+  );
+
+  const setBackground = useChatWidgetStore((s) => s.setBackground);
+  const setForeground = useChatWidgetStore((s) => s.setForeground);
+  const setLogoBadgeBackgroundColor = useChatWidgetStore(
+    (s) => s.setLogoBadgeBackgroundColor
+  );
+
+  const setBannerTitle = useChatWidgetStore((s) => s.setBannerTitle);
+  const setBannerSubtitle = useChatWidgetStore((s) => s.setBannerSubtitle);
+
+  const setCtaTitle = useChatWidgetStore((s) => s.setCtaTitle);
+  const setCtaSubtitle = useChatWidgetStore((s) => s.setCtaSubtitle);
+  const setCtaDescription = useChatWidgetStore((s) => s.setCtaDescription);
+  const setCtaButtonText = useChatWidgetStore((s) => s.setCtaButtonText);
+
+  const setLogoFromApi = useChatWidgetStore((s) => s.setLogoFileAndPreview);
+  const setBannerFromApi = useChatWidgetStore((s) => s.setBannerFileAndPreview);
+  const setPromoFromApi = useChatWidgetStore(
+    (s) => s.setPromotionalFileAndPreview
+  );
+
+  const setSaving = useChatWidgetStore((s: ChatWidgetStore) => s.setSaving);
+  const setError = useChatWidgetStore((s: ChatWidgetStore) => s.setError);
+  const setSuccess = useChatWidgetStore((s: ChatWidgetStore) => s.setSuccess);
+
+  useEffect(() => {
+    if (!currentProject?.features?.liveDesk) return;
+
+    const liveDesk = currentProject.features.liveDesk;
+
+    if (liveDesk.theme) {
+      setBackground(hslStringToHex(liveDesk.theme.background ?? '#FFFCE8'));
+      setForeground(hslStringToHex(liveDesk.theme.foreground ?? '#000000'));
+      setLogoBadgeBackgroundColor(
+        hslStringToHex(liveDesk.theme.logoBadgeBackgroundColor ?? '#FCE654')
+      );
+    }
+
+    if (liveDesk.banner) {
+      setBannerTitle(liveDesk.banner.title ?? '');
+      setBannerSubtitle(liveDesk.banner.subtitle ?? '');
+    }
+
+    if (liveDesk.cta) {
+      setCtaTitle(liveDesk.cta.title ?? '');
+      setCtaSubtitle(liveDesk.cta.subtitle ?? '');
+      setCtaDescription(liveDesk.cta.description ?? '');
+      setCtaButtonText(liveDesk.cta.buttonText ?? '');
+    }
+
+    if (liveDesk.logo) {
+      setLogoFromApi(null, liveDesk.logo);
+    }
+    if (liveDesk.bannerImage) {
+      setBannerFromApi(null, liveDesk.bannerImage);
+    }
+    if (liveDesk.promotionalImage) {
+      setPromoFromApi(null, liveDesk.promotionalImage);
+    }
+  }, [
+    currentProject,
+    setBackground,
+    setForeground,
+    setLogoBadgeBackgroundColor,
+    setBannerTitle,
+    setBannerSubtitle,
+    setCtaTitle,
+    setCtaSubtitle,
+    setCtaDescription,
+    setCtaButtonText,
+    setLogoFromApi,
+    setBannerFromApi,
+    setPromoFromApi,
+  ]);
+
+  const config: WidgetConfig = useMemo(
+    () => ({
+      background,
+      foreground,
+      logoBadgeBackgroundColor,
+      bannerTitle,
+      bannerSubtitle,
+      ctaTitle,
+      ctaSubtitle,
+      ctaDescription,
+      ctaButtonText,
+      promotionalLink,
+    }),
+    [
+      background,
+      foreground,
+      logoBadgeBackgroundColor,
+      bannerTitle,
+      bannerSubtitle,
+      ctaTitle,
+      ctaSubtitle,
+      ctaDescription,
+      ctaButtonText,
+      promotionalLink,
+    ]
+  );
+
+  // --- API mutations ---
+  const updateColors = useUpdateChatWidgetColors();
+  const updateBanner = useUpdateChatWidgetBanner();
+  const updateCta = useUpdateChatWidgetCta();
+  const updateLogo = useUpdateChatWidgetLogo();
+  const updateBannerImage = useUpdateChatWidgetBannerImage();
+  const updatePromotionalImage = useUpdateChatWidgetPromotionalImage();
+
+  const handleColorSave = async (
+    hslBackground: string,
+    hslForeground: string,
+    hslBadge: string
+  ) => {
+    setSaving(true);
+    setError(null);
+    setSuccess(null);
+
+    if (
+      !isValidHex(config.background) ||
+      !isValidHex(config.foreground) ||
+      !isValidHex(config.logoBadgeBackgroundColor)
+    ) {
+      setError('Please enter valid hex color codes.');
+      setSaving(false);
+      return;
+    }
+
+    try {
+      await updateColors.mutateAsync({
+        liveDeskId,
+        payload: {
+          background: hslBackground,
+          foreground: hslForeground,
+          primary: hslBackground,
+          primaryForeground: hslForeground,
+          logoBadgeBackgroundColor: hslBadge,
+        },
+      });
+      setSuccess('Saved successfully!');
+    } catch (e: any) {
+      const msg = e?.message ?? 'Failed to save colors.';
+      toast.error(msg);
+      setError(msg);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleBannerSave = async () => {
+    setSaving(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      await updateBanner.mutateAsync({
+        liveDeskId,
+        payload: {
+          title: bannerTitle,
+          subtitle: bannerSubtitle,
+        },
+      });
+      setSuccess('Banner saved!');
+    } catch (e: any) {
+      const msg = e?.message ?? 'Failed to save banner.';
+      toast.error(msg);
+      setError(msg);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleCtaSave = async () => {
+    setSaving(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      await updateCta.mutateAsync({
+        liveDeskId,
+        payload: {
+          title: ctaTitle,
+          subtitle: ctaSubtitle,
+          description: ctaDescription,
+          buttonText: ctaButtonText,
+        },
+      });
+      setSuccess('CTA saved!');
+    } catch (e: any) {
+      const msg = e?.message ?? 'Failed to save CTA.';
+      toast.error(msg);
+      setError(msg);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] ?? null;
+    if (file) {
+      const preview = URL.createObjectURL(file);
+      setLogoFileAndPreview(file, preview);
+    }
+  };
+
+  const handleBannerImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] ?? null;
+    if (file) {
+      const preview = URL.createObjectURL(file);
+      setBannerFileAndPreview(file, preview);
+    }
+  };
+
+  const handlePromotionalImageChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = e.target.files?.[0] ?? null;
+    if (file) {
+      const preview = URL.createObjectURL(file);
+      setPromotionalFileAndPreview(file, preview);
+    }
+  };
+
+  const handleLogoSave = async () => {
+    const file = useChatWidgetStore.getState().images.logoFile;
+    if (!file) return toast.error('Please select a logo image first.');
+
+    setSaving(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      const res = await updateLogo.mutateAsync({
+        liveDeskId,
+        file,
+      });
+
+      const uploadedUrl = res?.data?.logo ?? null;
+      setLogoFileAndPreview(null, uploadedUrl);
+      setSuccess('Logo updated!');
+      toast.success('Logo updated!');
+    } catch (err: any) {
+      const message =
+        err?.response?.data?.message ??
+        err?.message ??
+        'Failed to update logo.';
+
+      toast.error(message);
+      setError(message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleBannerImageSave = async () => {
+    const file = useChatWidgetStore.getState().images.bannerFile;
+    if (!file) return toast.error('Please select a banner first.');
+
+    setSaving(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      const res = await updateBannerImage.mutateAsync({
+        liveDeskId,
+        file,
+      });
+      const uploadedUrl = res?.data?.bannerImage ?? null;
+
+      setBannerFileAndPreview(null, uploadedUrl);
+      setSuccess('Banner updated!');
+      toast.success('Banner updated!');
+    } catch (err: any) {
+      const message =
+        err?.response?.data?.message ??
+        err?.message ??
+        'Failed to upload banner.';
+      toast.error(message);
+      setError(message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handlePromotionalImageSave = async () => {
+    const file = useChatWidgetStore.getState().images.promotionalImageFile;
+    if (!file) return toast.error('Please select a promotional image first.');
+
+    setSaving(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      const res = await updatePromotionalImage.mutateAsync({
+        liveDeskId,
+        file,
+      });
+
+      const uploadedUrl = res?.data?.promotionalImage ?? null;
+
+      setPromotionalFileAndPreview(null, uploadedUrl);
+      setSuccess('Promotional image updated!');
+      toast.success('Promotional image updated!');
+    } catch (err: any) {
+      const message =
+        err?.response?.data?.message ??
+        err?.message ??
+        'Failed to upload promotional image.';
+      toast.error(message);
+      setError(message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleLogoReset = () => {
+    resetLogo();
+  };
+
+  const handleBannerImageReset = () => {
+    resetBannerImage();
+  };
+
+  const handlePromotionalImageReset = () => {
+    resetPromotionalImage();
+  };
 
   const renderDetailedContent = () => {
     switch (navigation.item) {
       case 'project-information':
-        return renderProjectInformation();
+        return <ProjectInformation />;
+
       case 'chat-widget-configurations':
-        return renderChatWidgetConfigurations();
+        return (
+          <div className="space-y-12">
+            <ContentForm
+              handleBannerSave={handleBannerSave}
+              handleCtaSave={handleCtaSave}
+            />
+
+            <FaqForm />
+
+            <ColorsForm handleSave={handleColorSave} />
+
+            <ImagesForm
+              handleLogoChange={handleLogoChange}
+              handleLogoSave={handleLogoSave}
+              handleLogoReset={handleLogoReset}
+              handleBannerChange={handleBannerImageChange}
+              handleBannerSave={handleBannerImageSave}
+              handleBannerReset={handleBannerImageReset}
+              handlePromotionalImageChange={handlePromotionalImageChange}
+              handlePromotionalImageSave={handlePromotionalImageSave}
+              handlePromotionalImageReset={handlePromotionalImageReset}
+            />
+
+            <div
+              className="fixed bottom-5 right-14"
+              style={
+                {
+                  '--chat-bg': config.background,
+                  '--chat-fg': config.foreground,
+                  '--chat-badge': config.logoBadgeBackgroundColor,
+                } as React.CSSProperties
+              }
+            >
+              <ChatWidgetPreview
+                logoPreviewUrl={logoPreviewUrl ?? ''}
+                bannerPreviewUrl={bannerPreviewUrl ?? ''}
+                promotionalImagePreviewUrl={promotionalImagePreviewUrl ?? ''}
+                bannerTitle={bannerTitle}
+                bannerSubtitle={bannerSubtitle}
+                ctaTitle={ctaTitle}
+                ctaSubtitle={ctaSubtitle}
+                ctaDescription={ctaDescription}
+                ctaButtonText={ctaButtonText}
+                promotionalLink={promotionalLink}
+              />
+            </div>
+          </div>
+        );
+
       case 'cookie-consent-settings':
-        return renderCookieConsentSettings();
+        return <CookieConsentSettings />;
+
       default:
         return (
           <Card>
@@ -241,7 +537,7 @@ export const Component = () => {
 
   return (
     <>
-      <PageHeader title={'General Settings'} />
+      <PageHeader title="General Settings" />
 
       <div className="dashboard-container">
         <div className="w-full space-y-3 lg:w-1/2">
@@ -264,7 +560,7 @@ export const Component = () => {
                         {item.description}
                       </p>
                     </div>
-                    {/* <ArrowRight  /> */}
+
                     <ChevronRight className="w-5 text-gray-400" />
                   </div>
                 </button>
