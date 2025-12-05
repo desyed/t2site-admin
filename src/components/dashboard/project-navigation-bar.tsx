@@ -9,11 +9,17 @@ import {
   Plus,
   User,
 } from 'lucide-react';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router';
 
 import { useAuthStore } from '@/app/auth/auth.store';
 import { useProjectsQuery } from '@/app/project/project.hooks';
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,8 +30,10 @@ import {
 import { useAuth } from '@/contexts/auth-provider';
 import { cn } from '@/lib/utils';
 
+import { CreateProjectForm } from '../projects/create-project-form';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button';
+import { DialogHeader } from '../ui/dialog';
 import { Input } from '../ui/input';
 
 const faqItems = [
@@ -82,6 +90,8 @@ const faqItems = [
 ];
 
 export function ProjectNavigationBar({ projectId }: { projectId: string }) {
+  const [open, setOpen] = useState(false);
+
   const { data: projectsResult } = useProjectsQuery();
   const projects = useMemo(() => projectsResult ?? [], [projectsResult]);
 
@@ -96,7 +106,7 @@ export function ProjectNavigationBar({ projectId }: { projectId: string }) {
         <div className="px-1 py-4 text-xl font-bold text-[#bdbaba]">T2</div>
       </div>
 
-      <div className="flex flex-col gap-3 overflow-y-auto">
+      <div className="no-scrollbar mb-2 flex max-h-96 flex-col gap-3 overflow-y-auto">
         {projects?.map((project) => (
           <Link
             key={project.id}
@@ -119,16 +129,30 @@ export function ProjectNavigationBar({ projectId }: { projectId: string }) {
         ))}
       </div>
 
-      {/* Add Project Button */}
-      <div className="flex items-center justify-center p-2">
-        <Button
-          variant="ghost"
-          size="sm"
-          className="size-8 p-0 text-icon hover:bg-gray-200"
-        >
-          <Plus className="size-4" />
-        </Button>
-      </div>
+      {/* Add Project Button with Modal */}
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild className="mt-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="size-8 rounded-full p-0 text-icon hover:bg-gray-200"
+            onClick={() => setOpen(true)}
+          >
+            <Plus className="size-4" />
+          </Button>
+        </DialogTrigger>
+
+        <DialogContent className="p-8 sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Create Project</DialogTitle>
+          </DialogHeader>
+          <CreateProjectForm
+            onSuccess={() => {
+              setOpen(false);
+            }}
+          />
+        </DialogContent>
+      </Dialog>
 
       {/* Spacer */}
       <div className="flex-1" />

@@ -28,7 +28,7 @@ import { handleApiErrorException } from '@/lib/utils';
 
 export type CreateProjectFormData = z.infer<typeof createProjectSchema>;
 
-export function CreateProjectForm() {
+export function CreateProjectForm({ onSuccess }: { onSuccess?: () => void }) {
   const [showSiteUrlField, setShowSiteUrlField] = useState(false);
   const [projectNameValidated, setProjectNameValidated] = useState(false);
 
@@ -112,6 +112,9 @@ export function CreateProjectForm() {
         queryClient.invalidateQueries({
           queryKey: projectQueryKeys.projectList(),
         });
+
+        onSuccess?.();
+
         navigate(`/${result.data.data.id}`);
       },
       onError: (error) => {
