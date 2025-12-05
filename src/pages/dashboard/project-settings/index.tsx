@@ -19,6 +19,7 @@ import {
 } from '@/app/settings/chat-widget/chat-widget.store';
 import { PageHeader } from '@/components/dashboard/page-header';
 import { Card, CardContent } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { createDashboardLoader } from '@/middlewares/auth-middleware';
 
 import ChatWidgetPreview from './_components/chat-widget-preview';
@@ -453,26 +454,39 @@ export const Component = () => {
       case 'chat-widget-configurations':
         return (
           <div className="space-y-12">
-            <ContentForm
-              handleBannerSave={handleBannerSave}
-              handleCtaSave={handleCtaSave}
-            />
+            <Tabs defaultValue="appearance" className="space-y-12">
+              <TabsList>
+                <TabsTrigger value="appearance" className="px-8">
+                  Appearance
+                </TabsTrigger>
+                <TabsTrigger value="faq" className="px-8">
+                  FAQ
+                </TabsTrigger>
+              </TabsList>
+              <TabsContent value="appearance">
+                <ContentForm
+                  handleBannerSave={handleBannerSave}
+                  handleCtaSave={handleCtaSave}
+                />
 
-            <FaqForm />
+                <ColorsForm handleSave={handleColorSave} />
 
-            <ColorsForm handleSave={handleColorSave} />
-
-            <ImagesForm
-              handleLogoChange={handleLogoChange}
-              handleLogoSave={handleLogoSave}
-              handleLogoReset={handleLogoReset}
-              handleBannerChange={handleBannerImageChange}
-              handleBannerSave={handleBannerImageSave}
-              handleBannerReset={handleBannerImageReset}
-              handlePromotionalImageChange={handlePromotionalImageChange}
-              handlePromotionalImageSave={handlePromotionalImageSave}
-              handlePromotionalImageReset={handlePromotionalImageReset}
-            />
+                <ImagesForm
+                  handleLogoChange={handleLogoChange}
+                  handleLogoSave={handleLogoSave}
+                  handleLogoReset={handleLogoReset}
+                  handleBannerChange={handleBannerImageChange}
+                  handleBannerSave={handleBannerImageSave}
+                  handleBannerReset={handleBannerImageReset}
+                  handlePromotionalImageChange={handlePromotionalImageChange}
+                  handlePromotionalImageSave={handlePromotionalImageSave}
+                  handlePromotionalImageReset={handlePromotionalImageReset}
+                />
+              </TabsContent>
+              <TabsContent value="faq">
+                <FaqForm />
+              </TabsContent>
+            </Tabs>
 
             <div
               className="fixed bottom-5 right-14"
