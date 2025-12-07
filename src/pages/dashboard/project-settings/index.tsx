@@ -26,7 +26,7 @@ import ChatWidgetPreview from './_components/chat-widget-preview';
 import { ColorsForm } from './_components/colors-form';
 import { ContentForm } from './_components/content-form';
 import { CookieConsentSettings } from './_components/cookie-consent-settings';
-import { FaqForm } from './_components/faq-form';
+import FaqManager from './_components/faq-manager';
 import { ImagesForm } from './_components/images-form';
 import { ProjectInformation } from './_components/project-information';
 import { hslStringToHex, isValidHex } from './helpers';
@@ -484,7 +484,7 @@ export const Component = () => {
                 />
               </TabsContent>
               <TabsContent value="faq">
-                <FaqForm />
+                <FaqManager initialFaqs={[]} />
               </TabsContent>
             </Tabs>
 
