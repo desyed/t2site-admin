@@ -7,6 +7,14 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
+import { useCurrentProjectQuery } from '@/app/project/project.hooks';
+import {
+  useCreateFaq,
+  useDeleteFaq,
+  useFaqsQuery,
+  useUpdateFaq,
+} from '@/app/settings/faq/faq.hooks';
+import { useFaqStore } from '@/app/settings/faq/faq.store';
 import {
   Accordion,
   AccordionItem,
@@ -24,53 +32,55 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
-// Zod Schemas
+// Zod Schema
 const faqSchema = z.object({
   question: z.string().min(1, 'Question is required'),
   answer: z.string().min(1, 'Answer is required'),
 });
 
-type Faq = {
-  id: string;
-  question: string;
-  answer: string;
-};
+export default function FaqManager() {
+  const { data: currentProject } = useCurrentProjectQuery();
+  const liveDeskId = currentProject?.features?.liveDesk.id ?? '';
 
-// Props: faqs from backend
-const FaqManager = ({ initialFaqs }: { initialFaqs: Faq[] }) => {
-  const [faqs, setFaqs] = useState<Faq[]>(initialFaqs);
+  // Zustand Store - real source of truth
+  const faqs = useFaqStore((s) => s.faqs);
 
-  const [editingFaq, setEditingFaq] = useState<Faq | null>(null);
-  const [deletingFaq, setDeletingFaq] = useState<Faq | null>(null);
+  // Dialog States
+  const [editingFaq, setEditingFaq] = useState<any | null>(null);
+  const [deletingFaq, setDeletingFaq] = useState<any | null>(null);
 
-  // Create form
+  // Queries
+  const { isLoading } = useFaqsQuery(liveDeskId);
+
+  // Mutations
+  const createFaq = useCreateFaq(liveDeskId);
+  const updateFaq = useUpdateFaq(liveDeskId);
+  const deleteFaq = useDeleteFaq(liveDeskId);
+
+  // Forms
   const createForm = useForm({
     resolver: zodResolver(faqSchema),
     defaultValues: { question: '', answer: '' },
   });
 
-  // Edit form
   const editForm = useForm({
     resolver: zodResolver(faqSchema),
     defaultValues: { question: '', answer: '' },
   });
 
-  // CREATE FAQ
-  const handleCreate = async (values: any) => {
-    // API CALL
-    const newFaq: Faq = {
-      id: crypto.randomUUID(),
-      question: values.question,
-      answer: values.answer,
-    };
-
-    setFaqs((prev) => [...prev, newFaq]);
-    toast.success('FAQ Created!');
-    createForm.reset();
+  // Create FAQ
+  const handleCreate = (values: any) => {
+    createFaq.mutate(values, {
+      onSuccess: () => {
+        toast.success('FAQ Created!');
+        createForm.reset();
+      },
+      onError: () => toast.error('Failed to create FAQ'),
+    });
   };
 
-  // OPEN EDIT MODAL
-  const openEdit = (faq: Faq) => {
+  // Open Edit Modal
+  const openEdit = (faq: any) => {
     setEditingFaq(faq);
     editForm.reset({
       question: faq.question,
@@ -78,40 +88,46 @@ const FaqManager = ({ initialFaqs }: { initialFaqs: Faq[] }) => {
     });
   };
 
-  // SAVE EDIT
-  const handleEdit = async (values: any) => {
+  // Update FAQ
+  const handleEdit = (values: any) => {
     if (!editingFaq) return;
 
-    // API CALL
-    const updated = {
-      ...editingFaq,
-      question: values.question,
-      answer: values.answer,
-    };
-
-    setFaqs((prev) => prev.map((f) => (f.id === updated.id ? updated : f)));
-
-    toast.success('FAQ Updated!');
-    setEditingFaq(null);
+    updateFaq.mutate(
+      {
+        id: editingFaq.id,
+        body: values,
+      },
+      {
+        onSuccess: () => {
+          toast.success('FAQ Updated!');
+          setEditingFaq(null);
+        },
+        onError: () => toast.error('Failed to update FAQ'),
+      }
+    );
   };
 
-  // DELETE FAQ
-  const confirmDelete = async () => {
+  // Delete FAQ
+  const confirmDelete = () => {
     if (!deletingFaq) return;
 
-    // API CALL
-    setFaqs((prev) => prev.filter((f) => f.id !== deletingFaq.id));
-    toast.success('FAQ Deleted!');
-
-    setDeletingFaq(null);
+    deleteFaq.mutate(deletingFaq.id, {
+      onSuccess: () => {
+        toast.success('FAQ Deleted!');
+        setDeletingFaq(null);
+      },
+      onError: () => toast.error('Failed to delete FAQ'),
+    });
   };
 
   return (
     <div className="space-y-6">
-      {/* ---------------------- FAQ LIST (ACCORDION) ---------------------- */}
+      {/* ------------------ LOADING STATE ------------------ */}
+      {isLoading && <p className="text-sm text-gray-500">Loading FAQs...</p>}
 
-      {faqs.length === 0 ? (
-        <p className="text-sm text-gray-600">No FAQs added yet.</p>
+      {/* ------------------ FAQ LIST ------------------ */}
+      {!isLoading && faqs.length === 0 ? (
+        <p className="text-sm text-gray-600">No FAQs found.</p>
       ) : (
         <Accordion type="single" collapsible className="w-full space-y-2">
           {faqs.map((faq) => (
@@ -152,7 +168,7 @@ const FaqManager = ({ initialFaqs }: { initialFaqs: Faq[] }) => {
         </Accordion>
       )}
 
-      {/* ---------------------- ADD NEW FAQ FORM ---------------------- */}
+      {/* ------------------ CREATE FAQ ------------------ */}
       <div className="border-t pt-6">
         <h3 className="mb-3 text-xs uppercase text-gray-500">Add New FAQ</h3>
 
@@ -163,13 +179,17 @@ const FaqManager = ({ initialFaqs }: { initialFaqs: Faq[] }) => {
           <Input placeholder="Question" {...createForm.register('question')} />
           <Textarea placeholder="Answer" {...createForm.register('answer')} />
 
-          <Button type="submit" className="bg-primary text-white">
-            Create FAQ
+          <Button
+            type="submit"
+            className="bg-primary text-white"
+            disabled={createFaq.isPending}
+          >
+            {createFaq.isPending ? 'Creating...' : 'Create FAQ'}
           </Button>
         </form>
       </div>
 
-      {/* ---------------------- EDIT FAQ MODAL ---------------------- */}
+      {/* ------------------ EDIT MODAL ------------------ */}
       <Dialog open={!!editingFaq} onOpenChange={() => setEditingFaq(null)}>
         <DialogContent>
           <DialogHeader>
@@ -191,13 +211,15 @@ const FaqManager = ({ initialFaqs }: { initialFaqs: Faq[] }) => {
               >
                 Cancel
               </Button>
-              <Button type="submit">Save Changes</Button>
+              <Button type="submit" disabled={updateFaq.isPending}>
+                {updateFaq.isPending ? 'Saving...' : 'Save Changes'}
+              </Button>
             </DialogFooter>
           </form>
         </DialogContent>
       </Dialog>
 
-      {/* ---------------------- DELETE CONFIRMATION ---------------------- */}
+      {/* ------------------ DELETE MODAL ------------------ */}
       <Dialog open={!!deletingFaq} onOpenChange={() => setDeletingFaq(null)}>
         <DialogContent>
           <DialogHeader>
@@ -213,14 +235,16 @@ const FaqManager = ({ initialFaqs }: { initialFaqs: Faq[] }) => {
             <Button variant="outline" onClick={() => setDeletingFaq(null)}>
               Cancel
             </Button>
-            <Button className="bg-red-600 text-white" onClick={confirmDelete}>
-              Delete
+            <Button
+              className="bg-red-600 text-white"
+              onClick={confirmDelete}
+              disabled={deleteFaq.isPending}
+            >
+              {deleteFaq.isPending ? 'Deleting...' : 'Delete'}
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
   );
-};
-
-export default FaqManager;
+}

@@ -484,7 +484,7 @@ export const Component = () => {
                 />
               </TabsContent>
               <TabsContent value="faq">
-                <FaqManager initialFaqs={[]} />
+                <FaqManager />
               </TabsContent>
             </Tabs>
 

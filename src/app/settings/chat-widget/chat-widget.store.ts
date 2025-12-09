@@ -28,6 +28,19 @@ type StatusState = {
   success: string | null;
 };
 
+export type Faq = {
+  id: string;
+  question: string;
+  answer: string;
+  cursor?: string | null;
+  createdAt?: string | null;
+};
+
+type FaqCursors = {
+  nextCursor: string | null;
+  prevCursor: string | null;
+};
+
 export type ChatWidgetStore = {
   // config values
   background: string;
@@ -75,6 +88,17 @@ export type ChatWidgetStore = {
   // derived / helpers
   getConfig: () => WidgetConfig;
   resetAll: () => void;
+
+  // faqs
+  faqs: Faq[];
+  nextCursor: string | null;
+  prevCursor: string | null;
+  setFaqs: (faqs: Faq[]) => void;
+  addFaq: (faq: Faq) => void;
+  updateFaq: (faq: Faq) => void;
+  removeFaq: (faqId: string) => void;
+  setFaqCursors: (cursors: FaqCursors) => void;
+  resetFaqs: () => void;
 };
 
 export const useChatWidgetStore = create<ChatWidgetStore>((set, get) => ({
@@ -144,6 +168,21 @@ export const useChatWidgetStore = create<ChatWidgetStore>((set, get) => ({
         promotionalImagePreviewUrl: null,
       },
     })),
+
+  // faqs
+  faqs: [],
+  nextCursor: null,
+  prevCursor: null,
+  setFaqs: (faqs) => set(() => ({ faqs })),
+  addFaq: (faq) => set((s) => ({ faqs: [...s.faqs, faq] })),
+  updateFaq: (faq) =>
+    set((s) => ({ faqs: s.faqs.map((f) => (f.id === faq.id ? faq : f)) })),
+  removeFaq: (faqId) =>
+    set((s) => ({ faqs: s.faqs.filter((f) => f.id !== faqId) })),
+  setFaqCursors: ({ nextCursor, prevCursor }) =>
+    set(() => ({ nextCursor, prevCursor })),
+  resetFaqs: () =>
+    set(() => ({ faqs: [], nextCursor: null, prevCursor: null })),
 
   // status
   status: { saving: false, error: null, success: null },
